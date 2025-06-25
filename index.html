@@ -120,7 +120,7 @@
         .sud-criteria-list {
             padding-left: 1.5rem;
         }
-        .sud-justification-box {
+        .sud-Substantiation-box {
             margin-top: 0.5rem;
             margin-bottom: 1rem;
         }
@@ -741,13 +741,13 @@
                     li.innerHTML = `<span>${criterion.code ? criterion.code + '. ' : ''}${criterion.text}</span>`;
                 } else {
                     const criterionId = `sud-criterion-${(criterion.code || index).toString().replace(/\s+/g, '-')}`;
-                    li.innerHTML = `<input type="checkbox" id="${criterionId}" class="mr-2 leading-tight"><label for="${criterionId}">${criterion.code ? criterion.code + '. ' : ''}${criterion.text}</label><div class="sud-justification-div" style="display: none;"><textarea class="sud-justification-box w-full p-2 border border-gray-300 rounded-md mt-1" placeholder="Justification..."></textarea></div>`;
+                    li.innerHTML = `<input type="checkbox" id="${criterionId}" class="mr-2 leading-tight"><label for="${criterionId}">${criterion.code ? criterion.code + '. ' : ''}${criterion.text}</label><div class="sud-Substantiation-div" style="display: none;"><textarea class="sud-Substantiation-box w-full p-2 border border-gray-300 rounded-md mt-1" placeholder="Substantiation..."></textarea></div>`;
                     const checkbox = li.querySelector('input[type="checkbox"]');
                     checkbox.addEventListener('change', () => {
-                        const justificationDiv = li.querySelector('.sud-justification-div');
-                        if (justificationDiv) {
-                            justificationDiv.style.display = checkbox.checked ? 'block' : 'none';
-                            if(!checkbox.checked) justificationDiv.querySelector('textarea').value = '';
+                        const SubstantiationDiv = li.querySelector('.sud-Substantiation-div');
+                        if (SubstantiationDiv) {
+                            SubstantiationDiv.style.display = checkbox.checked ? 'block' : 'none';
+                            if(!checkbox.checked) SubstantiationDiv.querySelector('textarea').value = '';
                         }
                         updateSudReport();
                     });
@@ -885,10 +885,10 @@
                 report += 'Criteria Met:\n';
                 checkedCriteriaElements.forEach(cb => {
                     const label = cb.nextElementSibling;
-                    const justificationText = cb.parentElement.querySelector('textarea')?.value;
+                    const SubstantiationText = cb.parentElement.querySelector('textarea')?.value;
                     report += `  - ${label.textContent}\n`;
-                    if (justificationText) {
-                        report += `    Justification: ${justificationText}\n`;
+                    if (SubstantiationText) {
+                        report += `    Substantiation: ${SubstantiationText}\n`;
                     }
                 });
                 report += '\n';
