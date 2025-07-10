@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -5538,12 +5539,28 @@
                 }
             }
             
-            if(searchDescription){
-                 const codeObj = diagnosis.icd_codes.find(c => c.description.toLowerCase() === searchDescription.toLowerCase());
-                 icd10Code = codeObj ? codeObj.code : (diagnosis.icd_codes[0] ? diagnosis.icd_codes[0].code : "N/A");
-            } else {
-                 icd10Code = diagnosis.icd_codes[0] ? diagnosis.icd_codes[0].code : "N/A";
-            }
+if (selectedDiagnosisName === "Stimulant Use Disorder") {
+    const selectedSubstanceRadio = document.querySelector('input[name="sud-specifier-Substance-Type"]:checked');
+    const substanceType = selectedSubstanceRadio ? selectedSubstanceRadio.dataset.specifierName : "Amphetamine-type substance"; // Default if none selected
+
+    let severityCodeDescription = "Mild";
+    if (criteriaCount >= 4) { // Moderate or Severe
+        severityCodeDescription = "Moderate/Severe";
+    }
+
+    const codeObj = diagnosis.icd_codes.find(c => 
+        c.description.includes(severityCodeDescription) && c.description.includes(substanceType)
+    );
+    icd10Code = codeObj ? codeObj.code : "F15.10"; // Fallback code
+} else {
+    // This is the original logic for all other diagnoses
+    if(searchDescription){
+         const codeObj = diagnosis.icd_codes.find(c => c.description.toLowerCase() === searchDescription.toLowerCase());
+         icd10Code = codeObj ? codeObj.code : (diagnosis.icd_codes[0] ? diagnosis.icd_codes[0].code : "N/A");
+    } else {
+         icd10Code = diagnosis.icd_codes[0] ? diagnosis.icd_codes[0].code : "N/A";
+    }
+}
             
             const severityDiv = document.getElementById('sud-calculated-severity');
             if(severityDiv) {
