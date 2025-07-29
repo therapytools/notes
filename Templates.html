@@ -63,7 +63,7 @@
         option {
             padding: 5px 15px;
         }
-        .note-container p {
+        .note-container p, .note-container div {
             margin: 0;
             padding: 0;
         }
@@ -183,6 +183,16 @@
         .hidden {
             display: none;
         }
+        .inline-form-element {
+            display: inline-block;
+            width: auto;
+            min-width: 150px;
+            margin: 0 5px;
+            vertical-align: baseline;
+        }
+        .telehealth-text {
+            line-height: 2.5;
+        }
     </style>
 </head>
 <body>
@@ -198,6 +208,9 @@
         <option value="entry-so">Entry Session - Significant Other</option>
         <option value="narcan-kit">Narcan Education & Kit</option>
         <option value="mat-education">MAT Education</option>
+        <option value="telehealth">Telehealth</option>
+        <option value="closing-note-admitted">Closing Note – Admitted</option>
+        <option value="closing-note-non-admitted">Closing Note – Non-Admitted</option>
     </select>
 
     <!-- Container for Evaluation - Chemical Dependency Note -->
@@ -354,12 +367,18 @@
         <p>“Narcan is a medicine that can save someone’s life during an opioid overdose. It works by quickly blocking the effects of opioids and helping the person breathe again. Narcan is easy to use and can be given by anyone, even without medical training. Having Narcan nearby can give people a second chance and time to get more help. It’s safe, doesn’t hurt someone if they didn’t take opioids, and can help prevent deaths from overdose.”</p>
         <br>
         <p><strong>Links:</strong></p>
-        <p>Video: <a href="https://youtu.be/WnjgrRNMfKM?si=WvTS0Re5ZgYT79iP" target="_blank">https://youtu.be/WnjgrRNMfKM?si=WvTS0Re5ZgYT79iP</a></p>
-        <p>Handout: How to use Narcan Nasal Spray for an opioid overdose</p>
+        <p>Video: <a href="https://youtu.be/WnjgrRNMfKM?si=WvTS0Re5ZgYT79iP" rel="external">NARCAN Nasal Spray - How to use</a></p>
+        <p>Handout: <a href="https://www.health.ny.gov/publications/12028.pdf" rel="external">How to use Narcan Nasal Spray for an opioid overdose</a></p>
     </div>
 
     <!-- Container for MAT Education -->
     <div id="mat-container" class="note-container hidden">
+        <div class="info-box" style="margin-top: 20px;">
+            <label>Talking Points for Client Discussion:</label>
+            <p>Studies show that using both medicine and therapy can help people who have problems with drugs or alcohol. For some people, medicine can make it easier to stay in recovery. These medicines are safe and approved by the Food and Drug Administration (FDA). Doctors pick the right medicine for each person to help them get better and avoid dangerous overdoses. Medicine can also help people live longer, stay in treatment, stop using illegal drugs, stay out of trouble, keep their jobs, have healthier babies if they’re pregnant, and lower the chance of getting diseases like HIV or hepatitis C. There are a few things to keep in mind. A doctor needs to check on you often, the medicine might cause side effects, and some people might misuse it.</p>
+            <br>
+            <a href="https://www.dhcs.ca.gov/individuals/Documents/MAT_Toolkit_for_Counselors.pdf" target="_blank">Medication Assisted Treatment Toolkit for Counselors</a>
+        </div>
         <h2 style="margin-top: 20px;">MAT Education</h2>
         <label for="mat-education-type">Type of Education Provided:</label>
         <select id="mat-education-type">
@@ -419,13 +438,127 @@
             </div>
         </div>
 
-        <div class="info-box" style="margin-top: 20px;">
-            <label>Talking Points for Client Discussion:</label>
-            <p>Studies show that using both medicine and therapy can help people who have problems with drugs or alcohol. For some people, medicine can make it easier to stay in recovery. These medicines are safe and approved by the Food and Drug Administration (FDA). Doctors pick the right medicine for each person to help them get better and avoid dangerous overdoses. Medicine can also help people live longer, stay in treatment, stop using illegal drugs, stay out of trouble, keep their jobs, have healthier babies if they’re pregnant, and lower the chance of getting diseases like HIV or hepatitis C. There are a few things to keep in mind. A doctor needs to check on you often, the medicine might cause side effects, and some people might misuse it.</p>
-            <br>
-            <a href="https://www.dhcs.ca.gov/individuals/Documents/MAT_Toolkit_for_Counselors.pdf" target="_blank">Medication Assisted Treatment Toolkit for Counselors</a>
+
+    </div>
+    
+    <!-- Container for Telehealth Note -->
+    <div id="telehealth-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Telehealth Note Details</h2>
+        <div class="telehealth-text">
+            This session was conducted via 
+            <select id="telehealth-visit-type" class="inline-form-element">
+                <option value="" selected disabled>Select...</option>
+                <option value="video">video</option>
+                <option value="telephone">telephone</option>
+            </select>
+            , and client is clinically appropriate to receive services via telepractice. The use of telepractice was due to 
+            <select id="telehealth-reason" class="inline-form-element">
+                <option value="" selected disabled>Select...</option>
+                <option value="client preference">client preference</option>
+                <option value="location of the practitioner">location of the practitioner</option>
+                <option value="location of the client">location of the client</option>
+                <option value="other">other</option>
+            </select>
+            <input type="text" id="telehealth-reason-other" class="inline-form-element" style="display:none;" placeholder="specify...">
+            . There 
+            <select id="telehealth-disruption" class="inline-form-element">
+                <option value="" selected disabled>Select...</option>
+                <option value="were no service disruptions during the session">were no service disruptions during the session</option>
+                <option value="was a service disruption">was a service disruption</option>
+            </select>
+            <span id="telehealth-disruption-followup" class="hidden">. Writer will follow up by <input type="text" id="telehealth-disruption-plan" class="inline-form-element" placeholder="plan for follow-up..."></span>
+            . The client was located at 
+            <input type="text" id="telehealth-client-location" class="inline-form-element" placeholder="client location">
+            , and the practitioner was located at 
+            <input type="text" id="telehealth-practitioner-location" class="inline-form-element" placeholder="practitioner location">
+            at the time of the session. 
+            <select id="telehealth-presence-dropdown" class="inline-form-element">
+                <option value="" selected disabled>Select presence...</option>
+                <option value="only">Provider and client were the only individuals present in the session.</option>
+                <option value="others">In addition to the provider and client, the following individual(s) were present with the client:</option>
+            </select>
+            <input type="text" id="telehealth-others-present" class="inline-form-element" style="display:none;" placeholder="specify...">
+            . The client was asked about their satisfaction with receiving services via telepractice and 
+            <select id="telehealth-satisfaction" class="inline-form-element">
+                <option value="" selected disabled>Select...</option>
+                <option value="reported satisfaction">reported satisfaction</option>
+                <option value="expressed the following concerns:">expressed the following concerns:</option>
+            </select>
+            <input type="text" id="telehealth-satisfaction-concerns" class="inline-form-element" style="display:none;" placeholder="specify...">
+            .
         </div>
     </div>
+
+    <!-- Container for Closing Note - Admitted -->
+    <div id="closing-note-admitted-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Closing Note Details</h2>
+        <p>Client was discharged due to <input type="text" id="closing-reason" placeholder="reason for discharge...">. Treatment recommendations include <input type="text" id="closing-recommendations" placeholder="recommended treatment plan...">. The client 
+        <select id="closing-meds-dropdown">
+            <option value="" selected disabled>Select...</option>
+            <option value="is">is</option>
+            <option value="is not">is not</option>
+        </select>
+        currently prescribed medications most recently prescribed at Delphi.</p>
+        
+        <div id="closing-meds-actions-container" class="hidden">
+            <p>The following actions were taken to support the client’s medication management: <input type="text" id="closing-meds-actions" placeholder="describe actions taken..."></p>
+        </div>
+
+        <p>Referrals initiated to support the client post-discharge include: <input type="text" id="closing-referrals" placeholder="list referrals..."></p>
+        <p>The 
+        <select id="closing-offered-to-dropdown">
+            <option value="client">client</option>
+            <option value="client and guardian">client and guardian</option>
+        </select>
+        was offered:</p>
+        <div class="checkbox-container">
+            <input type="checkbox" id="closing-discharge-plan">
+            <label for="closing-discharge-plan">A copy of their discharge plan</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="closing-resource-handout">
+            <label for="closing-resource-handout">A recovery resource handout outlining community resources for urgent support</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="closing-harm-reduction">
+            <label for="closing-harm-reduction">Harm reduction resources</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="closing-mat-referral">
+            <label for="closing-mat-referral">Referrals to MAT providers</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="closing-peer-services">
+            <label for="closing-peer-services">Recovery peer services</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="closing-narcan-kit">
+            <label for="closing-narcan-kit">An overdose prevention/Narcan kit</label>
+        </div>
+    </div>
+
+    <!-- Container for Closing Note - Non-Admitted -->
+    <div id="closing-note-non-admitted-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Closing Note Details</h2>
+        <label for="non-admitted-client-type">Client Type:</label>
+        <select id="non-admitted-client-type">
+            <option value="" selected disabled>Select...</option>
+            <option value="no-engage">Client did not engage in evaluation</option>
+            <option value="higher-loc">Client is recommended to a higher level of care</option>
+            <option value="no-criteria">Client does not meet criteria</option>
+        </select>
+
+        <div id="non-admitted-no-engage-section" class="hidden">
+            <p>Client will not be admitted for treatment at this time due to not engaging in treatment beyond their evaluation(s). Engagement efforts included <input type="text" id="non-admitted-efforts" placeholder="list efforts...">. The decision not to admit was provided via mail to client <input type="text" id="non-admitted-provided-to-1" placeholder="and also provided to...">. Included in this letter is a recovery resource handout outlining community resources for urgent support, harm reduction resources, MAT providers, and recovery peer services.</p>
+        </div>
+        <div id="non-admitted-higher-loc-section" class="hidden">
+            <p>The client will not be admitted for treatment at this time, as they meet criteria for a higher level of care <input type="text" id="non-admitted-locadtr" placeholder="LOCADTR outcome...">. Following a thorough review and discussion by the multidisciplinary team, it was determined that the client’s needs would be more safely and appropriately addressed in a setting equipped to provide a higher intensity of services. Efforts to explore treatment options and identify appropriate referrals were made, including: <input type="text" id="non-admitted-efforts-2" placeholder="list efforts made...">. The decision not to admit was communicated to the client via mail <input type="text" id="non-admitted-provided-to-2" placeholder="and also provided to...">. Included in the letter was a recovery resource handout outlining local options for urgent support, harm reduction services, MAT providers, and peer recovery resources.</p>
+        </div>
+        <div id="non-admitted-no-criteria-section" class="hidden">
+            <p>Client will not be admitted for treatment at this time due to not meeting admission criteria. Urine screen was negative, no concerns were reported by collateral contacts, and LOCADTR does not indicate a recommended level of care. An outcome letter was provided to the client <input type="text" id="non-admitted-provided-to-3" placeholder="and..."></p>
+        </div>
+    </div>
+
 
     <!-- Read-only Note Output for Copying -->
     <div class="copy-area-container">
@@ -488,6 +621,48 @@
     const matNicotineReferralCheckbox = document.getElementById('mat-nicotine-referral-checkbox');
     const matNicotineOtherCheckbox = document.getElementById('mat-nicotine-other-checkbox');
     const matNicotineOtherTextbox = document.getElementById('mat-nicotine-other-textbox');
+    
+    // Telehealth elements
+    const telehealthVisitType = document.getElementById('telehealth-visit-type');
+    const telehealthReason = document.getElementById('telehealth-reason');
+    const telehealthReasonOther = document.getElementById('telehealth-reason-other');
+    const telehealthDisruption = document.getElementById('telehealth-disruption');
+    const telehealthDisruptionFollowup = document.getElementById('telehealth-disruption-followup');
+    const telehealthDisruptionPlan = document.getElementById('telehealth-disruption-plan');
+    const telehealthClientLocation = document.getElementById('telehealth-client-location');
+    const telehealthPractitionerLocation = document.getElementById('telehealth-practitioner-location');
+    const telehealthPresenceDropdown = document.getElementById('telehealth-presence-dropdown');
+    const telehealthOthersPresent = document.getElementById('telehealth-others-present');
+    const telehealthSatisfaction = document.getElementById('telehealth-satisfaction');
+    const telehealthSatisfactionConcerns = document.getElementById('telehealth-satisfaction-concerns');
+
+    // Closing Note (Admitted) elements
+    const closingReason = document.getElementById('closing-reason');
+    const closingRecommendations = document.getElementById('closing-recommendations');
+    const closingMedsDropdown = document.getElementById('closing-meds-dropdown');
+    const closingMedsActionsContainer = document.getElementById('closing-meds-actions-container');
+    const closingMedsActions = document.getElementById('closing-meds-actions');
+    const closingReferrals = document.getElementById('closing-referrals');
+    const closingOfferedToDropdown = document.getElementById('closing-offered-to-dropdown');
+    const closingDischargePlan = document.getElementById('closing-discharge-plan');
+    const closingResourceHandout = document.getElementById('closing-resource-handout');
+    const closingHarmReduction = document.getElementById('closing-harm-reduction');
+    const closingMatReferral = document.getElementById('closing-mat-referral');
+    const closingPeerServices = document.getElementById('closing-peer-services');
+    const closingNarcanKit = document.getElementById('closing-narcan-kit');
+    
+    // Closing Note (Non-Admitted) elements
+    const nonAdmittedClientType = document.getElementById('non-admitted-client-type');
+    const nonAdmittedNoEngageSection = document.getElementById('non-admitted-no-engage-section');
+    const nonAdmittedHigherLocSection = document.getElementById('non-admitted-higher-loc-section');
+    const nonAdmittedNoCriteriaSection = document.getElementById('non-admitted-no-criteria-section');
+    const nonAdmittedEfforts = document.getElementById('non-admitted-efforts');
+    const nonAdmittedProvidedTo1 = document.getElementById('non-admitted-provided-to-1');
+    const nonAdmittedLocadtr = document.getElementById('non-admitted-locadtr');
+    const nonAdmittedEfforts2 = document.getElementById('non-admitted-efforts-2');
+    const nonAdmittedProvidedTo2 = document.getElementById('non-admitted-provided-to-2');
+    const nonAdmittedProvidedTo3 = document.getElementById('non-admitted-provided-to-3');
+
 
     // Get containers
     const evalCdContainer = document.getElementById('eval-cd-container');
@@ -496,6 +671,9 @@
     const entrySoContainer = document.getElementById('entry-so-container');
     const narcanContainer = document.getElementById('narcan-container');
     const matContainer = document.getElementById('mat-container');
+    const telehealthContainer = document.getElementById('telehealth-container');
+    const closingNoteAdmittedContainer = document.getElementById('closing-note-admitted-container');
+    const closingNoteNonAdmittedContainer = document.getElementById('closing-note-non-admitted-container');
 
     const diagnosisOptionsHTML = `
         <option value="" selected disabled>Select a diagnosis...</option>
@@ -580,12 +758,8 @@
         const selectedNoteType = noteTypeSelect.value;
         let finalNote = '';
 
-        evalCdContainer.classList.add('hidden');
-        evalSoContainer.classList.add('hidden');
-        entryCdContainer.classList.add('hidden');
-        entrySoContainer.classList.add('hidden');
-        narcanContainer.classList.add('hidden');
-        matContainer.classList.add('hidden');
+        // Hide all containers first
+        document.querySelectorAll('.note-container').forEach(c => c.classList.add('hidden'));
 
         if (selectedNoteType === 'eval-cd') {
             evalCdContainer.classList.remove('hidden');
@@ -693,24 +867,24 @@
             matContainer.classList.remove('hidden');
             let noteParts = [];
             if (matEducationType.value === 'not-taking') {
-                noteParts.push("Medication Assisted Treatment (MAT) has been introduced, and education has been offered based on client's history and current presentation. Writer provided client with an overview of MAT’s benefits & risks, and offered to connect client to medication management in our clinic, including smoking and nicotine cessation services.");
+                noteParts.push("Medication Assisted Treatment (MAT) has been introduced, and education has been offered based on client's history and current presentation. Writer provided client with an overview of MAT’s benefits & risks, and offered to connect client to medication management in our clinic, including smoking and nicotine cessation services");
             } else if (matEducationType.value === 'already-taking') {
-                 noteParts.push("Client is currently taking medication to manage their Substance Use Disorder.");
+                 noteParts.push("Client is currently taking medication to manage their Substance Use Disorder");
             }
 
             if (matResponseDropdown.value) {
-                noteParts.push(`Based on the discussion, ${matResponseDropdown.value}.`);
+                noteParts.push(`Based on the discussion, ${matResponseDropdown.value}`);
             }
             
             if (matExploredOptionsDropdown.value) {
                 const exploredText = matExploredOptionsDropdown.value === 'did' ? 'did' : 'did not';
                 const substances = matSubstancesTextbox.value || '[list relevant substances, e.g., opioids, alcohol, etc.]';
-                noteParts.push(`The clinician ${exploredText} explore specific MAT options tailored to the substances reported by the client, including ${substances}.`);
+                noteParts.push(`The clinician ${exploredText} explore specific MAT options tailored to the substances reported by the client, including ${substances}`);
             }
 
             if (matNicotineUseDropdown.value) {
                 const nicotineUse = matNicotineUseDropdown.value;
-                let nicotineSentence = `The client ${nicotineUse} report current nicotine use.`;
+                let nicotineSentence = `The client ${nicotineUse} report current nicotine use`;
                 if (nicotineUse === 'does') {
                     let resources = [];
                     if (matNicotineReplacementCheckbox.checked) resources.push('nicotine replacement options');
@@ -720,17 +894,131 @@
                         resources.push(matNicotineOtherTextbox.value);
                     }
                     if (resources.length > 0) {
-                        nicotineSentence += ` The following nicotine cessation resources were provided: ${resources.join(', ')}.`;
+                        nicotineSentence += `, and the following nicotine cessation resources were provided: ${resources.join(', ')}`;
                     }
                 }
                 noteParts.push(nicotineSentence);
             }
             if (noteParts.length > 0) {
-                noteParts.push("The Clinician will connect client to the program nurse for further support and information.");
+                noteParts.push("The Clinician will connect client to the program nurse for further support and information");
                 noteParts.push("Medication Assisted Treatment Toolkit for Counselors");
             }
-            finalNote = noteParts.join(' ');
+            finalNote = noteParts.join('. ').replace(/\.\./g, '.'); // Join and clean up double periods
+            if(finalNote) finalNote += '.';
+
+        } else if (selectedNoteType === 'telehealth') {
+            telehealthContainer.classList.remove('hidden');
+            
+            telehealthReasonOther.style.display = (telehealthReason.value === 'other') ? 'inline-block' : 'none';
+            telehealthDisruptionFollowup.style.display = (telehealthDisruption.value === 'was a service disruption') ? 'inline-block' : 'none';
+            telehealthSatisfactionConcerns.style.display = (telehealthSatisfaction.value === 'expressed the following concerns:') ? 'inline-block' : 'none';
+            telehealthOthersPresent.style.display = (telehealthPresenceDropdown.value === 'others') ? 'inline-block' : 'none';
+
+            let noteParts = [];
+            
+            if (telehealthVisitType.value) {
+                noteParts.push(`This session was conducted via ${telehealthVisitType.value}, and client is clinically appropriate to receive services via telepractice`);
+            }
+            
+            let reason = telehealthReason.value;
+            if (reason === 'other') {
+                reason = telehealthReasonOther.value || '[specify]';
+            }
+            if (reason) {
+                noteParts.push(`the use of telepractice was due to ${reason}`);
+            }
+            
+            let disruption = telehealthDisruption.value;
+            if (disruption) {
+                let disruptionText = `there ${disruption}`;
+                if (disruption === 'was a service disruption') {
+                    const plan = telehealthDisruptionPlan.value || '[plan for follow-up]';
+                    disruptionText += `. Writer will follow up by ${plan}`;
+                }
+                noteParts.push(disruptionText);
+            }
+
+            const clientLocation = telehealthClientLocation.value || '[client location]';
+            const practitionerLocation = telehealthPractitionerLocation.value || '[practitioner location]';
+            noteParts.push(`the client was located at ${clientLocation}, and the practitioner was located at ${practitionerLocation} at the time of the session`);
+            
+            let presence = telehealthPresenceDropdown.value;
+            if (presence === 'only') {
+                noteParts.push('Provider and client were the only individuals present in the session');
+            } else if (presence === 'others') {
+                const others = telehealthOthersPresent.value || '[specify]';
+                noteParts.push(`in addition to the provider and client, the following individual(s) were present with the client: ${others}`);
+            }
+
+            let satisfaction = telehealthSatisfaction.value;
+            if (satisfaction) {
+                let satisfactionText = satisfaction;
+                if (satisfaction.startsWith('expressed the following concerns')) {
+                    const concerns = telehealthSatisfactionConcerns.value || '[specify]';
+                    satisfactionText += ` ${concerns}`;
+                }
+                noteParts.push(`The client was asked about their satisfaction with receiving services via telepractice and ${satisfactionText}`);
+            }
+
+            finalNote = noteParts.join('. ').replace(/\.\./g, '.');
+            if (finalNote) finalNote += '.';
+            if (finalNote === '.') finalNote = '';
+        } else if (selectedNoteType === 'closing-note-admitted') {
+            closingNoteAdmittedContainer.classList.remove('hidden');
+
+            let noteParts = [];
+            const reason = closingReason.value || '[reason for discharge]';
+            noteParts.push(`Client was discharged due to ${reason}`);
+
+            const recommendations = closingRecommendations.value || '[recommended treatment plan or next steps]';
+            noteParts.push(`Treatment recommendations include ${recommendations}`);
+
+            const meds = closingMedsDropdown.value;
+            if (meds) {
+                let medsSentence = `The client ${meds} currently prescribed medications most recently prescribed at Delphi`;
+                if (meds === 'is') {
+                    const actions = closingMedsActions.value || '[describe actions taken, e.g., medication reconciliation, prescription coordination, referral to prescriber, etc.]';
+                    medsSentence += `. The following actions were taken to support the client’s medication management: ${actions}`;
+                }
+                noteParts.push(medsSentence);
+            }
+
+            const referrals = closingReferrals.value || '[list referrals, e.g., outpatient counseling, primary care, housing support, etc.]';
+            noteParts.push(`Referrals initiated to support the client post-discharge include: ${referrals}`);
+
+            const offeredTo = closingOfferedToDropdown.value;
+            let offeredItems = [];
+            if (closingDischargePlan.checked) offeredItems.push('A copy of their discharge plan');
+            if (closingResourceHandout.checked) offeredItems.push('A recovery resource handout outlining community resources for urgent support');
+            if (closingHarmReduction.checked) offeredItems.push('Harm reduction resources');
+            if (closingMatReferral.checked) offeredItems.push('Referrals to MAT providers');
+            if (closingPeerServices.checked) offeredItems.push('Recovery peer services');
+            if (closingNarcanKit.checked) offeredItems.push('An overdose prevention/Narcan kit');
+            
+            if (offeredItems.length > 0) {
+                 noteParts.push(`The ${offeredTo} was offered: ${offeredItems.join(', ')}`);
+            }
+
+            finalNote = noteParts.join('. ').replace(/\.\./g, '.');
+            if (finalNote) finalNote += '.';
+        } else if (selectedNoteType === 'closing-note-non-admitted') {
+            closingNoteNonAdmittedContainer.classList.remove('hidden');
+            const clientType = nonAdmittedClientType.value;
+            if (clientType === 'no-engage') {
+                const efforts = nonAdmittedEfforts.value || '[list efforts]';
+                const providedTo = nonAdmittedProvidedTo1.value ? ` and also provided to: ${nonAdmittedProvidedTo1.value}` : '';
+                finalNote = `Client will not be admitted for treatment at this time due to not engaging in treatment beyond their evaluation(s). Engagement efforts included ${efforts}. The decision not to admit was provided via mail to client${providedTo}. Included in this letter is a recovery resource handout outlining community resources for urgent support, harm reduction resources, MAT providers, and recovery peer services.`;
+            } else if (clientType === 'higher-loc') {
+                const locadtr = nonAdmittedLocadtr.value || '[LOCADTR outcome]';
+                const efforts = nonAdmittedEfforts2.value || '[list efforts made, e.g., coordination with other providers, referral outreach, discussion with client/family, etc.]';
+                const providedTo = nonAdmittedProvidedTo2.value ? ` and also provided to: ${nonAdmittedProvidedTo2.value}` : '';
+                finalNote = `The client will not be admitted for treatment at this time, as they meet criteria for a higher level of care ${locadtr}. Following a thorough review and discussion by the multidisciplinary team, it was determined that the client’s needs would be more safely and appropriately addressed in a setting equipped to provide a higher intensity of services. Efforts to explore treatment options and identify appropriate referrals were made, including: ${efforts}. The decision not to admit was communicated to the client via mail${providedTo}. Included in the letter was a recovery resource handout outlining local options for urgent support, harm reduction services, MAT providers, and peer recovery resources.`;
+            } else if (clientType === 'no-criteria') {
+                const providedTo = nonAdmittedProvidedTo3.value ? ` and ${nonAdmittedProvidedTo3.value}` : '';
+                finalNote = `Client will not be admitted for treatment at this time due to not meeting admission criteria. Urine screen was negative, no concerns were reported by collateral contacts, and LOCADTR does not indicate a recommended level of care. An outcome letter was provided to the client${providedTo}.`;
+            }
         }
+
 
         finalNoteCopy.value = finalNote.trim();
         autoResize(finalNoteCopy);
@@ -803,6 +1091,38 @@
         el.addEventListener('input', updateFinalNote);
         el.addEventListener('change', updateFinalNote);
     });
+    
+    // Telehealth Listeners
+    telehealthReason.addEventListener('change', updateFinalNote);
+    telehealthDisruption.addEventListener('change', updateFinalNote);
+    telehealthSatisfaction.addEventListener('change', updateFinalNote);
+    telehealthPresenceDropdown.addEventListener('change', updateFinalNote);
+    [telehealthVisitType, telehealthReasonOther, telehealthDisruptionPlan, telehealthClientLocation, telehealthPractitionerLocation, telehealthOthersPresent, telehealthSatisfactionConcerns].forEach(el => {
+        el.addEventListener('input', updateFinalNote);
+        el.addEventListener('change', updateFinalNote);
+    });
+    
+    // Closing Note (Admitted) Listeners
+    closingMedsDropdown.addEventListener('change', () => {
+        closingMedsActionsContainer.classList.toggle('hidden', closingMedsDropdown.value !== 'is');
+        updateFinalNote();
+    });
+    [closingReason, closingRecommendations, closingMedsActions, closingReferrals, closingOfferedToDropdown, closingDischargePlan, closingResourceHandout, closingHarmReduction, closingMatReferral, closingPeerServices, closingNarcanKit].forEach(el => {
+        el.addEventListener('input', updateFinalNote);
+        el.addEventListener('change', updateFinalNote);
+    });
+    
+    // Closing Note (Non-Admitted) Listeners
+    nonAdmittedClientType.addEventListener('change', () => {
+        nonAdmittedNoEngageSection.classList.toggle('hidden', nonAdmittedClientType.value !== 'no-engage');
+        nonAdmittedHigherLocSection.classList.toggle('hidden', nonAdmittedClientType.value !== 'higher-loc');
+        nonAdmittedNoCriteriaSection.classList.toggle('hidden', nonAdmittedClientType.value !== 'no-criteria');
+        updateFinalNote();
+    });
+    [nonAdmittedEfforts, nonAdmittedProvidedTo1, nonAdmittedLocadtr, nonAdmittedEfforts2, nonAdmittedProvidedTo2, nonAdmittedProvidedTo3].forEach(el => {
+        el.addEventListener('input', updateFinalNote);
+    });
+
 
     // Copy Button functionality
     copyButton.addEventListener('click', () => {
