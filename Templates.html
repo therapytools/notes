@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template-Based Notes</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h2 {
+             border-bottom: 2px solid #e0e0e0;
+             padding-bottom: 10px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        select, textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin: 10px 0;
+            transition: border-color 0.2s;
+        }
+        select:focus, textarea:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            overflow-y: hidden;
+        }
+        optgroup {
+            font-weight: bold;
+            font-style: normal;
+            background-color: #f0f0f0;
+            color: #000;
+        }
+        option {
+            padding: 5px 15px;
+        }
+        .note-container p {
+            margin: 0;
+            padding: 0;
+        }
+        .dynamic-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .dynamic-row select, .dynamic-row input {
+            flex-grow: 1;
+            margin: 0;
+        }
+        .add-btn, .remove-btn {
+            flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .add-btn {
+            background-color: #28a745;
+            color: white;
+            border-color: #218838;
+        }
+        .add-btn:hover {
+            background-color: #218838;
+        }
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            border-color: #c82333;
+        }
+        .remove-btn:hover {
+            background-color: #c82333;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            background-color: #e9f5ff;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #bde0ff;
+        }
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 12px;
+            margin-top: 5px;
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+        }
+        .checkbox-container input[type="checkbox"]:disabled + label {
+            color: #999;
+        }
+        .checkbox-container label, .scenario-label-text {
+            margin: 0;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+        .scenarios-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .scenario-group {
+            margin-bottom: 15px;
+            padding-left: 20px; /* This indents the scenario groups */
+        }
+        .scenario-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .scenario-content {
+             /* No extra padding needed here anymore */
+        }
+        .copy-area-container {
+            margin-top: 30px;
+        }
+        #final-note-copy {
+            background-color: #f8f9fa;
+            min-height: 200px;
+            color: #555;
+        }
+        .copy-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+        .copy-button:hover {
+            background-color: #218838;
+        }
+        .copy-button:active {
+            background-color: #1e7e34;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Template-Based Notes</h1>
+
+    <label for="note-type-select">Select Note Type:</label>
+    <select id="note-type-select">
+        <option value="eval-cd">Evaluation - Chemical Dependency</option>
+        <option value="eval-so">Evaluation - Significant Other</option>
+        <option value="entry-cd">Entry Session - Chemical Dependency</option>
+        <option value="entry-so">Entry Session - Significant Other</option>
+        <option value="narcan-kit">Narcan Education & Kit</option>
+    </select>
+
+    <!-- Container for Evaluation - Chemical Dependency Note -->
+    <div id="eval-cd-container" class="note-container">
+        <h2 style="margin-top: 20px;">Note Details</h2>
+        <p>The client presented for services and meets diagnostic criteria for a substance use disorder, specifically</p>
+        <div id="diagnosis-container"></div>
+        <p>, as evidenced by:</p>
+        <textarea id="details-criteria" placeholder="Enter details here..."></textarea>
+        <p>The clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.</p>
+        <br>
+        <p>The clinician confirmed client understanding and emphasized the collaborative nature of recovery, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.</p>
+        <div class="checkbox-container">
+            <input type="checkbox" id="mandate-checkbox">
+            <label for="mandate-checkbox">Include the following mandate information: The clinician clarified the implications of external mandates, noting that mandated status does not override the client’s right to voluntary engagement in treatment or toxicology screenings. Corresponding handouts were provided.</label>
+        </div>
+        <p>The clinician reviewed the client’s screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions.</p>
+        <div class="scenarios-section">
+            <h2>Scenarios</h2>
+            <p style="margin-bottom: 1rem;"><strong>PHQ-9 Score ≥9 or any suicide risk on C-SSRS:</strong></p>
+            <div class="scenario-group">
+                <p class="scenario-label">If the client has a mental health provider:</p>
+                <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="cd-has-mh-provider-text">
+                    <label for="cd-has-mh-provider-text" class="scenario-label-text">The clinician discussed the client’s engagement with their current provider, encouraged prompt follow-up due to screening results, and reviewed additional mental health resources if the client wishes to explore other providers. A signed release was obtained to coordinate care.</label>
+                </div>
+                 <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="cd-safety-plan-has-provider">
+                    <label for="cd-safety-plan-has-provider" class="scenario-label-text">A safety plan was developed collaboratively.</label>
+                </div>
+            </div>
+            <div class="scenario-group">
+                <p class="scenario-label">If the client does not have a mental health provider:</p>
+                <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="cd-no-mh-provider-text">
+                    <label for="cd-no-mh-provider-text" class="scenario-label-text">The clinician provided a list of mental health referral options, reviewed the benefits of a comprehensive mental health evaluation, and offered support in making and completing the referral.</label>
+                </div>
+                 <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="cd-safety-plan-no-provider">
+                    <label for="cd-safety-plan-no-provider" class="scenario-label-text">A safety plan was developed to address suicide risk.</label>
+                </div>
+            </div>
+            <h2>Other Scenarios</h2>
+            <div class="scenario-group">
+                <p class="scenario-label">Overdose Risk Identified:</p>
+                 <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="cd-overdose-risk">
+                    <label for="cd-overdose-risk" class="scenario-label-text">The clinician reviewed the client’s overdose risk factors and collaborated with the client to create a personalized safety plan.</label>
+                </div>
+            </div>
+             <div class="scenario-group">
+                <p class="scenario-label">High-Risk Gambling Screen:</p>
+                 <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="cd-gambling-risk">
+                    <label for="cd-gambling-risk" class="scenario-label-text">The clinician reviewed the client’s gambling screen results and initiated a referral to an in-house counselor trained in gambling treatment for further support.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container for Evaluation - Significant Other Note -->
+    <div id="eval-so-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Note Details</h2>
+        <p>The client presented for services due to experiencing stress related to supporting someone in their life who struggles with substance use. The client meets diagnostic criteria, specifically</p>
+        <select id="so-diagnosis-select">
+            <option value="Z63.72 Alcoholism and drug addiction in family">Z63.72 Alcoholism and drug addiction in family</option>
+            <option value="Z63.8 Other specified problems related to primary support group">Z63.8 Other specified problems related to primary support group</option>
+        </select>
+        <p>, as evidenced by:</p>
+        <textarea id="so-details-criteria" placeholder="Enter details here..."></textarea>
+        <p>The clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.</p>
+        <br>
+        <p>The clinician confirmed client understanding and emphasized the collaborative nature of treatment, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.</p>
+        <br>
+        <p>The clinician reviewed the client’s screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions.</p>
+        <div class="scenarios-section">
+            <h2>Scenarios</h2>
+            <p style="margin-bottom: 1rem;"><strong>PHQ-9 Score ≥9 or any suicide risk on C-SSRS:</strong></p>
+            <div class="scenario-group">
+                <p class="scenario-label">If the client has a mental health provider:</p>
+                <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="so-has-mh-provider-text">
+                    <label for="so-has-mh-provider-text" class="scenario-label-text">The clinician discussed the client’s engagement with their current provider, encouraged prompt follow-up due to screening results, and reviewed additional mental health resources if the client wishes to explore other providers. A signed release was obtained to coordinate care.</label>
+                </div>
+                 <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="so-safety-plan-has-provider">
+                    <label for="so-safety-plan-has-provider" class="scenario-label-text">A safety plan was developed collaboratively.</label>
+                </div>
+            </div>
+            <div class="scenario-group">
+                <p class="scenario-label">If the client does not have a mental health provider:</p>
+                <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="so-no-mh-provider-text">
+                    <label for="so-no-mh-provider-text" class="scenario-label-text">The clinician provided a list of mental health referral options, reviewed the benefits of a comprehensive mental health evaluation, and offered support in making and completing the referral.</label>
+                </div>
+                 <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="so-safety-plan-no-provider">
+                    <label for="so-safety-plan-no-provider" class="scenario-label-text">A safety plan was developed to address suicide risk.</label>
+                </div>
+            </div>
+            <h2>Other Scenarios</h2>
+            <div class="scenario-group">
+                <p class="scenario-label">Overdose Risk Identified:</p>
+                 <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="so-overdose-risk">
+                    <label for="so-overdose-risk" class="scenario-label-text">The clinician reviewed the client’s overdose risk factors and collaborated with the client to create a personalized safety plan.</label>
+                </div>
+            </div>
+             <div class="scenario-group">
+                <p class="scenario-label">High-Risk Gambling Screen:</p>
+                 <div class="scenario-content checkbox-container">
+                    <input type="checkbox" id="so-gambling-risk">
+                    <label for="so-gambling-risk" class="scenario-label-text">The clinician reviewed the client’s gambling screen results and initiated a referral to an in-house counselor trained in gambling treatment for further support.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Container for Entry Session - Chemical Dependency Note -->
+    <div id="entry-cd-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Note Details</h2>
+        <p>The client has identified personal goals to support their recovery, including:</p>
+        <div id="client-goals-container"></div>
+        <p>Based on the client’s psychosocial needs, current presentation, and clinical history, the client is expected to benefit from the following treatment plan goals:</p>
+        <div id="treatment-goals-container"></div>
+        <p>The clinician reviewed all services available through the Outpatient clinic, with a focus on peer support, medication management, and therapeutic group offerings. Corresponding handouts were provided to support the client’s engagement and alignment with their identified recovery goals.</p>
+    </div>
+    
+    <!-- Container for Entry Session - Significant Other Note -->
+    <div id="entry-so-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Note Details</h2>
+        <p>The client has identified personal goals to support their recovery, including:</p>
+        <div id="so-client-goals-container"></div>
+        <p>Based on the client’s psychosocial needs, current presentation, and clinical history, the client is expected to benefit from the following treatment plan goals:</p>
+        <div id="so-treatment-goals-container"></div>
+        <p>The clinician reviewed all services available through the Outpatient clinic, with a focus on peer support, medication management, and therapeutic group offerings. Corresponding handouts were provided to support the client’s engagement and alignment with their identified recovery goals.</p>
+    </div>
+
+    <!-- Container for Narcan Education & Kit -->
+    <div id="narcan-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Note Details</h2>
+        <div class="checkbox-container">
+            <input type="checkbox" id="narcan-provided-checkbox">
+            <label for="narcan-provided-checkbox">Education provided: I provided client with an overview of Narcan, showed a brief video demonstrating how to use,  and instructional handout.</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="narcan-declined-checkbox">
+            <label for="narcan-declined-checkbox">Narcan training declined.</label>
+        </div>
+
+        <h2 style="margin-top: 20px;">Instructions</h2>
+        <p><strong>What to say to the client:</strong></p>
+        <p>“Narcan is a medicine that can save someone’s life during an opioid overdose. It works by quickly blocking the effects of opioids and helping the person breathe again. Narcan is easy to use and can be given by anyone, even without medical training. Having Narcan nearby can give people a second chance and time to get more help. It’s safe, doesn’t hurt someone if they didn’t take opioids, and can help prevent deaths from overdose.”</p>
+        <br>
+        <p><strong>Links:</strong></p>
+        <p>Video: <a href="https://youtu.be/WnjgrRNMfKM?si=WvTS0Re5ZgYT79iP" target="_blank">NARCAN Nasal Spray - How to use</a></p>
+        <p>Handout: <a href="https://www.health.ny.gov/publications/12028.pdf" target="_blank">How to use Narcan Nasal Spray for an opioid overdose</a></p>
+
+    </div>
+
+    <!-- Read-only Note Output for Copying -->
+    <div class="copy-area-container">
+        <h2>Copy Area</h2>
+        <textarea id="final-note-copy" readonly></textarea>
+        <button id="copy-button" class="copy-button">Copy Note to Clipboard</button>
+    </div>
+</div>
+
+<script>
+    // Get all interactive elements
+    const noteTypeSelect = document.getElementById('note-type-select');
+    const finalNoteCopy = document.getElementById('final-note-copy');
+    const copyButton = document.getElementById('copy-button');
+
+    // Eval-CD elements
+    const diagnosisContainer = document.getElementById('diagnosis-container');
+    const detailsTextarea = document.getElementById('details-criteria');
+    const mandateCheckbox = document.getElementById('mandate-checkbox');
+    const cdHasMhProviderTextCheckbox = document.getElementById('cd-has-mh-provider-text');
+    const cdSafetyPlanHasProviderCheckbox = document.getElementById('cd-safety-plan-has-provider');
+    const cdNoMhProviderTextCheckbox = document.getElementById('cd-no-mh-provider-text');
+    const cdSafetyPlanNoProviderCheckbox = document.getElementById('cd-safety-plan-no-provider');
+    const cdOverdoseRiskCheckbox = document.getElementById('cd-overdose-risk');
+    const cdGamblingRiskCheckbox = document.getElementById('cd-gambling-risk');
+
+    // Eval-SO elements
+    const soDiagnosisSelect = document.getElementById('so-diagnosis-select');
+    const soDetailsTextarea = document.getElementById('so-details-criteria');
+    const soHasMhProviderTextCheckbox = document.getElementById('so-has-mh-provider-text');
+    const soSafetyPlanHasProviderCheckbox = document.getElementById('so-safety-plan-has-provider');
+    const soNoMhProviderTextCheckbox = document.getElementById('so-no-mh-provider-text');
+    const soSafetyPlanNoProviderCheckbox = document.getElementById('so-safety-plan-no-provider');
+    const soOverdoseRiskCheckbox = document.getElementById('so-overdose-risk');
+    const soGamblingRiskCheckbox = document.getElementById('so-gambling-risk');
+    
+    // Entry-CD elements
+    const clientGoalsContainer = document.getElementById('client-goals-container');
+    const treatmentGoalsContainer = document.getElementById('treatment-goals-container');
+    
+    // Entry-SO elements
+    const soClientGoalsContainer = document.getElementById('so-client-goals-container');
+    const soTreatmentGoalsContainer = document.getElementById('so-treatment-goals-container');
+
+    // Narcan elements
+    const narcanProvidedCheckbox = document.getElementById('narcan-provided-checkbox');
+    const narcanDeclinedCheckbox = document.getElementById('narcan-declined-checkbox');
+
+    // Get containers
+    const evalCdContainer = document.getElementById('eval-cd-container');
+    const evalSoContainer = document.getElementById('eval-so-container');
+    const entryCdContainer = document.getElementById('entry-cd-container');
+    const entrySoContainer = document.getElementById('entry-so-container');
+    const narcanContainer = document.getElementById('narcan-container');
+
+    const diagnosisOptionsHTML = `
+        <optgroup label="F10: Alcohol Use Disorder"><option value="F10.10: Alcohol use disorder, mild">F10.10: Alcohol use disorder, mild</option><option value="F10.20: Alcohol use disorder, moderate">F10.20: Alcohol use disorder, moderate</option><option value="F10.20: Alcohol use disorder, severe">F10.20: Alcohol use disorder, severe</option></optgroup>
+        <optgroup label="F11: Opioid Use Disorder"><option value="F11.10: Opioid use disorder, mild">F11.10: Opioid use disorder, mild</option><option value="F11.20: Opioid use disorder, moderate">F11.20: Opioid use disorder, moderate</option><option value="F11.20: Opioid use disorder, severe">F11.20: Opioid use disorder, severe</option></optgroup>
+        <optgroup label="F12: Cannabis Use Disorder"><option value="F12.10: Cannabis use disorder, mild">F12.10: Cannabis use disorder, mild</option><option value="F12.20: Cannabis use disorder, moderate">F12.20: Cannabis use disorder, moderate</option><option value="F12.20: Cannabis use disorder, severe">F12.20: Cannabis use disorder, severe</option></optgroup>
+        <optgroup label="F13: Sedative, Hypnotic, or Anxiolytic Use Disorder"><option value="F13.10: Sedative, hypnotic, or anxiolytic use disorder, mild">F13.10: Sedative, hypnotic, or anxiolytic use disorder, mild</option><option value="F13.20: Sedative, hypnotic, or anxiolytic use disorder, moderate">F13.20: Sedative, hypnotic, or anxiolytic use disorder, moderate</option><option value="F13.20: Sedative, hypnotic, or anxiolytic use disorder, severe">F13.20: Sedative, hypnotic, or anxiolytic use disorder, severe</option></optgroup>
+        <optgroup label="F14: Cocaine Use Disorder"><option value="F14.10: Stimulant Use Disorder Cocaine, mild">F14.10: Stimulant Use Disorder Cocaine, mild</option><option value="F14.20: Stimulant Use Disorder Cocaine, moderate">F14.20: Stimulant Use Disorder Cocaine, moderate</option><option value="F14.20: Stimulant Use Disorder Cocaine, severe">F14.20: Stimulant Use Disorder Cocaine, severe</option></optgroup>
+        <optgroup label="F15: Other Stimulant Use Disorder"><option value="F15.10: Other stimulant use disorder, mild">F15.10: Other stimulant use disorder, mild</option><option value="F15.20: Other stimulant use disorder, moderate">F15.20: Other stimulant use disorder, moderate</option><option value="F15.20: Other stimulant use disorder, severe">F15.20: Other stimulant use disorder, severe</option></optgroup>
+        <optgroup label="F16: Hallucinogen Use Disorder"><option value="F16.10: Hallucinogen use disorder, mild">F16.10: Hallucinogen use disorder, mild</option><option value="F16.10: Hallucinogen use disorder, moderate">F16.10: Hallucinogen use disorder, moderate</option><option value="F16.10: Hallucinogen use disorder, severe">F16.10: Hallucinogen use disorder, severe</option></optgroup>
+        <optgroup label="F17: Tobacco Use Disorder"><option value="F17.200: Nicotine dependence, unspecified">F17.200: Nicotine dependence, unspecified</option><option value="F17.210: Nicotine dependence, cigarettes, uncomplicated">F17.210: Nicotine dependence, cigarettes, uncomplicated</option><option value="F17.220: Nicotine dependence, chewing tobacco, uncomplicated">F17.220: Nicotine dependence, chewing tobacco, uncomplicated</option><option value="F17.290: Nicotine dependence, other tobacco product, uncomplicated">F17.290: Nicotine dependence, other tobacco product, uncomplicated</option></optgroup>
+        <optgroup label="F18: Inhalant Use Disorder"><option value="F18.10: Inhalant use disorder, mild">F18.10: Inhalant use disorder, mild</option><option value="F18.20: Inhalant use disorder, moderate">F18.20: Inhalant use disorder, moderate</option><option value="F18.20: Inhalant use disorder, severe">F18.20: Inhalant use disorder, severe</option></optgroup>
+        <optgroup label="F19: Other (or Unknown) Psychoactive Substance Use Disorder"><option value="F19.10: Other psychoactive substance use disorder, mild">F19.10: Other psychoactive substance use disorder, mild</option><option value="F19.20: Other psychoactive substance use disorder, moderate">F19.20: Other psychoactive substance use disorder, moderate</option><option value="F19.20: Other psychoactive substance use disorder, severe">F19.20: Other psychoactive substance use disorder, severe</option></optgroup>
+    `;
+    
+    function createDynamicRow(container, placeholder) {
+        const row = document.createElement('div');
+        row.className = 'dynamic-row';
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = placeholder;
+        input.addEventListener('input', updateFinalNote);
+        const button = document.createElement('button');
+        button.type = 'button';
+
+        if (container.children.length === 0) {
+            button.className = 'add-btn';
+            button.textContent = '+';
+            button.onclick = () => createDynamicRow(container, placeholder);
+        } else {
+            button.className = 'remove-btn';
+            button.textContent = '-';
+            button.onclick = () => { row.remove(); updateFinalNote(); };
+        }
+        row.appendChild(input);
+        row.appendChild(button);
+        container.appendChild(row);
+        updateFinalNote();
+    }
+    
+    function addDiagnosisRow() {
+        const row = document.createElement('div');
+        row.className = 'dynamic-row';
+        const select = document.createElement('select');
+        select.innerHTML = diagnosisOptionsHTML;
+        select.addEventListener('change', updateFinalNote);
+        const button = document.createElement('button');
+        button.type = 'button';
+        if (diagnosisContainer.children.length === 0) {
+            button.className = 'add-btn';
+            button.textContent = '+';
+            button.onclick = addDiagnosisRow;
+        } else {
+            button.className = 'remove-btn';
+            button.textContent = '-';
+            button.onclick = () => { row.remove(); updateFinalNote(); };
+        }
+        row.appendChild(select);
+        row.appendChild(button);
+        diagnosisContainer.appendChild(row);
+        updateFinalNote();
+    }
+
+    function resetDiagnosisRows() {
+        diagnosisContainer.innerHTML = '';
+        addDiagnosisRow();
+    }
+    
+    function resetGoalRows(clientContainer, treatmentContainer) {
+        clientContainer.innerHTML = '';
+        treatmentContainer.innerHTML = '';
+        createDynamicRow(clientContainer, 'Enter client goal...');
+        createDynamicRow(treatmentContainer, 'Enter treatment plan goal...');
+    }
+
+    function autoResize(element) {
+        element.style.height = 'auto';
+        element.style.height = (element.scrollHeight) + 'px';
+    }
+
+    function updateFinalNote() {
+        const selectedNoteType = noteTypeSelect.value;
+        let finalNote = '';
+
+        evalCdContainer.classList.add('hidden');
+        evalSoContainer.classList.add('hidden');
+        entryCdContainer.classList.add('hidden');
+        entrySoContainer.classList.add('hidden');
+        narcanContainer.classList.add('hidden');
+
+        if (selectedNoteType === 'eval-cd') {
+            evalCdContainer.classList.remove('hidden');
+            const mandateSentence = "The clinician clarified the implications of external mandates, noting that mandated status does not override the client’s right to voluntary engagement in treatment or toxicology screenings. Corresponding handouts were provided.";
+            const diagnosisElements = diagnosisContainer.querySelectorAll('select');
+            const selectedOptions = Array.from(diagnosisElements).map(select => select.value);
+            const diagnosis = selectedOptions.length > 0 && selectedOptions[0] ? selectedOptions.join(', ') : '[SPECIFY DIAGNOSIS]';
+            const details = detailsTextarea.value || '[DETAILS OF CRITERIA MET]';
+            
+            let baseNote = `The client presented for services and meets diagnostic criteria for a substance use disorder, specifically ${diagnosis}, as evidenced by: \n\n${details}\n\nThe clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.\n\nThe clinician confirmed client understanding and emphasized the collaborative nature of recovery, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.${mandateCheckbox.checked ? ' ' + mandateSentence : ''}\n\nThe clinician reviewed the client’s screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions.`;
+
+            let scenariosText = [];
+            if (cdHasMhProviderTextCheckbox.checked) {
+                let text = cdHasMhProviderTextCheckbox.nextElementSibling.textContent;
+                if (cdSafetyPlanHasProviderCheckbox.checked) {
+                    text += ' ' + cdSafetyPlanHasProviderCheckbox.nextElementSibling.textContent;
+                }
+                scenariosText.push(text);
+            }
+            if (cdNoMhProviderTextCheckbox.checked) {
+                let text = cdNoMhProviderTextCheckbox.nextElementSibling.textContent;
+                if (cdSafetyPlanNoProviderCheckbox.checked) {
+                    text += ' ' + cdSafetyPlanNoProviderCheckbox.nextElementSibling.textContent;
+                }
+                scenariosText.push(text);
+            }
+            if (cdOverdoseRiskCheckbox.checked) {
+                scenariosText.push(cdOverdoseRiskCheckbox.nextElementSibling.textContent);
+            }
+            if (cdGamblingRiskCheckbox.checked) {
+                scenariosText.push(cdGamblingRiskCheckbox.nextElementSibling.textContent);
+            }
+
+            if (scenariosText.length > 0) {
+                finalNote = baseNote + "\n\n" + scenariosText.join("\n\n");
+            } else {
+                finalNote = baseNote;
+            }
+        
+        } else if (selectedNoteType === 'eval-so') {
+            evalSoContainer.classList.remove('hidden');
+            const diagnosis = soDiagnosisSelect.value;
+            const details = soDetailsTextarea.value || '[DETAILS OF CRITERIA MET]';
+            let baseNote = `The client presented for services due to experiencing stress related to supporting someone in their life who struggles with substance use. The client meets diagnostic criteria, specifically ${diagnosis}, as evidenced by: \n\n${details}\n\nThe clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.\n\nThe clinician confirmed client understanding and emphasized the collaborative nature of treatment, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.\n\nThe clinician reviewed the client’s screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions.`;
+            
+            let scenariosText = [];
+            if (soHasMhProviderTextCheckbox.checked) {
+                let text = soHasMhProviderTextCheckbox.nextElementSibling.textContent;
+                if (soSafetyPlanHasProviderCheckbox.checked) {
+                    text += ' ' + soSafetyPlanHasProviderCheckbox.nextElementSibling.textContent;
+                }
+                scenariosText.push(text);
+            }
+            if (soNoMhProviderTextCheckbox.checked) {
+                let text = soNoMhProviderTextCheckbox.nextElementSibling.textContent;
+                if (soSafetyPlanNoProviderCheckbox.checked) {
+                    text += ' ' + soSafetyPlanNoProviderCheckbox.nextElementSibling.textContent;
+                }
+                scenariosText.push(text);
+            }
+            if (soOverdoseRiskCheckbox.checked) {
+                scenariosText.push(soOverdoseRiskCheckbox.nextElementSibling.textContent);
+            }
+            if (soGamblingRiskCheckbox.checked) {
+                scenariosText.push(soGamblingRiskCheckbox.nextElementSibling.textContent);
+            }
+
+            if (scenariosText.length > 0) {
+                finalNote = baseNote + "\n\n" + scenariosText.join("\n\n");
+            } else {
+                finalNote = baseNote;
+            }
+
+        } else if (selectedNoteType === 'entry-cd') {
+            entryCdContainer.classList.remove('hidden');
+            const clientGoals = Array.from(clientGoalsContainer.querySelectorAll('input')).map(input => input.value).filter(val => val);
+            const treatmentGoals = Array.from(treatmentGoalsContainer.querySelectorAll('input')).map(input => input.value).filter(val => val);
+            
+            let clientGoalsText = clientGoals.length > 0 ? '\n' + clientGoals.map(goal => `"${goal}"`).join('\n') : ' [CLIENT-STATED GOALS / CLIENT VOICE/QUOTES]';
+            let treatmentGoalsText = treatmentGoals.length > 0 ? '\n' + treatmentGoals.join('\n') : ' [TREATMENT PLAN GOALS]';
+
+            finalNote = `The client has identified personal goals to support their recovery, including:${clientGoalsText}\n\nBased on the client’s psychosocial needs, current presentation, and clinical history, the client is expected to benefit from the following treatment plan goals:${treatmentGoalsText}\n\nThe clinician reviewed all services available through the Outpatient clinic, with a focus on peer support, medication management, and therapeutic group offerings. Corresponding handouts were provided to support the client’s engagement and alignment with their identified recovery goals.`;
+
+        } else if (selectedNoteType === 'entry-so') {
+            entrySoContainer.classList.remove('hidden');
+            const clientGoals = Array.from(soClientGoalsContainer.querySelectorAll('input')).map(input => input.value).filter(val => val);
+            const treatmentGoals = Array.from(soTreatmentGoalsContainer.querySelectorAll('input')).map(input => input.value).filter(val => val);
+            
+            let clientGoalsText = clientGoals.length > 0 ? '\n' + clientGoals.map(goal => `"${goal}"`).join('\n') : ' [CLIENT-STATED GOALS / CLIENT VOICE/QUOTES]';
+            let treatmentGoalsText = treatmentGoals.length > 0 ? '\n' + treatmentGoals.join('\n') : ' [TREATMENT PLAN GOALS]';
+
+            finalNote = `The client has identified personal goals to support their recovery, including:${clientGoalsText}\n\nBased on the client’s psychosocial needs, current presentation, and clinical history, the client is expected to benefit from the following treatment plan goals:${treatmentGoalsText}\n\nThe clinician reviewed all services available through the Outpatient clinic, with a focus on peer support, medication management, and therapeutic group offerings. Corresponding handouts were provided to support the client’s engagement and alignment with their identified recovery goals.`;
+        
+        } else if (selectedNoteType === 'narcan-kit') {
+            narcanContainer.classList.remove('hidden');
+            if (narcanProvidedCheckbox.checked) {
+                finalNote = "Writer provided Ct with an overview of Narcan, showed a brief video demonstrating how to use Narcan, and provided Ct with a Narcan kit and instructional handout.";
+            } else if (narcanDeclinedCheckbox.checked) {
+                finalNote = "Ct declined Narcan training when offered and declined to accept a Narcan kit.";
+            } else {
+                finalNote = "";
+            }
+        }
+
+        finalNoteCopy.value = finalNote.trim();
+        autoResize(finalNoteCopy);
+    }
+
+    function toggleSafetyPlan(mainCheckbox, safetyPlanCheckbox) {
+        safetyPlanCheckbox.disabled = !mainCheckbox.checked;
+        if (!mainCheckbox.checked) {
+            safetyPlanCheckbox.checked = false;
+        }
+    }
+
+    // EVENT LISTENERS
+    noteTypeSelect.addEventListener('change', () => {
+        if (noteTypeSelect.value === 'eval-cd') {
+            resetDiagnosisRows();
+        } else if (noteTypeSelect.value === 'entry-cd') {
+            resetGoalRows(clientGoalsContainer, treatmentGoalsContainer);
+        } else if (noteTypeSelect.value === 'entry-so') {
+            resetGoalRows(soClientGoalsContainer, soTreatmentGoalsContainer);
+        }
+        updateFinalNote();
+    });
+    
+    // Eval-CD Listeners
+    detailsTextarea.addEventListener('input', () => { autoResize(detailsTextarea); updateFinalNote(); });
+    mandateCheckbox.addEventListener('change', updateFinalNote);
+    cdHasMhProviderTextCheckbox.addEventListener('change', () => { toggleSafetyPlan(cdHasMhProviderTextCheckbox, cdSafetyPlanHasProviderCheckbox); updateFinalNote(); });
+    cdNoMhProviderTextCheckbox.addEventListener('change', () => { toggleSafetyPlan(cdNoMhProviderTextCheckbox, cdSafetyPlanNoProviderCheckbox); updateFinalNote(); });
+    cdSafetyPlanHasProviderCheckbox.addEventListener('change', updateFinalNote);
+    cdSafetyPlanNoProviderCheckbox.addEventListener('change', updateFinalNote);
+    cdOverdoseRiskCheckbox.addEventListener('change', updateFinalNote);
+    cdGamblingRiskCheckbox.addEventListener('change', updateFinalNote);
+
+    // Eval-SO Listeners
+    soDiagnosisSelect.addEventListener('change', updateFinalNote);
+    soDetailsTextarea.addEventListener('input', () => { autoResize(soDetailsTextarea); updateFinalNote(); });
+    soHasMhProviderTextCheckbox.addEventListener('change', () => { toggleSafetyPlan(soHasMhProviderTextCheckbox, soSafetyPlanHasProviderCheckbox); updateFinalNote(); });
+    soNoMhProviderTextCheckbox.addEventListener('change', () => { toggleSafetyPlan(soNoMhProviderTextCheckbox, soSafetyPlanNoProviderCheckbox); updateFinalNote(); });
+    soSafetyPlanHasProviderCheckbox.addEventListener('change', updateFinalNote);
+    soSafetyPlanNoProviderCheckbox.addEventListener('change', updateFinalNote);
+    soOverdoseRiskCheckbox.addEventListener('change', updateFinalNote);
+    soGamblingRiskCheckbox.addEventListener('change', updateFinalNote);
+
+    // Narcan Listeners
+    narcanProvidedCheckbox.addEventListener('change', () => {
+        if (narcanProvidedCheckbox.checked) {
+            narcanDeclinedCheckbox.checked = false;
+        }
+        updateFinalNote();
+    });
+    narcanDeclinedCheckbox.addEventListener('change', () => {
+        if (narcanDeclinedCheckbox.checked) {
+            narcanProvidedCheckbox.checked = false;
+        }
+        updateFinalNote();
+    });
+
+    // Copy Button functionality
+    copyButton.addEventListener('click', () => {
+        finalNoteCopy.select();
+        navigator.clipboard.writeText(finalNoteCopy.value).then(() => {
+            const originalText = copyButton.textContent;
+            copyButton.textContent = 'Copied!';
+            copyButton.style.backgroundColor = '#1e7e34';
+            setTimeout(() => { copyButton.textContent = originalText; copyButton.style.backgroundColor = '#28a745'; }, 1500);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            try { document.execCommand('copy'); } catch (e) { console.error('Fallback copy failed', e); }
+        });
+    });
+
+    // Initial call to populate the form on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        resetDiagnosisRows();
+        resetGoalRows(clientGoalsContainer, treatmentGoalsContainer);
+        resetGoalRows(soClientGoalsContainer, soTreatmentGoalsContainer);
+        toggleSafetyPlan(cdHasMhProviderTextCheckbox, cdSafetyPlanHasProviderCheckbox);
+        toggleSafetyPlan(cdNoMhProviderTextCheckbox, cdSafetyPlanNoProviderCheckbox);
+        toggleSafetyPlan(soHasMhProviderTextCheckbox, soSafetyPlanHasProviderCheckbox);
+        toggleSafetyPlan(soNoMhProviderTextCheckbox, soSafetyPlanNoProviderCheckbox);
+        updateFinalNote();
+    });
+
+</script>
+
+</body>
+</html>
