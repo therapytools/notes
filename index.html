@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -5695,9 +5693,9 @@ if (selectedDiagnosisName === "Stimulant Use Disorder") {
 <label><input checked="" type="checkbox"/> <strong>Suicide &amp; Crisis Lifeline:</strong> 988</label>
 <label><input type="checkbox"/> <strong>Veteran Crisis Line:</strong> 988, option 1</label>
 <label><input checked="" type="checkbox"/> <strong>Crisis Text Line:</strong> Text HOME to 741741</label>
-<label><input type="checkbox"/> <strong>National Alliance on Mental Illness (NAMI):</strong> 1-800‑950‑NAMI (6264) - M-F, 10 a.m.–10 p.m. ET</label>
+<label><input type="checkbox"/> <strong>National Alliance on Mental Illness (NAMI):</strong> 1-800-950-NAMI (6264). M-F, 10a.m.-10p.m. ET</label>
 <label><input type="checkbox"/> <strong>Substance Abuse and Mental Health Services Administration:</strong> 1‑800‑662‑HELP (4357)</label>
-<label><input type="checkbox"/> <strong>New York State HOPEline (Addiction, Substance Use, Gambling):</strong> 1-877-846-7369 or text HOPENY (467369)</label>
+<label><input type="checkbox"/> <strong>NYS HOPEline (Addiction & Gambling):</strong> 1-877-846-7369 or text HOPENY (467369)</label>
 <label><input type="checkbox"/> <strong>Disaster and Distress Help Line:</strong> 1-800-985-5990</label>
 <label><input type="checkbox"/> <strong>National Domestic Violence Hotline:</strong> 1-800‑799‑SAFE (7233)</label>
 <label><input type="checkbox"/> <strong>New York State Domestic Violence Hotline:</strong> 1-800-942-6906 or text 844-997-2121</label>
@@ -5829,15 +5827,17 @@ if (selectedDiagnosisName === "Stimulant Use Disorder") {
             const resources = [];
             const checkedBoxes = group.querySelectorAll('input[type="checkbox"]:checked');
 
-            checkedBoxes.forEach(checkbox => {
-                const labelElement = checkbox.parentElement;
-                const fullText = labelElement.textContent.trim();
-                const parts = fullText.split(':');
-                if (parts.length >= 2) {
-                    const label = parts[0].trim();
-                    const value = parts.slice(1).join(':').trim();
-                    resources.push({ label, value });
-                }
+if (parts.length >= 2) {
+                const label = parts[0].trim();
+                let value = parts.slice(1).join(':').trim(); // Use 'let'
+
+                // Sanitize the string by replacing multiple special characters
+                value = value.replace(/‑/g, '-')  // Replace non-breaking hyphen
+                             .replace(/–/g, '-')  // Replace en dash
+                             .replace(/ /g, ' '); // Replace narrow no-break space
+
+                resources.push({ label, value });
+            }
             });
 
             if (resources.length > 0) {
@@ -5845,18 +5845,31 @@ if (selectedDiagnosisName === "Stimulant Use Disorder") {
                 const col2x = margin + col1Width + 2;
                 doc.setFontSize(9);
 
-                resources.forEach(resource => {
+resources.forEach(resource => {
+                    // Keep this part to calculate the height for page breaks
                     doc.setFont(undefined, 'bold');
                     const labelLines = doc.splitTextToSize(resource.label, col1Width);
                     doc.setFont(undefined, 'normal');
                     const valueLines = doc.splitTextToSize(resource.value, pageWidth - col2x - margin);
                     const linesRequired = Math.max(labelLines.length, valueLines.length);
-                    const heightRequired = linesRequired * 4;
+                    const heightRequired = linesRequired * 5;
                     checkPageBreak(heightRequired);
+
+                    // --- Start of Changed Code ---
+                    // Render the text using maxWidth and align options instead
                     doc.setFont(undefined, 'bold');
-                    doc.text(labelLines, margin + 5, y);
+                    doc.text(resource.label, margin + 5, y, {
+                        maxWidth: col1Width,
+                        align: 'left'
+                    });
+
                     doc.setFont(undefined, 'normal');
-                    doc.text(valueLines, col2x, y);
+                    doc.text(resource.value, col2x, y, {
+                        maxWidth: (pageWidth - col2x - margin),
+                        align: 'left'
+                    });
+                    // --- End of Changed Code ---
+
                     y += heightRequired + 2;
                 });
             }
@@ -6181,16 +6194,20 @@ if (selectedDiagnosisName === "Stimulant Use Disorder") {
             const resources = [];
             const checkedBoxes = group.querySelectorAll('input[type="checkbox"]:checked');
 
-            checkedBoxes.forEach(checkbox => {
-                const labelElement = checkbox.parentElement;
-                const fullText = labelElement.textContent.trim();
-                const parts = fullText.split(':');
-                if (parts.length >= 2) {
-                    const label = parts[0].trim();
-                    const value = parts.slice(1).join(':').trim();
-                    resources.push({ label, value });
-                }
-            });
+checkedBoxes.forEach(checkbox => {
+    const labelElement = checkbox.parentElement;
+    const fullText = labelElement.textContent.trim();
+    const parts = fullText.split(':');
+    if (parts.length >= 2) {
+        const label = parts[0].trim();
+        let value = parts.slice(1).join(':').trim(); // Changed to 'let'
+
+        // Add this line to replace the special hyphen with a standard one
+        value = value.replace(/‑/g, '-');
+
+        resources.push({ label, value });
+    }
+});
 
             if (resources.length > 0) {
                 const col1Width = 80;
@@ -6203,12 +6220,14 @@ if (selectedDiagnosisName === "Stimulant Use Disorder") {
                     doc.setFont(undefined, 'normal');
                     const valueLines = doc.splitTextToSize(resource.value, pageWidth - col2x - margin);
                     const linesRequired = Math.max(labelLines.length, valueLines.length);
-                    const heightRequired = linesRequired * 4;
+                    const heightRequired = linesRequired * 5;
                     checkPageBreak(heightRequired);
                     doc.setFont(undefined, 'bold');
-                    doc.text(labelLines, margin + 5, y);
+                    doc.text(labelLines, margin + 5, y, { align: 'left' }); // Add alignment option
+
                     doc.setFont(undefined, 'normal');
-                    doc.text(valueLines, col2x, y);
+                    doc.text(valueLines, col2x, y, { align: 'left' }); // Add alignment option
+
                     y += heightRequired + 2;
                 });
             }
