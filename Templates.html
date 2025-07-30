@@ -373,12 +373,6 @@
 
     <!-- Container for MAT Education -->
     <div id="mat-container" class="note-container hidden">
-        <div class="info-box" style="margin-top: 20px;">
-            <label>Talking Points for Client Discussion:</label>
-            <p>Studies show that using both medicine and therapy can help people who have problems with drugs or alcohol. For some people, medicine can make it easier to stay in recovery. These medicines are safe and approved by the Food and Drug Administration (FDA). Doctors pick the right medicine for each person to help them get better and avoid dangerous overdoses. Medicine can also help people live longer, stay in treatment, stop using illegal drugs, stay out of trouble, keep their jobs, have healthier babies if they’re pregnant, and lower the chance of getting diseases like HIV or hepatitis C. There are a few things to keep in mind. A doctor needs to check on you often, the medicine might cause side effects, and some people might misuse it.</p>
-            <br>
-            <a href="https://www.dhcs.ca.gov/individuals/Documents/MAT_Toolkit_for_Counselors.pdf" target="_blank">Medication Assisted Treatment Toolkit for Counselors</a>
-        </div>
         <h2 style="margin-top: 20px;">MAT Education</h2>
         <label for="mat-education-type">Type of Education Provided:</label>
         <select id="mat-education-type">
@@ -438,7 +432,12 @@
             </div>
         </div>
 
-
+        <div class="info-box" style="margin-top: 20px;">
+            <label>Talking Points for Client Discussion:</label>
+            <p>Studies show that using both medicine and therapy can help people who have problems with drugs or alcohol. For some people, medicine can make it easier to stay in recovery. These medicines are safe and approved by the Food and Drug Administration (FDA). Doctors pick the right medicine for each person to help them get better and avoid dangerous overdoses. Medicine can also help people live longer, stay in treatment, stop using illegal drugs, stay out of trouble, keep their jobs, have healthier babies if they’re pregnant, and lower the chance of getting diseases like HIV or hepatitis C. There are a few things to keep in mind. A doctor needs to check on you often, the medicine might cause side effects, and some people might misuse it.</p>
+            <br>
+            <a href="https://www.dhcs.ca.gov/individuals/Documents/MAT_Toolkit_for_Counselors.pdf" target="_blank">Medication Assisted Treatment Toolkit for Counselors</a>
+        </div>
     </div>
     
     <!-- Container for Telehealth Note -->
@@ -457,6 +456,8 @@
                 <option value="client preference">client preference</option>
                 <option value="location of the practitioner">location of the practitioner</option>
                 <option value="location of the client">location of the client</option>
+                <option value="lack of access to a video-enabled device">lack of access to a video-enabled device</option>
+                <option value="temporary connectivity disruption">temporary connectivity disruption</option>
                 <option value="other">other</option>
             </select>
             <input type="text" id="telehealth-reason-other" class="inline-form-element" style="display:none;" placeholder="specify...">
@@ -510,31 +511,9 @@
             <option value="client">client</option>
             <option value="client and guardian">client and guardian</option>
         </select>
-        was offered:</p>
-        <div class="checkbox-container">
-            <input type="checkbox" id="closing-discharge-plan">
-            <label for="closing-discharge-plan">A copy of their discharge plan</label>
-        </div>
-        <div class="checkbox-container">
-            <input type="checkbox" id="closing-resource-handout">
-            <label for="closing-resource-handout">A recovery resource handout outlining community resources for urgent support</label>
-        </div>
-        <div class="checkbox-container">
-            <input type="checkbox" id="closing-harm-reduction">
-            <label for="closing-harm-reduction">Harm reduction resources</label>
-        </div>
-        <div class="checkbox-container">
-            <input type="checkbox" id="closing-mat-referral">
-            <label for="closing-mat-referral">Referrals to MAT providers</label>
-        </div>
-        <div class="checkbox-container">
-            <input type="checkbox" id="closing-peer-services">
-            <label for="closing-peer-services">Recovery peer services</label>
-        </div>
-        <div class="checkbox-container">
-            <input type="checkbox" id="closing-narcan-kit">
-            <label for="closing-narcan-kit">An overdose prevention/Narcan kit</label>
-        </div>
+        was offered a copy of their discharge plan, a recovery resource handout outlining community resources for urgent support, harm reduction resources, referrals to MAT providers and recovery peer services, and an overdose prevention/Narcan kit.</p>
+        <label for="closing-client-response">Client's Response to Resources Offered at Discharge:</label>
+        <input type="text" id="closing-client-response" placeholder="Enter client's response...">
     </div>
 
     <!-- Container for Closing Note - Non-Admitted -->
@@ -644,12 +623,8 @@
     const closingMedsActions = document.getElementById('closing-meds-actions');
     const closingReferrals = document.getElementById('closing-referrals');
     const closingOfferedToDropdown = document.getElementById('closing-offered-to-dropdown');
-    const closingDischargePlan = document.getElementById('closing-discharge-plan');
-    const closingResourceHandout = document.getElementById('closing-resource-handout');
-    const closingHarmReduction = document.getElementById('closing-harm-reduction');
-    const closingMatReferral = document.getElementById('closing-mat-referral');
-    const closingPeerServices = document.getElementById('closing-peer-services');
-    const closingNarcanKit = document.getElementById('closing-narcan-kit');
+    const closingClientResponse = document.getElementById('closing-client-response');
+
     
     // Closing Note (Non-Admitted) elements
     const nonAdmittedClientType = document.getElementById('non-admitted-client-type');
@@ -960,9 +935,9 @@
                 noteParts.push(`The client was asked about their satisfaction with receiving services via telepractice and ${satisfactionText}`);
             }
 
-            finalNote = noteParts.join('. ').replace(/\.\./g, '.');
-            if (finalNote) finalNote += '.';
-            if (finalNote === '.') finalNote = '';
+            finalNote = noteParts.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('. ').replace(/\.\s\./g, '.');
+            if (finalNote && !finalNote.endsWith('.')) finalNote += '.';
+
         } else if (selectedNoteType === 'closing-note-admitted') {
             closingNoteAdmittedContainer.classList.remove('hidden');
 
@@ -987,20 +962,16 @@
             noteParts.push(`Referrals initiated to support the client post-discharge include: ${referrals}`);
 
             const offeredTo = closingOfferedToDropdown.value;
-            let offeredItems = [];
-            if (closingDischargePlan.checked) offeredItems.push('A copy of their discharge plan');
-            if (closingResourceHandout.checked) offeredItems.push('A recovery resource handout outlining community resources for urgent support');
-            if (closingHarmReduction.checked) offeredItems.push('Harm reduction resources');
-            if (closingMatReferral.checked) offeredItems.push('Referrals to MAT providers');
-            if (closingPeerServices.checked) offeredItems.push('Recovery peer services');
-            if (closingNarcanKit.checked) offeredItems.push('An overdose prevention/Narcan kit');
+            noteParts.push(`The ${offeredTo} was offered a copy of their discharge plan, a recovery resource handout outlining community resources for urgent support, harm reduction resources, referrals to MAT providers and recovery peer services, and an overdose prevention/Narcan kit`);
             
-            if (offeredItems.length > 0) {
-                 noteParts.push(`The ${offeredTo} was offered: ${offeredItems.join(', ')}`);
+            const clientResponse = closingClientResponse.value;
+            if (clientResponse) {
+                noteParts.push(`Client's Response to Resources Offered at Discharge: ${clientResponse}`);
             }
 
-            finalNote = noteParts.join('. ').replace(/\.\./g, '.');
-            if (finalNote) finalNote += '.';
+            finalNote = noteParts.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('. ').replace(/\.\s\./g, '.');
+             if (finalNote && !finalNote.endsWith('.')) finalNote += '.';
+
         } else if (selectedNoteType === 'closing-note-non-admitted') {
             closingNoteNonAdmittedContainer.classList.remove('hidden');
             const clientType = nonAdmittedClientType.value;
@@ -1039,6 +1010,8 @@
             resetGoalRows(clientGoalsContainer, treatmentGoalsContainer);
         } else if (noteTypeSelect.value === 'entry-so') {
             resetGoalRows(soClientGoalsContainer, soTreatmentGoalsContainer);
+        } else if (noteTypeSelect.value === 'telehealth') {
+            telehealthPractitionerLocation.value = "72 Hinchey Road, Rochester, NY";
         }
         updateFinalNote();
     });
@@ -1093,13 +1066,11 @@
     });
     
     // Telehealth Listeners
-    telehealthReason.addEventListener('change', updateFinalNote);
-    telehealthDisruption.addEventListener('change', updateFinalNote);
-    telehealthSatisfaction.addEventListener('change', updateFinalNote);
-    telehealthPresenceDropdown.addEventListener('change', updateFinalNote);
-    [telehealthVisitType, telehealthReasonOther, telehealthDisruptionPlan, telehealthClientLocation, telehealthPractitionerLocation, telehealthOthersPresent, telehealthSatisfactionConcerns].forEach(el => {
-        el.addEventListener('input', updateFinalNote);
+    [telehealthVisitType, telehealthReason, telehealthDisruption, telehealthSatisfaction, telehealthPresenceDropdown].forEach(el => {
         el.addEventListener('change', updateFinalNote);
+    });
+    [telehealthReasonOther, telehealthDisruptionPlan, telehealthClientLocation, telehealthPractitionerLocation, telehealthOthersPresent, telehealthSatisfactionConcerns].forEach(el => {
+        el.addEventListener('input', updateFinalNote);
     });
     
     // Closing Note (Admitted) Listeners
@@ -1107,7 +1078,7 @@
         closingMedsActionsContainer.classList.toggle('hidden', closingMedsDropdown.value !== 'is');
         updateFinalNote();
     });
-    [closingReason, closingRecommendations, closingMedsActions, closingReferrals, closingOfferedToDropdown, closingDischargePlan, closingResourceHandout, closingHarmReduction, closingMatReferral, closingPeerServices, closingNarcanKit].forEach(el => {
+    [closingReason, closingRecommendations, closingMedsActions, closingReferrals, closingOfferedToDropdown, closingClientResponse].forEach(el => {
         el.addEventListener('input', updateFinalNote);
         el.addEventListener('change', updateFinalNote);
     });
