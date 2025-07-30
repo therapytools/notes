@@ -132,7 +132,40 @@
             margin-top: 0;
             margin-bottom: 1em;
         }
-    </style>
+   /* Styles for Safety Plan */
+.safety-plan-container {
+    max-width: 900px;
+    margin: 2rem auto; /* Centers the container */
+    padding: 2rem;
+    background-color: #ffffff; /* White background */
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+#SafetyPlan input[type="text"] {
+    border: 1px solid #000000; /* Black outline for textboxes */
+    padding: 8px;
+    border-radius: 4px;
+}
+.no-pdf {
+    color: #555;
+    font-style: italic;
+    font-size: 0.9em;
+    margin-top: 4px;
+    margin-bottom: 15px;
+}
+/* Styling for the new additional resources section */
+.additional-resource-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+    align-items: center;
+}
+.additional-resource-row input:first-child {
+    flex: 0 1 40%; /* Resource Name */
+}
+.additional-resource-row input:last-of-type {
+    flex: 1 1 60%; /* Contact Info */
+} </style>
 </head>
 <body class="bg-gray-100 font-sans p-4 md:p-8">
 <div class="bg-white rounded-lg shadow-lg">
