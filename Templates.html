@@ -44,6 +44,10 @@
             margin: 10px 0;
             transition: border-color 0.2s;
         }
+        select[multiple] {
+            height: auto;
+            padding: 10px;
+        }
         select:focus, textarea:focus, input[type="text"]:focus {
             outline: none;
             border-color: #007bff;
@@ -227,7 +231,7 @@
             <input type="checkbox" id="mandate-checkbox">
             <label for="mandate-checkbox">Include the following mandate information: The clinician clarified the implications of external mandates, noting that mandated status does not override the client’s right to voluntary engagement in treatment or toxicology screenings. Corresponding handouts were provided.</label>
         </div>
-        <p>The clinician reviewed the client’s screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions.</p>
+        <p>The clinician reviewed the client’s Behavioral Health and Chemical Dependency screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions inclusive of discussions during evaluation session.</p>
         <div class="scenarios-section">
             <h2>Scenarios</h2>
             <p style="margin-bottom: 1rem;"><strong>PHQ-9 Score ≥9 or any suicide risk on C-SSRS:</strong></p>
@@ -235,7 +239,7 @@
                 <p class="scenario-label">If the client has a mental health provider:</p>
                 <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="cd-has-mh-provider-text">
-                    <label for="cd-has-mh-provider-text" class="scenario-label-text">The clinician discussed the client’s engagement with their current provider, encouraged prompt follow-up due to screening results, and reviewed additional mental health resources if the client wishes to explore other providers. A signed release was obtained to coordinate care.</label>
+                    <label for="cd-has-mh-provider-text" class="scenario-label-text">The clinician discussed the client’s engagement with their current provider, encouraged prompt follow-up based on Behavioral Health screening results, and reviewed additional mental health resources if the client wishes to explore other providers. A signed release was obtained to coordinate care.</label>
                 </div>
                  <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="cd-safety-plan-has-provider">
@@ -246,7 +250,7 @@
                 <p class="scenario-label">If the client does not have a mental health provider:</p>
                 <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="cd-no-mh-provider-text">
-                    <label for="cd-no-mh-provider-text" class="scenario-label-text">The clinician provided a list of mental health referral options, reviewed the benefits of a comprehensive mental health evaluation, and offered support in making and completing the referral.</label>
+                    <label for="cd-no-mh-provider-text" class="scenario-label-text">The clinician encouraged a prompt mental health evaluation based on Behavioral Health screening results and provided a list of mental health referral options, reviewed the benefits of a comprehensive mental health evaluation, and offered support in making and completing the referral.</label>
                 </div>
                  <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="cd-safety-plan-no-provider">
@@ -286,7 +290,7 @@
         <br>
         <p>The clinician confirmed client understanding and emphasized the collaborative nature of treatment, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.</p>
         <br>
-        <p>The clinician reviewed the client’s screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions.</p>
+        <p>The clinician reviewed the client’s Behavioral Health screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions inclusive of discussions during evaluation session.</p>
         <div class="scenarios-section">
             <h2>Scenarios</h2>
             <p style="margin-bottom: 1rem;"><strong>PHQ-9 Score ≥9 or any suicide risk on C-SSRS:</strong></p>
@@ -294,7 +298,7 @@
                 <p class="scenario-label">If the client has a mental health provider:</p>
                 <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="so-has-mh-provider-text">
-                    <label for="so-has-mh-provider-text" class="scenario-label-text">The clinician discussed the client’s engagement with their current provider, encouraged prompt follow-up due to screening results, and reviewed additional mental health resources if the client wishes to explore other providers. A signed release was obtained to coordinate care.</label>
+                    <label for="so-has-mh-provider-text" class="scenario-label-text">The clinician discussed the client’s engagement with their current provider, encouraged prompt follow-up based on Behavioral Health screening results, and reviewed additional mental health resources if the client wishes to explore other providers. A signed release was obtained to coordinate care.</label>
                 </div>
                  <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="so-safety-plan-has-provider">
@@ -305,7 +309,7 @@
                 <p class="scenario-label">If the client does not have a mental health provider:</p>
                 <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="so-no-mh-provider-text">
-                    <label for="so-no-mh-provider-text" class="scenario-label-text">The clinician provided a list of mental health referral options, reviewed the benefits of a comprehensive mental health evaluation, and offered support in making and completing the referral.</label>
+                    <label for="so-no-mh-provider-text" class="scenario-label-text">The clinician encouraged a prompt mental health evaluation based on Behavioral Health screening results and provided a list of mental health referral options, reviewed the benefits of a comprehensive mental health evaluation, and offered support in making and completing the referral.</label>
                 </div>
                  <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="so-safety-plan-no-provider">
@@ -381,29 +385,36 @@
             <option value="already-taking">For Clients Already Taking MAT</option>
         </select>
         
-        <div id="mat-not-taking-info" class="info-box hidden">
-            <p><em>Medication Assisted Treatment (MAT) has been introduced, and education has been offered based on client's history and current presentation. Writer provided client with an overview of MAT’s benefits & risks, and offered to connect client to medication management in our clinic, including smoking and nicotine cessation services.</em></p>
-        </div>
-        <div id="mat-already-taking-info" class="info-box hidden">
-            <p><em>Client is currently taking medication to manage their Substance Use Disorder.</em></p>
-        </div>
-
         <div id="mat-form-fields">
             <label for="mat-response-dropdown">Client’s Response/Readiness:</label>
             <select id="mat-response-dropdown">
                 <option value="" selected disabled>Select a response...</option>
-                <option>Client expressed interest in MAT and a referral was offered to a Delphi Rise provider</option>
-                <option>Client declined at this time</option>
-                <option>Client is happy with their current provider</option>
+                <option value="Client expressed interest in transferring their MAT care and a referral was offered to a Delphi Rise provider">Client expressed interest in transferring care</option>
+                <option value="Client declined to transfer their care at this time">Client declined to transfer care</option>
+                <option value="Client is happy with their current provider">Client is happy with their current provider</option>
             </select>
-            <label for="mat-substances-textbox">MAT is recommended for the following substance(s):</label>
-            <input type="text" id="mat-substances-textbox" placeholder="e.g., opioids, alcohol...">
+             <label for="mat-response-details">Additional details on client's response:</label>
+            <input type="text" id="mat-response-details" placeholder="Enter additional details...">
+
             <label for="mat-explored-options-dropdown">Explored Specific MAT Options?</label>
             <select id="mat-explored-options-dropdown">
                 <option value="" selected disabled>Select an option...</option>
-                <option value="did">Writer and Client explored specific options that are currently available</option>
-                <option value="did-not">Writer deferred a conversation about specific options to the medical staff</option>
+                <option value="did">Writer explored options</option>
+                <option value="did-not">Writer deferred</option>
             </select>
+
+            <div id="mat-options-details-section" class="hidden">
+                 <label for="mat-substances-textbox">MAT is recommended for the following substance(s):</label>
+                <input type="text" id="mat-substances-textbox" placeholder="e.g., opioids, alcohol...">
+                <label for="mat-specific-options-dropdown">What MAT options were explored?</label>
+                <select id="mat-specific-options-dropdown" multiple size="4">
+                    <option>Buprenorphine (Suboxone, Sublocade)</option>
+                    <option>Naltrexone (Vivitrol)</option>
+                    <option>Methadone</option>
+                    <option>Acamprosate (Campral)</option>
+                </select>
+            </div>
+
             <label for="mat-nicotine-use-dropdown">Client's Nicotine Use:</label>
             <select id="mat-nicotine-use-dropdown">
                 <option value="" selected disabled>Select an option...</option>
@@ -440,7 +451,6 @@
         </div>
     </div>
     
-    <!-- Container for Telehealth Note -->
     <div id="telehealth-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Telehealth Note Details</h2>
         <div class="telehealth-text">
@@ -490,7 +500,6 @@
         </div>
     </div>
 
-    <!-- Container for Closing Note - Admitted -->
     <div id="closing-note-admitted-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Closing Note Details</h2>
         <p>Client was discharged due to <input type="text" id="closing-reason" placeholder="reason for discharge...">. Treatment recommendations include <input type="text" id="closing-recommendations" placeholder="recommended treatment plan...">. The client 
@@ -516,7 +525,6 @@
         <input type="text" id="closing-client-response" placeholder="Enter client's response...">
     </div>
 
-    <!-- Container for Closing Note - Non-Admitted -->
     <div id="closing-note-non-admitted-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Closing Note Details</h2>
         <label for="non-admitted-client-type">Client Type:</label>
@@ -588,11 +596,13 @@
 
     // MAT elements
     const matEducationType = document.getElementById('mat-education-type');
-    const matNotTakingInfo = document.getElementById('mat-not-taking-info');
-    const matAlreadyTakingInfo = document.getElementById('mat-already-taking-info');
+    const matFormFields = document.getElementById('mat-form-fields');
     const matResponseDropdown = document.getElementById('mat-response-dropdown');
+    const matResponseDetails = document.getElementById('mat-response-details');
     const matSubstancesTextbox = document.getElementById('mat-substances-textbox');
     const matExploredOptionsDropdown = document.getElementById('mat-explored-options-dropdown');
+    const matOptionsDetailsSection = document.getElementById('mat-options-details-section');
+    const matSpecificOptionsDropdown = document.getElementById('mat-specific-options-dropdown');
     const matNicotineUseDropdown = document.getElementById('mat-nicotine-use-dropdown');
     const matNicotineResourcesSection = document.getElementById('mat-nicotine-resources-section');
     const matNicotineReplacementCheckbox = document.getElementById('mat-nicotine-replacement-checkbox');
@@ -744,7 +754,7 @@
             const diagnosis = selectedOptions.length > 0 ? selectedOptions.join(', ') : '[SPECIFY DIAGNOSIS]';
             const details = detailsTextarea.value || '[DETAILS OF CRITERIA MET]';
             
-            let baseNote = `The client presented for services and meets diagnostic criteria for a substance use disorder, specifically ${diagnosis}, as evidenced by: \n\n${details}\n\nThe clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.\n\nThe clinician confirmed client understanding and emphasized the collaborative nature of recovery, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.${mandateCheckbox.checked ? ' ' + mandateSentence : ''}\n\nThe clinician reviewed the client’s screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions.`;
+            let baseNote = `The client presented for services and meets diagnostic criteria for a substance use disorder, specifically ${diagnosis}, as evidenced by: \n\n${details}\n\nThe clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.\n\nThe clinician confirmed client understanding and emphasized the collaborative nature of recovery, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.${mandateCheckbox.checked ? ' ' + mandateSentence : ''}\n\nThe clinician reviewed the client’s Behavioral Health and Chemical Dependency screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions inclusive of discussions during evaluation session.`;
 
             let scenariosText = [];
             if (cdHasMhProviderTextCheckbox.checked) {
@@ -778,7 +788,7 @@
             evalSoContainer.classList.remove('hidden');
             const diagnosis = soDiagnosisSelect.value;
             const details = soDetailsTextarea.value || '[DETAILS OF CRITERIA MET]';
-            let baseNote = `The client presented for services due to experiencing stress related to supporting someone in their life who struggles with substance use. The client meets diagnostic criteria, specifically ${diagnosis}, as evidenced by: \n\n${details}\n\nThe clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.\n\nThe clinician confirmed client understanding and emphasized the collaborative nature of treatment, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.\n\nThe clinician reviewed the client’s screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions.`;
+            let baseNote = `The client presented for services due to experiencing stress related to supporting someone in their life who struggles with substance use. The client meets diagnostic criteria, specifically ${diagnosis}, as evidenced by: \n\n${details}\n\nThe clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.\n\nThe clinician confirmed client understanding and emphasized the collaborative nature of treatment, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.\n\nThe clinician reviewed the client’s Behavioral Health screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions inclusive of discussions during evaluation session.`;
             
             let scenariosText = [];
             if (soHasMhProviderTextCheckbox.checked) {
@@ -842,19 +852,31 @@
             matContainer.classList.remove('hidden');
             let noteParts = [];
             if (matEducationType.value === 'not-taking') {
-                noteParts.push("Medication Assisted Treatment (MAT) has been introduced, and education has been offered based on client's history and current presentation. Writer provided client with an overview of MAT’s benefits & risks, and offered to connect client to medication management in our clinic, including smoking and nicotine cessation services");
+                noteParts.push("Medication Assisted Treatment (MAT) has been introduced, and education has been offered based on client's history and current presentation. Writer provided client with an overview of MAT’s benefits & risks, and offered to connect client to medication management in our clinic");
             } else if (matEducationType.value === 'already-taking') {
                  noteParts.push("Client is currently taking medication to manage their Substance Use Disorder");
             }
 
             if (matResponseDropdown.value) {
-                noteParts.push(`Based on the discussion, ${matResponseDropdown.value}`);
+                let response = matResponseDropdown.value;
+                if(matResponseDetails.value) {
+                    response += `: ${matResponseDetails.value}`;
+                }
+                noteParts.push(`Based on the discussion, ${response}`);
             }
             
             if (matExploredOptionsDropdown.value) {
-                const exploredText = matExploredOptionsDropdown.value === 'did' ? 'did' : 'did not';
-                const substances = matSubstancesTextbox.value || '[list relevant substances, e.g., opioids, alcohol, etc.]';
-                noteParts.push(`The clinician ${exploredText} explore specific MAT options tailored to the substances reported by the client, including ${substances}`);
+                const exploredText = matExploredOptionsDropdown.value === 'did' ? 'Writer and Client explored specific options that are currently available' : 'Writer deferred a conversation about specific options to the medical staff';
+                noteParts.push(exploredText);
+
+                if(matExploredOptionsDropdown.value === 'did') {
+                    const substances = matSubstancesTextbox.value || '[list relevant substances, e.g., opioids, alcohol, etc.]';
+                    noteParts.push(`MAT is recommended for the following substance(s): ${substances}`);
+                    const selectedOptions = Array.from(matSpecificOptionsDropdown.selectedOptions).map(option => option.value);
+                    if(selectedOptions.length > 0){
+                        noteParts.push(`Specific options explored include: ${selectedOptions.join(', ')}`);
+                    }
+                }
             }
 
             if (matNicotineUseDropdown.value) {
@@ -876,9 +898,8 @@
             }
             if (noteParts.length > 0) {
                 noteParts.push("The Clinician will connect client to the program nurse for further support and information");
-                noteParts.push("Medication Assisted Treatment Toolkit for Counselors");
             }
-            finalNote = noteParts.join('. ').replace(/\.\./g, '.'); // Join and clean up double periods
+            finalNote = noteParts.join('. ').replace(/\.\./g, '.');
             if(finalNote) finalNote += '.';
 
         } else if (selectedNoteType === 'telehealth') {
@@ -1048,8 +1069,9 @@
 
     // MAT Listeners
     matEducationType.addEventListener('change', () => {
-        matNotTakingInfo.classList.toggle('hidden', matEducationType.value !== 'not-taking');
-        matAlreadyTakingInfo.classList.toggle('hidden', matEducationType.value !== 'already-taking');
+        updateFinalNote();
+    });
+    matExploredOptionsDropdown.addEventListener('change', () => {
         updateFinalNote();
     });
     matNicotineUseDropdown.addEventListener('change', () => {
@@ -1060,7 +1082,7 @@
         matNicotineOtherTextbox.classList.toggle('hidden', !matNicotineOtherCheckbox.checked);
         updateFinalNote();
     });
-    [matResponseDropdown, matSubstancesTextbox, matExploredOptionsDropdown, matNicotineReplacementCheckbox, matNicotineCounselingCheckbox, matNicotineReferralCheckbox, matNicotineOtherTextbox].forEach(el => {
+    [matResponseDropdown, matResponseDetails, matSubstancesTextbox, matSpecificOptionsDropdown, matNicotineReplacementCheckbox, matNicotineCounselingCheckbox, matNicotineReferralCheckbox, matNicotineOtherTextbox].forEach(el => {
         el.addEventListener('input', updateFinalNote);
         el.addEventListener('change', updateFinalNote);
     });
@@ -1098,15 +1120,22 @@
     // Copy Button functionality
     copyButton.addEventListener('click', () => {
         finalNoteCopy.select();
-        navigator.clipboard.writeText(finalNoteCopy.value).then(() => {
+        try {
+            const successful = document.execCommand('copy');
             const originalText = copyButton.textContent;
-            copyButton.textContent = 'Copied!';
-            copyButton.style.backgroundColor = '#1e7e34';
-            setTimeout(() => { copyButton.textContent = originalText; copyButton.style.backgroundColor = '#28a745'; }, 1500);
-        }).catch(err => {
-            console.error('Failed to copy text: ', err);
-            try { document.execCommand('copy'); } catch (e) { console.error('Fallback copy failed', e); }
-        });
+            if(successful) {
+                copyButton.textContent = 'Copied!';
+                copyButton.style.backgroundColor = '#1e7e34';
+                setTimeout(() => {
+                    copyButton.textContent = originalText;
+                    copyButton.style.backgroundColor = '#28a745';
+                }, 1500);
+            } else {
+                 copyButton.textContent = 'Copy Failed';
+            }
+        } catch (err) {
+            console.error('Fallback copy failed', err);
+        }
     });
 
     // Initial call to populate the form on page load
@@ -1120,6 +1149,7 @@
         toggleSafetyPlan(soNoMhProviderTextCheckbox, soSafetyPlanNoProviderCheckbox);
         matNicotineResourcesSection.classList.toggle('hidden', matNicotineUseDropdown.value !== 'does');
         matNicotineOtherTextbox.classList.toggle('hidden', !matNicotineOtherCheckbox.checked);
+        matOptionsDetailsSection.classList.toggle('hidden', matExploredOptionsDropdown.value !== 'did');
         updateFinalNote();
     });
 
