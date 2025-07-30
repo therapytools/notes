@@ -385,35 +385,56 @@
             <option value="already-taking">For Clients Already Taking MAT</option>
         </select>
         
-        <div id="mat-form-fields">
-            <label for="mat-response-dropdown">Client’s Response/Readiness:</label>
-            <select id="mat-response-dropdown">
-                <option value="" selected disabled>Select a response...</option>
-                <option value="Client expressed interest in transferring their MAT care and a referral was offered to a Delphi Rise provider">Client expressed interest in transferring care</option>
-                <option value="Client declined to transfer their care at this time">Client declined to transfer care</option>
-                <option value="Client is happy with their current provider">Client is happy with their current provider</option>
-            </select>
-             <label for="mat-response-details">Additional details on client's response:</label>
-            <input type="text" id="mat-response-details" placeholder="Enter additional details...">
+        <div id="mat-not-taking-section" class="hidden">
+            <p style="margin-top: 15px; background-color: #e9f5ff; padding: 12px; border-radius: 5px; border: 1px solid #bde0ff;">Medication Assisted Treatment (MAT) has been introduced, and education has been offered based on client's history and current presentation. Writer provided client with an overview of MAT’s benefits & risks and offered to connect client to medication management in our clinic.</p>
+        </div>
 
+        <div id="mat-already-taking-section" class="hidden">
+            <p style="margin-top: 15px; background-color: #e9f5ff; padding: 12px; border-radius: 5px; border: 1px solid #bde0ff;">Client is currently taking medication to manage their Substance Use Disorder.</p>
+        </div>
+        
+        <div id="mat-form-fields" class="hidden">
             <label for="mat-explored-options-dropdown">Explored Specific MAT Options?</label>
             <select id="mat-explored-options-dropdown">
                 <option value="" selected disabled>Select an option...</option>
-                <option value="did">Writer explored options</option>
-                <option value="did-not">Writer deferred</option>
+                <option value="did">Writer explored specific MAT options with client</option>
+                <option value="did-not">Writer deferred conversation about specific medications to the medical staff</option>
             </select>
 
             <div id="mat-options-details-section" class="hidden">
                  <label for="mat-substances-textbox">MAT is recommended for the following substance(s):</label>
                 <input type="text" id="mat-substances-textbox" placeholder="e.g., opioids, alcohol...">
-                <label for="mat-specific-options-dropdown">What MAT options were explored?</label>
-                <select id="mat-specific-options-dropdown" multiple size="4">
-                    <option>Buprenorphine (Suboxone, Sublocade)</option>
-                    <option>Naltrexone (Vivitrol)</option>
-                    <option>Methadone</option>
-                    <option>Acamprosate (Campral)</option>
-                </select>
+                <label>What MAT options were explored?</label>
+                <div id="mat-specific-options-checkboxes">
+                    <div class="checkbox-container" style="margin-top: 10px; margin-bottom: 0;">
+                        <input type="checkbox" id="mat-buprenorphine-checkbox" value="Buprenorphine (Suboxone, Sublocade)">
+                        <label for="mat-buprenorphine-checkbox">Buprenorphine (Suboxone, Sublocade)</label>
+                    </div>
+                    <div class="checkbox-container" style="margin-top: 10px; margin-bottom: 0;">
+                        <input type="checkbox" id="mat-naltrexone-checkbox" value="Naltrexone (Vivitrol)">
+                        <label for="mat-naltrexone-checkbox">Naltrexone (Vivitrol)</label>
+                    </div>
+                    <div class="checkbox-container" style="margin-top: 10px; margin-bottom: 0;">
+                        <input type="checkbox" id="mat-methadone-checkbox" value="Methadone">
+                        <label for="mat-methadone-checkbox">Methadone</label>
+                    </div>
+                    <div class="checkbox-container" style="margin-top: 10px; margin-bottom: 0;">
+                        <input type="checkbox" id="mat-acamprosate-checkbox" value="Acamprosate (Campral)">
+                        <label for="mat-acamprosate-checkbox">Acamprosate (Campral)</label>
+                    </div>
+                </div>
             </div>
+
+            <label for="mat-response-dropdown">Client's Response/Status:</label>
+            <select id="mat-response-dropdown">
+                <option value="" selected disabled>Select a response...</option>
+                <option data-type="not-taking" value="Client expressed an interest in MAT and a referral was placed to our medical staff">Client expressed an interest in MAT and a referral was placed</option>
+                <option data-type="not-taking" value="Client declined a referral to MAT">Client declined a referral</option>
+                <option data-type="not-taking" value="Client was not appropriate for MAT at this stage">Client was not appropriate for MAT at this stage</option>
+                <option data-type="already-taking" value="Client reports they are happy with their current MAT provider.">Client reports they are happy with their current MAT provider</option>
+                <option data-type="already-taking" value="Client has been offered to connect to medication management at our clinic but declined to transfer care at this time">Client declined to transfer care</option>
+                <option data-type="already-taking" value="Client has been offered to connect to medication management at our clinic, but reports they are happy with their current prescriber">Client is happy with current prescriber, declined to transfer</option>
+            </select>
 
             <label for="mat-nicotine-use-dropdown">Client's Nicotine Use:</label>
             <select id="mat-nicotine-use-dropdown">
@@ -421,7 +442,7 @@
                 <option value="does">Client does current use nicotine</option>
                 <option value="does-not">Client does not current use nicotine</option>
             </select>
-            <div id="mat-nicotine-resources-section">
+            <div id="mat-nicotine-resources-section" class="hidden">
                 <label>The following nicotine cessation resources were provided:</label>
                 <div class="checkbox-container">
                     <input type="checkbox" id="mat-nicotine-replacement-checkbox">
@@ -485,7 +506,7 @@
             at the time of the session. 
             <select id="telehealth-presence-dropdown" class="inline-form-element">
                 <option value="" selected disabled>Select presence...</option>
-                <option value="only">Provider and client were the only individuals present in the session.</option>
+                <option value="only">Provider and client were the only individuals present in the session</option>
                 <option value="others">In addition to the provider and client, the following individual(s) were present with the client:</option>
             </select>
             <input type="text" id="telehealth-others-present" class="inline-form-element" style="display:none;" placeholder="specify...">
@@ -517,6 +538,7 @@
         <p>Referrals initiated to support the client post-discharge include: <input type="text" id="closing-referrals" placeholder="list referrals..."></p>
         <p>The 
         <select id="closing-offered-to-dropdown">
+            <option value="" selected disabled>Select...</option>
             <option value="client">client</option>
             <option value="client and guardian">client and guardian</option>
         </select>
@@ -596,13 +618,14 @@
 
     // MAT elements
     const matEducationType = document.getElementById('mat-education-type');
-    const matFormFields = document.getElementById('mat-form-fields');
+    const matNotTakingSection = document.getElementById('mat-not-taking-section');
+    const matAlreadyTakingSection = document.getElementById('mat-already-taking-section');
     const matResponseDropdown = document.getElementById('mat-response-dropdown');
-    const matResponseDetails = document.getElementById('mat-response-details');
+    const matFormFields = document.getElementById('mat-form-fields');
     const matSubstancesTextbox = document.getElementById('mat-substances-textbox');
     const matExploredOptionsDropdown = document.getElementById('mat-explored-options-dropdown');
     const matOptionsDetailsSection = document.getElementById('mat-options-details-section');
-    const matSpecificOptionsDropdown = document.getElementById('mat-specific-options-dropdown');
+    const matSpecificOptionsCheckboxes = document.getElementById('mat-specific-options-checkboxes');
     const matNicotineUseDropdown = document.getElementById('mat-nicotine-use-dropdown');
     const matNicotineResourcesSection = document.getElementById('mat-nicotine-resources-section');
     const matNicotineReplacementCheckbox = document.getElementById('mat-nicotine-replacement-checkbox');
@@ -786,7 +809,7 @@
         
         } else if (selectedNoteType === 'eval-so') {
             evalSoContainer.classList.remove('hidden');
-            const diagnosis = soDiagnosisSelect.value;
+            const diagnosis = soDiagnosisSelect.value || '[SELECT A DIAGNOSIS]';
             const details = soDetailsTextarea.value || '[DETAILS OF CRITERIA MET]';
             let baseNote = `The client presented for services due to experiencing stress related to supporting someone in their life who struggles with substance use. The client meets diagnostic criteria, specifically ${diagnosis}, as evidenced by: \n\n${details}\n\nThe clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.\n\nThe clinician confirmed client understanding and emphasized the collaborative nature of treatment, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.\n\nThe clinician reviewed the client’s Behavioral Health screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions inclusive of discussions during evaluation session.`;
             
@@ -851,36 +874,34 @@
         } else if (selectedNoteType === 'mat-education') {
             matContainer.classList.remove('hidden');
             let noteParts = [];
-            if (matEducationType.value === 'not-taking') {
-                noteParts.push("Medication Assisted Treatment (MAT) has been introduced, and education has been offered based on client's history and current presentation. Writer provided client with an overview of MAT’s benefits & risks, and offered to connect client to medication management in our clinic");
-            } else if (matEducationType.value === 'already-taking') {
-                 noteParts.push("Client is currently taking medication to manage their Substance Use Disorder");
-            }
+            const educationType = matEducationType.value;
 
-            if (matResponseDropdown.value) {
-                let response = matResponseDropdown.value;
-                if(matResponseDetails.value) {
-                    response += `: ${matResponseDetails.value}`;
-                }
-                noteParts.push(`Based on the discussion, ${response}`);
+            if (educationType === 'not-taking') {
+                noteParts.push("Medication Assisted Treatment (MAT) has been introduced, and education has been offered based on client's history and current presentation. Writer provided client with an overview of MAT’s benefits & risks and offered to connect client to medication management in our clinic");
+            } else if (educationType === 'already-taking') {
+                noteParts.push("Client is currently taking medication to manage their Substance Use Disorder");
             }
             
             if (matExploredOptionsDropdown.value) {
-                const exploredText = matExploredOptionsDropdown.value === 'did' ? 'Writer and Client explored specific options that are currently available' : 'Writer deferred a conversation about specific options to the medical staff';
-                noteParts.push(exploredText);
+                noteParts.push(matExploredOptionsDropdown.options[matExploredOptionsDropdown.selectedIndex].text);
 
                 if(matExploredOptionsDropdown.value === 'did') {
-                    const substances = matSubstancesTextbox.value || '[list relevant substances, e.g., opioids, alcohol, etc.]';
-                    noteParts.push(`MAT is recommended for the following substance(s): ${substances}`);
-                    const selectedOptions = Array.from(matSpecificOptionsDropdown.selectedOptions).map(option => option.value);
+                    if (matSubstancesTextbox.value.trim() !== "") {
+                        noteParts.push(`MAT is recommended for the following substance(s): ${matSubstancesTextbox.value.trim()}`);
+                    }
+                    const selectedOptions = Array.from(matSpecificOptionsCheckboxes.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
                     if(selectedOptions.length > 0){
                         noteParts.push(`Specific options explored include: ${selectedOptions.join(', ')}`);
                     }
                 }
             }
+            
+            if (matResponseDropdown.value) {
+                noteParts.push(matResponseDropdown.value);
+            }
 
             if (matNicotineUseDropdown.value) {
-                const nicotineUse = matNicotineUseDropdown.value;
+                const nicotineUse = matNicotineUseDropdown.value === 'does' ? 'does' : 'does not';
                 let nicotineSentence = `The client ${nicotineUse} report current nicotine use`;
                 if (nicotineUse === 'does') {
                     let resources = [];
@@ -896,11 +917,11 @@
                 }
                 noteParts.push(nicotineSentence);
             }
-            if (noteParts.length > 0) {
-                noteParts.push("The Clinician will connect client to the program nurse for further support and information");
+            
+            const joinedNote = noteParts.filter(Boolean).join('. ');
+            if (joinedNote) {
+                finalNote = joinedNote + '.';
             }
-            finalNote = noteParts.join('. ').replace(/\.\./g, '.');
-            if(finalNote) finalNote += '.';
 
         } else if (selectedNoteType === 'telehealth') {
             telehealthContainer.classList.remove('hidden');
@@ -917,10 +938,10 @@
             }
             
             let reason = telehealthReason.value;
-            if (reason === 'other') {
-                reason = telehealthReasonOther.value || '[specify]';
-            }
             if (reason) {
+                if (reason === 'other') {
+                    reason = telehealthReasonOther.value || '[specify]';
+                }
                 noteParts.push(`the use of telepractice was due to ${reason}`);
             }
             
@@ -939,11 +960,13 @@
             noteParts.push(`the client was located at ${clientLocation}, and the practitioner was located at ${practitionerLocation} at the time of the session`);
             
             let presence = telehealthPresenceDropdown.value;
-            if (presence === 'only') {
-                noteParts.push('Provider and client were the only individuals present in the session');
-            } else if (presence === 'others') {
-                const others = telehealthOthersPresent.value || '[specify]';
-                noteParts.push(`in addition to the provider and client, the following individual(s) were present with the client: ${others}`);
+            if (presence) {
+                if (presence === 'only') {
+                    noteParts.push('Provider and client were the only individuals present in the session');
+                } else if (presence === 'others') {
+                    const others = telehealthOthersPresent.value || '[specify]';
+                    noteParts.push(`in addition to the provider and client, the following individual(s) were present with the client: ${others}`);
+                }
             }
 
             let satisfaction = telehealthSatisfaction.value;
@@ -956,8 +979,10 @@
                 noteParts.push(`The client was asked about their satisfaction with receiving services via telepractice and ${satisfactionText}`);
             }
 
-            finalNote = noteParts.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('. ').replace(/\.\s\./g, '.');
-            if (finalNote && !finalNote.endsWith('.')) finalNote += '.';
+            const joinedNote = noteParts.filter(Boolean).map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('. ');
+            if(joinedNote) {
+                finalNote = joinedNote + '.';
+            }
 
         } else if (selectedNoteType === 'closing-note-admitted') {
             closingNoteAdmittedContainer.classList.remove('hidden');
@@ -983,15 +1008,19 @@
             noteParts.push(`Referrals initiated to support the client post-discharge include: ${referrals}`);
 
             const offeredTo = closingOfferedToDropdown.value;
-            noteParts.push(`The ${offeredTo} was offered a copy of their discharge plan, a recovery resource handout outlining community resources for urgent support, harm reduction resources, referrals to MAT providers and recovery peer services, and an overdose prevention/Narcan kit`);
+            if (offeredTo) {
+                noteParts.push(`The ${offeredTo} was offered a copy of their discharge plan, a recovery resource handout outlining community resources for urgent support, harm reduction resources, referrals to MAT providers and recovery peer services, and an overdose prevention/Narcan kit`);
+            }
             
             const clientResponse = closingClientResponse.value;
             if (clientResponse) {
                 noteParts.push(`Client's Response to Resources Offered at Discharge: ${clientResponse}`);
             }
-
-            finalNote = noteParts.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('. ').replace(/\.\s\./g, '.');
-             if (finalNote && !finalNote.endsWith('.')) finalNote += '.';
+            
+            const joinedNote = noteParts.filter(Boolean).map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('. ');
+            if (joinedNote) {
+                finalNote = joinedNote + '.';
+            }
 
         } else if (selectedNoteType === 'closing-note-non-admitted') {
             closingNoteNonAdmittedContainer.classList.remove('hidden');
@@ -1069,9 +1098,25 @@
 
     // MAT Listeners
     matEducationType.addEventListener('change', () => {
+        const selected = matEducationType.value;
+        matNotTakingSection.classList.toggle('hidden', selected !== 'not-taking');
+        matAlreadyTakingSection.classList.toggle('hidden', selected !== 'already-taking');
+        matFormFields.classList.toggle('hidden', !selected);
+
+        // Filter options in the response dropdown
+        matResponseDropdown.value = ""; // Reset selection
+        const options = matResponseDropdown.options;
+        for (let i = 0; i < options.length; i++) {
+            const option = options[i];
+            if (option.dataset.type) {
+                option.hidden = option.dataset.type !== selected;
+            }
+        }
+
         updateFinalNote();
     });
     matExploredOptionsDropdown.addEventListener('change', () => {
+        matOptionsDetailsSection.classList.toggle('hidden', matExploredOptionsDropdown.value !== 'did');
         updateFinalNote();
     });
     matNicotineUseDropdown.addEventListener('change', () => {
@@ -1082,9 +1127,12 @@
         matNicotineOtherTextbox.classList.toggle('hidden', !matNicotineOtherCheckbox.checked);
         updateFinalNote();
     });
-    [matResponseDropdown, matResponseDetails, matSubstancesTextbox, matSpecificOptionsDropdown, matNicotineReplacementCheckbox, matNicotineCounselingCheckbox, matNicotineReferralCheckbox, matNicotineOtherTextbox].forEach(el => {
+    [matResponseDropdown, matSubstancesTextbox, matNicotineReplacementCheckbox, matNicotineCounselingCheckbox, matNicotineReferralCheckbox, matNicotineOtherTextbox].forEach(el => {
         el.addEventListener('input', updateFinalNote);
         el.addEventListener('change', updateFinalNote);
+    });
+    matSpecificOptionsCheckboxes.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updateFinalNote);
     });
     
     // Telehealth Listeners
@@ -1147,6 +1195,9 @@
         toggleSafetyPlan(cdNoMhProviderTextCheckbox, cdSafetyPlanNoProviderCheckbox);
         toggleSafetyPlan(soHasMhProviderTextCheckbox, soSafetyPlanHasProviderCheckbox);
         toggleSafetyPlan(soNoMhProviderTextCheckbox, soSafetyPlanNoProviderCheckbox);
+        matNotTakingSection.classList.add('hidden');
+        matAlreadyTakingSection.classList.add('hidden');
+        matFormFields.classList.add('hidden');
         matNicotineResourcesSection.classList.toggle('hidden', matNicotineUseDropdown.value !== 'does');
         matNicotineOtherTextbox.classList.toggle('hidden', !matNicotineOtherCheckbox.checked);
         matOptionsDetailsSection.classList.toggle('hidden', matExploredOptionsDropdown.value !== 'did');
