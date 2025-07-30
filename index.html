@@ -161,7 +161,12 @@
 <legend>Presets</legend>
 <div class="space-y-2">
 <label class="flex items-center"><input class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" id="positiveMSE" onclick="togglePositiveMSE()" type="checkbox"/> <span class="ml-2">Normal MSE</span></label>
-<label class="flex items-center"><input class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" id="telehealthpositiveMSE" onclick="TelehealthPositiveMSE()" type="checkbox"/> <span class="ml-2">Telehealth Normal MSE</span></label>
+<label class="flex items-center"><input class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" id="telehealthpositiveMSE" onclick="TelehealthPositiveMSE()" type="checkbox"/> <span class="ml-2">Telehealth Normal MSE</span></label><br>
+<button type="button"
+        class="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+        onclick="clearAllMseCheckboxes(); updateMseText();">
+    Clear Form
+</button>
 </div>
 </fieldset>
 <!-- All fieldsets from MSE.html go here -->
@@ -3596,29 +3601,44 @@
         const msePositiveCheckboxes = [ "noSIHI", "x4", "neat", "clean", "appropriatelydressed", "notRemarkable", "appropriate", "normalAttention", "normalMemory", "normalEyeContact", "responsive", "cooperative", "affectCongruent", "affectAppropriate", "euthymic", "normalSpeech", "expressionCongruent", "normalOrganization", "logical", "goalDirected", "noHallucinations", "insightExcellent", "judgementExcellent", "normalDecisionMaking" ];
         const telehealthPositiveCheckboxes = [ "noSIHI", "x4", "appropriate", "normalAttention", "normalMemory", "cooperative", "affectCongruent", "affectAppropriate", "euthymic", "normalSpeech", "expressionCongruent", "normalOrganization", "logical", "goalDirected", "noHallucinations", "insightExcellent", "judgementExcellent", "normalDecisionMaking" ];
         
-        function togglePositiveMSE() {
-            const positiveMSE = document.getElementById("positiveMSE");
-            if (positiveMSE.checked) {
-                document.getElementById("telehealthpositiveMSE").checked = false;
-            }
-            msePositiveCheckboxes.forEach(id => {
-                const checkbox = document.getElementById(id);
-                if (checkbox) checkbox.checked = positiveMSE.checked;
-            });
-            updateMseText();
-        }
+function clearAllMseCheckboxes() {
+    document.querySelectorAll('#MSE input[type="checkbox"]').forEach(cb => cb.checked = false);
+}
 
-        function TelehealthPositiveMSE() {
-            const telehealthpositiveMSE = document.getElementById("telehealthpositiveMSE");
-            if (telehealthpositiveMSE.checked) {
-                document.getElementById("positiveMSE").checked = false;
-            }
-             telehealthPositiveCheckboxes.forEach(id => {
-                const checkbox = document.getElementById(id);
-                if (checkbox) checkbox.checked = telehealthpositiveMSE.checked;
-            });
-            updateMseText();
-        }
+function clearAllMseCheckboxes() {
+    document.querySelectorAll('#MSE input[type="checkbox"]').forEach(cb => cb.checked = false);
+}
+
+function togglePositiveMSE() {
+    clearAllMseCheckboxes();
+
+    // Recheck the preset toggle itself
+    document.getElementById("positiveMSE").checked = true;
+
+    // Apply Normal MSE presets
+    ["x4","neat","clean","appropriatelydressed","notRemarkable","appropriate","normalAttention",
+     "normalMemory","normalEyeContact","responsive","cooperative","affectCongruent","affectAppropriate",
+     "euthymic","normalSpeech","expressionCongruent","normalOrganization","noHallucinations",
+     "insightGood","judgementGood","normalDecisionMaking","noSIHI"]
+     .forEach(id => document.getElementById(id).checked = true);
+
+    updateMseText();
+}
+
+function TelehealthPositiveMSE() {
+    clearAllMseCheckboxes();
+
+    // Recheck the preset toggle itself
+    document.getElementById("telehealthpositiveMSE").checked = true;
+
+    // Apply Telehealth MSE presets
+    ["x4","appropriate","normalAttention","normalMemory","normalEyeContact","responsive","cooperative",
+     "affectCongruent","euthymic","normalSpeech","expressionCongruent","normalOrganization",
+     "noHallucinations","insightGood","judgementGood","normalDecisionMaking","noSIHI"]
+     .forEach(id => document.getElementById(id).checked = true);
+
+    updateMseText();
+}
 
         function updateMseText() {
             const mseTextbox = document.getElementById("mseTextbox");
