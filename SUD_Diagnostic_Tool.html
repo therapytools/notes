@@ -1760,10 +1760,16 @@
         if (!specifiers || specifiers.length === 0) return;
         
         specifiers.forEach(specifier => {
-            if (specifier.name === "Severity") {
-                container.innerHTML += `<div class="mb-4"><strong class="text-gray-800">${specifier.name}</strong><div id="sud-calculated-severity" class="mt-1 text-gray-600">Severity is determined by the number of criteria met.</div></div>`;
-                return;
-            }
+           if (specifier.name === "Severity") {
+                // Create a new div element for the severity section
+                const severityDiv = document.createElement('div');
+                severityDiv.className = 'mb-4';
+                severityDiv.innerHTML = `<strong class="text-gray-800">${specifier.name}</strong><div id="sud-calculated-severity" class="mt-1 text-gray-600">Severity is determined by the number of criteria met.</div>`;
+                
+                // Append the new div without destroying other elements
+                container.appendChild(severityDiv);
+                return;
+            }
             const div = document.createElement('div');
             div.className = 'mb-4';
             
