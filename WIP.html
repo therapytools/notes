@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Therapy Tools</title>
-    <!-- Tailwind CSS for modern styling and responsiveness -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom styles for the tab interface */
@@ -16,7 +15,6 @@
             color: #4f46e5;
             font-weight: 600;
         }
-
         /* Styles for MSE form */
         .mse-form-container {
             max-width: 900px;
@@ -50,7 +48,6 @@
             font-size: 1.1em;
             margin-bottom: 0.5rem;
         }
-
         /* Styles for DARP form */
         .darp-form-container label, .darp-form-container select, .darp-form-container input {
             display: block;
@@ -92,24 +89,28 @@
 </head>
 <body class="bg-gray-100 font-sans p-4 md:p-8">
 <div class="bg-white rounded-lg shadow-lg">
-    <!-- Tab Buttons -->
     <div class="border-b border-gray-200">
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap items-center">
             <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" id="defaultOpen" onclick="openTab(event, 'MSE')">
                 Mental Status Exam (MSE)
             </button>
             <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" onclick="openTab(event, 'DARP')">
                 DARP Note
             </button>
+            <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" onclick="openTab(event, 'NoteTemplates')">
+                Note Templates
+            </button>
             <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" onclick="openTab(event, 'SUD')">
                 SUD Dx
             </button>
             <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" onclick="openTab(event, 'Planner')">Treatment Planner</button>
-            
             <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" onclick="openTab(event, 'SafetyPlan')">Safety Plan</button>
+            
+            <button onclick="location.reload()" class="ml-auto my-2 mr-4 px-4 py-2 bg-red-600 text-white font-semibold rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                Clear All
+            </button>
         </div>
     </div>
-    <!-- MSE Tab Content -->
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="MSE">
         <div class="mse-form-container">
             <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Mental Status Exam</h1>
@@ -123,7 +124,6 @@
                     </button>
                 </div>
             </fieldset>
-            <!-- All fieldsets from MSE.html go here -->
             <div class="space-y-4">
                 <fieldset class="border p-3 rounded-md"><legend>Orientation</legend><div class="mse-category"><label><input id="x4" onclick="updateMseText()" type="checkbox"> Oriented x4</label><label><input id="time" onclick="updateMseText()" type="checkbox"> Time</label><label><input id="place" onclick="updateMseText()" type="checkbox"> Place</label><label><input id="situation" onclick="updateMseText()" type="checkbox"> Situation</label><label><input id="person" onclick="updateMseText()" type="checkbox"> Person</label><input class="mse-custom-input border-gray-300 rounded-md" id="orientationCustom" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
                 <fieldset class="border p-3 rounded-md"><legend>Clothing/Grooming</legend><div class="mse-category"><label><input id="neat" onclick="updateMseText()" type="checkbox"> Neat</label><label><input id="clean" onclick="updateMseText()" type="checkbox"> Clean</label><label><input id="appropriatelydressed" onclick="updateMseText()" type="checkbox"> Appropriately Dressed</label><label><input id="careless" onclick="updateMseText()" type="checkbox"> Careless</label><label><input id="disheveled" onclick="updateMseText()" type="checkbox"> Disheveled</label><label><input id="dirty" onclick="updateMseText()" type="checkbox"> Dirty</label><label><input id="inappropriate" onclick="updateMseText()" type="checkbox"> Inappropriate</label><label><input id="bizarre" onclick="updateMseText()" type="checkbox"> Bizarre</label><input class="mse-custom-input border-gray-300 rounded-md" id="clothingGroomingCustom" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
@@ -149,7 +149,6 @@
             <button class="mt-2 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onclick="copyMseToClipboard()">COPY MSE</button>
         </div>
     </div>
-    <!-- DARP Tab Content -->
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="DARP" style="display:none;">
         <div class="darp-form-container">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Progress Note Form</h2>
@@ -157,18 +156,15 @@
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">DATA:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="diagnoses">Diagnoses:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="diagnoses" name="diagnoses" oninput="autoResize(this)"></textarea>
-                <label class="font-medium text-gray-700 mb-2" for="problemsAddressed">Content and Problems Addressed in the Counseling Session:</label>
+                <label class="font-medium text-gray-700 mb-2" for="problemsAddressed">Problems Addressed in the Counseling Session:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="problemsAddressed" name="problemsAddressed" oninput="autoResize(this)"></textarea>
-                <p class="text-sm text-gray-500 italic mt-1">Remember to use client quotes and person-centered language.</p>
-                <label class="font-medium text-gray-700 mb-2 mt-4" for="updatesProgress">Updates and Progress to Client's Treatment Goals:</label>
+                <label class="font-medium text-gray-700 mb-2" for="updatesProgress">Updates and Progress to Client's Treatment Goals:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="updatesProgress" name="updatesProgress" oninput="autoResize(this)"></textarea>
                 <div class="darp-inline-checkbox"><input id="toxicologyScreen" name="toxicologyScreen" type="checkbox"><label for="toxicologyScreen">Client provided a toxicology screen</label></div>
                 <label class="font-medium text-gray-700 mb-2" for="additionalNotes">Additional Notes:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="additionalNotes" name="additionalNotes" oninput="autoResize(this)"></textarea>
-                
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">Interventions Used:</h3>
                 <div class="darp-interventions">
-                    <!-- Custom Interventions Column -->
                     <div class="darp-column">
                         <strong class="font-semibold">Custom Interventions</strong><br>
                         <div class="controls mt-2 flex gap-2">
@@ -178,7 +174,6 @@
                         </div>
                         <div class="mt-2" id="customList"></div>
                     </div>
-                    <!-- CBT Column -->
                     <div class="darp-column">
                         <strong class="font-semibold">CBT</strong><br>
                         <div class="darp-inline-checkbox"><input id="cbt_cr" name="CBT" type="checkbox" value="Cognitive Restructuring"><label for="cbt_cr">Cognitive Restructuring</label></div>
@@ -191,7 +186,6 @@
                         <div class="darp-inline-checkbox"><input id="cbt_icd" name="CBT" type="checkbox" value="Identifying Cognitive Distortions and alternative thinking patterns"><label for="cbt_icd">Identifying Cognitive Distortions and alternative thinking patterns</label></div>
                         Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="CBTOther" type="text">
                     </div>
-                    <!-- Person Centered Column -->
                     <div class="darp-column">
                         <strong class="font-semibold">Person Centered</strong><br>
                         <div class="darp-inline-checkbox"><input id="pc_emp" name="Person Centered" type="checkbox" value="Empathy"><label for="pc_emp">Empathy</label></div>
@@ -207,7 +201,6 @@
                         <div class="darp-inline-checkbox"><input id="pc_upr" name="Person Centered" type="checkbox" value="Unconditional Positive Regard"><label for="pc_upr">Unconditional Positive Regard</label></div>
                         Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="PersonCenteredOther" type="text">
                     </div>
-                    <!-- Motivational Interviewing Column -->
                     <div class="darp-column">
                         <strong class="font-semibold">Motivational Interviewing</strong><br>
                         <div class="darp-inline-checkbox"><input id="mi_oeq" name="Motivational Interviewing" type="checkbox" value="Open-Ended Questions"><label for="mi_oeq">Open-Ended Questions</label></div>
@@ -221,41 +214,36 @@
                         Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="MotivationalInterviewingOther" type="text">
                     </div>
                 </div>
-
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">ASSESSMENT:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="mentalStatus">Mental Status Exam:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md bg-gray-50 w-full" id="mentalStatus" name="mentalStatus" oninput="autoResize(this)"></textarea>
                 <label class="font-medium text-gray-700 mb-2" for="additionalAssessment">Additional Assessment:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="additionalAssessment" name="additionalAssessment" oninput="autoResize(this)"></textarea>
-                
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">RESPONSE:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="response">Response:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="response" name="response" oninput="autoResize(this)"></textarea>
-                
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">PLAN:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="plan">Plan:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="plan" name="plan" oninput="autoResize(this)"></textarea>
             </form>
-            
             <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-2">Generated Progress Note</h3>
             <textarea class="w-full p-2 border border-gray-300 rounded-md bg-gray-50" id="progressNote" oninput="autoResize(this)"></textarea>
             <button class="mt-2 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onclick="copyDarpToClipboard()">COPY DARP NOTE</button>
         </div>
     </div>
-    <!-- SUD Dx Tab Content -->
+    <div class="tabcontent p-4 sm:p-6 md:p-8" id="NoteTemplates" style="display:none;">
+        <iframe src="https://therapytools.github.io/notes/Templates.html" class="w-full h-[85vh]" style="border:none;" title="Note Templates"></iframe>
+    </div>
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="SUD" style="display:none;">
         <iframe src="https://therapytools.github.io/notes/SUD_Diagnostic_Tool.html" class="w-full h-[85vh]" style="border:none;" title="SUD Diagnostic Tool"></iframe>
     </div>
-    <!-- Planner Tab Content -->
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="Planner" style="display:none;">
         <iframe src="https://therapytools.github.io/notes/Treatment_Planner.html" class="w-full h-[85vh]" style="border:none;" title="Treatment Planner"></iframe>
     </div>
-    <!-- Safety Plan Tab Content -->
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="SafetyPlan" style="display:none">
         <iframe src="https://therapytools.github.io/notes/safetyplan.html" class="w-full h-[85vh]" style="border:none;" title="Safety Plan"></iframe>
     </div>
 </div>
-
 <script>
     // --- Core Tab and UI Logic ---
     function openTab(evt, tabName) {
@@ -270,7 +258,6 @@
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.className += " active";
     }
-    
     document.getElementById("defaultOpen").click();
 
     function autoResize(textarea) {
@@ -356,7 +343,6 @@
 
         const generatedText = text.trim();
         mseTextbox.value = generatedText;
-        
         if (darpMentalStatusTextarea) {
             darpMentalStatusTextarea.value = generatedText;
             autoResize(darpMentalStatusTextarea);
@@ -391,7 +377,7 @@
 
         let progressNote = "DATA:\n";
         if (diagnoses) progressNote += `Diagnoses:\n${diagnoses}\n\n`;
-        if (problemsAddressed) progressNote += `Content and Problems Addressed in the Counseling Session:\n${problemsAddressed}\n\n`;
+        if (problemsAddressed) progressNote += `Problems Addressed in the Counseling Session:\n${problemsAddressed}\n\n`;
         if (updatesProgress) progressNote += `Updates and Progress to Client's Treatment Goals:\n${updatesProgress}\n\n`;
         if (toxicologyScreen) progressNote += `Client provided a toxicology screen.\n\n`;
         if (additionalNotes) progressNote += `Additional Notes:\n${additionalNotes}\n\n`;
@@ -486,6 +472,5 @@
         updateMseText(); // Initial call to populate MSE field in DARP
     });
 </script>
-
 </body>
 </html>
