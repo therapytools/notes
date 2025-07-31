@@ -157,9 +157,10 @@
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">DATA:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="diagnoses">Diagnoses:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="diagnoses" name="diagnoses" oninput="autoResize(this)"></textarea>
-                <label class="font-medium text-gray-700 mb-2" for="problemsAddressed">Problems Addressed in the Counseling Session:</label>
+                <label class="font-medium text-gray-700 mb-2" for="problemsAddressed">Content and Problems Addressed in the Counseling Session:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="problemsAddressed" name="problemsAddressed" oninput="autoResize(this)"></textarea>
-                <label class="font-medium text-gray-700 mb-2" for="updatesProgress">Updates and Progress to Client's Treatment Goals:</label>
+                <p class="text-sm text-gray-500 italic mt-1">remember to use client quotes and person-centered language.</p>
+                <label class="font-medium text-gray-700 mb-2 mt-4" for="updatesProgress">Updates and Progress to Client's Treatment Goals:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="updatesProgress" name="updatesProgress" oninput="autoResize(this)"></textarea>
                 <div class="darp-inline-checkbox"><input id="toxicologyScreen" name="toxicologyScreen" type="checkbox"><label for="toxicologyScreen">Client provided a toxicology screen</label></div>
                 <label class="font-medium text-gray-700 mb-2" for="additionalNotes">Additional Notes:</label>
@@ -390,7 +391,7 @@
 
         let progressNote = "DATA:\n";
         if (diagnoses) progressNote += `Diagnoses:\n${diagnoses}\n\n`;
-        if (problemsAddressed) progressNote += `Problems Addressed in the Counseling Session:\n${problemsAddressed}\n\n`;
+        if (problemsAddressed) progressNote += `Content and Problems Addressed in the Counseling Session:\n${problemsAddressed}\n\n`;
         if (updatesProgress) progressNote += `Updates and Progress to Client's Treatment Goals:\n${updatesProgress}\n\n`;
         if (toxicologyScreen) progressNote += `Client provided a toxicology screen.\n\n`;
         if (additionalNotes) progressNote += `Additional Notes:\n${additionalNotes}\n\n`;
