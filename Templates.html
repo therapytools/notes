@@ -34,7 +34,7 @@
             margin-top: 15px;
             margin-bottom: 5px;
         }
-        select, textarea, input[type="text"] {
+        select, textarea, input[type="text"], input[type="date"] {
             width: 100%;
             padding: 10px;
             border-radius: 4px;
@@ -48,7 +48,7 @@
             height: auto;
             padding: 10px;
         }
-        select:focus, textarea:focus, input[type="text"]:focus {
+        select:focus, textarea:focus, input:focus {
             outline: none;
             border-color: #007bff;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
@@ -197,6 +197,19 @@
         .telehealth-text {
             line-height: 2.5;
         }
+        .injection-field-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px 20px;
+            align-items: center;
+        }
+        .injection-field-group label {
+            margin: 0;
+            font-weight: normal;
+        }
+        .injection-field-group input {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -206,6 +219,7 @@
 
     <label for="note-type-select">Select Note Type:</label>
     <select id="note-type-select">
+        <option value="" selected disabled>Select a note type...</option>
         <option value="eval-cd">Evaluation - Chemical Dependency</option>
         <option value="eval-so">Evaluation - Significant Other</option>
         <option value="entry-cd">Entry Session - Chemical Dependency</option>
@@ -215,6 +229,7 @@
         <option value="telehealth">Telehealth</option>
         <option value="closing-note-admitted">Closing Note – Admitted</option>
         <option value="closing-note-non-admitted">Closing Note – Non-Admitted</option>
+        <option value="injections">Injections</option>
     </select>
 
     <!-- Container for Evaluation - Chemical Dependency Note -->
@@ -355,7 +370,7 @@
     </div>
 
     <!-- Container for Narcan Education & Kit -->
-    <div id="narcan-container" class="note-container hidden">
+    <div id="narcan-kit-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Note Details</h2>
         <div class="checkbox-container">
             <input type="checkbox" id="narcan-provided-checkbox">
@@ -371,12 +386,12 @@
         <p>“Narcan is a medicine that can save someone’s life during an opioid overdose. It works by quickly blocking the effects of opioids and helping the person breathe again. Narcan is easy to use and can be given by anyone, even without medical training. Having Narcan nearby can give people a second chance and time to get more help. It’s safe, doesn’t hurt someone if they didn’t take opioids, and can help prevent deaths from overdose.”</p>
         <br>
         <p><strong>Links:</strong></p>
-        <p>Video: <a href="https://youtu.be/WnjgrRNMfKM?si=WvTS0Re5ZgYT79iP" rel="external">NARCAN Nasal Spray - How to use</a></p>
-        <p>Handout: <a href="https://www.health.ny.gov/publications/12028.pdf" rel="external">How to use Narcan Nasal Spray for an opioid overdose</a></p>
+        <p>Video: <a href="https://youtu.be/WnjgrRNMfKM?si=WvTS0Re5ZgYT79iP" rel="external" target="_blank">NARCAN Nasal Spray - How to use</a></p>
+        <p>Handout: <a href="https://www.health.ny.gov/publications/12028.pdf" rel="external" target="_blank">How to use Narcan Nasal Spray for an opioid overdose</a></p>
     </div>
 
     <!-- Container for MAT Education -->
-    <div id="mat-container" class="note-container hidden">
+    <div id="mat-education-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">MAT Education</h2>
         <label for="mat-education-type">Type of Education Provided:</label>
         <select id="mat-education-type">
@@ -568,11 +583,77 @@
         </div>
     </div>
 
+    <!-- Container for Injections -->
+    <div id="injections-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Injections</h2>
+        <label for="injection-type-select">Select Injection Type:</label>
+        <select id="injection-type-select">
+            <option value="" selected disabled>Select an injection...</option>
+            <option value="brixadi">Brixadi SQ injection</option>
+            <option value="sublocade">Sublocade SQ injection</option>
+            <option value="vivitrol">Vivitrol 380mg Sus ER rec</option>
+        </select>
+
+        <!-- Vivitrol Section -->
+        <div id="vivitrol-section" class="hidden">
+            <p style="margin-top:15px;">Suspension prepared as instructed with preparation needle.</p>
+            <div class="injection-field-group">
+                <label for="vivitrol-site">Site:</label>
+                <input type="text" id="vivitrol-site" placeholder="Enter site">
+                <label for="vivitrol-lot">Lot #:</label>
+                <input type="text" id="vivitrol-lot" placeholder="Enter lot number">
+                <label for="vivitrol-exp">Exp date:</label>
+                <input type="date" id="vivitrol-exp">
+                <label for="vivitrol-sn">SN:</label>
+                <input type="text" id="vivitrol-sn" placeholder="Enter serial number">
+            </div>
+            <p style="margin-top:15px;">Gluteal injection site identified by landmarks, prepped with alcohol swab. 2-inch admin needle used. 4.2 ml of suspension injected (Vivitrol 380 mg) with scant bleeding, Band-aid applied. Pt tolerated procedure well without complication. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection.</p>
+            <label for="vivitrol-next-injection">Next scheduled Injection:</label>
+            <input type="date" id="vivitrol-next-injection">
+        </div>
+
+        <!-- Sublocade Section -->
+        <div id="sublocade-section" class="hidden">
+            <p style="margin-top:15px;">Sublocade SQ injection administered</p>
+            <div class="injection-field-group">
+                <label for="sublocade-site">Site:</label>
+                <input type="text" id="sublocade-site" placeholder="Enter site">
+                <label for="sublocade-lot">Lot #:</label>
+                <input type="text" id="sublocade-lot" placeholder="Enter lot number">
+                <label for="sublocade-exp">Exp date:</label>
+                <input type="date" id="sublocade-exp">
+                <label for="sublocade-sn">SN:</label>
+                <input type="text" id="sublocade-sn" placeholder="Enter serial number">
+            </div>
+            <p style="margin-top:15px;">Ice pack applied to site prior to administration Cold Spray applied to site. Site prepped with alcohol swab. Pt tolerated procedure well without complication. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection. PT instructed on importance of medication adherence and follow appointments with providers.</p>
+            <label for="sublocade-next-injection">Next scheduled Injection:</label>
+            <input type="date" id="sublocade-next-injection">
+        </div>
+
+        <!-- Brixadi Section -->
+        <div id="brixadi-section" class="hidden">
+            <p style="margin-top:15px;">Brixadi SQ injection administered</p>
+            <div class="injection-field-group">
+                <label for="brixadi-site">Site:</label>
+                <input type="text" id="brixadi-site" placeholder="Enter site">
+                <label for="brixadi-lot">Lot #:</label>
+                <input type="text" id="brixadi-lot" placeholder="Enter lot number">
+                <label for="brixadi-exp">Exp date:</label>
+                <input type="date" id="brixadi-exp">
+                <label for="brixadi-sn">SN:</label>
+                <input type="text" id="brixadi-sn" placeholder="Enter serial number">
+            </div>
+            <p style="margin-top:15px;">Site prepped with alcohol swab. Pt tolerated procedure. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection.</p>
+            <label for="brixadi-next-injection">Next scheduled Injection:</label>
+            <input type="date" id="brixadi-next-injection">
+        </div>
+    </div>
+
 
     <!-- Read-only Note Output for Copying -->
     <div class="copy-area-container">
         <h2>Copy Area</h2>
-        <textarea id="final-note-copy"></textarea>
+        <textarea id="final-note-copy" readonly></textarea>
         <button id="copy-button" class="copy-button">Copy Note to Clipboard</button>
     </div>
 </div>
@@ -657,7 +738,6 @@
     const closingReferrals = document.getElementById('closing-referrals');
     const closingOfferedToDropdown = document.getElementById('closing-offered-to-dropdown');
     const closingClientResponse = document.getElementById('closing-client-response');
-
     
     // Closing Note (Non-Admitted) elements
     const nonAdmittedClientType = document.getElementById('non-admitted-client-type');
@@ -671,17 +751,29 @@
     const nonAdmittedProvidedTo2 = document.getElementById('non-admitted-provided-to-2');
     const nonAdmittedProvidedTo3 = document.getElementById('non-admitted-provided-to-3');
 
+    // Injections elements
+    const injectionTypeSelect = document.getElementById('injection-type-select');
+    const vivitrolSection = document.getElementById('vivitrol-section');
+    const sublocadeSection = document.getElementById('sublocade-section');
+    const brixadiSection = document.getElementById('brixadi-section');
+    const vivitrolSite = document.getElementById('vivitrol-site');
+    const vivitrolLot = document.getElementById('vivitrol-lot');
+    const vivitrolExp = document.getElementById('vivitrol-exp');
+    const vivitrolSn = document.getElementById('vivitrol-sn');
+    const vivitrolNextInjection = document.getElementById('vivitrol-next-injection');
+    const sublocadeSite = document.getElementById('sublocade-site');
+    const sublocadeLot = document.getElementById('sublocade-lot');
+    const sublocadeExp = document.getElementById('sublocade-exp');
+    const sublocadeSn = document.getElementById('sublocade-sn');
+    const sublocadeNextInjection = document.getElementById('sublocade-next-injection');
+    const brixadiSite = document.getElementById('brixadi-site');
+    const brixadiLot = document.getElementById('brixadi-lot');
+    const brixadiExp = document.getElementById('brixadi-exp');
+    const brixadiSn = document.getElementById('brixadi-sn');
+    const brixadiNextInjection = document.getElementById('brixadi-next-injection');
 
     // Get containers
-    const evalCdContainer = document.getElementById('eval-cd-container');
-    const evalSoContainer = document.getElementById('eval-so-container');
-    const entryCdContainer = document.getElementById('entry-cd-container');
-    const entrySoContainer = document.getElementById('entry-so-container');
-    const narcanContainer = document.getElementById('narcan-container');
-    const matContainer = document.getElementById('mat-container');
-    const telehealthContainer = document.getElementById('telehealth-container');
-    const closingNoteAdmittedContainer = document.getElementById('closing-note-admitted-container');
-    const closingNoteNonAdmittedContainer = document.getElementById('closing-note-non-admitted-container');
+    const noteContainers = document.querySelectorAll('.note-container');
 
     const diagnosisOptionsHTML = `
         <option value="" selected disabled>Select a diagnosis...</option>
@@ -767,10 +859,15 @@
         let finalNote = '';
 
         // Hide all containers first
-        document.querySelectorAll('.note-container').forEach(c => c.classList.add('hidden'));
+        noteContainers.forEach(c => c.classList.add('hidden'));
+        
+        // Show the relevant container
+        const activeContainer = document.getElementById(`${selectedNoteType}-container`);
+        if (activeContainer) {
+            activeContainer.classList.remove('hidden');
+        }
 
         if (selectedNoteType === 'eval-cd') {
-            evalCdContainer.classList.remove('hidden');
             const mandateSentence = "The clinician clarified the implications of external mandates, noting that mandated status does not override the client’s right to voluntary engagement in treatment or toxicology screenings. Corresponding handouts were provided.";
             const diagnosisElements = diagnosisContainer.querySelectorAll('select');
             const selectedOptions = Array.from(diagnosisElements).map(select => select.value).filter(val => val);
@@ -808,7 +905,6 @@
             }
         
         } else if (selectedNoteType === 'eval-so') {
-            evalSoContainer.classList.remove('hidden');
             const diagnosis = soDiagnosisSelect.value || '[SELECT A DIAGNOSIS]';
             const details = soDetailsTextarea.value || '[DETAILS OF CRITERIA MET]';
             let baseNote = `The client presented for services due to experiencing stress related to supporting someone in their life who struggles with substance use. The client meets diagnostic criteria, specifically ${diagnosis}, as evidenced by: \n\n${details}\n\nThe clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.\n\nThe clinician confirmed client understanding and emphasized the collaborative nature of treatment, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.\n\nThe clinician reviewed the client’s Behavioral Health screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions inclusive of discussions during evaluation session.`;
@@ -842,7 +938,6 @@
             }
 
         } else if (selectedNoteType === 'entry-cd') {
-            entryCdContainer.classList.remove('hidden');
             const clientGoals = Array.from(clientGoalsContainer.querySelectorAll('input')).map(input => input.value).filter(val => val);
             const treatmentGoals = Array.from(treatmentGoalsContainer.querySelectorAll('input')).map(input => input.value).filter(val => val);
             
@@ -852,7 +947,6 @@
             finalNote = `The client has identified personal goals to support their recovery, including:${clientGoalsText}\n\nBased on the client’s psychosocial needs, current presentation, and clinical history, the client is expected to benefit from the following treatment plan goals:${treatmentGoalsText}\n\nThe clinician reviewed all services available through the Outpatient clinic, with a focus on peer support, medication management, and therapeutic group offerings. Corresponding handouts were provided to support the client’s engagement and alignment with their identified recovery goals.`;
 
         } else if (selectedNoteType === 'entry-so') {
-            entrySoContainer.classList.remove('hidden');
             const clientGoals = Array.from(soClientGoalsContainer.querySelectorAll('input')).map(input => input.value).filter(val => val);
             const treatmentGoals = Array.from(soTreatmentGoalsContainer.querySelectorAll('input')).map(input => input.value).filter(val => val);
             
@@ -862,7 +956,6 @@
             finalNote = `The client has identified personal goals to support their recovery, including:${clientGoalsText}\n\nBased on the client’s psychosocial needs, current presentation, and clinical history, the client is expected to benefit from the following treatment plan goals:${treatmentGoalsText}\n\nThe clinician reviewed all services available through the Outpatient clinic, with a focus on peer support, medication management, and therapeutic group offerings. Corresponding handouts were provided to support the client’s engagement and alignment with their identified recovery goals.`;
         
         } else if (selectedNoteType === 'narcan-kit') {
-            narcanContainer.classList.remove('hidden');
             if (narcanProvidedCheckbox.checked) {
                 finalNote = "Writer provided Ct with an overview of Narcan, showed a brief video demonstrating how to use Narcan, and provided Ct with a Narcan kit.";
             } else if (narcanDeclinedCheckbox.checked) {
@@ -872,7 +965,6 @@
             }
         
         } else if (selectedNoteType === 'mat-education') {
-            matContainer.classList.remove('hidden');
             let noteParts = [];
             const educationType = matEducationType.value;
 
@@ -924,7 +1016,6 @@
             }
 
         } else if (selectedNoteType === 'telehealth') {
-            telehealthContainer.classList.remove('hidden');
             
             telehealthReasonOther.style.display = (telehealthReason.value === 'other') ? 'inline-block' : 'none';
             telehealthDisruptionFollowup.style.display = (telehealthDisruption.value === 'was a service disruption') ? 'inline-block' : 'none';
@@ -985,8 +1076,6 @@
             }
 
         } else if (selectedNoteType === 'closing-note-admitted') {
-            closingNoteAdmittedContainer.classList.remove('hidden');
-
             let noteParts = [];
             const reason = closingReason.value || '[reason for discharge]';
             noteParts.push(`Client was discharged due to ${reason}`);
@@ -1023,7 +1112,6 @@
             }
 
         } else if (selectedNoteType === 'closing-note-non-admitted') {
-            closingNoteNonAdmittedContainer.classList.remove('hidden');
             const clientType = nonAdmittedClientType.value;
             if (clientType === 'no-engage') {
                 const efforts = nonAdmittedEfforts.value || '[list efforts]';
@@ -1037,6 +1125,19 @@
             } else if (clientType === 'no-criteria') {
                 const providedTo = nonAdmittedProvidedTo3.value ? ` and ${nonAdmittedProvidedTo3.value}` : '';
                 finalNote = `Client will not be admitted for treatment at this time due to not meeting diagnostic criteria. Urine screen was negative, no concerns were reported by collateral contacts, and LOCADTR does not indicate an Outpatient recommended level of care. An outcome letter was provided to the client${providedTo}.`;
+            }
+        } else if (selectedNoteType === 'injections') {
+            const injectionType = injectionTypeSelect.value;
+            switch (injectionType) {
+                case 'vivitrol':
+                    finalNote = `Vivitrol 380mg Sus ER rec\nSuspension prepared as instructed with preparation needle.\nSite: ${vivitrolSite.value || '[Site]'}\nLot #: ${vivitrolLot.value || '[Lot #]'}\nExp date: ${vivitrolExp.value || '[Exp Date]'}\nSN: ${vivitrolSn.value || '[SN]'}\nGluteal injection site identified by landmarks, prepped with alcohol swab. 2-inch admin needle used. 4.2 ml of suspension injected (Vivitrol 380 mg) with scant bleeding, Band-aid applied. Pt tolerated procedure well without complication. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection.\nNext scheduled Injection: ${vivitrolNextInjection.value || '[Next Injection Date]'}`;
+                    break;
+                case 'sublocade':
+                    finalNote = `Sublocade SQ injection administered\nSite: ${sublocadeSite.value || '[Site]'}\nLot #: ${sublocadeLot.value || '[Lot #]'}\nExp date: ${sublocadeExp.value || '[Exp Date]'}\nSN: ${sublocadeSn.value || '[SN]'}\nIce pack applied to site prior to administration Cold Spray applied to site. Site prepped with alcohol swab. Pt tolerated procedure well without complication. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection. PT instructed on importance of medication adherence and follow appointments with providers.\nNext scheduled Injection: ${sublocadeNextInjection.value || '[Next Injection Date]'}`;
+                    break;
+                case 'brixadi':
+                    finalNote = `Brixadi SQ injection administered\nSite: ${brixadiSite.value || '[Site]'}\nLot #: ${brixadiLot.value || '[Lot #]'}\nExp date: ${brixadiExp.value || '[Exp Date]'}\nSN: ${brixadiSn.value || '[SN]'}\nSite prepped with alcohol swab. Pt tolerated procedure. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection.\nNext scheduled Injection: ${brixadiNextInjection.value || '[Next Injection Date]'}`;
+                    break;
             }
         }
 
@@ -1052,15 +1153,38 @@
         }
     }
 
+    function sortSelectOptions(selectElement) {
+        const options = Array.from(selectElement.options);
+        let placeholder = null;
+        
+        // Check if the first option is a disabled placeholder
+        if (options.length > 0 && options[0].disabled) {
+            placeholder = options.shift(); // Remove it from the array for sorting
+        }
+
+        options.sort((a, b) => a.text.localeCompare(b.text));
+
+        selectElement.innerHTML = ''; // Clear existing options
+
+        // Add the placeholder back at the top
+        if (placeholder) {
+            selectElement.add(placeholder);
+        }
+
+        options.forEach(option => selectElement.add(option));
+    }
+
+
     // EVENT LISTENERS
     noteTypeSelect.addEventListener('change', () => {
-        if (noteTypeSelect.value === 'eval-cd') {
+        const selection = noteTypeSelect.value;
+        if (selection === 'eval-cd') {
             resetDiagnosisRows();
-        } else if (noteTypeSelect.value === 'entry-cd') {
+        } else if (selection === 'entry-cd') {
             resetGoalRows(clientGoalsContainer, treatmentGoalsContainer);
-        } else if (noteTypeSelect.value === 'entry-so') {
+        } else if (selection === 'entry-so') {
             resetGoalRows(soClientGoalsContainer, soTreatmentGoalsContainer);
-        } else if (noteTypeSelect.value === 'telehealth') {
+        } else if (selection === 'telehealth') {
             telehealthPractitionerLocation.value = "72 Hinchey Road, Rochester, NY";
         }
         updateFinalNote();
@@ -1103,7 +1227,6 @@
         matAlreadyTakingSection.classList.toggle('hidden', selected !== 'already-taking');
         matFormFields.classList.toggle('hidden', !selected);
 
-        // Filter options in the response dropdown
         matResponseDropdown.value = ""; // Reset selection
         const options = matResponseDropdown.options;
         for (let i = 0; i < options.length; i++) {
@@ -1112,7 +1235,6 @@
                 option.hidden = option.dataset.type !== selected;
             }
         }
-
         updateFinalNote();
     });
     matExploredOptionsDropdown.addEventListener('change', () => {
@@ -1164,6 +1286,20 @@
         el.addEventListener('input', updateFinalNote);
     });
 
+    // Injections Listeners
+    injectionTypeSelect.addEventListener('change', () => {
+        const selection = injectionTypeSelect.value;
+        vivitrolSection.classList.toggle('hidden', selection !== 'vivitrol');
+        sublocadeSection.classList.toggle('hidden', selection !== 'sublocade');
+        brixadiSection.classList.toggle('hidden', selection !== 'brixadi');
+        updateFinalNote();
+    });
+    [
+        vivitrolSite, vivitrolLot, vivitrolExp, vivitrolSn, vivitrolNextInjection,
+        sublocadeSite, sublocadeLot, sublocadeExp, sublocadeSn, sublocadeNextInjection,
+        brixadiSite, brixadiLot, brixadiExp, brixadiSn, brixadiNextInjection
+    ].forEach(el => el.addEventListener('input', updateFinalNote));
+
 
     // Copy Button functionality
     copyButton.addEventListener('click', () => {
@@ -1188,6 +1324,7 @@
 
     // Initial call to populate the form on page load
     document.addEventListener('DOMContentLoaded', () => {
+        sortSelectOptions(noteTypeSelect); // Sort the main dropdown
         resetDiagnosisRows();
         resetGoalRows(clientGoalsContainer, treatmentGoalsContainer);
         resetGoalRows(soClientGoalsContainer, soTreatmentGoalsContainer);
@@ -1195,12 +1332,6 @@
         toggleSafetyPlan(cdNoMhProviderTextCheckbox, cdSafetyPlanNoProviderCheckbox);
         toggleSafetyPlan(soHasMhProviderTextCheckbox, soSafetyPlanHasProviderCheckbox);
         toggleSafetyPlan(soNoMhProviderTextCheckbox, soSafetyPlanNoProviderCheckbox);
-        matNotTakingSection.classList.add('hidden');
-        matAlreadyTakingSection.classList.add('hidden');
-        matFormFields.classList.add('hidden');
-        matNicotineResourcesSection.classList.toggle('hidden', matNicotineUseDropdown.value !== 'does');
-        matNicotineOtherTextbox.classList.toggle('hidden', !matNicotineOtherCheckbox.checked);
-        matOptionsDetailsSection.classList.toggle('hidden', matExploredOptionsDropdown.value !== 'did');
         updateFinalNote();
     });
 
