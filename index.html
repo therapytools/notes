@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<!-- saved from url=(0037)https://therapytools.github.io/notes/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Therapy Tools</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -91,7 +91,7 @@
 <div class="bg-white rounded-lg shadow-lg">
     <div class="border-b border-gray-200">
         <div class="flex flex-wrap items-center">
-            <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" id="defaultOpen" onclick="openTab(event, 'MSE')">
+            <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg active" id="defaultOpen" onclick="openTab(event, 'MSE')">
                 Mental Status Exam (MSE)
             </button>
             <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" onclick="openTab(event, 'DARP')">
@@ -111,7 +111,7 @@
             </button>
         </div>
     </div>
-    <div class="tabcontent p-4 sm:p-6 md:p-8" id="MSE">
+    <div class="tabcontent p-4 sm:p-6 md:p-8" id="MSE" style="display: block;">
         <div class="mse-form-container">
             <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Mental Status Exam</h1>
             <fieldset class="border p-3 rounded-md mb-4">
@@ -152,18 +152,24 @@
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="DARP" style="display:none;">
         <div class="darp-form-container">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Progress Note Form</h2>
-            <form id="progressNoteForm" oninput="updateDarpProgressNote()">
+            <form id="progressNoteForm">
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">DATA:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="diagnoses">Diagnoses:</label>
-                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="diagnoses" name="diagnoses" oninput="autoResize(this)"></textarea>
+                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="diagnoses" name="diagnoses" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
                <label class="font-medium text-gray-700 mb-1" for="problemsAddressed">Session Content and Problems Addressed:</label>
-                                    <textarea class="p-2 border border-gray-300 rounded-md w-full" id="problemsAddressed" name="problemsAddressed" oninput="autoResize(this)"></textarea>
-                                    <p class="text-sm text-gray-500 italic mt-1">Remember to include person-centered language and client quotes.</p>
-               <br> <label class="font-medium text-gray-700 mb-2" for="updatesProgress">Updates and Progress to Client's Treatment Goals:</label>
-                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="updatesProgress" name="updatesProgress" oninput="autoResize(this)"></textarea>
-                <div class="darp-inline-checkbox"><input id="toxicologyScreen" name="toxicologyScreen" type="checkbox"><label for="toxicologyScreen">Client provided a toxicology screen</label></div>
-                <label class="font-medium text-gray-700 mb-2" for="additionalNotes">Additional Notes:</label>
-                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="additionalNotes" name="additionalNotes" oninput="autoResize(this)"></textarea>
+                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="problemsAddressed" name="problemsAddressed" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
+                <p class="text-sm text-gray-500 italic mt-1">Remember to include person-centered language and client quotes.</p>
+                
+                <br>
+                <label class="font-medium text-gray-700 mb-2">Updates and Progress to Client's Treatment Goals:</label>
+                <div id="treatmentGoalsContainer" class="space-y-2">
+                    <!-- Treatment goal rows will be dynamically inserted here by JavaScript -->
+                </div>
+
+                <div class="darp-inline-checkbox mt-2"><input id="toxicologyScreen" name="toxicologyScreen" type="checkbox" onchange="updateDarpProgressNote()"><label for="toxicologyScreen">Client provided a toxicology screen</label></div>
+                <label class="font-medium text-gray-700 mb-2 mt-2" for="additionalNotes">Additional Notes:</label>
+                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="additionalNotes" name="additionalNotes" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
+                
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">Interventions Used:</h3>
                 <div class="darp-interventions">
                     <div class="darp-column">
@@ -177,55 +183,55 @@
                     </div>
                     <div class="darp-column">
                         <strong class="font-semibold">CBT</strong><br>
-                        <div class="darp-inline-checkbox"><input id="cbt_cr" name="CBT" type="checkbox" value="Cognitive Restructuring"><label for="cbt_cr">Cognitive Restructuring</label></div>
-                        <div class="darp-inline-checkbox"><input id="cbt_ba" name="CBT" type="checkbox" value="Behavioral Activation"><label for="cbt_ba">Behavioral Activation</label></div>
-                        <div class="darp-inline-checkbox"><input id="cbt_mt" name="CBT" type="checkbox" value="Mindfulness Training"><label for="cbt_mt">Mindfulness Training</label></div>
-                        <div class="darp-inline-checkbox"><input id="cbt_ps" name="CBT" type="checkbox" value="Problem-Solving"><label for="cbt_ps">Problem-Solving</label></div>
-                        <div class="darp-inline-checkbox"><input id="cbt_as" name="CBT" type="checkbox" value="Activity Scheduling"><label for="cbt_as">Activity Scheduling</label></div>
-                        <div class="darp-inline-checkbox"><input id="cbt_rt" name="CBT" type="checkbox" value="Relaxation Techniques"><label for="cbt_rt">Relaxation Techniques</label></div>
-                        <div class="darp-inline-checkbox"><input id="cbt_cd" name="CBT" type="checkbox" value="Cognitive Defusion"><label for="cbt_cd">Cognitive Defusion</label></div>
-                        <div class="darp-inline-checkbox"><input id="cbt_icd" name="CBT" type="checkbox" value="Identifying Cognitive Distortions and alternative thinking patterns"><label for="cbt_icd">Identifying Cognitive Distortions and alternative thinking patterns</label></div>
-                        Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="CBTOther" type="text">
+                        <div class="darp-inline-checkbox"><input id="cbt_cr" name="CBT" type="checkbox" value="Cognitive Restructuring" onchange="updateDarpProgressNote()"><label for="cbt_cr">Cognitive Restructuring</label></div>
+                        <div class="darp-inline-checkbox"><input id="cbt_ba" name="CBT" type="checkbox" value="Behavioral Activation" onchange="updateDarpProgressNote()"><label for="cbt_ba">Behavioral Activation</label></div>
+                        <div class="darp-inline-checkbox"><input id="cbt_mt" name="CBT" type="checkbox" value="Mindfulness Training" onchange="updateDarpProgressNote()"><label for="cbt_mt">Mindfulness Training</label></div>
+                        <div class="darp-inline-checkbox"><input id="cbt_ps" name="CBT" type="checkbox" value="Problem-Solving" onchange="updateDarpProgressNote()"><label for="cbt_ps">Problem-Solving</label></div>
+                        <div class="darp-inline-checkbox"><input id="cbt_as" name="CBT" type="checkbox" value="Activity Scheduling" onchange="updateDarpProgressNote()"><label for="cbt_as">Activity Scheduling</label></div>
+                        <div class="darp-inline-checkbox"><input id="cbt_rt" name="CBT" type="checkbox" value="Relaxation Techniques" onchange="updateDarpProgressNote()"><label for="cbt_rt">Relaxation Techniques</label></div>
+                        <div class="darp-inline-checkbox"><input id="cbt_cd" name="CBT" type="checkbox" value="Cognitive Defusion" onchange="updateDarpProgressNote()"><label for="cbt_cd">Cognitive Defusion</label></div>
+                        <div class="darp-inline-checkbox"><input id="cbt_icd" name="CBT" type="checkbox" value="Identifying Cognitive Distortions and alternative thinking patterns" onchange="updateDarpProgressNote()"><label for="cbt_icd">Identifying Cognitive Distortions and alternative thinking patterns</label></div>
+                        Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="CBTOther" type="text" oninput="updateDarpProgressNote()">
                     </div>
                     <div class="darp-column">
                         <strong class="font-semibold">Person Centered</strong><br>
-                        <div class="darp-inline-checkbox"><input id="pc_emp" name="Person Centered" type="checkbox" value="Empathy"><label for="pc_emp">Empathy</label></div>
-                        <div class="darp-inline-checkbox"><input id="pc_al" name="Person Centered" type="checkbox" value="Active Listening"><label for="pc_al">Active Listening</label></div>
-                        <div class="darp-inline-checkbox"><input id="pc_rl" name="Person Centered" type="checkbox" value="Reflective Listening"><label for="pc_rl">Reflective Listening</label></div>
-                        <div class="darp-inline-checkbox"><input id="pc_oeq" name="Person Centered" type="checkbox" value="Open-ended questions"><label for="pc_oeq">Open-ended questions</label></div>
-                        <div class="darp-inline-checkbox"><input id="pc_sum" name="Person Centered" type="checkbox" value="Summarizing"><label for="pc_sum">Summarizing</label></div>
-                        <div class="darp-inline-checkbox"><input id="pc_val" name="Person Centered" type="checkbox" value="Validation"><label for="pc_val">Validation</label></div>
-                        <div class="darp-inline-checkbox"><input id="pc_sil" name="Person Centered" type="checkbox" value="Silence"><label for="pc_sil">Silence</label></div>
-                        <div class="darp-inline-checkbox"><input id="pc_ep" name="Person Centered" type="checkbox" value="Emotional Presence"><label for="pc_ep">Emotional Presence</label></div>
-                        <div class="darp-inline-checkbox"><input id="pc_ea" name="Person Centered" type="checkbox" value="Encouraging Autonomy"><label for="pc_ea">Encouraging Autonomy</label></div>
-                        <div class="darp-inline-checkbox"><input id="pc_fsd" name="Person Centered" type="checkbox" value="Facilitation of Self-Discovery"><label for="pc_fsd">Facilitation of Self-Discovery</label></div>
-                        <div class="darp-inline-checkbox"><input id="pc_upr" name="Person Centered" type="checkbox" value="Unconditional Positive Regard"><label for="pc_upr">Unconditional Positive Regard</label></div>
-                        Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="PersonCenteredOther" type="text">
+                        <div class="darp-inline-checkbox"><input id="pc_emp" name="Person Centered" type="checkbox" value="Empathy" onchange="updateDarpProgressNote()"><label for="pc_emp">Empathy</label></div>
+                        <div class="darp-inline-checkbox"><input id="pc_al" name="Person Centered" type="checkbox" value="Active Listening" onchange="updateDarpProgressNote()"><label for="pc_al">Active Listening</label></div>
+                        <div class="darp-inline-checkbox"><input id="pc_rl" name="Person Centered" type="checkbox" value="Reflective Listening" onchange="updateDarpProgressNote()"><label for="pc_rl">Reflective Listening</label></div>
+                        <div class="darp-inline-checkbox"><input id="pc_oeq" name="Person Centered" type="checkbox" value="Open-ended questions" onchange="updateDarpProgressNote()"><label for="pc_oeq">Open-ended questions</label></div>
+                        <div class="darp-inline-checkbox"><input id="pc_sum" name="Person Centered" type="checkbox" value="Summarizing" onchange="updateDarpProgressNote()"><label for="pc_sum">Summarizing</label></div>
+                        <div class="darp-inline-checkbox"><input id="pc_val" name="Person Centered" type="checkbox" value="Validation" onchange="updateDarpProgressNote()"><label for="pc_val">Validation</label></div>
+                        <div class="darp-inline-checkbox"><input id="pc_sil" name="Person Centered" type="checkbox" value="Silence" onchange="updateDarpProgressNote()"><label for="pc_sil">Silence</label></div>
+                        <div class="darp-inline-checkbox"><input id="pc_ep" name="Person Centered" type="checkbox" value="Emotional Presence" onchange="updateDarpProgressNote()"><label for="pc_ep">Emotional Presence</label></div>
+                        <div class="darp-inline-checkbox"><input id="pc_ea" name="Person Centered" type="checkbox" value="Encouraging Autonomy" onchange="updateDarpProgressNote()"><label for="pc_ea">Encouraging Autonomy</label></div>
+                        <div class="darp-inline-checkbox"><input id="pc_fsd" name="Person Centered" type="checkbox" value="Facilitation of Self-Discovery" onchange="updateDarpProgressNote()"><label for="pc_fsd">Facilitation of Self-Discovery</label></div>
+                        <div class="darp-inline-checkbox"><input id="pc_upr" name="Person Centered" type="checkbox" value="Unconditional Positive Regard" onchange="updateDarpProgressNote()"><label for="pc_upr">Unconditional Positive Regard</label></div>
+                        Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="PersonCenteredOther" type="text" oninput="updateDarpProgressNote()">
                     </div>
                     <div class="darp-column">
                         <strong class="font-semibold">Motivational Interviewing</strong><br>
-                        <div class="darp-inline-checkbox"><input id="mi_oeq" name="Motivational Interviewing" type="checkbox" value="Open-Ended Questions"><label for="mi_oeq">Open-Ended Questions</label></div>
-                        <div class="darp-inline-checkbox"><input id="mi_aff" name="Motivational Interviewing" type="checkbox" value="Affirmations"><label for="mi_aff">Affirmations</label></div>
-                        <div class="darp-inline-checkbox"><input id="mi_rl" name="Motivational Interviewing" type="checkbox" value="Reflective Listening"><label for="mi_rl">Reflective Listening</label></div>
-                        <div class="darp-inline-checkbox"><input id="mi_sum" name="Motivational Interviewing" type="checkbox" value="Summarizing"><label for="mi_sum">Summarizing</label></div>
-                        <div class="darp-inline-checkbox"><input id="mi_db" name="Motivational Interviewing" type="checkbox" value="Decisional Balance (Pros/Cons)"><label for="mi_db">Decisional Balance (Pros/Cons)</label></div>
-                        <div class="darp-inline-checkbox"><input id="mi_did" name="Motivational Interviewing" type="checkbox" value="Developing and Identifying Discrepancy"><label for="mi_did">Developing and Identifying Discrepancy</label></div>
-                        <div class="darp-inline-checkbox"><input id="mi_sse" name="Motivational Interviewing" type="checkbox" value="Supporting Self-Efficacy"><label for="mi_sse">Supporting Self-Efficacy</label></div>
-                        <div class="darp-inline-checkbox"><input id="mi_ecl" name="Motivational Interviewing" type="checkbox" value="Evoking Commitment Language"><label for="mi_ecl">Evoking Commitment Language</label></div>
-                        Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="MotivationalInterviewingOther" type="text">
+                        <div class="darp-inline-checkbox"><input id="mi_oeq" name="Motivational Interviewing" type="checkbox" value="Open-Ended Questions" onchange="updateDarpProgressNote()"><label for="mi_oeq">Open-Ended Questions</label></div>
+                        <div class="darp-inline-checkbox"><input id="mi_aff" name="Motivational Interviewing" type="checkbox" value="Affirmations" onchange="updateDarpProgressNote()"><label for="mi_aff">Affirmations</label></div>
+                        <div class="darp-inline-checkbox"><input id="mi_rl" name="Motivational Interviewing" type="checkbox" value="Reflective Listening" onchange="updateDarpProgressNote()"><label for="mi_rl">Reflective Listening</label></div>
+                        <div class="darp-inline-checkbox"><input id="mi_sum" name="Motivational Interviewing" type="checkbox" value="Summarizing" onchange="updateDarpProgressNote()"><label for="mi_sum">Summarizing</label></div>
+                        <div class="darp-inline-checkbox"><input id="mi_db" name="Motivational Interviewing" type="checkbox" value="Decisional Balance (Pros/Cons)" onchange="updateDarpProgressNote()"><label for="mi_db">Decisional Balance (Pros/Cons)</label></div>
+                        <div class="darp-inline-checkbox"><input id="mi_did" name="Motivational Interviewing" type="checkbox" value="Developing and Identifying Discrepancy" onchange="updateDarpProgressNote()"><label for="mi_did">Developing and Identifying Discrepancy</label></div>
+                        <div class="darp-inline-checkbox"><input id="mi_sse" name="Motivational Interviewing" type="checkbox" value="Supporting Self-Efficacy" onchange="updateDarpProgressNote()"><label for="mi_sse">Supporting Self-Efficacy</label></div>
+                        <div class="darp-inline-checkbox"><input id="mi_ecl" name="Motivational Interviewing" type="checkbox" value="Evoking Commitment Language" onchange="updateDarpProgressNote()"><label for="mi_ecl">Evoking Commitment Language</label></div>
+                        Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="MotivationalInterviewingOther" type="text" oninput="updateDarpProgressNote()">
                     </div>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">ASSESSMENT:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="mentalStatus">Mental Status Exam:</label>
-                <textarea class="p-2 border border-gray-300 rounded-md bg-gray-50 w-full" id="mentalStatus" name="mentalStatus" oninput="autoResize(this)"></textarea>
+                <textarea class="p-2 border border-gray-300 rounded-md bg-gray-50 w-full" id="mentalStatus" name="mentalStatus" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
                 <label class="font-medium text-gray-700 mb-2" for="additionalAssessment">Additional Assessment:</label>
-                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="additionalAssessment" name="additionalAssessment" oninput="autoResize(this)"></textarea>
+                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="additionalAssessment" name="additionalAssessment" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">RESPONSE:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="response">Response:</label>
-                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="response" name="response" oninput="autoResize(this)"></textarea>
+                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="response" name="response" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">PLAN:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="plan">Plan:</label>
-                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="plan" name="plan" oninput="autoResize(this)"></textarea>
+                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="plan" name="plan" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
             </form>
             <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-2">Generated Progress Note</h3>
             <textarea class="w-full p-2 border border-gray-300 rounded-md bg-gray-50" id="progressNote" oninput="autoResize(this)"></textarea>
@@ -262,8 +268,10 @@
     document.getElementById("defaultOpen").click();
 
     function autoResize(textarea) {
-        textarea.style.height = 'auto';
-        textarea.style.height = textarea.scrollHeight + 'px';
+        if(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
     }
 
     // --- MSE (Mental Status Exam) Logic ---
@@ -359,16 +367,80 @@
     }
 
     // --- DARP (Progress Note) Logic ---
+
+    function addTreatmentGoalRow() {
+        const container = document.getElementById('treatmentGoalsContainer');
+        const goalRow = document.createElement('div');
+        goalRow.className = 'treatment-goal-row flex items-start gap-2 p-2 border rounded-md';
+
+        goalRow.innerHTML = `
+            <div class="flex-grow space-y-2">
+                <div class="flex items-center gap-2">
+                    <label class="font-medium text-gray-700 w-28 flex-shrink-0">Treatment Goal:</label>
+                    <input type="text" class="p-2 border border-gray-300 rounded-md w-full treatment-goal-input" oninput="updateDarpProgressNote()">
+                </div>
+                <div class="flex items-start gap-2">
+                    <label class="font-medium text-gray-700 w-28 flex-shrink-0 mt-2">Update:</label>
+                    <textarea class="p-2 border border-gray-300 rounded-md w-full treatment-goal-update" oninput="autoResize(this); updateDarpProgressNote()"></textarea>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2">
+                <button type="button" class="px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600" onclick="addTreatmentGoalRow()">+</button>
+                <button type="button" class="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 remove-goal-btn" onclick="removeTreatmentGoalRow(this)">-</button>
+            </div>
+        `;
+
+        container.appendChild(goalRow);
+        const newTextarea = goalRow.querySelector('textarea');
+        autoResize(newTextarea);
+        updateRemoveButtonsState();
+        updateDarpProgressNote();
+    }
+
+    function removeTreatmentGoalRow(button) {
+        const row = button.closest('.treatment-goal-row');
+        if (row) {
+            row.remove();
+            updateDarpProgressNote();
+            updateRemoveButtonsState();
+        }
+    }
+
+    function updateRemoveButtonsState() {
+        const rows = document.querySelectorAll('#treatmentGoalsContainer .treatment-goal-row');
+        rows.forEach(row => {
+            const removeBtn = row.querySelector('.remove-goal-btn');
+            if (removeBtn) {
+                 removeBtn.style.display = rows.length <= 1 ? 'none' : 'block';
+            }
+        });
+    }
+
     function updateDarpProgressNote() {
-        const mentalStatus = document.getElementById('mentalStatus').value;
-        const problemsAddressed = document.getElementById('problemsAddressed').value;
-        const diagnoses = document.getElementById('diagnoses').value;
-        const updatesProgress = document.getElementById('updatesProgress').value;
-        const additionalNotes = document.getElementById('additionalNotes').value;
-        const additionalAssessment = document.getElementById('additionalAssessment').value;
-        const response = document.getElementById('response').value;
-        const plan = document.getElementById('plan').value;
-        const toxicologyScreen = document.getElementById('toxicologyScreen').checked;
+        const mentalStatus = document.getElementById('mentalStatus')?.value || '';
+        const problemsAddressed = document.getElementById('problemsAddressed')?.value || '';
+        const diagnoses = document.getElementById('diagnoses')?.value || '';
+        
+        let updatesProgressText = "";
+        const goalRows = document.querySelectorAll('#treatmentGoalsContainer .treatment-goal-row');
+        goalRows.forEach((row, index) => {
+            const goalInput = row.querySelector('.treatment-goal-input');
+            const updateInput = row.querySelector('.treatment-goal-update');
+            if (goalInput && updateInput) {
+                const goal = goalInput.value.trim();
+                const update = updateInput.value.trim();
+                if (goal || update) {
+                    updatesProgressText += `Goal: ${goal}\nUpdate: ${update}\n\n`;
+                }
+            }
+        });
+        updatesProgressText = updatesProgressText.trim();
+
+        const additionalNotes = document.getElementById('additionalNotes')?.value || '';
+        const additionalAssessment = document.getElementById('additionalAssessment')?.value || '';
+        const response = document.getElementById('response')?.value || '';
+        const plan = document.getElementById('plan')?.value || '';
+        const toxicologyScreen = document.getElementById('toxicologyScreen')?.checked;
         
         let interventionsUsed = "Interventions Used:\n";
         interventionsUsed += getCustomInterventions();
@@ -379,7 +451,7 @@
         let progressNote = "DATA:\n";
         if (diagnoses) progressNote += `Diagnoses:\n${diagnoses}\n\n`;
         if (problemsAddressed) progressNote += `Problems Addressed in the Counseling Session:\n${problemsAddressed}\n\n`;
-        if (updatesProgress) progressNote += `Updates and Progress to Client's Treatment Goals:\n${updatesProgress}\n\n`;
+        if (updatesProgressText) progressNote += `Updates and Progress to Client's Treatment Goals:\n${updatesProgressText}\n\n`;
         if (toxicologyScreen) progressNote += `Client provided a toxicology screen.\n\n`;
         if (additionalNotes) progressNote += `Additional Notes:\n${additionalNotes}\n\n`;
         if (interventionsUsed.trim() !== "Interventions Used:") progressNote += `${interventionsUsed}\n`;
@@ -395,8 +467,10 @@
         if (plan) progressNote += `${plan}`;
 
         const noteBox = document.getElementById('progressNote');
-        noteBox.value = progressNote;
-        autoResize(noteBox);
+        if (noteBox) {
+            noteBox.value = progressNote;
+            autoResize(noteBox);
+        }
     }
 
     function getInterventions(columnTitle) {
@@ -422,7 +496,7 @@
         alert("Progress note copied to clipboard!");
     }
 
-    let savedCustoms = JSON.parse(localStorage.getItem('customInterventions') || '["Reflection","Mirroring"]');
+    let savedCustoms = JSON.parse(localStorage.getItem('customInterventions') || '["PD: Interpretation", "PD: Clarification", "PD: Confrontation", "PD: Linking Past & Present", "PD: Defense Interpretation", "PD: Identifying Resistance", "Inner Child Work", "Reflection", "Mirroring"]');
 
     function addCustomIntervention() {
         const input = document.getElementById('customInput');
@@ -466,13 +540,16 @@
     // --- Combined DOMContentLoaded Initializer ---
     window.addEventListener('DOMContentLoaded', () => {
         // DARP Init
+        addTreatmentGoalRow();
         savedCustoms.forEach(addCustomElement);
-        document.querySelectorAll('.darp-column input, .darp-column textarea').forEach(el => {
-            el.addEventListener('input', updateDarpProgressNote);
-        });
-        updateMseText(); // Initial call to populate MSE field in DARP
+        
+        // Initial call to populate MSE field in DARP from the other tab
+        if (document.getElementById('mseTextbox')) {
+            updateMseText(); 
+        }
     });
 </script>
-</body>
-</html>
 
+
+
+</body></html>
