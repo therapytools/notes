@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0037)https://therapytools.github.io/notes/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Therapy Tools</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,7 +31,7 @@
         }
         @media (min-width: 768px) {
             .mse-category label {
-                 width: 30%;
+                width: 30%;
             }
         }
         .mse-category input[type="text"] {
@@ -65,12 +65,12 @@
         }
         @media (min-width: 640px) { /* sm */
             .darp-interventions {
-                 grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         @media (min-width: 1024px) { /* lg */
             .darp-interventions {
-                 grid-template-columns: repeat(4, 1fr); /* Adjusted for 4 columns */
+                grid-template-columns: repeat(4, 1fr); /* Adjusted for 4 columns */
             }
         }
         .darp-column {
@@ -90,27 +90,34 @@
 <body class="bg-gray-100 font-sans p-4 md:p-8">
 <div class="bg-white rounded-lg shadow-lg">
     <div class="border-b border-gray-200">
-        <div class="flex flex-wrap items-center">
-            <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg active" id="defaultOpen" onclick="openTab(event, 'MSE')">
-                Mental Status Exam (MSE)
-            </button>
-            <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" onclick="openTab(event, 'DARP')">
-                DARP Note
-            </button>
-            <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" onclick="openTab(event, 'NoteTemplates')">
-                Note Templates
-            </button>
-            <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" onclick="openTab(event, 'SUD')">
-                SUD Dx
-            </button>
-            <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" onclick="openTab(event, 'Planner')">Treatment Planner</button>
-            <button class="tab-button flex-1 text-center text-gray-500 hover:text-gray-700 py-4 border-b-2 border-transparent text-lg" onclick="openTab(event, 'SafetyPlan')">Safety Plan</button>
-            
-            <button onclick="location.reload()" class="ml-auto my-2 mr-4 px-4 py-2 bg-red-600 text-white font-semibold rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+        <!-- This container now properly separates the wrapping tabs from the Clear All button -->
+        <div class="flex justify-between items-center flex-wrap">
+            <!-- This inner container holds all the tabs and allows them to wrap -->
+            <div class="flex flex-1 flex-wrap">
+                <button class="tab-button flex-grow text-center text-gray-500 hover:text-gray-700 py-4 px-2 border-b-2 border-transparent text-base md:text-lg active" id="defaultOpen" onclick="openTab(event, 'MSE')">
+                    MSE
+                </button>
+                <button class="tab-button flex-grow text-center text-gray-500 hover:text-gray-700 py-4 px-2 border-b-2 border-transparent text-base md:text-lg" onclick="openTab(event, 'DARP')">
+                    DARP
+                </button>
+                <button class="tab-button flex-grow text-center text-gray-500 hover:text-gray-700 py-4 px-2 border-b-2 border-transparent text-base md:text-lg" onclick="openTab(event, 'NoteTemplates')">
+                    Templates
+                </button>
+                <button class="tab-button flex-grow text-center text-gray-500 hover:text-gray-700 py-4 px-2 border-b-2 border-transparent text-base md:text-lg" onclick="openTab(event, 'SUD')">
+                    SUD Dx
+                </button>
+                <button class="tab-button flex-grow text-center text-gray-500 hover:text-gray-700 py-4 px-2 border-b-2 border-transparent text-base md:text-lg" onclick="openTab(event, 'Planner')">Planner</button>
+                <button class="tab-button flex-grow text-center text-gray-500 hover:text-gray-700 py-4 px-2 border-b-2 border-transparent text-base md:text-lg" onclick="openTab(event, 'Letters')">Letters</button>
+                <button class="tab-button flex-grow text-center text-gray-500 hover:text-gray-700 py-4 px-2 border-b-2 border-transparent text-base md:text-lg" onclick="openTab(event, 'SafetyPlan')">Safety Plan</button>
+            </div>
+            <!-- The Clear All button is now outside the wrapping container -->
+            <button onclick="location.reload()" class="ml-4 my-2 mr-4 px-4 py-2 bg-red-600 text-white font-semibold rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 flex-shrink-0">
                 Clear All
             </button>
         </div>
     </div>
+
+    <!-- MSE Tab Content -->
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="MSE" style="display: block;">
         <div class="mse-form-container">
             <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Mental Status Exam</h1>
@@ -149,6 +156,8 @@
             <button class="mt-2 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onclick="copyMseToClipboard()">COPY MSE</button>
         </div>
     </div>
+    
+    <!-- DARP Tab Content -->
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="DARP" style="display:none;">
         <div class="darp-form-container">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Progress Note Form</h2>
@@ -238,15 +247,28 @@
             <button class="mt-2 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onclick="copyDarpToClipboard()">COPY DARP NOTE</button>
         </div>
     </div>
+
+    <!-- Note Templates Tab Content -->
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="NoteTemplates" style="display:none;">
         <iframe src="https://therapytools.github.io/notes/Templates.html" class="w-full h-[85vh]" style="border:none;" title="Note Templates"></iframe>
     </div>
+
+    <!-- SUD Tab Content -->
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="SUD" style="display:none;">
         <iframe src="https://therapytools.github.io/notes/SUD_Diagnostic_Tool.html" class="w-full h-[85vh]" style="border:none;" title="SUD Diagnostic Tool"></iframe>
     </div>
+
+    <!-- Planner Tab Content -->
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="Planner" style="display:none;">
         <iframe src="https://therapytools.github.io/notes/Treatment_Planner.html" class="w-full h-[85vh]" style="border:none;" title="Treatment Planner"></iframe>
     </div>
+
+    <!-- Letters Tab Content (NEW) -->
+    <div class="tabcontent p-4 sm:p-6 md:p-8" id="Letters" style="display:none;">
+        <iframe src="http://therapytools.github.io/notes/letters.html" class="w-full h-[85vh]" style="border:none;" title="Letters"></iframe>
+    </div>
+
+    <!-- Safety Plan Tab Content -->
     <div class="tabcontent p-4 sm:p-6 md:p-8" id="SafetyPlan" style="display:none">
         <iframe src="https://therapytools.github.io/notes/safetyplan.html" class="w-full h-[85vh]" style="border:none;" title="Safety Plan"></iframe>
     </div>
@@ -363,6 +385,7 @@
         const textbox = document.getElementById("mseTextbox");
         textbox.select();
         document.execCommand("copy");
+        // Using a more modern notification approach could be an improvement, but alert is simple and effective.
         alert("MSE text copied to clipboard!");
     }
 
@@ -549,7 +572,5 @@
         }
     });
 </script>
-
-
-
-</body></html>
+</body>
+</html>
