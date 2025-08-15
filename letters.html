@@ -16,7 +16,6 @@
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
-
     <!-- Password Protection Overlay -->
     <div id="password-overlay" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
         <div class="bg-white p-8 rounded-lg shadow-xl text-center">
@@ -40,13 +39,14 @@
                 <div class="mb-8">
                     <label for="letterType" class="block text-lg font-semibold text-gray-700 mb-2">Select Letter Type</label>
                     <select id="letterType" onchange="handleTemplateChange()" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-lg">
-                        <option value="noTxRec">No Treatment Recommended</option>
                         <option value="evalInProgress">Evaluation in Progress</option>
+                        <option value="noTxRec">No Treatment Recommended</option>
+                        <option value="reEngagement">Re-Engagement</option>
                     </select>
                 </div>
 
                 <!-- ===== TEMPLATE: No Treatment Recommended ===== -->
-                <div id="noTxRecFields">
+                <div id="noTxRecFields" class="hidden">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Client Information -->
                         <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
@@ -96,7 +96,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <!-- Toxicology Details -->
                     <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 md:col-span-2">
                         <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Toxicology Screen Details</h2>
@@ -163,6 +162,54 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- ===== TEMPLATE: Re-Engagement ===== -->
+                <div id="reEngagementFields" class="hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <!-- Client Information -->
+                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                            <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Client Information</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="reClientFirstName" class="block text-sm font-medium text-gray-700 mb-1">Client’s First Name</label>
+                                    <input type="text" id="reClientFirstName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                </div>
+                                <div>
+                                    <label for="reClientLastName" class="block text-sm font-medium text-gray-700 mb-1">Client’s Last Name</label>
+                                    <input type="text" id="reClientLastName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                </div>
+                                <div>
+                                    <label for="reClientAddress" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                                    <input type="text" id="reClientAddress" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                </div>
+                                <div>
+                                    <label for="reClientCityStateZip" class="block text-sm font-medium text-gray-700 mb-1">City, State, Zip</label>
+                                    <input type="text" id="reClientCityStateZip" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Letter Details -->
+                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                            <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Letter Details</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="lastServiceDate" class="block text-sm font-medium text-gray-700 mb-1">Last Date of Service</label>
+                                    <input type="date" id="lastServiceDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                </div>
+                                <div>
+                                    <label for="reTodaysDate" class="block text-sm font-medium text-gray-700 mb-1">Today's Date</label>
+                                    <input type="date" id="reTodaysDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                </div>
+                                <div>
+                                    <label for="closureDate" class="block text-sm font-medium text-gray-700 mb-1">Closure Date</label>
+                                    <input type="date" id="closureDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    <p class="text-xs text-gray-500 mt-1">Friday of next week suggested.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Counselor Information (Shared) -->
                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
@@ -172,6 +219,10 @@
                             <div>
                                 <label for="counselorName" class="block text-sm font-medium text-gray-700 mb-1">Counselor’s Name</label>
                                 <input type="text" id="counselorName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            </div>
+                            <div>
+                                <label for="counselorCredentials" class="block text-sm font-medium text-gray-700 mb-1">Counselor’s Credentials</label>
+                                <input type="text" id="counselorCredentials" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., CASAC-T">
                             </div>
                             <div>
                                 <label for="counselorExtension" class="block text-sm font-medium text-gray-700 mb-1">Extension</label>
@@ -212,7 +263,7 @@
     </div>
     
     <!-- Hidden div for PDF generation (Shared) -->
-    <div id="pdf-content" class="hidden" style="width: 8.5in; padding: 1in; background: white; color: black; font-size: 10pt; line-height: 1.5;">
+    <div id="pdf-content" class="hidden" style="width: 8.5in; height: 11in; padding: 1in; background: white; color: black; font-size: 10pt; line-height: 1.5; box-sizing: border-box; position: relative;">
          <img id="pdf-logo" src="" alt="Delphi Rise Logo" style="height: 80px; margin-bottom: 2rem;">
          <div id="pdf-text-content" style="white-space: pre-wrap;"></div>
          <div id="pdf-signature-area" style="margin-top: 1rem;">
@@ -220,8 +271,12 @@
              <img id="pdf-signature" src="" alt="Signature" style="max-height: 60px; margin-top: 0.5rem; display: none;"/>
              <div id="pdf-signature-block" style="margin-top: 0.5rem; white-space: pre-wrap;"></div>
          </div>
+         <div id="pdf-footer" style="position: absolute; bottom: 1in; right: 1in; text-align: right; font-size: 8pt; color: #555; line-height: 1.2;">
+            Treatment | Prevention | Care Management | Counseling<br>
+            72 Hinchey Road, Rochester, NY 14624 | 585-467-2230<br>
+            www.delphirise.org
+        </div>
     </div>
-
 
     <script>
         // --- Password Protection ---
@@ -268,9 +323,15 @@
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
             const todayString = `${yyyy}-${mm}-${dd}`;
+            
+            // Set today's date for all relevant fields
             document.getElementById('todaysDate').value = todayString;
             document.getElementById('eipTodaysDate').value = todayString;
+            document.getElementById('reTodaysDate').value = todayString;
             
+            // Set the default closure date for the re-engagement letter
+            setClosureDate();
+
             const logoUrl = 'https://therapytools.github.io/notes/logo.png';
             const base64Logo = await toDataURL(logoUrl);
             if (base64Logo !== logoUrl) {
@@ -288,7 +349,7 @@
                 document.getElementById('main-content').style.display = 'block';
                 initializeApp();
             }
-             // Add event listener for the Enter key on the password input
+            // Add event listener for the Enter key on the password input
             document.getElementById('password-input').addEventListener('keypress', function(event) {
                 if (event.key === 'Enter') {
                     event.preventDefault(); // Prevent form submission
@@ -313,18 +374,25 @@
                 return url;
             }
         }
-        
+
         function handleTemplateChange() {
             const letterType = document.getElementById('letterType').value;
             const noTxRecFields = document.getElementById('noTxRecFields');
             const evalInProgressFields = document.getElementById('evalInProgressFields');
+            const reEngagementFields = document.getElementById('reEngagementFields');
 
+            // Hide all fieldsets first
+            noTxRecFields.style.display = 'none';
+            evalInProgressFields.style.display = 'none';
+            reEngagementFields.style.display = 'none';
+
+            // Show the selected one
             if (letterType === 'noTxRec') {
                 noTxRecFields.style.display = 'block';
-                evalInProgressFields.style.display = 'none';
             } else if (letterType === 'evalInProgress') {
-                noTxRecFields.style.display = 'none';
                 evalInProgressFields.style.display = 'block';
+            } else if (letterType === 'reEngagement') {
+                reEngagementFields.style.display = 'block';
             }
             generateReport();
         }
@@ -337,11 +405,12 @@
                     const preview = document.getElementById('signaturePreview');
                     preview.src = e.target.result;
                     preview.classList.remove('hidden');
+                    generateReport(); // Regenerate report when image is added/changed
                 };
                 reader.readAsDataURL(file);
             }
         });
-        
+
         function toggleRecipientName() {
             const recipientType = document.getElementById('recipientType').value;
             const recipientNameContainer = document.getElementById('recipientNameContainer');
@@ -358,6 +427,7 @@
             const signaturePreview = document.getElementById('signaturePreview');
             const signatureData = {
                 name: document.getElementById('counselorName').value,
+                credentials: document.getElementById('counselorCredentials').value,
                 extension: document.getElementById('counselorExtension').value,
                 email: document.getElementById('counselorEmail').value,
                 imgSrc: signaturePreview.src.startsWith('data:image') ? signaturePreview.src : null
@@ -371,6 +441,7 @@
             if (savedData) {
                 const signatureData = JSON.parse(savedData);
                 document.getElementById('counselorName').value = signatureData.name || '';
+                document.getElementById('counselorCredentials').value = signatureData.credentials || '';
                 document.getElementById('counselorExtension').value = signatureData.extension || '';
                 document.getElementById('counselorEmail').value = signatureData.email || '';
                 if (signatureData.imgSrc) {
@@ -384,6 +455,7 @@
         function deleteSignature() {
             localStorage.removeItem('delphiRiseSignatureInfo');
             document.getElementById('counselorName').value = '';
+            document.getElementById('counselorCredentials').value = '';
             document.getElementById('counselorExtension').value = '';
             document.getElementById('counselorEmail').value = '';
             const signaturePreview = document.getElementById('signaturePreview');
@@ -394,24 +466,47 @@
             generateReport();
         }
 
+        function setClosureDate() {
+            const today = new Date();
+            // Start from 7 days in the future
+            let futureDate = new Date();
+            futureDate.setDate(today.getDate() + 7);
+
+            // Find the next Friday
+            const dayOfWeek = futureDate.getDay(); // Sunday = 0, Friday = 5
+            const daysUntilFriday = (5 - dayOfWeek + 7) % 7;
+            futureDate.setDate(futureDate.getDate() + daysUntilFriday);
+
+            const yyyy = futureDate.getFullYear();
+            const mm = String(futureDate.getMonth() + 1).padStart(2, '0');
+            const dd = String(futureDate.getDate()).padStart(2, '0');
+            const closureDateString = `${yyyy}-${mm}-${dd}`;
+            document.getElementById('closureDate').value = closureDateString;
+        }
+
         function generateReport() {
             const letterType = document.getElementById('letterType').value;
             if (letterType === 'noTxRec') {
                 generateNoTxRecReport();
             } else if (letterType === 'evalInProgress') {
                 generateEvalInProgressReport();
+            } else if (letterType === 'reEngagement') {
+                generateReEngagementReport();
             }
         }
-
+        
+        // --- Report Generation Functions ---
+        
+        const formatDate = (dateString, placeholder) => {
+            if (!dateString) return `[${placeholder}]`;
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return `[${placeholder}]`;
+            // Adjust for timezone offset by using UTC methods
+            const adjustedDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+            return adjustedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        };
+        
         function generateNoTxRecReport() {
-            const formatDate = (dateString, placeholder) => {
-                if (!dateString) return `[${placeholder}]`;
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) return `[${placeholder}]`;
-                date.setUTCDate(date.getUTCDate() + 1);
-                return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-            };
-
             const clientFirstName = document.getElementById('clientFirstName').value || '[Client’s First Name]';
             const clientLastName = document.getElementById('clientLastName').value || '[Client’s Last Name]';
             const clientFullName = `${clientFirstName} ${clientLastName}`.trim() || '[Client’s Full Name]';
@@ -441,7 +536,15 @@
             }
             const conclusionSource = includeInterviews ? 'our clinical evaluation and interviews' : 'our clinical evaluation';
             const conclusionParagraph = `Additionally, based on ${conclusionSource}, there is no current evidence suggesting a substance or alcohol use disorder at this time.`;
-            const counselorSignature = getSignatureBlock();
+            
+            const signaturePreview = document.getElementById('signaturePreview');
+            const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
+            let signatureBlock = getSignatureBlock();
+            if (!hasSignatureImage) {
+                // 3 newlines = 2 blank lines. The join adds 2, so we add 1 more.
+                signatureBlock = `\n${signatureBlock}`;
+            }
+
             const finalParagraphs = [
                 `Subject: Evaluation Report for ${clientFullName}`,
                 `Date: ${todaysDate}`,
@@ -451,19 +554,12 @@
                 `Given these findings, we do not recommend ${clientFirstName} for further treatment or intervention related to substance use at this moment. Should there be any future concerns or changes in ${clientFirstName}’s status, we would be prepared to reassess and provide further recommendations as needed.`,
                 `Please let us know if there are any additional requirements or if further information is needed. We are committed to supporting ${clientFirstName}’s ongoing progress and well-being in any way we can.`,
                 `Sincerely,`,
-                counselorSignature
+                signatureBlock
             ];
             document.getElementById('generatedText').value = finalParagraphs.join('\n\n');
         }
 
         function generateEvalInProgressReport() {
-            const formatDate = (dateString, placeholder) => {
-                if (!dateString) return `[${placeholder}]`;
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) return `[${placeholder}]`;
-                date.setUTCDate(date.getUTCDate() + 1);
-                return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-            };
             const formatTime = (timeString, placeholder) => {
                 if (!timeString) return `[${placeholder}]`;
                 const [hours, minutes] = timeString.split(':');
@@ -477,7 +573,15 @@
             const todaysDate = formatDate(document.getElementById('eipTodaysDate').value, "Today's Date");
             const evaluationDate = formatDate(document.getElementById('eipEvaluationDate').value, 'Evaluation Date');
             const evaluationTime = formatTime(document.getElementById('eipEvaluationTime').value, 'Evaluation Time');
-            const counselorSignature = getSignatureBlock();
+            
+            const signaturePreview = document.getElementById('signaturePreview');
+            const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
+            let signatureBlock = getSignatureBlock();
+            if (!hasSignatureImage) {
+                // 3 newlines = 2 blank lines. The join adds 2, so we add 1 more.
+                signatureBlock = `\n${signatureBlock}`;
+            }
+
             const finalParagraphs = [
                 `Re: Evaluation Status for ${clientFullName}`,
                 `Date: ${todaysDate}`,
@@ -487,16 +591,66 @@
                 `We will provide the final evaluation results as soon as the toxicology screen results are available. Please feel free to contact our office if you need any additional information or if there are any specific forms or documentation required in the interim.`,
                 `Thank you for your attention to this matter.`,
                 `Sincerely,`,
-                counselorSignature
+                signatureBlock
             ];
             document.getElementById('generatedText').value = finalParagraphs.join('\n\n');
         }
         
+        function generateReEngagementReport() {
+            const clientFirstName = document.getElementById('reClientFirstName').value || '[FIRST NAME]';
+            const clientLastName = document.getElementById('reClientLastName').value || '[LAST NAME]';
+            const clientFullName = `${clientFirstName} ${clientLastName}`.trim();
+            const address = document.getElementById('reClientAddress').value || '[ADDRESS]';
+            const cityStateZip = document.getElementById('reClientCityStateZip').value || '[CITY], [STATE] [ZIP]';
+            const todaysDateFormatted = formatDate(document.getElementById('reTodaysDate').value, "TODAY'S DATE");
+            const closureDate = formatDate(document.getElementById('closureDate').value, "CLOSURE DATE");
+
+            // Calculate days since last service
+            const lastServiceDateVal = document.getElementById('lastServiceDate').value;
+            const reTodaysDateVal = document.getElementById('reTodaysDate').value;
+            let daysDifference = '[XX]';
+            if (lastServiceDateVal && reTodaysDateVal) {
+                const lastServiceDate = new Date(lastServiceDateVal);
+                const reTodaysDate = new Date(reTodaysDateVal);
+                if (!isNaN(lastServiceDate.getTime()) && !isNaN(reTodaysDate.getTime())) {
+                    const differenceInTime = reTodaysDate.getTime() - lastServiceDate.getTime();
+                    const differenceInDays = Math.round(differenceInTime / (1000 * 3600 * 24));
+                    daysDifference = differenceInDays >= 0 ? differenceInDays : '[XX]';
+                }
+            }
+
+            const signaturePreview = document.getElementById('signaturePreview');
+            const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
+            let signatureBlock = getSignatureBlock();
+            if (!hasSignatureImage) {
+                // 3 newlines = 2 blank lines. The join adds 2, so we add 1 more.
+                signatureBlock = `\n${signatureBlock}`;
+            }
+
+            const addressBlock = [clientFullName, address, cityStateZip].join('\n');
+            
+            const body = [
+                todaysDateFormatted,
+                `Dear ${clientFirstName},`,
+                `I hope you’re doing well. It has been ${daysDifference} days since your last service with us, and in accordance with OASAS regulations, we are required to close your chart if there is no further engagement. However, we want to ensure you continue receiving the support and services that can help you in your recovery.`,
+                `If you would like to remain active with Delphi Rise and continue receiving services, we ask that you schedule an appointment by ${closureDate}. You can do so by calling us at 585-467-2230.`,
+                `If there are any barriers preventing you from scheduling, please reach out—we are happy to discuss ways to help. We value your well-being and hope to continue supporting you on your journey.`,
+                `Sincerely,`,
+                signatureBlock
+            ].join('\n\n');
+
+            document.getElementById('generatedText').value = `${addressBlock}\n\n${body}`;
+        }
+
         function getSignatureBlock() {
             const counselorName = document.getElementById('counselorName').value || '[Counselor’s Name]';
+            const counselorCredentials = document.getElementById('counselorCredentials').value;
             const counselorExtension = document.getElementById('counselorExtension').value || '[Extension]';
             const counselorEmail = document.getElementById('counselorEmail').value || '[Counselor’s E-Mail]';
-            return `${counselorName}\nOutpatient Counselor\nDelphi Rise\n72 Hinchey Road\nRochester, NY 14624\n585-467-2230 ext. ${counselorExtension}\n${counselorEmail}`;
+            
+            const nameLine = counselorCredentials ? `${counselorName}, ${counselorCredentials}` : counselorName;
+
+            return `${nameLine}\nOutpatient Counselor\nDelphi Rise\n72 Hinchey Road\nRochester, NY 14624\n585-467-2230 ext. ${counselorExtension}\n${counselorEmail}`;
         }
 
         function copyText() {
@@ -510,7 +664,7 @@
                 alert('Failed to copy text.');
             }
         }
-        
+
         async function downloadPDF() {
             const { jsPDF } = window.jspdf;
             const reportText = document.getElementById('generatedText').value;
@@ -526,18 +680,21 @@
 
             if (sincerelyIndex !== -1) {
                 mainBody = reportText.substring(0, sincerelyIndex).trim();
-                signatureText = reportText.substring(sincerelyIndex + 'Sincerely,'.length).trim();
+                // Correctly capture the signature block without trimming leading newlines
+                signatureText = reportText.substring(sincerelyIndex + 'Sincerely,'.length);
             }
-            
+
             pdfTextContent.innerText = mainBody;
             pdfSignatureBlock.innerText = signatureText;
 
-            if (signaturePreview.src && signaturePreview.src.startsWith('data:image')) {
+            if (signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden')) {
                  pdfSignatureImg.src = signaturePreview.src;
                  pdfSignatureImg.style.display = 'block';
                  const lines = signatureText.split('\n');
                  if (lines.length > 1) {
-                    pdfSignatureBlock.innerText = lines.slice(1).join('\n');
+                    // The first non-empty line is the name, the rest is the block
+                    const firstLineIndex = lines.findIndex(line => line.trim() !== '');
+                    pdfSignatureBlock.innerText = lines.slice(firstLineIndex + 1).join('\n');
                  }
             } else {
                  pdfSignatureImg.src = "";
@@ -557,19 +714,22 @@
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            
             const letterType = document.getElementById('letterType').value;
             let clientFirstName, clientLastName;
             if (letterType === 'noTxRec') {
                 clientFirstName = document.getElementById('clientFirstName').value;
                 clientLastName = document.getElementById('clientLastName').value;
-            } else {
+            } else if (letterType === 'evalInProgress') {
                 clientFirstName = document.getElementById('eipClientFirstName').value;
                 clientLastName = document.getElementById('eipClientLastName').value;
+            } else if (letterType === 'reEngagement') {
+                clientFirstName = document.getElementById('reClientFirstName').value;
+                clientLastName = document.getElementById('reClientLastName').value;
             }
             const clientName = `${clientFirstName} ${clientLastName}`.trim() || 'report';
-            pdf.save(`${clientName.replace(/\s/g, '_')}_Evaluation_Report.pdf`);
+            pdf.save(`${clientName.replace(/\s/g, '_')}_Report.pdf`);
         }
-
     </script>
 </body>
 </html>
