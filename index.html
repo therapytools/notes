@@ -232,7 +232,7 @@
                 </div>
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">ASSESSMENT:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="mentalStatus">Mental Status Exam:</label>
-                <textarea class="p-2 border border-gray-300 rounded-md bg-gray-50 w-full" id="mentalStatus" name="mentalStatus" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
+                <textarea class="p-2 border border-gray-300 rounded-md w-full" id="mentalStatus" name="mentalStatus" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
                 <label class="font-medium text-gray-700 mb-2" for="additionalAssessment">Additional Assessment:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="additionalAssessment" name="additionalAssessment" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">RESPONSE:</h3>
@@ -569,6 +569,27 @@
         // Initial call to populate MSE field in DARP from the other tab
         if (document.getElementById('mseTextbox')) {
             updateMseText(); 
+        }
+
+        // --- ADDED: Logic for editable & synced MSE textareas ---
+        const mseTextbox = document.getElementById('mseTextbox');
+        const darpMentalStatusTextarea = document.getElementById('mentalStatus');
+
+        if (mseTextbox && darpMentalStatusTextarea) {
+            // Sync from MSE tab to DARP tab
+            mseTextbox.addEventListener('input', () => {
+                darpMentalStatusTextarea.value = mseTextbox.value;
+                autoResize(darpMentalStatusTextarea);
+                updateDarpProgressNote();
+            });
+
+            // Sync from DARP tab to MSE tab
+            // The existing oninput attribute on mentalStatus already calls autoResize and updateDarpProgressNote.
+            // We just add the sync back to mseTextbox.
+            darpMentalStatusTextarea.addEventListener('input', () => {
+                mseTextbox.value = darpMentalStatusTextarea.value;
+                autoResize(mseTextbox);
+            });
         }
     });
 </script>
