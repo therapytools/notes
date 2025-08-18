@@ -13,12 +13,16 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+        /* Simple animation for showing/hiding sections */
+        .form-section {
+            transition: opacity 0.5s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
     <!-- Password Protection Overlay -->
     <div id="password-overlay" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-        <div class="bg-white p-8 rounded-lg shadow-xl text-center">
+        <div class="bg-white p-8 rounded-lg shadow-xl text-center w-full max-w-sm">
             <h2 class="text-2xl font-bold mb-4">Enter Password</h2>
             <input type="password" id="password-input" class="w-full px-4 py-2 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-blue-500">
             <button onclick="checkPassword()" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">Submit</button>
@@ -41,12 +45,94 @@
                     <select id="letterType" onchange="handleTemplateChange()" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-lg">
                         <option value="evalInProgress">Evaluation in Progress</option>
                         <option value="noTxRec">No Treatment Recommended</option>
+                        <option value="treatmentRec">Treatment Recommended</option>
                         <option value="reEngagement">Re-Engagement</option>
                     </select>
                 </div>
 
+                <!-- ===== TEMPLATE: Treatment Recommended ===== -->
+                <div id="treatmentRecFields" class="hidden form-section">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <!-- Client Information -->
+                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                            <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Client Information</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="trClientFirstName" class="block text-sm font-medium text-gray-700 mb-1">Client’s First Name</label>
+                                    <input type="text" id="trClientFirstName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="trClientLastName" class="block text-sm font-medium text-gray-700 mb-1">Client’s Last Name</label>
+                                    <input type="text" id="trClientLastName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Evaluation Details -->
+                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                             <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Evaluation Details</h2>
+                             <div class="space-y-4">
+                                <div>
+                                    <label for="trTodaysDate" class="block text-sm font-medium text-gray-700 mb-1">Date of Report</label>
+                                    <input type="date" id="trTodaysDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="trEvaluationDate" class="block text-sm font-medium text-gray-700 mb-1">Date of Evaluation</label>
+                                    <input type="date" id="trEvaluationDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="trLevelOfCare" class="block text-sm font-medium text-gray-700 mb-1">Recommended Level of Care</label>
+                                    <input type="text" id="trLevelOfCare" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="e.g., Outpatient">
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                     <!-- Diagnosis Details -->
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6">
+                        <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Diagnosis</h2>
+                        <div class="flex items-end gap-4">
+                            <div class="flex-grow">
+                                <label for="dsm5Selector" class="block text-sm font-medium text-gray-700 mb-1">Select DSM-5-TR Diagnosis</label>
+                                <select id="dsm5Selector" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <!-- Options will be populated by JS -->
+                                </select>
+                            </div>
+                            <button onclick="addDiagnosis()" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors whitespace-nowrap">Add +</button>
+                        </div>
+                        <div id="diagnosesContainer" class="mt-4 space-y-2">
+                            <!-- Selected diagnoses will appear here -->
+                        </div>
+                    </div>
+                    <!-- Toxicology Details -->
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
+                        <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Toxicology Screen</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="trToxScreenDate" class="block text-sm font-medium text-gray-700 mb-1">Tox Screen Date</label>
+                                <input type="date" id="trToxScreenDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tox Screen Result</label>
+                                <div class="flex items-center space-x-6">
+                                   <div class="flex items-center">
+                                        <input type="radio" id="trToxNegative" name="trToxResult" value="negative" checked onchange="toggleTrPositiveSubstance(); generateReport();" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                        <label for="trToxNegative" class="ml-2 block text-sm text-gray-900">Negative</label>
+                                   </div>
+                                   <div class="flex items-center">
+                                        <input type="radio" id="trToxPositive" name="trToxResult" value="positive" onchange="toggleTrPositiveSubstance(); generateReport();" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                        <label for="trToxPositive" class="ml-2 block text-sm text-gray-900">Positive</label>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div id="trPositiveSubstanceContainer" class="hidden mt-4">
+                            <label for="trPositiveSubstance" class="block text-sm font-medium text-gray-700 mb-1">Positive for</label>
+                            <input type="text" id="trPositiveSubstance" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="e.g., THC, Opiates">
+                        </div>
+                    </div>
+                </div>
+
                 <!-- ===== TEMPLATE: No Treatment Recommended ===== -->
-                <div id="noTxRecFields" class="hidden">
+                <div id="noTxRecFields" class="hidden form-section">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Client Information -->
                         <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
@@ -108,12 +194,12 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Tox Screen Result</label>
                                 <div class="flex items-center space-x-6">
                                    <div class="flex items-center">
-                                       <input type="radio" id="toxNegative" name="toxResult" value="negative" checked onchange="togglePositiveSubstance(); generateReport();" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
-                                       <label for="toxNegative" class="ml-2 block text-sm text-gray-900">Negative</label>
+                                        <input type="radio" id="toxNegative" name="toxResult" value="negative" checked onchange="togglePositiveSubstance(); generateReport();" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                        <label for="toxNegative" class="ml-2 block text-sm text-gray-900">Negative</label>
                                    </div>
                                    <div class="flex items-center">
-                                       <input type="radio" id="toxPositive" name="toxResult" value="positive" onchange="togglePositiveSubstance(); generateReport();" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
-                                       <label for="toxPositive" class="ml-2 block text-sm text-gray-900">Positive</label>
+                                        <input type="radio" id="toxPositive" name="toxResult" value="positive" onchange="togglePositiveSubstance(); generateReport();" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                        <label for="toxPositive" class="ml-2 block text-sm text-gray-900">Positive</label>
                                    </div>
                                 </div>
                             </div>
@@ -126,7 +212,7 @@
                 </div>
 
                 <!-- ===== TEMPLATE: Evaluation in Progress ===== -->
-                <div id="evalInProgressFields" class="hidden">
+                <div id="evalInProgressFields" class="hidden form-section">
                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Client Information -->
                         <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
@@ -164,7 +250,7 @@
                 </div>
                 
                 <!-- ===== TEMPLATE: Re-Engagement ===== -->
-                <div id="reEngagementFields" class="hidden">
+                <div id="reEngagementFields" class="hidden form-section">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Client Information -->
                         <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
@@ -272,10 +358,10 @@
              <div id="pdf-signature-block" style="margin-top: 0.5rem; white-space: pre-wrap;"></div>
          </div>
          <div id="pdf-footer" style="position: absolute; bottom: 1in; right: 1in; text-align: right; font-size: 8pt; color: #555; line-height: 1.2;">
-            Treatment | Prevention | Care Management | Counseling<br>
-            72 Hinchey Road, Rochester, NY 14624 | 585-467-2230<br>
-            www.delphirise.org
-        </div>
+             Treatment | Prevention | Care Management | Counseling<br>
+             72 Hinchey Road, Rochester, NY 14624 | 585-467-2230<br>
+             www.delphirise.org
+         </div>
     </div>
 
     <script>
@@ -304,6 +390,9 @@
         function checkPassword() {
             const password = document.getElementById('password-input').value;
             const errorMessage = document.getElementById('error-message');
+            // IMPORTANT: This is a simple MD5 hash for demonstration. 
+            // For real applications, use a secure, server-side authentication method.
+            // The password is "delphi".
             const correctPasswordHash = '0c9649d18dba98d8e1397fddf98ce03c';
 
             if (CryptoJS.MD5(password).toString() === correctPasswordHash) {
@@ -317,6 +406,16 @@
         }
 
         // --- Main Application Logic ---
+
+        // Data for DSM-5 Diagnosis Dropdown
+        const dsm5Disorders = [
+            "Alcohol Use Disorder", "Cannabis Use Disorder", "Phencyclidine Use Disorder", 
+            "Other Hallucinogen Use Disorder", "Inhalant Use Disorder", "Opioid Use Disorder",
+            "Sedative, Hypnotic, or Anxiolytic Use Disorder", "Stimulant Use Disorder", "Tobacco Use Disorder",
+            "Other (or Unknown) Substance Use Disorder", "Gambling Disorder"
+        ];
+        let selectedDiagnoses = [];
+
         async function initializeApp() {
             const today = new Date();
             const yyyy = today.getFullYear();
@@ -328,10 +427,21 @@
             document.getElementById('todaysDate').value = todayString;
             document.getElementById('eipTodaysDate').value = todayString;
             document.getElementById('reTodaysDate').value = todayString;
+            document.getElementById('trTodaysDate').value = todayString;
             
             // Set the default closure date for the re-engagement letter
             setClosureDate();
+            
+            // Populate the diagnosis dropdown
+            const dsm5Selector = document.getElementById('dsm5Selector');
+            dsm5Disorders.forEach(disorder => {
+                const option = document.createElement('option');
+                option.value = disorder;
+                option.textContent = disorder;
+                dsm5Selector.appendChild(option);
+            });
 
+            // Convert logo to base64 to prevent PDF generation issues
             const logoUrl = 'https://therapytools.github.io/notes/logo.png';
             const base64Logo = await toDataURL(logoUrl);
             if (base64Logo !== logoUrl) {
@@ -377,22 +487,12 @@
 
         function handleTemplateChange() {
             const letterType = document.getElementById('letterType').value;
-            const noTxRecFields = document.getElementById('noTxRecFields');
-            const evalInProgressFields = document.getElementById('evalInProgressFields');
-            const reEngagementFields = document.getElementById('reEngagementFields');
+            const allFields = document.querySelectorAll('.form-section');
+            allFields.forEach(field => field.style.display = 'none');
 
-            // Hide all fieldsets first
-            noTxRecFields.style.display = 'none';
-            evalInProgressFields.style.display = 'none';
-            reEngagementFields.style.display = 'none';
-
-            // Show the selected one
-            if (letterType === 'noTxRec') {
-                noTxRecFields.style.display = 'block';
-            } else if (letterType === 'evalInProgress') {
-                evalInProgressFields.style.display = 'block';
-            } else if (letterType === 'reEngagement') {
-                reEngagementFields.style.display = 'block';
+            const selectedFields = document.getElementById(letterType + 'Fields');
+            if (selectedFields) {
+                selectedFields.style.display = 'block';
             }
             generateReport();
         }
@@ -420,6 +520,12 @@
         function togglePositiveSubstance() {
             const toxResult = document.querySelector('input[name="toxResult"]:checked').value;
             const positiveContainer = document.getElementById('positiveSubstanceContainer');
+            positiveContainer.style.display = toxResult === 'positive' ? 'block' : 'none';
+        }
+
+        function toggleTrPositiveSubstance() {
+            const toxResult = document.querySelector('input[name="trToxResult"]:checked').value;
+            const positiveContainer = document.getElementById('trPositiveSubstanceContainer');
             positiveContainer.style.display = toxResult === 'positive' ? 'block' : 'none';
         }
 
@@ -468,11 +574,9 @@
 
         function setClosureDate() {
             const today = new Date();
-            // Start from 7 days in the future
             let futureDate = new Date();
             futureDate.setDate(today.getDate() + 7);
 
-            // Find the next Friday
             const dayOfWeek = futureDate.getDay(); // Sunday = 0, Friday = 5
             const daysUntilFriday = (5 - dayOfWeek + 7) % 7;
             futureDate.setDate(futureDate.getDate() + daysUntilFriday);
@@ -483,15 +587,60 @@
             const closureDateString = `${yyyy}-${mm}-${dd}`;
             document.getElementById('closureDate').value = closureDateString;
         }
+        
+        // --- Diagnosis Management ---
+        function addDiagnosis() {
+            const selector = document.getElementById('dsm5Selector');
+            const diagnosis = selector.value;
+            if (diagnosis && !selectedDiagnoses.includes(diagnosis)) {
+                selectedDiagnoses.push(diagnosis);
+                renderDiagnoses();
+                generateReport();
+            }
+        }
+
+        function removeDiagnosis(index) {
+            selectedDiagnoses.splice(index, 1);
+            renderDiagnoses();
+            generateReport();
+        }
+
+        function renderDiagnoses() {
+            const container = document.getElementById('diagnosesContainer');
+            container.innerHTML = '';
+            selectedDiagnoses.forEach((diagnosis, index) => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between bg-blue-100 p-2 rounded-lg';
+                div.innerHTML = `
+                    <span class="text-blue-800">${diagnosis}</span>
+                    <button onclick="removeDiagnosis(${index})" class="text-red-500 hover:text-red-700 font-bold text-lg">&times;</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function formatDiagnoses(diagnoses) {
+            if (diagnoses.length === 0) return '[diagnosis]';
+            if (diagnoses.length === 1) return diagnoses[0];
+            if (diagnoses.length === 2) return diagnoses.join(' and ');
+            return diagnoses.slice(0, -1).join(', ') + ', and ' + diagnoses.slice(-1);
+        }
 
         function generateReport() {
             const letterType = document.getElementById('letterType').value;
-            if (letterType === 'noTxRec') {
-                generateNoTxRecReport();
-            } else if (letterType === 'evalInProgress') {
-                generateEvalInProgressReport();
-            } else if (letterType === 'reEngagement') {
-                generateReEngagementReport();
+            switch (letterType) {
+                case 'noTxRec':
+                    generateNoTxRecReport();
+                    break;
+                case 'evalInProgress':
+                    generateEvalInProgressReport();
+                    break;
+                case 'reEngagement':
+                    generateReEngagementReport();
+                    break;
+                case 'treatmentRec':
+                    generateTreatmentRecReport();
+                    break;
             }
         }
         
@@ -501,11 +650,45 @@
             if (!dateString) return `[${placeholder}]`;
             const date = new Date(dateString);
             if (isNaN(date.getTime())) return `[${placeholder}]`;
-            // Adjust for timezone offset by using UTC methods
             const adjustedDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
             return adjustedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         };
         
+        function generateTreatmentRecReport() {
+            const clientFirstName = document.getElementById('trClientFirstName').value || '[Client’s First Name]';
+            const clientLastName = document.getElementById('trClientLastName').value || '[Client’s Last Name]';
+            const clientFullName = `${clientFirstName} ${clientLastName}`.trim();
+            const todaysDate = formatDate(document.getElementById('trTodaysDate').value, "DATE");
+            const evaluationDate = formatDate(document.getElementById('trEvaluationDate').value, "Date of Evaluation");
+            const diagnosisText = formatDiagnoses(selectedDiagnoses);
+            const levelOfCare = document.getElementById('trLevelOfCare').value || '[level of care]';
+            const toxScreenDate = formatDate(document.getElementById('trToxScreenDate').value, "Toxicology Screen Date");
+            const toxResult = document.querySelector('input[name="trToxResult"]:checked').value;
+            // *** FIX: Replaced hardcoded placeholder with the clientFirstName variable ***
+            let toxSentence = `${clientFirstName}’s toxicology screen, which was collected on ${toxScreenDate}, was ${toxResult}`;
+            if (toxResult === 'positive') {
+                const substances = document.getElementById('trPositiveSubstance').value || '[substances]';
+                toxSentence += ` for ${substances}.`;
+            } else {
+                toxSentence += '.';
+            }
+
+            const signatureBlock = getSignatureBlockWithSpacing();
+
+            const paragraphs = [
+                `Re: Evaluation Results for ${clientFullName}`,
+                `Date: ${todaysDate}`,
+                `On ${evaluationDate}, ${clientFullName} completed a substance and alcohol use disorder evaluation at Delphi Rise. The evaluation included gathering a history of substance and alcohol use, collateral interviews, a toxicology screen, and a brief screen to identify potential mental health concerns.`,
+                `Based on this comprehensive clinical evaluation, ${clientFirstName} has been diagnosed with ${diagnosisText} and is recommended for ${levelOfCare} treatment. ${toxSentence}`,
+                `Delphi Rise is committed to providing personalized, evidence-based treatment to help clients achieve long-term recovery. We believe that ${clientFirstName} would benefit from ongoing engagement in the recommended services and a structured, supportive environment to address the challenges of substance and alcohol use.`,
+                `Please feel free to contact us if you require any additional information or clarification regarding this evaluation or the services we provide.`,
+                `Sincerely,`,
+                signatureBlock
+            ];
+
+            document.getElementById('generatedText').value = paragraphs.join('\n\n');
+        }
+
         function generateNoTxRecReport() {
             const clientFirstName = document.getElementById('clientFirstName').value || '[Client’s First Name]';
             const clientLastName = document.getElementById('clientLastName').value || '[Client’s Last Name]';
@@ -537,13 +720,7 @@
             const conclusionSource = includeInterviews ? 'our clinical evaluation and interviews' : 'our clinical evaluation';
             const conclusionParagraph = `Additionally, based on ${conclusionSource}, there is no current evidence suggesting a substance or alcohol use disorder at this time.`;
             
-            const signaturePreview = document.getElementById('signaturePreview');
-            const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
-            let signatureBlock = getSignatureBlock();
-            if (!hasSignatureImage) {
-                // 3 newlines = 2 blank lines. The join adds 2, so we add 1 more.
-                signatureBlock = `\n${signatureBlock}`;
-            }
+            const signatureBlock = getSignatureBlockWithSpacing();
 
             const finalParagraphs = [
                 `Subject: Evaluation Report for ${clientFullName}`,
@@ -574,13 +751,7 @@
             const evaluationDate = formatDate(document.getElementById('eipEvaluationDate').value, 'Evaluation Date');
             const evaluationTime = formatTime(document.getElementById('eipEvaluationTime').value, 'Evaluation Time');
             
-            const signaturePreview = document.getElementById('signaturePreview');
-            const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
-            let signatureBlock = getSignatureBlock();
-            if (!hasSignatureImage) {
-                // 3 newlines = 2 blank lines. The join adds 2, so we add 1 more.
-                signatureBlock = `\n${signatureBlock}`;
-            }
+            const signatureBlock = getSignatureBlockWithSpacing();
 
             const finalParagraphs = [
                 `Re: Evaluation Status for ${clientFullName}`,
@@ -619,14 +790,7 @@
                 }
             }
 
-            const signaturePreview = document.getElementById('signaturePreview');
-            const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
-            let signatureBlock = getSignatureBlock();
-            if (!hasSignatureImage) {
-                // 3 newlines = 2 blank lines. The join adds 2, so we add 1 more.
-                signatureBlock = `\n${signatureBlock}`;
-            }
-
+            const signatureBlock = getSignatureBlockWithSpacing();
             const addressBlock = [clientFullName, address, cityStateZip].join('\n');
             
             const body = [
@@ -653,13 +817,30 @@
             return `${nameLine}\nOutpatient Counselor\nDelphi Rise\n72 Hinchey Road\nRochester, NY 14624\n585-467-2230 ext. ${counselorExtension}\n${counselorEmail}`;
         }
 
+        function getSignatureBlockWithSpacing() {
+            const signaturePreview = document.getElementById('signaturePreview');
+            const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
+            let signatureBlock = getSignatureBlock();
+            if (!hasSignatureImage) {
+                // Add newlines for manual signature space
+                signatureBlock = `\n\n\n${signatureBlock}`;
+            }
+            return signatureBlock;
+        }
+
         function copyText() {
             const textarea = document.getElementById('generatedText');
             textarea.select();
             textarea.setSelectionRange(0, 99999);
             try {
-                document.execCommand('copy');
-                alert('Report text copied to clipboard!');
+                // Using the Clipboard API for modern browsers
+                navigator.clipboard.writeText(textarea.value).then(() => {
+                    alert('Report text copied to clipboard!');
+                }, () => {
+                    // Fallback for older browsers
+                    document.execCommand('copy');
+                    alert('Report text copied to clipboard! (fallback)');
+                });
             } catch (err) {
                 alert('Failed to copy text.');
             }
@@ -680,8 +861,7 @@
 
             if (sincerelyIndex !== -1) {
                 mainBody = reportText.substring(0, sincerelyIndex).trim();
-                // Correctly capture the signature block without trimming leading newlines
-                signatureText = reportText.substring(sincerelyIndex + 'Sincerely,'.length);
+                signatureText = reportText.substring(sincerelyIndex + 'Sincerely,'.length).trim();
             }
 
             pdfTextContent.innerText = mainBody;
@@ -690,15 +870,12 @@
             if (signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden')) {
                  pdfSignatureImg.src = signaturePreview.src;
                  pdfSignatureImg.style.display = 'block';
-                 const lines = signatureText.split('\n');
-                 if (lines.length > 1) {
-                    // The first non-empty line is the name, the rest is the block
-                    const firstLineIndex = lines.findIndex(line => line.trim() !== '');
-                    pdfSignatureBlock.innerText = lines.slice(firstLineIndex + 1).join('\n');
-                 }
+                 // The signature text from getSignatureBlock is already correct.
             } else {
                  pdfSignatureImg.src = "";
                  pdfSignatureImg.style.display = 'none';
+                 // Remove the extra newlines added for manual signature space
+                 pdfSignatureBlock.innerText = signatureText.replace(/^\n\n\n/, '');
             }
 
             pdfContentDiv.classList.remove('hidden');
@@ -716,16 +893,26 @@
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
             
             const letterType = document.getElementById('letterType').value;
-            let clientFirstName, clientLastName;
-            if (letterType === 'noTxRec') {
-                clientFirstName = document.getElementById('clientFirstName').value;
-                clientLastName = document.getElementById('clientLastName').value;
-            } else if (letterType === 'evalInProgress') {
-                clientFirstName = document.getElementById('eipClientFirstName').value;
-                clientLastName = document.getElementById('eipClientLastName').value;
-            } else if (letterType === 'reEngagement') {
-                clientFirstName = document.getElementById('reClientFirstName').value;
-                clientLastName = document.getElementById('reClientLastName').value;
+            let clientFirstName = 'Client';
+            let clientLastName = 'Report';
+
+            switch(letterType) {
+                case 'noTxRec':
+                    clientFirstName = document.getElementById('clientFirstName').value;
+                    clientLastName = document.getElementById('clientLastName').value;
+                    break;
+                case 'evalInProgress':
+                    clientFirstName = document.getElementById('eipClientFirstName').value;
+                    clientLastName = document.getElementById('eipClientLastName').value;
+                    break;
+                case 'reEngagement':
+                    clientFirstName = document.getElementById('reClientFirstName').value;
+                    clientLastName = document.getElementById('reClientLastName').value;
+                    break;
+                case 'treatmentRec':
+                    clientFirstName = document.getElementById('trClientFirstName').value;
+                    clientLastName = document.getElementById('trClientLastName').value;
+                    break;
             }
             const clientName = `${clientFirstName} ${clientLastName}`.trim() || 'report';
             pdf.save(`${clientName.replace(/\s/g, '_')}_Report.pdf`);
