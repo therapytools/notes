@@ -46,8 +46,84 @@
                         <option value="evalInProgress">Evaluation in Progress</option>
                         <option value="noTxRec">No Treatment Recommended</option>
                         <option value="treatmentRec">Treatment Recommended</option>
+                        <option value="discharge">Discharge Letter</option>
                         <option value="reEngagement">Re-Engagement</option>
                     </select>
+                </div>
+
+                <!-- ===== TEMPLATE: Discharge Letter ===== -->
+                <div id="dischargeFields" class="hidden form-section">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <!-- Client & Dates -->
+                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                            <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Client &amp; Dates</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="disClientFirstName" class="block text-sm font-medium text-gray-700 mb-1">Client’s First Name</label>
+                                    <input type="text" id="disClientFirstName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="disClientLastName" class="block text-sm font-medium text-gray-700 mb-1">Client’s Last Name</label>
+                                    <input type="text" id="disClientLastName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="disClientDOB" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                                    <input type="date" id="disClientDOB" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="disAdmissionDate" class="block text-sm font-medium text-gray-700 mb-1">Admission Date</label>
+                                    <input type="date" id="disAdmissionDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="disDischargeDate" class="block text-sm font-medium text-gray-700 mb-1">Discharge Date</label>
+                                    <input type="date" id="disDischargeDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Treatment Summary -->
+                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                             <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Treatment Summary</h2>
+                             <div class="space-y-4">
+                                <div>
+                                    <label for="disNumSessions" class="block text-sm font-medium text-gray-700 mb-1">Number of Sessions</label>
+                                    <input type="number" id="disNumSessions" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="disGoalAchievement" class="block text-sm font-medium text-gray-700 mb-1">Treatment Goal Achievement</label>
+                                    <select id="disGoalAchievement" onchange="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                        <option value="achieved">achieved</option>
+                                        <option value="partially achieved">partially achieved</option>
+                                        <option value="did not achieve">did not achieve</option>
+                                    </select>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                     <!-- Discharge Status -->
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
+                        <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Discharge Status</h2>
+                        <div class="space-y-4">
+                           <div>
+                                <label for="disOasasReasonSelect" class="block text-sm font-medium text-gray-700 mb-1">OASAS Reporting Reason</label>
+                                <select id="disOasasReasonSelect" onchange="toggleOasasOther(); generateReport();" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <option value="completed treatment, and all goals were met">Completed treatment: all goals met</option>
+                                    <option value="completed treatment, and some goals were met">Completed treatment: some goals met</option>
+                                    <option value="transferred to another OASAS-certified program">Transferred to another OASAS-certified program</option>
+                                    <option value="transferred to another non-OASAS program / level of care">Transferred to another non-OASAS program / level of care</option>
+                                    <option value="was referred elsewhere for non-treatment services">Referred elsewhere (non-treatment services)</option>
+                                    <option value="left against professional advice (APA)">Left against professional advice (APA)</option>
+                                    <option value="dropped out (lost to contact)" selected>Dropped out (lost to contact)</option>
+                                    <option value="was incarcerated">Incarcerated</option>
+                                    <option value="is deceased">Deceased</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                           </div>
+                            <div id="oasasOtherContainer" class="hidden pl-2">
+                                <label for="disOasasOtherText" class="block text-sm font-medium text-gray-700 mb-1">Specify Other Reason</label>
+                                <input type="text" id="disOasasOtherText" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- ===== TEMPLATE: Treatment Recommended ===== -->
@@ -428,6 +504,7 @@
             document.getElementById('eipTodaysDate').value = todayString;
             document.getElementById('reTodaysDate').value = todayString;
             document.getElementById('trTodaysDate').value = todayString;
+            document.getElementById('disDischargeDate').value = todayString;
             
             // Set the default closure date for the re-engagement letter
             setClosureDate();
@@ -527,6 +604,12 @@
             const toxResult = document.querySelector('input[name="trToxResult"]:checked').value;
             const positiveContainer = document.getElementById('trPositiveSubstanceContainer');
             positiveContainer.style.display = toxResult === 'positive' ? 'block' : 'none';
+        }
+        
+        function toggleOasasOther() {
+            const oasasResult = document.getElementById('disOasasReasonSelect').value;
+            const otherContainer = document.getElementById('oasasOtherContainer');
+            otherContainer.style.display = oasasResult === 'Other' ? 'block' : 'none';
         }
 
         function saveSignature() {
@@ -641,6 +724,9 @@
                 case 'treatmentRec':
                     generateTreatmentRecReport();
                     break;
+                case 'discharge':
+                    generateDischargeReport();
+                    break;
             }
         }
         
@@ -654,6 +740,42 @@
             return adjustedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         };
         
+        function generateDischargeReport() {
+            const dischargeDate = formatDate(document.getElementById('disDischargeDate').value, "Today's Date");
+            const clientFirstName = document.getElementById('disClientFirstName').value || '[First Name]';
+            const clientLastName = document.getElementById('disClientLastName').value || '[Last Name]';
+            const clientFullName = `${clientFirstName} ${clientLastName}`.trim();
+            const clientDOB = formatDate(document.getElementById('disClientDOB').value, "Date of Birth");
+            const admissionDate = formatDate(document.getElementById('disAdmissionDate').value, "Admission Date");
+            const numSessions = document.getElementById('disNumSessions').value || '[Number of Sessions]';
+            const goalAchievement = document.getElementById('disGoalAchievement').value;
+
+            let oasasReasonText = document.getElementById('disOasasReasonSelect').value;
+            let finalOasasSentence;
+
+            if (oasasReasonText === 'Other') {
+                const otherText = document.getElementById('disOasasOtherText').value || '______________________________';
+                finalOasasSentence = `Client was discharged for another reason: ${otherText}.`;
+            } else {
+                finalOasasSentence = `Client ${oasasReasonText}.`;
+            }
+
+            const signatureBlock = getSignatureBlockWithSpacing();
+
+            const paragraphs = [
+                dischargeDate,
+                `To Whom It May Concern,`,
+                `This letter is to confirm that ${clientFullName}, date of birth ${clientDOB}, was admitted to Delphi Rise Outpatient on ${admissionDate} and discharged on ${dischargeDate}.`,
+                `During treatment, ${clientFirstName} attended a total of ${numSessions} sessions. At the time of discharge, ${clientFirstName} ${goalAchievement} the treatment goals established at the start of services.`,
+                `In accordance with OASAS reporting requirements, this discharge is recorded as follows: ${finalOasasSentence}`,
+                `If further information is required, please contact me using the information provided below.`,
+                `Sincerely,`,
+                signatureBlock
+            ];
+
+            document.getElementById('generatedText').value = paragraphs.join('\n\n');
+        }
+
         function generateTreatmentRecReport() {
             const clientFirstName = document.getElementById('trClientFirstName').value || '[Client’s First Name]';
             const clientLastName = document.getElementById('trClientLastName').value || '[Client’s Last Name]';
@@ -664,7 +786,6 @@
             const levelOfCare = document.getElementById('trLevelOfCare').value || '[level of care]';
             const toxScreenDate = formatDate(document.getElementById('trToxScreenDate').value, "Toxicology Screen Date");
             const toxResult = document.querySelector('input[name="trToxResult"]:checked').value;
-            // *** FIX: Replaced hardcoded placeholder with the clientFirstName variable ***
             let toxSentence = `${clientFirstName}’s toxicology screen, which was collected on ${toxScreenDate}, was ${toxResult}`;
             if (toxResult === 'positive') {
                 const substances = document.getElementById('trPositiveSubstance').value || '[substances]';
@@ -822,8 +943,8 @@
             const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
             let signatureBlock = getSignatureBlock();
             if (!hasSignatureImage) {
-                // Add newlines for manual signature space
-                signatureBlock = `\n\n\n${signatureBlock}`;
+                // Add 2 newlines for 1 blank line
+                signatureBlock = `\n\n${signatureBlock}`;
             }
             return signatureBlock;
         }
@@ -861,7 +982,8 @@
 
             if (sincerelyIndex !== -1) {
                 mainBody = reportText.substring(0, sincerelyIndex).trim();
-                signatureText = reportText.substring(sincerelyIndex + 'Sincerely,'.length).trim();
+                // Do not trim the start of the signature text to preserve newlines
+                signatureText = reportText.substring(sincerelyIndex + 'Sincerely,'.length);
             }
 
             pdfTextContent.innerText = mainBody;
@@ -870,12 +992,9 @@
             if (signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden')) {
                  pdfSignatureImg.src = signaturePreview.src;
                  pdfSignatureImg.style.display = 'block';
-                 // The signature text from getSignatureBlock is already correct.
             } else {
                  pdfSignatureImg.src = "";
                  pdfSignatureImg.style.display = 'none';
-                 // Remove the extra newlines added for manual signature space
-                 pdfSignatureBlock.innerText = signatureText.replace(/^\n\n\n/, '');
             }
 
             pdfContentDiv.classList.remove('hidden');
@@ -912,6 +1031,10 @@
                 case 'treatmentRec':
                     clientFirstName = document.getElementById('trClientFirstName').value;
                     clientLastName = document.getElementById('trClientLastName').value;
+                    break;
+                case 'discharge':
+                    clientFirstName = document.getElementById('disClientFirstName').value;
+                    clientLastName = document.getElementById('disClientLastName').value;
                     break;
             }
             const clientName = `${clientFirstName} ${clientLastName}`.trim() || 'report';
