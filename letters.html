@@ -17,6 +17,14 @@
         .form-section {
             transition: opacity 0.5s ease-in-out;
         }
+        /* Styles for the custom notification */
+        #notification {
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        /* Removed margin from pdf-signature-block to control spacing with newlines */
+        #pdf-signature-block {
+             white-space: pre-wrap;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -35,7 +43,7 @@
         <div class="container mx-auto p-4 sm:p-6 lg:p-8">
             <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6 sm:p-8">
                 <div class="flex items-center justify-center mb-6">
-                    <img id="visible-logo" src="https://therapytools.github.io/notes/logo.png" alt="Delphi Rise Logo" class="h-20">
+                    <img id="visible-logo" src="https://therapytools.github.io/notes/logo.png" alt="Delphi Rise Logo" class="h-20" onerror="this.onerror=null;this.src='https://placehold.co/200x80/ffffff/333333?text=Logo';">
                 </div>
                 <h1 class="text-2xl sm:text-3xl font-bold text-center text-gray-700 mb-8">Letter Generator</h1>
 
@@ -99,7 +107,7 @@
                              </div>
                         </div>
                     </div>
-                     <!-- Discharge Status -->
+                      <!-- Discharge Status -->
                     <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
                         <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Discharge Status</h2>
                         <div class="space-y-4">
@@ -162,7 +170,7 @@
                              </div>
                         </div>
                     </div>
-                     <!-- Diagnosis Details -->
+                      <!-- Diagnosis Details -->
                     <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6">
                         <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Diagnosis</h2>
                         <div class="flex items-end gap-4">
@@ -289,40 +297,40 @@
 
                 <!-- ===== TEMPLATE: Evaluation in Progress ===== -->
                 <div id="evalInProgressFields" class="hidden form-section">
-                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <!-- Client Information -->
-                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                            <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Client Information</h2>
-                            <div class="space-y-4">
-                                <div>
-                                    <label for="eipClientFirstName" class="block text-sm font-medium text-gray-700 mb-1">Client’s First Name</label>
-                                    <input type="text" id="eipClientFirstName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <!-- Client Information -->
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                                <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Client Information</h2>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="eipClientFirstName" class="block text-sm font-medium text-gray-700 mb-1">Client’s First Name</label>
+                                        <input type="text" id="eipClientFirstName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    </div>
+                                    <div>
+                                        <label for="eipClientLastName" class="block text-sm font-medium text-gray-700 mb-1">Client’s Last Name</label>
+                                        <input type="text" id="eipClientLastName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="eipClientLastName" class="block text-sm font-medium text-gray-700 mb-1">Client’s Last Name</label>
-                                    <input type="text" id="eipClientLastName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            </div>
+                            <!-- Evaluation Details -->
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                                <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Evaluation Details</h2>
+                                 <div class="space-y-4">
+                                    <div>
+                                        <label for="eipTodaysDate" class="block text-sm font-medium text-gray-700 mb-1">Date of Report</label>
+                                        <input type="date" id="eipTodaysDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    </div>
+                                    <div>
+                                        <label for="eipEvaluationDate" class="block text-sm font-medium text-gray-700 mb-1">Evaluation Date</label>
+                                        <input type="date" id="eipEvaluationDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    </div>
+                                     <div>
+                                        <label for="eipEvaluationTime" class="block text-sm font-medium text-gray-700 mb-1">Evaluation Time</label>
+                                        <input type="time" id="eipEvaluationTime" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Evaluation Details -->
-                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                            <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Evaluation Details</h2>
-                             <div class="space-y-4">
-                                <div>
-                                    <label for="eipTodaysDate" class="block text-sm font-medium text-gray-700 mb-1">Date of Report</label>
-                                    <input type="date" id="eipTodaysDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                                </div>
-                                <div>
-                                    <label for="eipEvaluationDate" class="block text-sm font-medium text-gray-700 mb-1">Evaluation Date</label>
-                                    <input type="date" id="eipEvaluationDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                                </div>
-                                 <div>
-                                    <label for="eipEvaluationTime" class="block text-sm font-medium text-gray-700 mb-1">Evaluation Time</label>
-                                    <input type="time" id="eipEvaluationTime" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 
                 <!-- ===== TEMPLATE: Re-Engagement ===== -->
@@ -431,7 +439,7 @@
          <div id="pdf-signature-area" style="margin-top: 1rem;">
              <div>Sincerely,</div>
              <img id="pdf-signature" src="" alt="Signature" style="max-height: 60px; margin-top: 0.5rem; display: none;"/>
-             <div id="pdf-signature-block" style="margin-top: 0.5rem; white-space: pre-wrap;"></div>
+             <div id="pdf-signature-block" style="white-space: pre-wrap;"></div>
          </div>
          <div id="pdf-footer" style="position: absolute; bottom: 1in; right: 1in; text-align: right; font-size: 8pt; color: #555; line-height: 1.2;">
              Treatment | Prevention | Care Management | Counseling<br>
@@ -440,7 +448,34 @@
          </div>
     </div>
 
+    <!-- Custom Notification/Toast -->
+    <div id="notification" class="fixed bottom-5 right-5 bg-gray-800 text-white py-3 px-6 rounded-lg shadow-lg opacity-0 transform translate-y-2">
+        <p id="notification-message"></p>
+    </div>
+
     <script>
+        // --- Custom Notification System ---
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notification-message');
+            
+            messageEl.textContent = message;
+            notification.className = `fixed bottom-5 right-5 text-white py-3 px-6 rounded-lg shadow-lg opacity-0 transform translate-y-2 ${isError ? 'bg-red-600' : 'bg-gray-800'}`;
+
+            // Show notification
+            setTimeout(() => {
+                notification.classList.remove('opacity-0', 'translate-y-2');
+                notification.classList.add('opacity-100', 'translate-y-0');
+            }, 10);
+
+            // Hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('opacity-100', 'translate-y-0');
+                notification.classList.add('opacity-0', 'translate-y-2');
+            }, 3000);
+        }
+
+
         // --- Password Protection ---
         function setCookie(name, value, days) {
             let expires = "";
@@ -449,7 +484,8 @@
                 date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
                 expires = "; expires=" + date.toUTCString();
             }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+            // Added SameSite=Lax for better iframe compatibility
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
         }
 
         function getCookie(name) {
@@ -621,11 +657,13 @@
                 email: document.getElementById('counselorEmail').value,
                 imgSrc: signaturePreview.src.startsWith('data:image') ? signaturePreview.src : null
             };
+            // NOTE: localStorage may be restricted in some iframe contexts.
             localStorage.setItem('delphiRiseSignatureInfo', JSON.stringify(signatureData));
-            alert('Signature information saved!');
+            showNotification('Signature information saved!');
         }
 
         function loadSignature() {
+            // NOTE: localStorage may be restricted in some iframe contexts.
             const savedData = localStorage.getItem('delphiRiseSignatureInfo');
             if (savedData) {
                 const signatureData = JSON.parse(savedData);
@@ -651,7 +689,7 @@
             signaturePreview.src = '';
             signaturePreview.classList.add('hidden');
             document.getElementById('signatureUpload').value = null;
-            alert('Saved signature information deleted.');
+            showNotification('Saved signature information deleted.');
             generateReport();
         }
 
@@ -760,20 +798,18 @@
                 finalOasasSentence = `Client ${oasasReasonText}.`;
             }
 
-            const signatureBlock = getSignatureBlockWithSpacing();
-
-            const paragraphs = [
+            const mainParagraphs = [
                 dischargeDate,
                 `To Whom It May Concern,`,
                 `This letter is to confirm that ${clientFullName}, date of birth ${clientDOB}, was admitted to Delphi Rise Outpatient on ${admissionDate} and discharged on ${dischargeDate}.`,
                 `During treatment, ${clientFirstName} attended a total of ${numSessions} sessions. At the time of discharge, ${clientFirstName} ${goalAchievement} the treatment goals established at the start of services.`,
                 `In accordance with OASAS reporting requirements, this discharge is recorded as follows: ${finalOasasSentence}`,
-                `If further information is required, please contact me using the information provided below.`,
-                `Sincerely,`,
-                signatureBlock
+                `If further information is required, please contact me using the information provided below.`
             ];
-
-            document.getElementById('generatedText').value = paragraphs.join('\n\n');
+            
+            const signatureBlock = getSignatureBlock();
+            const fullText = mainParagraphs.join('\n\n') + `\n\nSincerely,\n\n\n\n${signatureBlock}`;
+            document.getElementById('generatedText').value = fullText;
         }
 
         function generateTreatmentRecReport() {
@@ -794,20 +830,18 @@
                 toxSentence += '.';
             }
 
-            const signatureBlock = getSignatureBlockWithSpacing();
-
-            const paragraphs = [
+            const mainParagraphs = [
                 `Re: Evaluation Results for ${clientFullName}`,
                 `Date: ${todaysDate}`,
                 `On ${evaluationDate}, ${clientFullName} completed a substance and alcohol use disorder evaluation at Delphi Rise. The evaluation included gathering a history of substance and alcohol use, collateral interviews, a toxicology screen, and a brief screen to identify potential mental health concerns.`,
                 `Based on this comprehensive clinical evaluation, ${clientFirstName} has been diagnosed with ${diagnosisText} and is recommended for ${levelOfCare} treatment. ${toxSentence}`,
                 `Delphi Rise is committed to providing personalized, evidence-based treatment to help clients achieve long-term recovery. We believe that ${clientFirstName} would benefit from ongoing engagement in the recommended services and a structured, supportive environment to address the challenges of substance and alcohol use.`,
-                `Please feel free to contact us if you require any additional information or clarification regarding this evaluation or the services we provide.`,
-                `Sincerely,`,
-                signatureBlock
+                `Please feel free to contact us if you require any additional information or clarification regarding this evaluation or the services we provide.`
             ];
 
-            document.getElementById('generatedText').value = paragraphs.join('\n\n');
+            const signatureBlock = getSignatureBlock();
+            const fullText = mainParagraphs.join('\n\n') + `\n\nSincerely,\n\n\n\n${signatureBlock}`;
+            document.getElementById('generatedText').value = fullText;
         }
 
         function generateNoTxRecReport() {
@@ -841,20 +875,19 @@
             const conclusionSource = includeInterviews ? 'our clinical evaluation and interviews' : 'our clinical evaluation';
             const conclusionParagraph = `Additionally, based on ${conclusionSource}, there is no current evidence suggesting a substance or alcohol use disorder at this time.`;
             
-            const signatureBlock = getSignatureBlockWithSpacing();
-
-            const finalParagraphs = [
+            const mainParagraphs = [
                 `Subject: Evaluation Report for ${clientFullName}`,
                 `Date: ${todaysDate}`,
                 recipientSalutation,
                 firstP,
                 `${toxParagraph} ${conclusionParagraph}`,
                 `Given these findings, we do not recommend ${clientFirstName} for further treatment or intervention related to substance use at this moment. Should there be any future concerns or changes in ${clientFirstName}’s status, we would be prepared to reassess and provide further recommendations as needed.`,
-                `Please let us know if there are any additional requirements or if further information is needed. We are committed to supporting ${clientFirstName}’s ongoing progress and well-being in any way we can.`,
-                `Sincerely,`,
-                signatureBlock
+                `Please let us know if there are any additional requirements or if further information is needed. We are committed to supporting ${clientFirstName}’s ongoing progress and well-being in any way we can.`
             ];
-            document.getElementById('generatedText').value = finalParagraphs.join('\n\n');
+            
+            const signatureBlock = getSignatureBlock();
+            const fullText = mainParagraphs.join('\n\n') + `\n\nSincerely,\n\n\n\n${signatureBlock}`;
+            document.getElementById('generatedText').value = fullText;
         }
 
         function generateEvalInProgressReport() {
@@ -872,20 +905,19 @@
             const evaluationDate = formatDate(document.getElementById('eipEvaluationDate').value, 'Evaluation Date');
             const evaluationTime = formatTime(document.getElementById('eipEvaluationTime').value, 'Evaluation Time');
             
-            const signatureBlock = getSignatureBlockWithSpacing();
-
-            const finalParagraphs = [
+            const mainParagraphs = [
                 `Re: Evaluation Status for ${clientFullName}`,
                 `Date: ${todaysDate}`,
                 `To Whom it May Concern;`,
                 `I am writing to inform you of the current status of the substance use disorder evaluation for ${clientFullName}, which took place on ${evaluationDate} at ${evaluationTime}.`,
                 `${clientFirstName} attended the evaluation as scheduled. The assessment has been conducted; however, the results are currently pending the completion of a toxicology screen, which is necessary for a comprehensive evaluation.`,
                 `We will provide the final evaluation results as soon as the toxicology screen results are available. Please feel free to contact our office if you need any additional information or if there are any specific forms or documentation required in the interim.`,
-                `Thank you for your attention to this matter.`,
-                `Sincerely,`,
-                signatureBlock
+                `Thank you for your attention to this matter.`
             ];
-            document.getElementById('generatedText').value = finalParagraphs.join('\n\n');
+            
+            const signatureBlock = getSignatureBlock();
+            const fullText = mainParagraphs.join('\n\n') + `\n\nSincerely,\n\n\n\n${signatureBlock}`;
+            document.getElementById('generatedText').value = fullText;
         }
         
         function generateReEngagementReport() {
@@ -911,20 +943,19 @@
                 }
             }
 
-            const signatureBlock = getSignatureBlockWithSpacing();
             const addressBlock = [clientFullName, address, cityStateZip].join('\n');
             
-            const body = [
+            const bodyParagraphs = [
                 todaysDateFormatted,
                 `Dear ${clientFirstName},`,
                 `I hope you’re doing well. It has been ${daysDifference} days since your last service with us, and in accordance with OASAS regulations, we are required to close your chart if there is no further engagement. However, we want to ensure you continue receiving the support and services that can help you in your recovery.`,
                 `If you would like to remain active with Delphi Rise and continue receiving services, we ask that you schedule an appointment by ${closureDate}. You can do so by calling us at 585-467-2230.`,
-                `If there are any barriers preventing you from scheduling, please reach out—we are happy to discuss ways to help. We value your well-being and hope to continue supporting you on your journey.`,
-                `Sincerely,`,
-                signatureBlock
-            ].join('\n\n');
+                `If there are any barriers preventing you from scheduling, please reach out—we are happy to discuss ways to help. We value your well-being and hope to continue supporting you on your journey.`
+            ];
 
-            document.getElementById('generatedText').value = `${addressBlock}\n\n${body}`;
+            const signatureBlock = getSignatureBlock();
+            const fullText = bodyParagraphs.join('\n\n') + `\n\nSincerely,\n\n\n\n${signatureBlock}`;
+            document.getElementById('generatedText').value = `${addressBlock}\n\n${fullText}`;
         }
 
         function getSignatureBlock() {
@@ -938,32 +969,17 @@
             return `${nameLine}\nOutpatient Counselor\nDelphi Rise\n72 Hinchey Road\nRochester, NY 14624\n585-467-2230 ext. ${counselorExtension}\n${counselorEmail}`;
         }
 
-        function getSignatureBlockWithSpacing() {
-            const signaturePreview = document.getElementById('signaturePreview');
-            const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
-            let signatureBlock = getSignatureBlock();
-            if (!hasSignatureImage) {
-                // Add 2 newlines for 1 blank line
-                signatureBlock = `\n\n${signatureBlock}`;
-            }
-            return signatureBlock;
-        }
-
         function copyText() {
             const textarea = document.getElementById('generatedText');
             textarea.select();
             textarea.setSelectionRange(0, 99999);
             try {
-                // Using the Clipboard API for modern browsers
-                navigator.clipboard.writeText(textarea.value).then(() => {
-                    alert('Report text copied to clipboard!');
-                }, () => {
-                    // Fallback for older browsers
-                    document.execCommand('copy');
-                    alert('Report text copied to clipboard! (fallback)');
-                });
+                // Use execCommand as a fallback for iframe environments where Clipboard API might be restricted.
+                document.execCommand('copy');
+                showNotification('Report text copied to clipboard!');
             } catch (err) {
-                alert('Failed to copy text.');
+                showNotification('Failed to copy text.', true);
+                console.error('Copy to clipboard failed:', err);
             }
         }
 
@@ -971,30 +987,33 @@
             const { jsPDF } = window.jspdf;
             const reportText = document.getElementById('generatedText').value;
             const signaturePreview = document.getElementById('signaturePreview');
+            const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
+
             const pdfTextContent = document.getElementById('pdf-text-content');
             const pdfSignatureImg = document.getElementById('pdf-signature');
             const pdfSignatureBlock = document.getElementById('pdf-signature-block');
             const pdfContentDiv = document.getElementById('pdf-content');
 
+            // Find the last occurrence of "Sincerely," to split the main body from the signature part.
             const sincerelyIndex = reportText.lastIndexOf('Sincerely,');
-            let mainBody = reportText;
-            let signatureText = "";
-
-            if (sincerelyIndex !== -1) {
-                mainBody = reportText.substring(0, sincerelyIndex).trim();
-                // Do not trim the start of the signature text to preserve newlines
-                signatureText = reportText.substring(sincerelyIndex + 'Sincerely,'.length);
-            }
-
+            
+            // The main body is everything before "Sincerely,".
+            // We trim it to remove any trailing whitespace.
+            const mainBody = (sincerelyIndex !== -1) ? reportText.substring(0, sincerelyIndex).trim() : reportText;
+            
             pdfTextContent.innerText = mainBody;
-            pdfSignatureBlock.innerText = signatureText;
 
-            if (signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden')) {
-                 pdfSignatureImg.src = signaturePreview.src;
-                 pdfSignatureImg.style.display = 'block';
+            // Handle the signature block based on whether an image is present
+            if (hasSignatureImage) {
+                pdfSignatureImg.src = signaturePreview.src;
+                pdfSignatureImg.style.display = 'block';
+                // If there is an image, the text block appears directly below it with no extra spacing.
+                pdfSignatureBlock.innerText = getSignatureBlock();
             } else {
-                 pdfSignatureImg.src = "";
-                 pdfSignatureImg.style.display = 'none';
+                pdfSignatureImg.src = "";
+                pdfSignatureImg.style.display = 'none';
+                // If there is NO image, add three line breaks before the text block for manual signing space.
+                pdfSignatureBlock.innerText = `\n\n\n${getSignatureBlock()}`;
             }
 
             pdfContentDiv.classList.remove('hidden');
