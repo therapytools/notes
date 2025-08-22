@@ -210,6 +210,22 @@
         .injection-field-group input {
             margin: 0;
         }
+        /* Styles for merged form */
+        .radio-group label {
+            font-weight: normal;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .radio-group input[type="radio"] {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .conditional {
+            /* display: none; <-- REMOVED THIS CONFLICTING STYLE */
+            padding-left: 25px;
+            margin-top: 15px;
+            border-left: 3px solid #007bff;
+        }
     </style>
 </head>
 <body>
@@ -230,6 +246,7 @@
         <option value="closing-note-admitted">Closing Note – Admitted</option>
         <option value="closing-note-non-admitted">Closing Note – Non-Admitted</option>
         <option value="injections">Injections</option>
+        <option value="medical-screening">Medical Screening</option>
     </select>
 
     <!-- Container for Evaluation - Chemical Dependency Note -->
@@ -648,6 +665,182 @@
             <input type="date" id="brixadi-next-injection">
         </div>
     </div>
+
+    <!-- START: Container for Medical Screening -->
+    <div id="medical-screening-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">PCP and Physical Exams</h2>
+
+        <div class="form-group">
+            <label>Does client have a primary care physician?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="hasPCP" value="yes"> Yes</label>
+                <label><input type="radio" name="hasPCP" value="no"> No</label>
+            </div>
+        </div>
+
+        <div id="ms-pcpYesSection" class="conditional hidden">
+            <label for="pcpName">Name of PCP:</label>
+            <input type="text" id="pcpName" name="pcpName">
+            <label for="lastPEDate">Date of Last PE:</label>
+            <input type="date" id="lastPEDate" name="lastPEDate">
+            <div class="checkbox-container">
+                <input type="checkbox" id="pcpDiscussed" name="pcpDiscussed">
+                <label for="pcpDiscussed">Writer and client discussed the importance of routine health maintenance and management of chronic conditions with PCP.</label>
+            </div>
+        </div>
+
+        <div id="ms-pcpNoSection" class="conditional hidden">
+            <label>Has client had a physical exam within the last year?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="hadPELastYear" value="yes"> Yes</label>
+                <label><input type="radio" name="hadPELastYear" value="no"> No</label>
+            </div>
+
+            <div id="ms-peLastYearYesSection" class="conditional hidden">
+                <label for="peLocation">Where?</label>
+                <input type="text" id="peLocation" name="peLocation">
+                <label>Consent obtained to get PE records?</label>
+                <select name="peConsent">
+                    <option value="">Select an option...</option>
+                    <option value="yes">Yes</option>
+                    <option value="consent_declined">Consent Declined</option>
+                </select>
+            </div>
+
+            <div id="ms-peLastYearNoSection" class="conditional hidden">
+                 <div class="checkbox-container">
+                    <input type="checkbox" id="noPeDiscussed" name="noPeDiscussed">
+                    <label for="noPeDiscussed">Writer and client discussed the importance of routine health maintenance and management of chronic conditions with PCP. Client was provided with information of local PCP offices that are taking new clients, writer offered to provide support in making referral.</label>
+                </div>
+            </div>
+        </div>
+        
+        <label>PCP consent completed?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="pcpConsentCompleted" value="yes"> Yes</label>
+            <label><input type="radio" name="pcpConsentCompleted" value="no"> No</label>
+        </div>
+        
+        <div id="ms-pcpConsentNoSection" class="conditional hidden">
+            <label>Reason for declining consent:</label>
+             <div class="radio-group">
+                <label><input type="radio" name="declineReason" value="confidential"> Client does not want PCP to know about substance abuse treatment.</label>
+                <label><input type="radio" name="declineReason" value="other"> Other</label>
+             </div>
+             <div id="ms-declineReasonOtherSpecify" class="conditional hidden">
+                 <input type="text" name="declineReasonOtherText" placeholder="Specify other reason">
+             </div>
+             <div class="checkbox-container">
+                <input type="checkbox" id="oasasReviewedNoConsent" name="oasasReviewedNoConsent">
+                <label for="oasasReviewedNoConsent">Reviewed with client OASAS guidelines regarding obtaining recent physical exam review, will only request last PE, current med list. Client understands and does not consent to PCP consent.</label>
+            </div>
+        </div>
+
+        <h2>Communicable Diseases</h2>
+        <label>Has client had recent STD, HEP testing?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="stdHepTest" value="yes"> Yes</label>
+            <label><input type="radio" name="stdHepTest" value="no"> No</label>
+        </div>
+
+        <div id="ms-stdHepTestYesSection" class="conditional hidden">
+            <label for="stdHepStatus">Client reports recent STD, HEP testing:</label>
+            <select id="stdHepStatus" name="stdHepStatus">
+                <option value="">Select status...</option>
+                <option value="known_negative">Known Negative</option>
+                <option value="known_positive">Known Positive</option>
+            </select>
+             <div id="ms-stdHepPositiveSection" class="conditional hidden">
+                <label for="stdHepPositiveSpecify">Specify:</label>
+                <input type="text" id="stdHepPositiveSpecify" name="stdHepPositiveSpecify">
+            </div>
+        </div>
+
+        <label>Has client been tested for TB?</label>
+         <div class="radio-group">
+            <label><input type="radio" name="tbTest" value="yes"> Yes</label>
+            <label><input type="radio" name="tbTest" value="no"> No</label>
+        </div>
+        
+        <div id="ms-tbTestYesSection" class="conditional hidden">
+            <label>Test Result:</label>
+            <div class="radio-group">
+                <label><input type="radio" name="tbResult" value="negative"> Negative</label>
+                <label><input type="radio" name="tbResult" value="positive"> Positive</label>
+            </div>
+            <div id="ms-tbPositiveDetailsSection" class="conditional hidden">
+                <label for="tbPositiveDetails">Positive Result Details (e.g., treatment, follow-up):</label>
+                <textarea id="tbPositiveDetails" name="tbPositiveDetails" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div id="ms-tbTestNoSection" class="conditional hidden">
+            <label>Does client have risk factors/symptoms to indicate TB test?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="tbRiskFactors" value="yes"> Yes</label>
+                <label><input type="radio" name="tbRiskFactors" value="no"> No</label>
+            </div>
+            <label>Referral Status:</label>
+            <select id="tbReferralStatus" name="tbReferralStatus">
+                <option value="">Select referral status...</option>
+                <option value="accepted">Client ACCEPTED offer for support with a referral.</option>
+                <option value="declined">Client DECLINED offer for support with a referral.</option>
+            </select>
+        </div>
+
+        <h2>Substance Use</h2>
+        <label>Tobacco use:</label>
+         <div class="radio-group">
+            <label><input type="radio" name="tobaccoUse" value="yes"> Yes</label>
+            <label><input type="radio" name="tobaccoUse" value="no"> No</label>
+        </div>
+
+        <div id="ms-tobaccoUseYesSection" class="conditional hidden">
+            <label for="tobaccoAmount">Client reports tobacco use (amount):</label>
+            <input type="text" id="tobaccoAmount" name="tobaccoAmount">
+            <label for="vapeAmount">Client reports nicotine vape use (amount):</label>
+            <input type="text" id="vapeAmount" name="vapeAmount">
+            <label>Is client interested in smoking cessation/quitting smoking?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="cessationInterest" value="yes"> Yes</label>
+                <label><input type="radio" name="cessationInterest" value="no"> No</label>
+            </div>
+            <div id="ms-cessationInterestYesSection" class="conditional hidden">
+                <label>Was client scheduled with med provider?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="medProviderScheduled" value="yes"> Yes</label>
+                    <label><input type="radio" name="medProviderScheduled" value="no"> No</label>
+                </div>
+            </div>
+        </div>
+        
+        <label>Is client currently on MAT?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="onMAT" value="yes"> Yes</label>
+            <label><input type="radio" name="onMAT" value="no"> No</label>
+        </div>
+        
+        <div id="ms-matYesSection" class="conditional hidden">
+            <div class="radio-group">
+                <label><input type="radio" name="matProviderStatus" value="happy"> Client reports they are happy with their current provider.</label>
+                <label><input type="radio" name="matProviderStatus" value="switch"> Client would like to switch MAT provider to Delphi and client has been scheduled with medication provider.</label>
+            </div>
+        </div>
+
+        <div id="ms-matNoSection" class="conditional hidden">
+             <div class="radio-group">
+                <label><input type="radio" name="matInterest" value="declined"> Client declined MAT at this time, client aware that if client is interested in MAT in the future to discuss with therapist or with nurse.</label>
+                <label><input type="radio" name="matInterest" value="accepted"> Client would like to see med provider for MAT and has been scheduled with medication provider.</label>
+            </div>
+        </div>
+
+        <label>Narcan / Overdose Prevention</label>
+         <div class="radio-group">
+            <label><input type="radio" name="narcanOffered" value="yes"> Narcan training offered and accepted</label>
+            <label><input type="radio" name="narcanOffered" value="no"> Narcan training offered and declined</label>
+        </div>
+    </div>
+    <!-- END: Container for Medical Screening -->
 
 
     <!-- Read-only Note Output for Copying -->
@@ -1139,6 +1332,165 @@
                     finalNote = `Brixadi SQ injection administered\nSite: ${brixadiSite.value || '[Site]'}\nLot #: ${brixadiLot.value || '[Lot #]'}\nExp date: ${brixadiExp.value || '[Exp Date]'}\nSN: ${brixadiSn.value || '[SN]'}\nSite prepped with alcohol swab. Pt tolerated procedure. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection.\nNext scheduled Injection: ${brixadiNextInjection.value || '[Next Injection Date]'}`;
                     break;
             }
+        } else if (selectedNoteType === 'medical-screening') {
+            // Logic for Medical Screening Note
+            let pcpNarrative = [];
+            let diseaseNarrative = [];
+            let substanceNarrative = [];
+
+            // Helper to get radio value
+            const getRadioValue = (name) => {
+                const radio = document.querySelector(`#medical-screening-container input[name="${name}"]:checked`);
+                return radio ? radio.value : '';
+            };
+
+            // --- PCP and Physical Exams ---
+            const hasPCP = getRadioValue('hasPCP');
+            if (hasPCP === 'yes') {
+                const pcpName = document.getElementById('pcpName').value || '[PCP Name Not Provided]';
+                const lastPEDate = document.getElementById('lastPEDate').value || '[Date Not Provided]';
+                pcpNarrative.push(`Client has a primary care physician, ${pcpName}. Their last physical exam was on ${lastPEDate}.`);
+                if (document.getElementById('pcpDiscussed').checked) {
+                    pcpNarrative.push("Writer and client discussed the importance of routine health maintenance and management of chronic conditions with their PCP.");
+                }
+            } else if (hasPCP === 'no') {
+                pcpNarrative.push("Client does not have a primary care physician.");
+                const hadPE = getRadioValue('hadPELastYear');
+                if (hadPE === 'yes') {
+                    const peLocation = document.getElementById('peLocation').value || '[Location Not Provided]';
+                    const peConsent = document.querySelector('[name="peConsent"]').value;
+                    let consentText = peConsent === 'yes' ? 'and consent was obtained to get PE records.' : 'and consent was declined to get PE records.';
+                    if (!peConsent) consentText = "Consent to obtain records was not addressed.";
+                    pcpNarrative.push(`Client reports having a physical exam within the last year at ${peLocation}, ${consentText}`);
+                } else if (hadPE === 'no') {
+                    if (document.getElementById('noPeDiscussed').checked) {
+                        pcpNarrative.push("Client has not had a physical exam in the last year. Writer and client discussed the importance of routine health maintenance and management of chronic conditions with a PCP. Client was provided with information of local PCP offices that are taking new clients, and the writer offered to provide support in making a referral.");
+                    }
+                }
+            }
+
+            const pcpConsent = getRadioValue('pcpConsentCompleted');
+            if (pcpConsent === 'yes') {
+                pcpNarrative.push("PCP consent was completed. Writer reviewed with client OASAS guidelines regarding obtaining a recent physical exam review and the information that client is consenting to.");
+            } else if (pcpConsent === 'no') {
+                const declineReason = getRadioValue('declineReason');
+                let reasonText = "Client declined consent for Delphi to contact their PCP.";
+                if (declineReason === 'confidential') {
+                    reasonText += " The reason provided was that the client does not want their PCP to know about their substance abuse treatment.";
+                } else if (declineReason === 'other') {
+                    const otherReason = document.querySelector('[name="declineReasonOtherText"]').value || '[Reason not specified]';
+                    reasonText += ` The reason provided was: ${otherReason}.`;
+                }
+                pcpNarrative.push(reasonText);
+                if (document.getElementById('oasasReviewedNoConsent').checked) {
+                    pcpNarrative.push("Writer reviewed with client OASAS guidelines regarding obtaining a recent physical exam review, clarifying that the request would only be for the last PE and current medication list. Client understands and does not consent to PCP contact.");
+                }
+            }
+            
+            // --- Communicable Diseases ---
+            const stdHepTest = getRadioValue('stdHepTest');
+            if (stdHepTest === 'yes') {
+                const status = document.getElementById('stdHepStatus').value;
+                if (status === 'known_negative') {
+                    diseaseNarrative.push("Client reports recent STD/HEP testing and states they are known to be negative, with no concerns from themselves or their PCP. Writer and client reviewed the importance of STD/communicable disease testing and prevention resources available to the client at Delphi and in the community.");
+                } else if (status === 'known_positive') {
+                    const positiveSpecify = document.getElementById('stdHepPositiveSpecify').value || '[Condition Not Specified]';
+                    diseaseNarrative.push(`Client reports recent STD/HEP testing and is known to be positive for: ${positiveSpecify}.`);
+                }
+            } else if (stdHepTest === 'no') {
+                diseaseNarrative.push("Client reports no recent STD/HEP testing.");
+            }
+
+            const tbTest = getRadioValue('tbTest');
+            if (tbTest === 'yes') {
+                const tbResult = getRadioValue('tbResult');
+                if (tbResult === 'negative') {
+                    diseaseNarrative.push("Client reports having been tested for TB and had a negative PPD. Writer offered to connect the client to resources to support their education, risk reduction, counseling, and testing services, and an overview of the benefits was provided.");
+                } else if (tbResult === 'positive') {
+                    const details = document.getElementById('tbPositiveDetails').value || '[Details not provided]';
+                    diseaseNarrative.push(`Client reports a positive TB test. Details: ${details}.`);
+                }
+            } else if (tbTest === 'no') {
+                diseaseNarrative.push("Client reports that they have not been tested for TB or do not remember getting tested.");
+                const tbRisk = getRadioValue('tbRiskFactors');
+                const tbReferral = document.getElementById('tbReferralStatus').value;
+                let referralText = tbReferral ? `Client ${tbReferral} the offer for support with a referral.` : '';
+                if (tbRisk === 'yes') {
+                    diseaseNarrative.push(`Client presents with risk factors indicating the need for TB testing. The medical director was notified by the writer. The client has been offered connection to resources for education, risk reduction, counseling, and testing services. An overview of benefits and a warm hand-off referral has been offered. ${referralText}`);
+                } else if (tbRisk === 'no') {
+                    diseaseNarrative.push(`Client does not have risk factors/symptoms that indicate a need for TB testing. The client has been offered connection to resources for education, risk reduction, counseling, and testing services. An overview of benefits and a warm hand-off referral has been offered. ${referralText}`);
+                }
+            }
+
+            // --- Substance Use ---
+            const tobaccoUse = getRadioValue('tobaccoUse');
+            if (tobaccoUse === 'yes') {
+                const tobaccoAmount = document.getElementById('tobaccoAmount').value;
+                const vapeAmount = document.getElementById('vapeAmount').value;
+                let useText = "Client reports using tobacco";
+                if (tobaccoAmount) useText += ` (${tobaccoAmount})`;
+                if (vapeAmount) useText += ` and nicotine vape products (${vapeAmount})`;
+                useText += ".";
+                substanceNarrative.push(useText);
+
+                const cessationInterest = getRadioValue('cessationInterest');
+                if (cessationInterest === 'yes') {
+                    substanceNarrative.push("Client is interested in quitting smoking. Writer and client discussed the NY State QUITS hotline, and information was provided. Writer also discussed that medication providers at Delphi could prescribe medications for smoking cessation.");
+                    const scheduled = getRadioValue('medProviderScheduled');
+                    if (scheduled === 'yes') {
+                        substanceNarrative.push("Client is scheduled with a medication provider at Delphi.");
+                    } else if (scheduled === 'no') {
+                        substanceNarrative.push("Client declined an appointment with a medication provider but is aware they can schedule one in the future.");
+                    }
+                } else if (cessationInterest === 'no') {
+                    substanceNarrative.push("Client is not currently interested in quitting smoking. Writer and client discussed the NY State QUITS hotline, and information was provided. Writer discussed that medication providers would be able to prescribe medications for smoking cessation if the client becomes interested in the future.");
+                }
+            } else if (tobaccoUse === 'no') {
+                substanceNarrative.push("Client denies tobacco use.");
+            }
+
+            const onMAT = getRadioValue('onMAT');
+            if (onMAT === 'yes') {
+                substanceNarrative.push("Client is currently taking medication to manage their substance use disorder.");
+                const matProviderStatus = getRadioValue('matProviderStatus');
+                if (matProviderStatus === 'happy') {
+                    substanceNarrative.push("Client reports they are happy with their current provider.");
+                } else if (matProviderStatus === 'switch') {
+                    substanceNarrative.push("Client would like to switch their MAT provider to Delphi and has been scheduled with a medication provider.");
+                }
+            } else if (onMAT === 'no') {
+                substanceNarrative.push("Medication Assisted Treatment (MAT) was introduced, and education was offered based on the client's history and current presentation. An overview of MAT’s benefits and risks was provided, and the client was offered a connection to medication management in the clinic.");
+                const matInterest = getRadioValue('matInterest');
+                if (matInterest === 'declined') {
+                    substanceNarrative.push("Client declined MAT at this time and is aware they can discuss it with their therapist or nurse in the future if interested.");
+                } else if (matInterest === 'accepted') {
+                    substanceNarrative.push("Client would like to see a medication provider for MAT and has been scheduled.");
+                }
+            }
+
+            const narcanOffered = getRadioValue('narcanOffered');
+            if (narcanOffered === 'yes') {
+                substanceNarrative.push("Client was provided Narcan training, overdose prevention education, and given a Narcan kit.");
+            } else if (narcanOffered === 'no') {
+                substanceNarrative.push("Client declined Narcan training and a Narcan kit. Client was given overdose prevention education and resources for Narcan if they would like to be trained in the future.");
+            }
+            
+            const pcpText = pcpNarrative.join(' ');
+            const diseaseText = diseaseNarrative.join(' ');
+            const substanceText = substanceNarrative.join(' ');
+
+            let narrativeParts = [];
+            if (pcpText.trim() !== '') {
+                narrativeParts.push('[PCP AND PHYSICAL EXAMS]\n' + pcpText);
+            }
+            if (diseaseText.trim() !== '') {
+                narrativeParts.push('[COMMUNICABLE DISEASES]\n' + diseaseText);
+            }
+            if (substanceText.trim() !== '') {
+                narrativeParts.push('[SUBSTANCE USE]\n' + substanceText);
+            }
+
+            finalNote = narrativeParts.join('\n\n');
         }
 
 
@@ -1157,16 +1509,14 @@
         const options = Array.from(selectElement.options);
         let placeholder = null;
         
-        // Check if the first option is a disabled placeholder
         if (options.length > 0 && options[0].disabled) {
-            placeholder = options.shift(); // Remove it from the array for sorting
+            placeholder = options.shift();
         }
 
         options.sort((a, b) => a.text.localeCompare(b.text));
 
-        selectElement.innerHTML = ''; // Clear existing options
+        selectElement.innerHTML = '';
 
-        // Add the placeholder back at the top
         if (placeholder) {
             selectElement.add(placeholder);
         }
@@ -1299,6 +1649,48 @@
         sublocadeSite, sublocadeLot, sublocadeExp, sublocadeSn, sublocadeNextInjection,
         brixadiSite, brixadiLot, brixadiExp, brixadiSn, brixadiNextInjection
     ].forEach(el => el.addEventListener('input', updateFinalNote));
+
+    // Medical Screening Listeners
+    const medicalScreeningContainer = document.getElementById('medical-screening-container');
+    if (medicalScreeningContainer) {
+        const msInputs = medicalScreeningContainer.querySelectorAll('input, select, textarea');
+        msInputs.forEach(input => {
+            input.addEventListener('change', updateFinalNote);
+            input.addEventListener('keyup', updateFinalNote);
+        });
+
+        const setupMSConditional = (triggerName, conditions) => {
+            const triggers = document.querySelectorAll(`#medical-screening-container [name="${triggerName}"]`);
+            triggers.forEach(trigger => {
+                trigger.addEventListener('change', () => {
+                    Object.values(conditions).forEach(sectionId => {
+                        const section = document.querySelector(sectionId);
+                        if (section) section.classList.add('hidden');
+                    });
+                    const value = trigger.value;
+                    const sectionToShow = document.querySelector(conditions[value]);
+                    if (sectionToShow) {
+                        sectionToShow.classList.remove('hidden');
+                    }
+                });
+            });
+        };
+
+        setupMSConditional('hasPCP', { 'yes': '#ms-pcpYesSection', 'no': '#ms-pcpNoSection' });
+        setupMSConditional('hadPELastYear', { 'yes': '#ms-peLastYearYesSection', 'no': '#ms-peLastYearNoSection' });
+        setupMSConditional('pcpConsentCompleted', { 'no': '#ms-pcpConsentNoSection' });
+        setupMSConditional('declineReason', { 'other': '#ms-declineReasonOtherSpecify' });
+        setupMSConditional('stdHepTest', { 'yes': '#ms-stdHepTestYesSection' });
+        document.getElementById('stdHepStatus').addEventListener('change', () => {
+            const status = document.getElementById('stdHepStatus').value;
+            document.getElementById('ms-stdHepPositiveSection').classList.toggle('hidden', status !== 'known_positive');
+        });
+        setupMSConditional('tbTest', { 'yes': '#ms-tbTestYesSection', 'no': '#ms-tbTestNoSection' });
+        setupMSConditional('tbResult', { 'positive': '#ms-tbPositiveDetailsSection' });
+        setupMSConditional('tobaccoUse', { 'yes': '#ms-tobaccoUseYesSection' });
+        setupMSConditional('cessationInterest', { 'yes': '#ms-cessationInterestYesSection' });
+        setupMSConditional('onMAT', { 'yes': '#ms-matYesSection', 'no': '#ms-matNoSection' });
+    }
 
 
     // Copy Button functionality
