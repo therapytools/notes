@@ -596,8 +596,7 @@
             <p>The client will not be admitted for treatment at this time, as they meet criteria for a higher level of care <input type="text" id="non-admitted-locadtr" placeholder="LOCADTR outcome...">. Following a thorough review and discussion by the multidisciplinary team, it was determined that the client’s needs would be more safely and appropriately addressed in a setting equipped to provide a higher intensity of services. Efforts to explore treatment options and identify appropriate referrals were made, including: <input type="text" id="non-admitted-efforts-2" placeholder="list efforts made...">. The decision not to admit was communicated to the client via mail <input type="text" id="non-admitted-provided-to-2" placeholder="and also provided to...">. Included in the letter was a recovery resource handout outlining local options for urgent support, harm reduction services, MAT providers, and peer recovery resources.</p>
         </div>
         <div id="non-admitted-no-criteria-section" class="hidden">
-            <p>Client will not be admitted for treatment at this time due to not meeting diagnostic criteria. Urine screen was negative, no concerns were reported by collateral contacts, and LOCADTR does not indicate an Outpatient recommended level of care. An outcome letter was provided to the client <input type="text" id="non-admitted-provided-to-3" placeholder="and..."></p>
-        </div>
+            <p>Client will not be admitted for treatment at this time due to not meeting diagnostic criteria. Urine screen was <input type="text" id="non-admitted-urine-screen" placeholder="result..."> and no concerns were reported by collateral contacts. An outcome letter was provided to the client <input type="text" id="non-admitted-provided-to-3" placeholder="and..."></p>        </div>
     </div>
 
     <!-- Container for Injections -->
@@ -846,7 +845,7 @@
     <!-- Read-only Note Output for Copying -->
     <div class="copy-area-container">
         <h2>Copy Area</h2>
-        <textarea id="final-note-copy" readonly></textarea>
+        <textarea id="final-note-copy"></textarea>
         <button id="copy-button" class="copy-button">Copy Note to Clipboard</button>
     </div>
 </div>
@@ -943,6 +942,7 @@
     const nonAdmittedEfforts2 = document.getElementById('non-admitted-efforts-2');
     const nonAdmittedProvidedTo2 = document.getElementById('non-admitted-provided-to-2');
     const nonAdmittedProvidedTo3 = document.getElementById('non-admitted-provided-to-3');
+    const nonAdmittedUrineScreen = document.getElementById('non-admitted-urine-screen');
 
     // Injections elements
     const injectionTypeSelect = document.getElementById('injection-type-select');
@@ -1316,9 +1316,10 @@
                 const providedTo = nonAdmittedProvidedTo2.value ? ` and also provided to: ${nonAdmittedProvidedTo2.value}` : '';
                 finalNote = `The client will not be admitted for treatment at this time, as they meet criteria for a higher level of care ${locadtr}. Following a thorough review and discussion by the multidisciplinary team, it was determined that the client’s needs would be more safely and appropriately addressed in a setting equipped to provide a higher intensity of services. Efforts to explore treatment options and identify appropriate referrals were made, including: ${efforts}. The decision not to admit was communicated to the client via mail${providedTo}. Included in the letter was a recovery resource handout outlining local options for urgent support, harm reduction services, MAT providers, and peer recovery resources.`;
             } else if (clientType === 'no-criteria') {
-                const providedTo = nonAdmittedProvidedTo3.value ? ` and ${nonAdmittedProvidedTo3.value}` : '';
-                finalNote = `Client will not be admitted for treatment at this time due to not meeting diagnostic criteria. Urine screen was negative, no concerns were reported by collateral contacts, and LOCADTR does not indicate an Outpatient recommended level of care. An outcome letter was provided to the client${providedTo}.`;
-            }
+    const urineScreenResult = nonAdmittedUrineScreen.value || '[urine screen result]';
+    const providedTo = nonAdmittedProvidedTo3.value ? ` and ${nonAdmittedProvidedTo3.value}` : '';
+    finalNote = `Client will not be admitted for treatment at this time due to not meeting diagnostic criteria. Urine screen was ${urineScreenResult} and no concerns were reported by collateral contacts. An outcome letter was provided to the client${providedTo}.`;
+}
         } else if (selectedNoteType === 'injections') {
             const injectionType = injectionTypeSelect.value;
             switch (injectionType) {
@@ -1632,7 +1633,7 @@
         nonAdmittedNoCriteriaSection.classList.toggle('hidden', nonAdmittedClientType.value !== 'no-criteria');
         updateFinalNote();
     });
-    [nonAdmittedEfforts, nonAdmittedProvidedTo1, nonAdmittedLocadtr, nonAdmittedEfforts2, nonAdmittedProvidedTo2, nonAdmittedProvidedTo3].forEach(el => {
+    [nonAdmittedEfforts, nonAdmittedProvidedTo1, nonAdmittedLocadtr, nonAdmittedEfforts2, nonAdmittedProvidedTo2, nonAdmittedUrineScreen, nonAdmittedProvidedTo3].forEach(el => {
         el.addEventListener('input', updateFinalNote);
     });
 
@@ -1731,3 +1732,4 @@
 
 </body>
 </html>
+
