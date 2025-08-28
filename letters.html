@@ -433,13 +433,21 @@
     </div>
     
     <!-- Hidden div for PDF generation (Shared) -->
-    <div id="pdf-content" class="hidden" style="width: 8.5in; height: 11in; padding: 1in; background: white; color: black; font-size: 10pt; line-height: 1.5; box-sizing: border-box; position: relative;">
-         <img id="pdf-logo" src="" alt="Delphi Rise Logo" style="height: 80px; margin-bottom: 2rem;">
-         <div id="pdf-text-content" style="white-space: pre-wrap;"></div>
-         <div id="pdf-signature-area" style="margin-top: 1rem;">
-             <div>Sincerely,</div>
-             <img id="pdf-signature" src="" alt="Signature" style="max-height: 60px; margin-top: 0.5rem; display: none;"/>
-             <div id="pdf-signature-block" style="white-space: pre-wrap;"></div>
+    <div id="pdf-content" class="hidden" style="width: 8.5in; height: 11in; background: white; color: black; font-size: 10pt; line-height: 1.5; box-sizing: border-box; position: relative;">
+         <!-- PDF Header with logo always at top left -->
+         <div id="pdf-header" style="position: absolute; top: 1in; left: 1in; width: 100%; height: 80px;">
+             <img id="pdf-logo" src="" alt="Delphi Rise Logo" style="height: 80px;">
+         </div>
+         <!-- Vertically centered content area, with body and signature block sharing the same alignment/margins -->
+         <div id="pdf-main-content" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; pointer-events: none;">
+             <div style="max-width: 6.5in; width: 100%; pointer-events: auto;">
+                 <div id="pdf-text-content" style="white-space: pre-wrap;"></div>
+                 <div id="pdf-signature-area" style="margin-top: 1rem;">
+                     <div>Sincerely,</div>
+                     <img id="pdf-signature" src="" alt="Signature" style="max-height: 60px; margin-top: 0.5rem; display: none;"/>
+                     <div id="pdf-signature-block" style="white-space: pre-wrap;"></div>
+                 </div>
+             </div>
          </div>
          <div id="pdf-footer" style="position: absolute; bottom: 1in; right: 1in; text-align: right; font-size: 8pt; color: #555; line-height: 1.2;">
              Treatment | Prevention | Care Management | Counseling<br>
@@ -996,40 +1004,39 @@
 
             // Find the last occurrence of "Sincerely," to split the main body from the signature part.
             const sincerelyIndex = reportText.lastIndexOf('Sincerely,');
-            
-            // The main body is everything before "Sincerely,".
-            // We trim it to remove any trailing whitespace.
             const mainBody = (sincerelyIndex !== -1) ? reportText.substring(0, sincerelyIndex).trim() : reportText;
-            
             pdfTextContent.innerText = mainBody;
 
             // Handle the signature block based on whether an image is present
             if (hasSignatureImage) {
                 pdfSignatureImg.src = signaturePreview.src;
                 pdfSignatureImg.style.display = 'block';
-                // If there is an image, the text block appears directly below it with no extra spacing.
                 pdfSignatureBlock.innerText = getSignatureBlock();
             } else {
                 pdfSignatureImg.src = "";
                 pdfSignatureImg.style.display = 'none';
-                // If there is NO image, add three line breaks before the text block for manual signing space.
                 pdfSignatureBlock.innerText = `\n\n\n${getSignatureBlock()}`;
             }
 
+            // Show the PDF content div for rendering
             pdfContentDiv.classList.remove('hidden');
             pdfContentDiv.style.position = 'absolute';
             pdfContentDiv.style.left = '-9999px';
+
+            // Use html2canvas to render the PDF content
             const canvas = await html2canvas(pdfContentDiv, { scale: 2, useCORS: true });
             pdfContentDiv.classList.add('hidden');
             pdfContentDiv.style.position = '';
             pdfContentDiv.style.left = '';
+
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter' });
             const imgProps = pdf.getImageProperties(imgData);
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            
+
+            // ...existing code for filename...
             const letterType = document.getElementById('letterType').value;
             let clientFirstName = 'Client';
             let clientLastName = 'Report';
