@@ -247,6 +247,7 @@
         <option value="closing-note-non-admitted">Closing Note – Non-Admitted</option>
         <option value="injections">Injections</option>
         <option value="medical-screening">Medical Screening</option>
+        <option value="discharge-plan">Discharge Plan</option>
     </select>
 
     <!-- Container for Evaluation - Chemical Dependency Note -->
@@ -841,6 +842,47 @@
     </div>
     <!-- END: Container for Medical Screening -->
 
+
+    <!-- Container for Discharge Plan -->
+    <div id="discharge-plan-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Discharge Plan</h2>
+        <label for="peer-support-textbox">Peer Support/Mutual Assistance</label>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+            <textarea id="peer-support-textbox" rows="10" style="flex:1; min-height: 180px;">Delphi Rise Continuing Care
+72 Hinchey Road
+Rochester, NY 14624
+(585) 467-2230
+
+Delphi Rise Open Access
+72 Hinchey Road
+Rochester, NY 14624
+(585) 627-1777
+
+AA Rochester 
+Find a Rochester meeting: https://www.rochesteraa.org/ 
+Call (585) 232-6720 to speak to an AA support at our Central Office 
+
+ROCovery Fitness  
+1035 Dewey Avenue, Rochester, New York 14613 	
+https://www.rocoveryfitness.org/ 
+</textarea>
+            <button id="copy-peer-support-btn" class="copy-button" style="width:auto; padding:8px 16px; margin-top:0;">Copy</button>
+        </div>
+        <label for="family-services-textbox" style="margin-top:20px;">Services for Significant Others and/or Family:</label>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+            <textarea id="family-services-textbox" rows="7" style="flex:1; min-height: 120px;">Delphi Rise Significant Other Counseling
+72 Hinchey Road
+Rochester, NY 14624
+(585) 467-2230
+
+Liberty Resources
+175 N. Winton Rd
+Rochester, NY
+</textarea>
+            <button id="copy-family-services-btn" class="copy-button" style="width:auto; padding:8px 16px; margin-top:0;">Copy</button>
+        </div>
+        <p style="margin-top:20px; color:#555;">You may copy and paste these resources into your discharge summary or provide them directly to clients/families.</p>
+    </div>
 
     <!-- Read-only Note Output for Copying -->
     <div class="copy-area-container">
@@ -1727,6 +1769,33 @@
         toggleSafetyPlan(soNoMhProviderTextCheckbox, soSafetyPlanNoProviderCheckbox);
         updateFinalNote();
     });
+
+    // Copy button logic for discharge plan textboxes
+    function copyTextboxContent(textbox, button) {
+        textbox.select();
+        try {
+            document.execCommand('copy');
+            const originalText = button.textContent;
+            button.textContent = 'Copied!';
+            button.style.backgroundColor = '#1e7e34';
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.backgroundColor = '#28a745';
+            }, 1200);
+        } catch (err) {
+            button.textContent = 'Copy Failed';
+        }
+    }
+    const copyPeerSupportBtn = document.getElementById('copy-peer-support-btn');
+    const copyFamilyServicesBtn = document.getElementById('copy-family-services-btn');
+    const peerSupportTextbox = document.getElementById('peer-support-textbox');
+    const familyServicesTextbox = document.getElementById('family-services-textbox');
+    if (copyPeerSupportBtn && peerSupportTextbox) {
+        copyPeerSupportBtn.addEventListener('click', () => copyTextboxContent(peerSupportTextbox, copyPeerSupportBtn));
+    }
+    if (copyFamilyServicesBtn && familyServicesTextbox) {
+        copyFamilyServicesBtn.addEventListener('click', () => copyTextboxContent(familyServicesTextbox, copyFamilyServicesBtn));
+    }
 
 </script>
 
