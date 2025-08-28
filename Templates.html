@@ -255,7 +255,7 @@
         <h2 style="margin-top: 20px;">Note Details</h2>
         <p>The client presented for services and meets diagnostic criteria for a substance use disorder, specifically</p>
         <div id="diagnosis-container"></div>
-        <p>, as evidenced by:</p>
+        <p id="eval-cd-evidenced-by-label">, as evidenced by:</p>
         <textarea id="details-criteria" placeholder="Enter details here..."></textarea>
         <p>The client was provided a packet with the following information: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.</p>
         <br>
@@ -1022,6 +1022,7 @@ Rochester, NY
         <optgroup label="F17: Tobacco Use Disorder"><option value="F17.200: Nicotine dependence, unspecified">F17.200: Nicotine dependence, unspecified</option><option value="F17.210: Nicotine dependence, cigarettes, uncomplicated">F17.210: Nicotine dependence, cigarettes, uncomplicated</option><option value="F17.220: Nicotine dependence, chewing tobacco, uncomplicated">F17.220: Nicotine dependence, chewing tobacco, uncomplicated</option><option value="F17.290: Nicotine dependence, other tobacco product, uncomplicated">F17.290: Nicotine dependence, other tobacco product, uncomplicated</option></optgroup>
         <optgroup label="F18: Inhalant Use Disorder"><option value="F18.10: Inhalant use disorder, mild">F18.10: Inhalant use disorder, mild</option><option value="F18.20: Inhalant use disorder, moderate">F18.20: Inhalant use disorder, moderate</option><option value="F18.20: Inhalant use disorder, severe">F18.20: Inhalant use disorder, severe</option></optgroup>
         <optgroup label="F19: Other (or Unknown) Psychoactive Substance Use Disorder"><option value="F19.10: Other psychoactive substance use disorder, mild">F19.10: Other psychoactive substance use disorder, mild</option><option value="F19.20: Other psychoactive substance use disorder, moderate">F19.20: Other psychoactive substance use disorder, moderate</option><option value="F19.20: Other psychoactive substance use disorder, severe">F19.20: Other psychoactive substance use disorder, severe</option></optgroup>
+        <optgroup label="No Criteria Met"><option value="F19.99 - Unspecified or Other Unknown Substance Use Disorder">F19.99 - Unspecified or Other Unknown Substance Use Disorder</option></optgroup>
     `;
     
     function createDynamicRow(container, placeholder) {
@@ -1103,13 +1104,28 @@ Rochester, NY
         }
 
         if (selectedNoteType === 'eval-cd') {
-            const mandateSentence = "The clinician clarified the implications of external mandates, noting that mandated status does not override the client’s right to voluntary engagement in treatment or toxicology screenings. Corresponding handouts were provided.";
             const diagnosisElements = diagnosisContainer.querySelectorAll('select');
             const selectedOptions = Array.from(diagnosisElements).map(select => select.value).filter(val => val);
             const diagnosis = selectedOptions.length > 0 ? selectedOptions.join(', ') : '[SPECIFY DIAGNOSIS]';
-            const details = detailsTextarea.value || '[DETAILS OF CRITERIA MET]';
-            
-            let baseNote = `The client presented for services and meets diagnostic criteria for a substance use disorder, specifically ${diagnosis}, as evidenced by: \n\n${details}\n\nThe clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.\n\nThe clinician confirmed client understanding and emphasized the collaborative nature of recovery, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time.${mandateCheckbox.checked ? ' ' + mandateSentence : ''}\n\nThe clinician reviewed the client’s Behavioral Health and Chemical Dependency screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions inclusive of discussions during evaluation session.`;
+
+            // Hide "as evidenced by" and details textbox if F19.99 is selected
+            const evidencedByLabel = document.getElementById('eval-cd-evidenced-by-label');
+            const detailsCriteria = document.getElementById('details-criteria');
+            const isF1999 = selectedOptions.includes('F19.99 - Unspecified or Other Unknown Substance Use Disorder');
+            if (evidencedByLabel && detailsCriteria) {
+                evidencedByLabel.style.display = isF1999 ? 'none' : '';
+                detailsCriteria.style.display = isF1999 ? 'none' : '';
+            }
+
+            // Compose note
+            let baseNote = `The client presented for services and meets diagnostic criteria for a substance use disorder, specifically ${diagnosis}`;
+            if (!isF1999) {
+                const details = detailsCriteria.value || '[DETAILS OF CRITERIA MET]';
+                baseNote += `, as evidenced by: \n\n${details}`;
+            } else {
+                baseNote += '.';
+            }
+            baseNote += `\n\nThe clinician reviewed: Program expectations, rules, and attendance policies; Delphi Rise’s policy as a tobacco, nicotine, alcohol, and drug-free environment; and Client rights and responsibilities, including HIPAA and 42 CFR Part 2 confidentiality protections.\n\nThe clinician confirmed client understanding and emphasized the collaborative nature of recovery, highlighting the agency’s role in supporting the client’s treatment goals. The client demonstrated an understanding that participation in services is voluntary and may be discontinued at any time${mandateCheckbox.checked ? ' The clinician clarified the implications of external mandates, noting that mandated status does not override the client’s right to voluntary engagement in treatment or toxicology screenings. Corresponding handouts were provided.' : ''}\n\nThe clinician reviewed the client’s Behavioral Health and Chemical Dependency screening results and supported the client in understanding their scores. A comprehensive review of the client’s presenting concerns, referral reason, psychosocial needs, and current and historical functioning was conducted to assess eligibility for Outpatient services. The client's initial treatment goal is to complete the evaluation process; additional goals will be developed collaboratively in future sessions inclusive of discussions during evaluation session.`;
 
             let scenariosText = [];
             if (cdHasMhProviderTextCheckbox.checked) {
@@ -1138,7 +1154,6 @@ Rochester, NY
             } else {
                 finalNote = baseNote;
             }
-        
         } else if (selectedNoteType === 'eval-so') {
             const diagnosis = soDiagnosisSelect.value || '[SELECT A DIAGNOSIS]';
             const details = soDetailsTextarea.value || '[DETAILS OF CRITERIA MET]';
