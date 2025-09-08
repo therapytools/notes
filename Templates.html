@@ -1668,31 +1668,31 @@ Rochester, NY
             let noteParts = [];
             const diagnosisElements = mdtDiagnosisContainer.querySelectorAll('select');
             const selectedOptions = Array.from(diagnosisElements).map(select => select.value).filter(val => val);
-            const diagnosis = selectedOptions.length > 0 ? selectedOptions.join(', ') : '[SPECIFY DIAGNOSIS]';
-            noteParts.push(`Diagnosis: ${diagnosis}`);
+            const diagnosis = selectedOptions.length > 0 ? selectedOptions.join(',\n') : '[SPECIFY DIAGNOSIS]';
+            noteParts.push(`Diagnosis:\n${diagnosis}`);
 
-            noteParts.push(`Reason on High Risk: ${mdtReasonHighRisk.value || '[Reason]'}`);
-            noteParts.push(`Criteria to come off High Risk: ${mdtCriteriaOffHighRisk.value || '[Criteria]'}`);
-            noteParts.push(`Risk factors: ${mdtRiskFactors.value || '[Factors]'}`);
-            noteParts.push(`Protective factors: ${mdtProtectiveFactors.value || '[Factors]'}`);
-            noteParts.push(`Care coordination needs: ${mdtCareCoordination.value || '[Needs]'}`);
+            noteParts.push(`Reason on High Risk:\n${mdtReasonHighRisk.value || '[Reason]'}`);
+            noteParts.push(`Criteria to come off High Risk:\n${mdtCriteriaOffHighRisk.value || '[Criteria]'}`);
+            noteParts.push(`Risk factors:\n${mdtRiskFactors.value || '[Factors]'}`);
+            noteParts.push(`Protective factors:\n${mdtProtectiveFactors.value || '[Factors]'}`);
+            noteParts.push(`Care coordination needs:\n${mdtCareCoordination.value || '[Needs]'}`);
 
             let stageOfChange = mdtStageOfChange.value;
             if (stageOfChange === 'Other') {
                 stageOfChange = mdtStageOfChangeOther.value || '[Other Stage]';
             }
-            noteParts.push(`Stage of change / motivation level: ${stageOfChange || '[Stage]'}`);
+            noteParts.push(`Stage of change / motivation level:\n${stageOfChange || '[Stage]'}`);
 
-            noteParts.push(`Safety Plan completed: ${mdtSafetyPlanCompleted.value || '[Yes/No]'}`);
-            noteParts.push(`Safety Plan applicable to current presentation: ${mdtSafetyPlanApplicable.value || '[Details]'}`);
-            noteParts.push(`MAT status: ${mdtMatStatus.value || '[Status]'}`);
-            noteParts.push(`Date last Urine toxicology collected: ${mdtLastToxDate.value || '[Date]'}`);
-            noteParts.push(`Result of toxicology screen: ${mdtToxResult.value || '[Result]'}`);
-            noteParts.push(`Is client engaging? ${mdtClientEngaging.value || '[Engaging Status]'}`);
-            noteParts.push(`Most recent appointment date: ${mdtMostRecentAppt.value || '[Date]'}`);
-            noteParts.push(`Next appointment date: ${mdtNextAppt.value || '[Date]'}`);
-            noteParts.push(`Progress on most recent MDT recommendations: ${mdtProgressRecommendations.value || '[Progress]'}`);
-            noteParts.push(`Guiding Question(s) for today’s MDT discussion: ${mdtGuidingQuestions.value || '[Questions]'}`);
+            noteParts.push(`Safety Plan completed:\n${mdtSafetyPlanCompleted.value || '[Yes/No]'}`);
+            noteParts.push(`Safety Plan applicable to current presentation:\n${mdtSafetyPlanApplicable.value || '[Details]'}`);
+            noteParts.push(`MAT status:\n${mdtMatStatus.value || '[Status]'}`);
+            noteParts.push(`Date last Urine toxicology collected:\n${mdtLastToxDate.value || '[Date]'}`);
+            noteParts.push(`Result of toxicology screen:\n${mdtToxResult.value || '[Result]'}`);
+            noteParts.push(`Is client engaging?:\n${mdtClientEngaging.value || '[Engaging Status]'}`);
+            noteParts.push(`Most recent appointment date:\n${mdtMostRecentAppt.value || '[Date]'}`);
+            noteParts.push(`Next appointment date:\n${mdtNextAppt.value || '[Date]'}`);
+            noteParts.push(`Progress on most recent MDT recommendations:\n${mdtProgressRecommendations.value || '[Progress]'}`);
+            noteParts.push(`Guiding Question(s) for today’s MDT discussion:\n${mdtGuidingQuestions.value || '[Questions]'}`);
 
             finalNote = noteParts.join('\n\n');
         }
