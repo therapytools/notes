@@ -247,6 +247,7 @@
         <option value="closing-note-non-admitted">Closing Note – Non-Admitted</option>
         <option value="injections">Injections</option>
         <option value="medical-screening">Medical Screening</option>
+        <option value="mdt">MDT</option>
         <option value="discharge-plan">Discharge Plan</option>
     </select>
 
@@ -843,6 +844,77 @@
     <!-- END: Container for Medical Screening -->
 
 
+    <!-- Container for MDT Note -->
+    <div id="mdt-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">MDT Note Details</h2>
+
+        <label for="mdt-diagnosis-container">Diagnosis:</label>
+        <div id="mdt-diagnosis-container"></div>
+
+        <label for="mdt-reason-high-risk">Reason on High Risk:</label>
+        <textarea id="mdt-reason-high-risk"></textarea>
+
+        <label for="mdt-criteria-off-high-risk">Criteria to come off High Risk:</label>
+        <textarea id="mdt-criteria-off-high-risk"></textarea>
+
+        <label for="mdt-risk-factors">Risk factors:</label>
+        <textarea id="mdt-risk-factors"></textarea>
+
+        <label for="mdt-protective-factors">Protective factors:</label>
+        <textarea id="mdt-protective-factors"></textarea>
+
+        <label for="mdt-care-coordination">Care coordination needs:</label>
+        <textarea id="mdt-care-coordination"></textarea>
+
+        <label for="mdt-stage-of-change">Stage of change / motivation level:</label>
+        <select id="mdt-stage-of-change">
+            <option value="" selected disabled>Select a stage...</option>
+            <option value="Precontemplation">Precontemplation</option>
+            <option value="Contemplation">Contemplation</option>
+            <option value="Preparation">Preparation</option>
+            <option value="Action">Action</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Relapse">Relapse</option>
+            <option value="Other">Other</option>
+        </select>
+        <input type="text" id="mdt-stage-of-change-other" class="hidden" placeholder="Specify other stage/motivation...">
+
+        <label for="mdt-safety-plan-completed">Safety Plan completed:</label>
+        <select id="mdt-safety-plan-completed">
+            <option value="" selected disabled>Select...</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label for="mdt-safety-plan-applicable">Safety Plan applicable to current presentation:</label>
+        <textarea id="mdt-safety-plan-applicable"></textarea>
+
+        <label for="mdt-mat-status">MAT status:</label>
+        <input type="text" id="mdt-mat-status">
+
+        <label for="mdt-last-tox-date">Date last Urine toxicology collected:</label>
+        <input type="date" id="mdt-last-tox-date">
+
+        <label for="mdt-tox-result">Result of toxicology screen:</label>
+        <textarea id="mdt-tox-result"></textarea>
+
+        <label for="mdt-client-engaging">Is client engaging?</label>
+        <input type="text" id="mdt-client-engaging">
+
+        <label for="mdt-most-recent-appt">Most recent appointment date:</label>
+        <input type="date" id="mdt-most-recent-appt">
+
+        <label for="mdt-next-appt">Next appointment date:</label>
+        <input type="date" id="mdt-next-appt">
+
+        <label for="mdt-progress-recommendations">Progress on most recent MDT recommendations:</label>
+        <textarea id="mdt-progress-recommendations"></textarea>
+
+        <label for="mdt-guiding-questions">Guiding Question(s) for today’s MDT discussion:</label>
+        <textarea id="mdt-guiding-questions"></textarea>
+    </div>
+
+
     <!-- Container for Discharge Plan -->
     <div id="discharge-plan-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Discharge Plan</h2>
@@ -1007,6 +1079,26 @@ Rochester, NY
     const brixadiSn = document.getElementById('brixadi-sn');
     const brixadiNextInjection = document.getElementById('brixadi-next-injection');
 
+    // MDT elements
+    const mdtDiagnosisContainer = document.getElementById('mdt-diagnosis-container');
+    const mdtReasonHighRisk = document.getElementById('mdt-reason-high-risk');
+    const mdtCriteriaOffHighRisk = document.getElementById('mdt-criteria-off-high-risk');
+    const mdtRiskFactors = document.getElementById('mdt-risk-factors');
+    const mdtProtectiveFactors = document.getElementById('mdt-protective-factors');
+    const mdtCareCoordination = document.getElementById('mdt-care-coordination');
+    const mdtStageOfChange = document.getElementById('mdt-stage-of-change');
+    const mdtStageOfChangeOther = document.getElementById('mdt-stage-of-change-other');
+    const mdtSafetyPlanCompleted = document.getElementById('mdt-safety-plan-completed');
+    const mdtSafetyPlanApplicable = document.getElementById('mdt-safety-plan-applicable');
+    const mdtMatStatus = document.getElementById('mdt-mat-status');
+    const mdtLastToxDate = document.getElementById('mdt-last-tox-date');
+    const mdtToxResult = document.getElementById('mdt-tox-result');
+    const mdtClientEngaging = document.getElementById('mdt-client-engaging');
+    const mdtMostRecentAppt = document.getElementById('mdt-most-recent-appt');
+    const mdtNextAppt = document.getElementById('mdt-next-appt');
+    const mdtProgressRecommendations = document.getElementById('mdt-progress-recommendations');
+    const mdtGuidingQuestions = document.getElementById('mdt-guiding-questions');
+
     // Get containers
     const noteContainers = document.querySelectorAll('.note-container');
 
@@ -1070,6 +1162,29 @@ Rochester, NY
         row.appendChild(select);
         row.appendChild(button);
         diagnosisContainer.appendChild(row);
+        updateFinalNote();
+    }
+
+    function addMdtDiagnosisRow() {
+        const row = document.createElement('div');
+        row.className = 'dynamic-row';
+        const select = document.createElement('select');
+        select.innerHTML = diagnosisOptionsHTML;
+        select.addEventListener('change', updateFinalNote);
+        const button = document.createElement('button');
+        button.type = 'button';
+        if (mdtDiagnosisContainer.children.length === 0) {
+            button.className = 'add-btn';
+            button.textContent = '+';
+            button.onclick = addMdtDiagnosisRow;
+        } else {
+            button.className = 'remove-btn';
+            button.textContent = '-';
+            button.onclick = () => { row.remove(); updateFinalNote(); };
+        }
+        row.appendChild(select);
+        row.appendChild(button);
+        mdtDiagnosisContainer.appendChild(row);
         updateFinalNote();
     }
 
@@ -1549,6 +1664,37 @@ Rochester, NY
             }
 
             finalNote = narrativeParts.join('\n\n');
+        } else if (selectedNoteType === 'mdt') {
+            let noteParts = [];
+            const diagnosisElements = mdtDiagnosisContainer.querySelectorAll('select');
+            const selectedOptions = Array.from(diagnosisElements).map(select => select.value).filter(val => val);
+            const diagnosis = selectedOptions.length > 0 ? selectedOptions.join(', ') : '[SPECIFY DIAGNOSIS]';
+            noteParts.push(`Diagnosis: ${diagnosis}`);
+
+            noteParts.push(`Reason on High Risk: ${mdtReasonHighRisk.value || '[Reason]'}`);
+            noteParts.push(`Criteria to come off High Risk: ${mdtCriteriaOffHighRisk.value || '[Criteria]'}`);
+            noteParts.push(`Risk factors: ${mdtRiskFactors.value || '[Factors]'}`);
+            noteParts.push(`Protective factors: ${mdtProtectiveFactors.value || '[Factors]'}`);
+            noteParts.push(`Care coordination needs: ${mdtCareCoordination.value || '[Needs]'}`);
+
+            let stageOfChange = mdtStageOfChange.value;
+            if (stageOfChange === 'Other') {
+                stageOfChange = mdtStageOfChangeOther.value || '[Other Stage]';
+            }
+            noteParts.push(`Stage of change / motivation level: ${stageOfChange || '[Stage]'}`);
+
+            noteParts.push(`Safety Plan completed: ${mdtSafetyPlanCompleted.value || '[Yes/No]'}`);
+            noteParts.push(`Safety Plan applicable to current presentation: ${mdtSafetyPlanApplicable.value || '[Details]'}`);
+            noteParts.push(`MAT status: ${mdtMatStatus.value || '[Status]'}`);
+            noteParts.push(`Date last Urine toxicology collected: ${mdtLastToxDate.value || '[Date]'}`);
+            noteParts.push(`Result of toxicology screen: ${mdtToxResult.value || '[Result]'}`);
+            noteParts.push(`Is client engaging? ${mdtClientEngaging.value || '[Engaging Status]'}`);
+            noteParts.push(`Most recent appointment date: ${mdtMostRecentAppt.value || '[Date]'}`);
+            noteParts.push(`Next appointment date: ${mdtNextAppt.value || '[Date]'}`);
+            noteParts.push(`Progress on most recent MDT recommendations: ${mdtProgressRecommendations.value || '[Progress]'}`);
+            noteParts.push(`Guiding Question(s) for today’s MDT discussion: ${mdtGuidingQuestions.value || '[Questions]'}`);
+
+            finalNote = noteParts.join('\n\n');
         }
 
 
@@ -1594,6 +1740,9 @@ Rochester, NY
             resetGoalRows(soClientGoalsContainer, soTreatmentGoalsContainer);
         } else if (selection === 'telehealth') {
             telehealthPractitionerLocation.value = "72 Hinchey Road, Rochester, NY";
+        } else if (selection === 'mdt') {
+            mdtDiagnosisContainer.innerHTML = '';
+            addMdtDiagnosisRow();
         }
         updateFinalNote();
     });
@@ -1692,6 +1841,17 @@ Rochester, NY
     });
     [nonAdmittedEfforts, nonAdmittedProvidedTo1, nonAdmittedLocadtr, nonAdmittedEfforts2, nonAdmittedProvidedTo2, nonAdmittedUrineScreen, nonAdmittedProvidedTo3].forEach(el => {
         el.addEventListener('input', updateFinalNote);
+    });
+
+    // MDT Listeners
+    mdtStageOfChange.addEventListener('change', () => {
+        mdtStageOfChangeOther.classList.toggle('hidden', mdtStageOfChange.value !== 'Other');
+        updateFinalNote();
+    });
+    const mdtInputs = document.querySelectorAll('#mdt-container input, #mdt-container textarea, #mdt-container select');
+    mdtInputs.forEach(input => {
+        input.addEventListener('input', updateFinalNote);
+        input.addEventListener('change', updateFinalNote);
     });
 
     // Injections Listeners
