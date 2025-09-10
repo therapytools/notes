@@ -307,6 +307,17 @@
                 </div>
             </div>
         </div>
+        <h2 style="margin-top: 20px;">Suggested Goals</h2>
+        <label for="eval-cd-goal1-textbox">Goal 1:</label>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+            <textarea id="eval-cd-goal1-textbox" rows="2" style="flex:1;" readonly>Engage in Intake Process</textarea>
+            <button id="copy-eval-cd-goal1-btn" class="copy-button" style="width:auto; padding:8px 16px; margin-top:0;">Copy</button>
+        </div>
+        <label for="eval-cd-goal2-textbox" style="margin-top:20px;">Goal 2:</label>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+            <textarea id="eval-cd-goal2-textbox" rows="4" style="flex:1;" readonly>Client will maintain and improve overall health status through engagement with the medical team as needed, including medical monitoring and adherence to provider recommendations, to support recovery and well-being.</textarea>
+            <button id="copy-eval-cd-goal2-btn" class="copy-button" style="width:auto; padding:8px 16px; margin-top:0;">Copy</button>
+        </div>
     </div>
 
     <!-- Container for Evaluation - Significant Other Note -->
@@ -365,6 +376,17 @@
                     <label for="so-gambling-risk" class="scenario-label-text">The clinician reviewed the client’s gambling screen results and initiated a referral to an in-house counselor trained in gambling treatment for further support.</label>
                 </div>
             </div>
+        </div>
+        <h2 style="margin-top: 20px;">Suggested Goals</h2>
+        <label for="eval-so-goal1-textbox">Goal 1:</label>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+            <textarea id="eval-so-goal1-textbox" rows="2" style="flex:1;" readonly>Engage in Intake Process</textarea>
+            <button id="copy-eval-so-goal1-btn" class="copy-button" style="width:auto; padding:8px 16px; margin-top:0;">Copy</button>
+        </div>
+        <label for="eval-so-goal2-textbox" style="margin-top:20px;">Goal 2:</label>
+        <div style="display: flex; gap: 10px; align-items: flex-start;">
+            <textarea id="eval-so-goal2-textbox" rows="4" style="flex:1;" readonly>Client will maintain and improve overall health status through engagement with the medical team as needed, including medical monitoring and adherence to provider recommendations, to support recovery and well-being.</textarea>
+            <button id="copy-eval-so-goal2-btn" class="copy-button" style="width:auto; padding:8px 16px; margin-top:0;">Copy</button>
         </div>
     </div>
     
@@ -1970,6 +1992,30 @@ Rochester, NY
     }
     if (copyFamilyServicesBtn && familyServicesTextbox) {
         copyFamilyServicesBtn.addEventListener('click', () => copyTextboxContent(familyServicesTextbox, copyFamilyServicesBtn));
+    }
+
+    // Eval-CD Goal Copy Buttons
+    const copyEvalCdGoal1Btn = document.getElementById('copy-eval-cd-goal1-btn');
+    const evalCdGoal1Textbox = document.getElementById('eval-cd-goal1-textbox');
+    if (copyEvalCdGoal1Btn && evalCdGoal1Textbox) {
+        copyEvalCdGoal1Btn.addEventListener('click', () => copyTextboxContent(evalCdGoal1Textbox, copyEvalCdGoal1Btn));
+    }
+    const copyEvalCdGoal2Btn = document.getElementById('copy-eval-cd-goal2-btn');
+    const evalCdGoal2Textbox = document.getElementById('eval-cd-goal2-textbox');
+    if (copyEvalCdGoal2Btn && evalCdGoal2Textbox) {
+        copyEvalCdGoal2Btn.addEventListener('click', () => copyTextboxContent(evalCdGoal2Textbox, copyEvalCdGoal2Btn));
+    }
+
+    // Eval-SO Goal Copy Buttons
+    const copyEvalSoGoal1Btn = document.getElementById('copy-eval-so-goal1-btn');
+    const evalSoGoal1Textbox = document.getElementById('eval-so-goal1-textbox');
+    if (copyEvalSoGoal1Btn && evalSoGoal1Textbox) {
+        copyEvalSoGoal1Btn.addEventListener('click', () => copyTextboxContent(evalSoGoal1Textbox, copyEvalSoGoal1Btn));
+    }
+    const copyEvalSoGoal2Btn = document.getElementById('copy-eval-so-goal2-btn');
+    const evalSoGoal2Textbox = document.getElementById('eval-so-goal2-textbox');
+    if (copyEvalSoGoal2Btn && evalSoGoal2Textbox) {
+        copyEvalSoGoal2Btn.addEventListener('click', () => copyTextboxContent(evalSoGoal2Textbox, copyEvalSoGoal2Btn));
     }
 
 </script>
