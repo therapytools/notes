@@ -1003,15 +1003,15 @@ Rochester, NY
         <textarea id="mmfu-psychosocial" placeholder="Document stressors, supports, or changes."></textarea>
 
         <h3>OBJECTIVE:</h3>
-        <label for="mmfu-istop">ISTOP/PRESCRIPTION MONITORING:</label>
+        <label for="mmfu-istop">I-STOP/Prescription Monitoring:</label>
         <textarea id="mmfu-istop" placeholder="Date(s) reviewed, medications dispensed, quantities."></textarea>
-        <label for="mmfu-uds">UDS RESULTS (Reviewed):</label>
+        <label for="mmfu-uds">UDS Results (Reviewed):</label>
         <textarea id="mmfu-uds" placeholder="Date, results, and how it informs assessment."></textarea>
 
         <h3>ASSESSMENT:</h3>
-        <label for="mmfu-interventions">INTERVENTIONS:</label>
+        <label for="mmfu-interventions">Interventions:</label>
         <textarea id="mmfu-interventions" placeholder="Describe interventions used (review of labs, counseling, motivational interviewing, education, risk/benefit discussion, etc.)"></textarea>
-        <label for="mmfu-med-plan">MEDICATION PLAN:</label>
+        <label for="mmfu-med-plan">Medication Plan:</label>
         <textarea id="mmfu-med-plan" placeholder="Medication name, dose, frequency, max daily dose if applicable."></textarea>
         <label for="mmfu-client-response">Client's Response:</label>
         <textarea id="mmfu-client-response" placeholder="Client’s engagement, understanding, agreement/disagreement with plan. Response to interventions, risks/benefits discussion."></textarea>
@@ -1780,53 +1780,59 @@ Rochester, NY
 
             finalNote = noteParts.join('\n\n');
         } else if (selectedNoteType === 'med-mgmt-follow-up') {
-            let noteParts = [];
-            noteParts.push(`CHIEF COMPLAINT:\n${document.getElementById('mmfu-chief-complaint').value || '[Client’s statement]'}`);
+        let noteParts = [];
+        noteParts.push(`CHIEF COMPLAINT:\n${document.getElementById('mmfu-chief-complaint').value || '[Client’s statement]'}`);
 
-            const diagnoses = Array.from(document.querySelectorAll('#mmfu-diagnosis-container input'))
-                .map(input => input.value.trim()).filter(val => val);
-            noteParts.push(`DIAGNOSIS:\n${diagnoses.length > 0 ? diagnoses.join('\n') : '[Diagnosis]'}`);
+        const diagnoses = Array.from(document.querySelectorAll('#mmfu-diagnosis-container input'))
+            .map(input => input.value.trim()).filter(val => val);
+        // Change is on the next line
+        noteParts.push(`DIAGNOSIS:\n${diagnoses.length > 0 ? diagnoses.join('\n\n') : '[Diagnosis]'}`);
 
-            let subjectiveParts = [];
-            const presentingConcern = document.getElementById('mmfu-presenting-concern').value || '[presenting concern]';
-            const medRegimen = document.getElementById('mmfu-med-regimen').value || '[medication regimen]';
-            subjectiveParts.push(`Client presents for ${presentingConcern}. Current medication regimen (${medRegimen}) addresses the presenting concern.`);
-            subjectiveParts.push(`Symptoms/Cravings: ${document.getElementById('mmfu-symptoms').value || '[Not documented]'}`);
-            subjectiveParts.push(`Substance Use: ${document.getElementById('mmfu-substance-use').value || '[Not documented]'}`);
-            subjectiveParts.push(`Medication Adherence: ${document.getElementById('mmfu-adherence').value || '[Not documented]'}`);
-            subjectiveParts.push(`Side Effects/Complications: ${document.getElementById('mmfu-side-effects').value || '[Not documented]'}`);
-            subjectiveParts.push(`Psychosocial/Environmental Changes: ${document.getElementById('mmfu-psychosocial').value || '[Not documented]'}`);
-            noteParts.push(`SUBJECTIVE:\n${subjectiveParts.join('\n')}`);
+        let subjectiveParts = [];
+        const presentingConcern = document.getElementById('mmfu-presenting-concern').value || '[presenting concern]';
+        const medRegimen = document.getElementById('mmfu-med-regimen').value || '[medication regimen]';
+        subjectiveParts.push(`Client presents for ${presentingConcern}. Current medication regimen (${medRegimen}) addresses the presenting concern.`);
+        subjectiveParts.push(`Symptoms/Cravings: ${document.getElementById('mmfu-symptoms').value || '[Not documented]'}`);
+        subjectiveParts.push(`Substance Use: ${document.getElementById('mmfu-substance-use').value || '[Not documented]'}`);
+        subjectiveParts.push(`Medication Adherence: ${document.getElementById('mmfu-adherence').value || '[Not documented]'}`);
+        subjectiveParts.push(`Side Effects/Complications: ${document.getElementById('mmfu-side-effects').value || '[Not documented]'}`);
+        subjectiveParts.push(`Psychosocial/Environmental Changes: ${document.getElementById('mmfu-psychosocial').value || '[Not documented]'}`);
+        // Change is on the next line
+        noteParts.push(`SUBJECTIVE:\n${subjectiveParts.join('\n\n')}`);
 
-            let objectiveParts = [];
-            objectiveParts.push(`ISTOP/PRESCRIPTION MONITORING:\n${document.getElementById('mmfu-istop').value || '[Not documented]'}`);
-            objectiveParts.push(`UDS RESULTS (Reviewed):\n${document.getElementById('mmfu-uds').value || '[Not documented]'}`);
-            noteParts.push(`OBJECTIVE:\n${objectiveParts.join('\n')}`);
+        let objectiveParts = [];
+        objectiveParts.push(`I-STOP/Prescription Monitoring:\n${document.getElementById('mmfu-istop').value || '[Not documented]'}`);
+        objectiveParts.push(`UDS Results (Reviewed):\n${document.getElementById('mmfu-uds').value || '[Not documented]'}`);
+        // Change is on the next line
+        noteParts.push(`OBJECTIVE:\n${objectiveParts.join('\n\n')}`);
 
-            let assessmentParts = [];
-            assessmentParts.push(`INTERVENTIONS: ${document.getElementById('mmfu-interventions').value || '[Not documented]'}`);
-            assessmentParts.push(`MEDICATION PLAN: ${document.getElementById('mmfu-med-plan').value || '[Not documented]'}`);
-            assessmentParts.push(`Client's Response: ${document.getElementById('mmfu-client-response').value || '[Not documented]'}`);
-            assessmentParts.push(`Suicidality: ${document.getElementById('mmfu-suicidality').value}`);
-            noteParts.push(`ASSESSMENT:\n${assessmentParts.join('\n')}`);
+        let assessmentParts = [];
+        assessmentParts.push(`Interventions: ${document.getElementById('mmfu-interventions').value || '[Not documented]'}`);
+        assessmentParts.push(`Medication Plan: ${document.getElementById('mmfu-med-plan').value || '[Not documented]'}`);
+        assessmentParts.push(`Client's Response: ${document.getElementById('mmfu-client-response').value || '[Not documented]'}`);
+        assessmentParts.push(`Suicidality: ${document.getElementById('mmfu-suicidality').value}`);
+        // Change is on the next line
+        noteParts.push(`ASSESSMENT:\n${assessmentParts.join('\n\n')}`);
 
-            let planParts = [];
-            if (document.getElementById('mmfu-plan-continue-meds').checked) planParts.push('Continue medications as prescribed.');
-            if (document.getElementById('mmfu-plan-attend-appts').checked) planParts.push('Attend all medication management appointments.');
-            const followupTime = document.getElementById('mmfu-plan-followup-time').value || '[timeframe]';
-            planParts.push(`Follow up in ${followupTime} for medication management.`);
-            const followupProvider = document.getElementById('mmfu-plan-followup-provider').value || '[provider]';
-            planParts.push(`Follow up with ${followupProvider} as scheduled.`);
-            if (document.getElementById('mmfu-plan-call-911').checked) planParts.push('Client agrees to call 911 and contact staff with any SI/HI or urgent mental health concerns.');
-            noteParts.push(`PLAN:\n${planParts.join('\n')}`);
+        let planParts = [];
+        if (document.getElementById('mmfu-plan-continue-meds').checked) planParts.push('Continue medications as prescribed.');
+        if (document.getElementById('mmfu-plan-attend-appts').checked) planParts.push('Attend all medication management appointments.');
+        const followupTime = document.getElementById('mmfu-plan-followup-time').value || '[timeframe]';
+        planParts.push(`Follow up in ${followupTime} for medication management.`);
+        const followupProvider = document.getElementById('mmfu-plan-followup-provider').value || '[provider]';
+        planParts.push(`Follow up with ${followupProvider} as scheduled.`);
+        if (document.getElementById('mmfu-plan-call-911').checked) planParts.push('Client agrees to call 911 and contact staff with any SI/HI or urgent mental health concerns.');
+        // Change is on the next line
+        noteParts.push(`PLAN:\n${planParts.join('\n\n')}`);
 
-            finalNote = noteParts.join('\n\n');
-        }
-
-
-        finalNoteCopy.value = finalNote.trim();
-        autoResize(finalNoteCopy);
+        // This line correctly joins the major sections with a blank line. No change needed here.
+        finalNote = noteParts.join('\n\n');
     }
+
+
+    finalNoteCopy.value = finalNote.trim();
+    autoResize(finalNoteCopy);
+}
 
     function toggleSafetyPlan(mainCheckbox, safetyPlanCheckbox) {
         safetyPlanCheckbox.disabled = !mainCheckbox.checked;
