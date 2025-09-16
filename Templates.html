@@ -249,6 +249,7 @@
         <option value="medical-screening">Medical Screening</option>
         <option value="mdt">MDT Note</option>
         <option value="discharge-plan">Discharge Plan</option>
+        <option value="med-mgmt-follow-up">Medication Management Follow-up</option>
     </select>
 
     <!-- Container for Evaluation - Chemical Dependency Note -->
@@ -976,6 +977,67 @@ Rochester, NY
             <button id="copy-family-services-btn" class="copy-button" style="width:auto; padding:8px 16px; margin-top:0;">Copy</button>
         </div>
         <p style="margin-top:20px; color:#555;">You may copy and paste these resources into your discharge summary or provide them directly to clients/families.</p>
+    </div>
+
+    <!-- Container for Medication Management Follow-up -->
+    <div id="med-mgmt-follow-up-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Medication Management Follow-up</h2>
+
+        <h3>CHIEF COMPLAINT:</h3>
+        <textarea id="mmfu-chief-complaint" placeholder="Client’s statement here"></textarea>
+
+        <h3>DIAGNOSIS:</h3>
+        <div id="mmfu-diagnosis-container"></div>
+
+        <h3>SUBJECTIVE:</h3>
+        <p>Client presents for <input type="text" id="mmfu-presenting-concern" class="inline-form-element" placeholder="Describe presenting concern">. Current medication regimen <textarea id="mmfu-med-regimen" placeholder="medication, dose, frequency" rows="2"></textarea> addresses the presenting concern.</p>
+        <label for="mmfu-symptoms">Symptoms/Cravings:</label>
+        <input type="text" id="mmfu-symptoms" placeholder="Document client’s current symptoms, cravings, or withdrawal signs.">
+        <label for="mmfu-substance-use">Substance Use:</label>
+        <input type="text" id="mmfu-substance-use" placeholder="Document any substance use or alcohol use since last seen.">
+        <label for="mmfu-adherence">Medication Adherence:</label>
+        <input type="text" id="mmfu-adherence" placeholder="Document if taking medications as prescribed.">
+        <label for="mmfu-side-effects">Side Effects/Complications:</label>
+        <input type="text" id="mmfu-side-effects" placeholder="Note presence/absence of side effects.">
+        <label for="mmfu-psychosocial">Psychosocial/Environmental Changes:</label>
+        <textarea id="mmfu-psychosocial" placeholder="Document stressors, supports, or changes."></textarea>
+
+        <h3>OBJECTIVE:</h3>
+        <label for="mmfu-istop">ISTOP/PRESCRIPTION MONITORING:</label>
+        <textarea id="mmfu-istop" placeholder="Date(s) reviewed, medications dispensed, quantities."></textarea>
+        <label for="mmfu-uds">UDS RESULTS (Reviewed):</label>
+        <textarea id="mmfu-uds" placeholder="Date, results, and how it informs assessment."></textarea>
+
+        <h3>ASSESSMENT:</h3>
+        <label for="mmfu-interventions">INTERVENTIONS:</label>
+        <textarea id="mmfu-interventions" placeholder="Describe interventions used (review of labs, counseling, motivational interviewing, education, risk/benefit discussion, etc.)"></textarea>
+        <label for="mmfu-med-plan">MEDICATION PLAN:</label>
+        <textarea id="mmfu-med-plan" placeholder="Medication name, dose, frequency, max daily dose if applicable."></textarea>
+        <label for="mmfu-client-response">Client's Response:</label>
+        <textarea id="mmfu-client-response" placeholder="Client’s engagement, understanding, agreement/disagreement with plan. Response to interventions, risks/benefits discussion."></textarea>
+        <label for="mmfu-suicidality">Suicidality:</label>
+        <select id="mmfu-suicidality">
+            <option value="Client denies SI/HI">Client denies SI/HI</option>
+            <option value="Client endorses SI">Client endorses SI</option>
+            <option value="Client endorses HI">Client endorses HI</option>
+            <option value="Client endorses SI & HI">Client endorses SI & HI</option>
+        </select>
+
+        <h3>PLAN:</h3>
+        <div class="checkbox-container">
+            <input type="checkbox" id="mmfu-plan-continue-meds">
+            <label for="mmfu-plan-continue-meds">Continue medications as prescribed.</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="mmfu-plan-attend-appts">
+            <label for="mmfu-plan-attend-appts">Attend all medication management appointments.</label>
+        </div>
+        <p>Follow up in <input type="text" id="mmfu-plan-followup-time" class="inline-form-element" placeholder="timeframe"> for medication management.</p>
+        <p>Follow up with <input type="text" id="mmfu-plan-followup-provider" class="inline-form-element" placeholder="counselor/medical provider/etc."> as scheduled.</p>
+        <div class="checkbox-container">
+            <input type="checkbox" id="mmfu-plan-call-911">
+            <label for="mmfu-plan-call-911">Client agrees to call 911 and contact staff with any SI/HI or urgent mental health concerns.</label>
+        </div>
     </div>
 
     <!-- Read-only Note Output for Copying -->
@@ -1717,6 +1779,48 @@ Rochester, NY
             noteParts.push(`Guiding Question(s) for today’s MDT discussion:\n${mdtGuidingQuestions.value || '[Questions]'}`);
 
             finalNote = noteParts.join('\n\n');
+        } else if (selectedNoteType === 'med-mgmt-follow-up') {
+            let noteParts = [];
+            noteParts.push(`CHIEF COMPLAINT:\n${document.getElementById('mmfu-chief-complaint').value || '[Client’s statement]'}`);
+
+            const diagnoses = Array.from(document.querySelectorAll('#mmfu-diagnosis-container input'))
+                .map(input => input.value.trim()).filter(val => val);
+            noteParts.push(`DIAGNOSIS:\n${diagnoses.length > 0 ? diagnoses.join('\n') : '[Diagnosis]'}`);
+
+            let subjectiveParts = [];
+            const presentingConcern = document.getElementById('mmfu-presenting-concern').value || '[presenting concern]';
+            const medRegimen = document.getElementById('mmfu-med-regimen').value || '[medication regimen]';
+            subjectiveParts.push(`Client presents for ${presentingConcern}. Current medication regimen (${medRegimen}) addresses the presenting concern.`);
+            subjectiveParts.push(`Symptoms/Cravings: ${document.getElementById('mmfu-symptoms').value || '[Not documented]'}`);
+            subjectiveParts.push(`Substance Use: ${document.getElementById('mmfu-substance-use').value || '[Not documented]'}`);
+            subjectiveParts.push(`Medication Adherence: ${document.getElementById('mmfu-adherence').value || '[Not documented]'}`);
+            subjectiveParts.push(`Side Effects/Complications: ${document.getElementById('mmfu-side-effects').value || '[Not documented]'}`);
+            subjectiveParts.push(`Psychosocial/Environmental Changes: ${document.getElementById('mmfu-psychosocial').value || '[Not documented]'}`);
+            noteParts.push(`SUBJECTIVE:\n${subjectiveParts.join('\n')}`);
+
+            let objectiveParts = [];
+            objectiveParts.push(`ISTOP/PRESCRIPTION MONITORING:\n${document.getElementById('mmfu-istop').value || '[Not documented]'}`);
+            objectiveParts.push(`UDS RESULTS (Reviewed):\n${document.getElementById('mmfu-uds').value || '[Not documented]'}`);
+            noteParts.push(`OBJECTIVE:\n${objectiveParts.join('\n')}`);
+
+            let assessmentParts = [];
+            assessmentParts.push(`INTERVENTIONS: ${document.getElementById('mmfu-interventions').value || '[Not documented]'}`);
+            assessmentParts.push(`MEDICATION PLAN: ${document.getElementById('mmfu-med-plan').value || '[Not documented]'}`);
+            assessmentParts.push(`Client's Response: ${document.getElementById('mmfu-client-response').value || '[Not documented]'}`);
+            assessmentParts.push(`Suicidality: ${document.getElementById('mmfu-suicidality').value}`);
+            noteParts.push(`ASSESSMENT:\n${assessmentParts.join('\n')}`);
+
+            let planParts = [];
+            if (document.getElementById('mmfu-plan-continue-meds').checked) planParts.push('Continue medications as prescribed.');
+            if (document.getElementById('mmfu-plan-attend-appts').checked) planParts.push('Attend all medication management appointments.');
+            const followupTime = document.getElementById('mmfu-plan-followup-time').value || '[timeframe]';
+            planParts.push(`Follow up in ${followupTime} for medication management.`);
+            const followupProvider = document.getElementById('mmfu-plan-followup-provider').value || '[provider]';
+            planParts.push(`Follow up with ${followupProvider} as scheduled.`);
+            if (document.getElementById('mmfu-plan-call-911').checked) planParts.push('Client agrees to call 911 and contact staff with any SI/HI or urgent mental health concerns.');
+            noteParts.push(`PLAN:\n${planParts.join('\n')}`);
+
+            finalNote = noteParts.join('\n\n');
         }
 
 
@@ -1765,6 +1869,10 @@ Rochester, NY
         } else if (selection === 'mdt') {
             mdtDiagnosisContainer.innerHTML = '';
             addMdtDiagnosisRow();
+        } else if (selection === 'med-mgmt-follow-up') {
+            const container = document.getElementById('mmfu-diagnosis-container');
+            container.innerHTML = '';
+            createDynamicRow(container, 'Enter diagnosis...');
         }
         updateFinalNote();
     });
@@ -1874,6 +1982,16 @@ Rochester, NY
     mdtInputs.forEach(input => {
         input.addEventListener('input', updateFinalNote);
         input.addEventListener('change', updateFinalNote);
+    });
+
+    // Medication Management Follow-up Listeners
+    const mmfuInputs = document.querySelectorAll('#med-mgmt-follow-up-container input, #med-mgmt-follow-up-container textarea, #med-mgmt-follow-up-container select');
+    mmfuInputs.forEach(input => {
+        input.addEventListener('input', updateFinalNote);
+        input.addEventListener('change', updateFinalNote);
+        if (input.tagName.toLowerCase() === 'textarea') {
+            input.addEventListener('input', () => autoResize(input));
+        }
     });
 
     // Injections Listeners
