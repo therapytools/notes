@@ -1249,6 +1249,30 @@ Rochester, NY
         updateFinalNote();
     }
 
+    function addMmfuDiagnosisRow() {
+        const container = document.getElementById('mmfu-diagnosis-container');
+        const row = document.createElement('div');
+        row.className = 'dynamic-row';
+        const select = document.createElement('select');
+        select.innerHTML = diagnosisOptionsHTML;
+        select.addEventListener('change', updateFinalNote);
+        const button = document.createElement('button');
+        button.type = 'button';
+        if (container.children.length === 0) {
+            button.className = 'add-btn';
+            button.textContent = '+';
+            button.onclick = addMmfuDiagnosisRow;
+        } else {
+            button.className = 'remove-btn';
+            button.textContent = '-';
+            button.onclick = () => { row.remove(); updateFinalNote(); };
+        }
+        row.appendChild(select);
+        row.appendChild(button);
+        container.appendChild(row);
+        updateFinalNote();
+    }
+
     function addMdtDiagnosisRow() {
         const row = document.createElement('div');
         row.className = 'dynamic-row';
@@ -1783,10 +1807,9 @@ Rochester, NY
         let noteParts = [];
         noteParts.push(`CHIEF COMPLAINT:\n${document.getElementById('mmfu-chief-complaint').value || '[Client’s statement]'}`);
 
-        const diagnoses = Array.from(document.querySelectorAll('#mmfu-diagnosis-container input'))
-            .map(input => input.value.trim()).filter(val => val);
-        // Change is on the next line
-        noteParts.push(`DIAGNOSIS:\n${diagnoses.length > 0 ? diagnoses.join('\n\n') : '[Diagnosis]'}`);
+        const diagnoses = Array.from(document.querySelectorAll('#mmfu-diagnosis-container select'))
+            .map(select => select.value.trim()).filter(val => val);
+        noteParts.push(`DIAGNOSIS:\n${diagnoses.length > 0 ? diagnoses.join('\n') : '[Diagnosis]'}`);
 
         let subjectiveParts = [];
         const presentingConcern = document.getElementById('mmfu-presenting-concern').value || '[presenting concern]';
@@ -1797,13 +1820,11 @@ Rochester, NY
         subjectiveParts.push(`Medication Adherence: ${document.getElementById('mmfu-adherence').value || '[Not documented]'}`);
         subjectiveParts.push(`Side Effects/Complications: ${document.getElementById('mmfu-side-effects').value || '[Not documented]'}`);
         subjectiveParts.push(`Psychosocial/Environmental Changes: ${document.getElementById('mmfu-psychosocial').value || '[Not documented]'}`);
-        // Change is on the next line
         noteParts.push(`SUBJECTIVE:\n${subjectiveParts.join('\n\n')}`);
 
         let objectiveParts = [];
         objectiveParts.push(`I-STOP/Prescription Monitoring:\n${document.getElementById('mmfu-istop').value || '[Not documented]'}`);
         objectiveParts.push(`UDS Results (Reviewed):\n${document.getElementById('mmfu-uds').value || '[Not documented]'}`);
-        // Change is on the next line
         noteParts.push(`OBJECTIVE:\n${objectiveParts.join('\n\n')}`);
 
         let assessmentParts = [];
@@ -1811,7 +1832,6 @@ Rochester, NY
         assessmentParts.push(`Medication Plan: ${document.getElementById('mmfu-med-plan').value || '[Not documented]'}`);
         assessmentParts.push(`Client's Response: ${document.getElementById('mmfu-client-response').value || '[Not documented]'}`);
         assessmentParts.push(`Suicidality: ${document.getElementById('mmfu-suicidality').value}`);
-        // Change is on the next line
         noteParts.push(`ASSESSMENT:\n${assessmentParts.join('\n\n')}`);
 
         let planParts = [];
@@ -1822,10 +1842,8 @@ Rochester, NY
         const followupProvider = document.getElementById('mmfu-plan-followup-provider').value || '[provider]';
         planParts.push(`Follow up with ${followupProvider} as scheduled.`);
         if (document.getElementById('mmfu-plan-call-911').checked) planParts.push('Client agrees to call 911 and contact staff with any SI/HI or urgent mental health concerns.');
-        // Change is on the next line
         noteParts.push(`PLAN:\n${planParts.join('\n\n')}`);
 
-        // This line correctly joins the major sections with a blank line. No change needed here.
         finalNote = noteParts.join('\n\n');
     }
 
@@ -1878,7 +1896,7 @@ Rochester, NY
         } else if (selection === 'med-mgmt-follow-up') {
             const container = document.getElementById('mmfu-diagnosis-container');
             container.innerHTML = '';
-            createDynamicRow(container, 'Enter diagnosis...');
+            addMmfuDiagnosisRow();
         }
         updateFinalNote();
     });
