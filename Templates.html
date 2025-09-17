@@ -1002,6 +1002,24 @@ Rochester, NY
         <label for="mmfu-psychosocial">Psychosocial/Environmental Changes:</label>
         <textarea id="mmfu-psychosocial" placeholder="Document stressors, supports, or changes."></textarea>
 
+        <label for="mmfu-nicotine-use">Patient uses a product containing nicotine?</label>
+        <select id="mmfu-nicotine-use">
+            <option value="" selected disabled>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
+        <div id="mmfu-nicotine-details-section" class="hidden">
+            <label for="mmfu-nicotine-interest">Is the patient interested in cutting down?</label>
+            <select id="mmfu-nicotine-interest">
+                <option value="" selected disabled>Select...</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+            <label for="mmfu-nicotine-details">Type of nicotine used, amount, frequency, factors that predispose use that were reviewed with patient such as social and environmental triggers, history of previous quit attempts, prior therapies or treatments used</label>
+            <textarea id="mmfu-nicotine-details" rows="3"></textarea>
+        </div>
+
         <h3>OBJECTIVE:</h3>
         <label for="mmfu-istop">I-STOP/Prescription Monitoring:</label>
         <textarea id="mmfu-istop" placeholder="Date(s) reviewed, medications dispensed, quantities."></textarea>
@@ -1182,6 +1200,13 @@ Rochester, NY
     const mdtNextAppt = document.getElementById('mdt-next-appt');
     const mdtProgressRecommendations = document.getElementById('mdt-progress-recommendations');
     const mdtGuidingQuestions = document.getElementById('mdt-guiding-questions');
+
+    // Medication Management Follow-up elements
+    const mmfuNicotineUse = document.getElementById('mmfu-nicotine-use');
+    const mmfuNicotineDetailsSection = document.getElementById('mmfu-nicotine-details-section');
+    const mmfuNicotineInterest = document.getElementById('mmfu-nicotine-interest');
+    const mmfuNicotineDetails = document.getElementById('mmfu-nicotine-details');
+
 
     // Get containers
     const noteContainers = document.querySelectorAll('.note-container');
@@ -1820,6 +1845,23 @@ Rochester, NY
         subjectiveParts.push(`Medication Adherence: ${document.getElementById('mmfu-adherence').value || '[Not documented]'}`);
         subjectiveParts.push(`Side Effects/Complications: ${document.getElementById('mmfu-side-effects').value || '[Not documented]'}`);
         subjectiveParts.push(`Psychosocial/Environmental Changes: ${document.getElementById('mmfu-psychosocial').value || '[Not documented]'}`);
+        
+        const nicotineUse = document.getElementById('mmfu-nicotine-use').value;
+        if (nicotineUse) {
+            let nicotineSentence = `The patient ${nicotineUse === 'yes' ? 'reports' : 'denies'} using nicotine.`;
+            if (nicotineUse === 'yes') {
+                const nicotineInterest = document.getElementById('mmfu-nicotine-interest').value;
+                if (nicotineInterest) {
+                    nicotineSentence += ` Ct ${nicotineInterest === 'yes' ? 'is' : 'is not'} interested in reduction or cessation of nicotine.`;
+                }
+                const nicotineDetails = document.getElementById('mmfu-nicotine-details').value;
+                if (nicotineDetails) {
+                    nicotineSentence += `\nType of nicotine used, amount used, frequency of use, factors that predispose use that were reviewed with patient such as social and environmental triggers AND history of previous quit attempts, prior therapies or treatments used: ${nicotineDetails}`;
+                }
+            }
+            subjectiveParts.push(nicotineSentence);
+        }
+
         noteParts.push(`SUBJECTIVE:\n${subjectiveParts.join('\n\n')}`);
 
         let objectiveParts = [];
@@ -1920,6 +1962,17 @@ Rochester, NY
     soSafetyPlanNoProviderCheckbox.addEventListener('change', updateFinalNote);
     soOverdoseRiskCheckbox.addEventListener('change', updateFinalNote);
     soGamblingRiskCheckbox.addEventListener('change', updateFinalNote);
+
+    // Med Mgmt Follow Up Listeners
+    mmfuNicotineUse.addEventListener('change', () => {
+        mmfuNicotineDetailsSection.classList.toggle('hidden', mmfuNicotineUse.value !== 'yes');
+        updateFinalNote();
+    });
+    document.querySelectorAll('#med-mgmt-follow-up-container input, #med-mgmt-follow-up-container select, #med-mgmt-follow-up-container textarea').forEach(el => {
+        el.addEventListener('input', updateFinalNote);
+        el.addEventListener('change', updateFinalNote);
+    });
+
 
     // Narcan Listeners
     narcanProvidedCheckbox.addEventListener('change', () => {
