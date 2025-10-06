@@ -233,23 +233,17 @@
 <div class="container">
     <h1>Template-Based Notes</h1>
 
-    <label for="note-type-select">Select Note Type:</label>
-    <select id="note-type-select">
-        <option value="" selected disabled>Select a note type...</option>
-        <option value="eval-cd">Evaluation - Chemical Dependency</option>
-        <option value="eval-so">Evaluation - Significant Other</option>
-        <option value="entry-cd">Entry Session - Chemical Dependency</option>
-        <option value="entry-so">Entry Session - Significant Other</option>
-        <option value="narcan-kit">Narcan Education & Kit</option>
-        <option value="mat-education">MAT Education</option>
-        <option value="telehealth">Telehealth</option>
-        <option value="closing-note-admitted">Closing Note – Admitted</option>
-        <option value="closing-note-non-admitted">Closing Note – Non-Admitted</option>
-        <option value="injections">Injections</option>
-        <option value="medical-screening">Medical Screening</option>
-        <option value="mdt">MDT Note</option>
-        <option value="discharge-plan">Discharge Plan</option>
-        <option value="med-mgmt-follow-up">Medication Management Follow-up</option>
+    <!-- New: Staff Role selector -->
+    <label for="staff-type-select">Select Staff Role:</label>
+    <select id="staff-type-select">
+        <option value="" selected disabled>Select role...</option>
+        <option value="counseling">Counseling Staff</option>
+        <option value="medical">Medical Staff</option>
+    </select>
+
+    <label for="note-type-select" style="margin-top:12px;">Select Note Type:</label>
+    <select id="note-type-select" disabled>
+        <option value="" selected disabled>Select a role first...</option>
     </select>
 
     <!-- Container for Evaluation - Chemical Dependency Note -->
@@ -1067,8 +1061,64 @@ Rochester, NY
 </div>
 
 <script>
+        // --- Staff-Role driven Note Type population ---
+        const staffTypeSelect = document.getElementById('staff-type-select');
+        const noteTypeSelect = document.getElementById('note-type-select');
+
+        const staffNoteOptions = {
+            counseling: [
+                { value: 'closing-note-admitted', label: 'Closing Note – Admitted' },
+                { value: 'closing-note-non-admitted', label: 'Closing Note – Non-Admitted' },
+                { value: 'discharge-plan', label: 'Discharge Plan' },
+                { value: 'entry-cd', label: 'Entry Session - Chemical Dependency' },
+                { value: 'entry-so', label: 'Entry Session - Significant Other' },
+                { value: 'eval-cd', label: 'Evaluation - Chemical Dependency' },
+                { value: 'eval-so', label: 'Evaluation - Significant Other' },
+                { value: 'mdt', label: 'MDT Note' },
+                { value: 'narcan-kit', label: 'Narcan Education & Kit' },
+                { value: 'telehealth', label: 'Telehealth' }
+            ],
+            medical: [
+                { value: 'injections', label: 'Injections' },
+                { value: 'mat-education', label: 'MAT Education' },
+                { value: 'medical-screening', label: 'Medical Screening' },
+                { value: 'med-mgmt-follow-up', label: 'Medication Management Follow-up' },
+                { value: 'narcan-kit', label: 'Narcan Education & Kit' },
+                { value: 'telehealth', label: 'Telehealth' }
+            ]
+        };
+
+        function populateNoteTypesForRole(role) {
+            // clear current options
+            noteTypeSelect.innerHTML = '';
+            const placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.disabled = true;
+            placeholder.selected = true;
+            placeholder.textContent = 'Select a note type...';
+            noteTypeSelect.appendChild(placeholder);
+
+            const options = staffNoteOptions[role] || [];
+            options.forEach(opt => {
+                const o = document.createElement('option');
+                o.value = opt.value;
+                o.textContent = opt.label;
+                noteTypeSelect.appendChild(o);
+            });
+            noteTypeSelect.disabled = options.length === 0;
+        }
+
+        // When staff role changes, populate allowed note types and reset selection
+        staffTypeSelect.addEventListener('change', () => {
+            const role = staffTypeSelect.value;
+            populateNoteTypesForRole(role);
+            noteTypeSelect.value = '';
+            // hide all containers and clear generated note area
+            noteContainers.forEach(c => c.classList.add('hidden'));
+            updateFinalNote();
+        });
+
     // Get all interactive elements
-    const noteTypeSelect = document.getElementById('note-type-select');
     const finalNoteCopy = document.getElementById('final-note-copy');
     const copyButton = document.getElementById('copy-button');
 
