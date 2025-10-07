@@ -25,8 +25,8 @@
             color: #2c3e50;
         }
         h2 {
-             border-bottom: 2px solid #e0e0e0;
-             padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
         }
         label {
             display: block;
@@ -164,7 +164,7 @@
             color: #333;
             border: 1px solid #ccc;
         }
-        .copy-button {
+        .copy-button, .mse-button {
             display: block;
             width: 100%;
             padding: 12px;
@@ -178,10 +178,10 @@
             margin-top: 10px;
             transition: background-color 0.2s;
         }
-        .copy-button:hover {
+        .copy-button:hover, .mse-button:hover {
             background-color: #218838;
         }
-        .copy-button:active {
+        .copy-button:active, .mse-button:active {
             background-color: #1e7e34;
         }
         .hidden {
@@ -213,7 +213,8 @@
         /* Styles for merged form */
         .radio-group label {
             font-weight: normal;
-            display: block;
+            display: inline-block;
+            margin-right: 15px;
             margin-bottom: 5px;
         }
         .radio-group input[type="radio"] {
@@ -226,6 +227,191 @@
             margin-top: 15px;
             border-left: 3px solid #007bff;
         }
+        .ouds-substance-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .ouds-substance-grid label {
+            margin: 0;
+            font-weight: normal;
+        }
+        .ouds-substance-grid input {
+            margin: 0;
+        }
+        /* Updated styling for ouds-inline-label to handle short textboxes */
+        .ouds-inline-label {
+            display: grid; /* Use grid for alignment */
+            grid-template-columns: 1fr 1fr; /* Create two even columns */
+            align-items: start; /* Align items to the top for wrapped labels */
+            gap: 20px; /* Add more gap for even columns */
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .ouds-inline-label label {
+            margin: 0;
+            font-weight: bold; /* Keep labels bold */
+        }
+        .ouds-inline-label input[type="text"],
+        .ouds-inline-label input[type="date"] {
+            margin: 0;
+            flex-grow: 1; /* Allow input to grow */
+        }
+        .ouds-inline-label textarea { /* Textareas should still take full width below label */
+            grid-column: 1 / -1; /* Make textarea span all columns */
+            margin: 0;
+            flex-grow: 1;
+        }
+        .ouds-inline-label .radio-group {
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            grid-column: 2; /* Align radio group to the right column */
+            justify-content: flex-start;
+        }
+        /* Special case for Chief Complaint to remove input field entirely */
+        #opioid-use-disorder-short-container #ouds-chief-complaint-display-label {
+            grid-column: 1 / -1; /* Make the label span full width */
+            margin-bottom: 10px;
+        }
+        
+        /* New styles for aligned items in Plan and Time Statement */
+        .ouds-aligned-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .ouds-aligned-item > span,
+        .ouds-aligned-item > label:first-child {
+            display: flex;
+            align-items: center;
+            grid-column: 1 / 2;
+        }
+
+        .ouds-aligned-item > input[type="text"] {
+            grid-column: 2 / 3;
+            margin: 0;
+        }
+
+        .ouds-aligned-item input[type="checkbox"] {
+            margin-right: 12px;
+            margin-top: 0;
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+        }
+        .ouds-aligned-item label {
+            font-weight: normal;
+            margin: 0;
+        }
+
+        /* Styles for MSE Modal */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); 
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 900px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+        }
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Styles for MSE form from user */
+        .mse-form-container {
+            background-color: #ffffff;
+            padding: .25rem;
+            border-radius: 0.25rem;
+        }
+        .mse-category {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start; /* Align items to the start */
+            gap: .25rem; /* Add some gap between items */
+        }
+        .mse-category label {
+             display: inline-flex; /* Use flex to align checkbox and text */
+            align-items: center;
+            flex-grow: .25;
+            flex-basis: calc(25% - 1rem); /* Default to 3 columns, adjusting for gap */
+        }
+        @media (max-width: 768px) {
+            .mse-category label {
+                flex-basis: calc(50% - 1rem); /* 2 columns on medium screens */
+            }
+        }
+         @media (max-width: 480px) {
+            .mse-category label {
+                flex-basis: 100%; /* 1 column on small screens */
+            }
+        }
+        .mse-category input[type="text"] {
+            width: 100%;
+            margin: 1px 0;
+        }
+        .mse-custom-input {
+            width: 100%; /* Full width for custom input */
+            margin-top: 0.25rem;
+        }
+        .mse-form-container legend {
+            font-weight: bold;
+            color: #c2410c;
+            font-size: 1.1em;
+            margin-bottom: 0.25rem;
+        }
+      /* Corrected spacing for labels above LARGE textareas in OUD Short note */
+#opioid-use-disorder-short-container .ouds-inline-label:has(textarea) {
+    display: block;      /* Override the grid layout for these specific fields */
+    grid-template-columns: none; /* Remove the column definition */
+    gap: 0;              /* Remove the unwanted gap */
+    margin-top: 20px;    /* Add space above the entire label-textbox unit */
+    margin-bottom: 10px;
+}
+
+#opioid-use-disorder-short-container .ouds-inline-label:has(textarea) > label {
+    margin-bottom: 0px; /* Reduce space between the label and its textbox */
+    margin-top: 0;
+}
+
+#opioid-use-disorder-short-container .ouds-inline-label:has(textarea) > textarea {
+    margin-top: 0; /* Ensure no extra space above the textarea */
+}
+
+/* This rule adds back a small amount of space for textareas that come directly after a main heading (like I-STOP). */
+#opioid-use-disorder-short-container h3 + textarea {
+    margin-top: 5px;
+}
     </style>
 </head>
 <body>
@@ -270,7 +456,7 @@
                     <input type="checkbox" id="cd-has-mh-provider-text">
                     <label for="cd-has-mh-provider-text" class="scenario-label-text">The clinician discussed the client’s engagement with their current provider, encouraged prompt follow-up based on Behavioral Health screening results, and reviewed additional mental health resources if the client wishes to explore other providers. A signed release was obtained to coordinate care.</label>
                 </div>
-                 <div class="scenario-content checkbox-container">
+                    <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="cd-safety-plan-has-provider">
                     <label for="cd-safety-plan-has-provider" class="scenario-label-text">A safety plan was developed collaboratively.</label>
                 </div>
@@ -281,7 +467,7 @@
                     <input type="checkbox" id="cd-no-mh-provider-text">
                     <label for="cd-no-mh-provider-text" class="scenario-label-text">The clinician encouraged a prompt mental health evaluation based on Behavioral Health screening results and provided a list of mental health referral options, reviewed the benefits of a comprehensive mental health evaluation, and offered support in making and completing the referral.</label>
                 </div>
-                 <div class="scenario-content checkbox-container">
+                    <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="cd-safety-plan-no-provider">
                     <label for="cd-safety-plan-no-provider" class="scenario-label-text">A safety plan was developed to address suicide risk.</label>
                 </div>
@@ -289,14 +475,14 @@
             <h2>Other Scenarios</h2>
             <div class="scenario-group">
                 <p class="scenario-label">Overdose Risk Identified:</p>
-                 <div class="scenario-content checkbox-container">
+                    <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="cd-overdose-risk">
                     <label for="cd-overdose-risk" class="scenario-label-text">The clinician reviewed the client’s overdose risk factors and collaborated with the client to create a personalized safety plan.</label>
                 </div>
             </div>
-             <div class="scenario-group">
+                <div class="scenario-group">
                 <p class="scenario-label">High-Risk Gambling Screen:</p>
-                 <div class="scenario-content checkbox-container">
+                    <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="cd-gambling-risk">
                     <label for="cd-gambling-risk" class="scenario-label-text">The clinician reviewed the client’s gambling screen results and initiated a referral to an in-house counselor trained in gambling treatment for further support.</label>
                 </div>
@@ -340,7 +526,7 @@
                     <input type="checkbox" id="so-has-mh-provider-text">
                     <label for="so-has-mh-provider-text" class="scenario-label-text">The clinician discussed the client’s engagement with their current provider, encouraged prompt follow-up based on Behavioral Health screening results, and reviewed additional mental health resources if the client wishes to explore other providers. A signed release was obtained to coordinate care.</label>
                 </div>
-                 <div class="scenario-content checkbox-container">
+                    <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="so-safety-plan-has-provider">
                     <label for="so-safety-plan-has-provider" class="scenario-label-text">A safety plan was developed collaboratively.</label>
                 </div>
@@ -351,7 +537,7 @@
                     <input type="checkbox" id="so-no-mh-provider-text">
                     <label for="so-no-mh-provider-text" class="scenario-label-text">The clinician encouraged a prompt mental health evaluation based on Behavioral Health screening results and provided a list of mental health referral options, reviewed the benefits of a comprehensive mental health evaluation, and offered support in making and completing the referral.</label>
                 </div>
-                 <div class="scenario-content checkbox-container">
+                    <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="so-safety-plan-no-provider">
                     <label for="so-safety-plan-no-provider" class="scenario-label-text">A safety plan was developed to address suicide risk.</label>
                 </div>
@@ -359,14 +545,14 @@
             <h2>Other Scenarios</h2>
             <div class="scenario-group">
                 <p class="scenario-label">Overdose Risk Identified:</p>
-                 <div class="scenario-content checkbox-container">
+                    <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="so-overdose-risk">
                     <label for="so-overdose-risk" class="scenario-label-text">The clinician reviewed the client’s overdose risk factors and collaborated with the client to create a personalized safety plan.</label>
                 </div>
             </div>
-             <div class="scenario-group">
+                <div class="scenario-group">
                 <p class="scenario-label">High-Risk Gambling Screen:</p>
-                 <div class="scenario-content checkbox-container">
+                    <div class="scenario-content checkbox-container">
                     <input type="checkbox" id="so-gambling-risk">
                     <label for="so-gambling-risk" class="scenario-label-text">The clinician reviewed the client’s gambling screen results and initiated a referral to an in-house counselor trained in gambling treatment for further support.</label>
                 </div>
@@ -453,7 +639,7 @@
             </select>
 
             <div id="mat-options-details-section" class="hidden">
-                 <label for="mat-substances-textbox">MAT is recommended for the following substance(s):</label>
+                    <label for="mat-substances-textbox">MAT is recommended for the following substance(s):</label>
                 <input type="text" id="mat-substances-textbox" placeholder="e.g., opioids, alcohol...">
                 <label>What MAT options were explored?</label>
                 <div id="mat-specific-options-checkboxes">
@@ -726,7 +912,7 @@
             </div>
 
             <div id="ms-peLastYearNoSection" class="conditional hidden">
-                 <div class="checkbox-container">
+                    <div class="checkbox-container">
                     <input type="checkbox" id="noPeDiscussed" name="noPeDiscussed">
                     <label for="noPeDiscussed">Writer and client discussed the importance of routine health maintenance and management of chronic conditions with PCP. Client was provided with information of local PCP offices that are taking new clients, writer offered to provide support in making referral.</label>
                 </div>
@@ -741,17 +927,17 @@
         
         <div id="ms-pcpConsentNoSection" class="conditional hidden">
             <label>Reason for declining consent:</label>
-             <div class="radio-group">
-                <label><input type="radio" name="declineReason" value="confidential"> Client does not want PCP to know about substance abuse treatment.</label>
-                <label><input type="radio" name="declineReason" value="other"> Other</label>
-             </div>
-             <div id="ms-declineReasonOtherSpecify" class="conditional hidden">
-                 <input type="text" name="declineReasonOtherText" placeholder="Specify other reason">
-             </div>
-             <div class="checkbox-container">
-                <input type="checkbox" id="oasasReviewedNoConsent" name="oasasReviewedNoConsent">
-                <label for="oasasReviewedNoConsent">Reviewed with client OASAS guidelines regarding obtaining recent physical exam review, will only request last PE, current med list. Client understands and does not consent to PCP consent.</label>
-            </div>
+                <div class="radio-group">
+                    <label><input type="radio" name="declineReason" value="confidential"> Client does not want PCP to know about substance abuse treatment.</label>
+                    <label><input type="radio" name="declineReason" value="other"> Other</label>
+                </div>
+                <div id="ms-declineReasonOtherSpecify" class="conditional hidden">
+                    <input type="text" name="declineReasonOtherText" placeholder="Specify other reason">
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="oasasReviewedNoConsent" name="oasasReviewedNoConsent">
+                    <label for="oasasReviewedNoConsent">Reviewed with client OASAS guidelines regarding obtaining recent physical exam review, will only request last PE, current med list. Client understands and does not consent to PCP consent.</label>
+                </div>
         </div>
 
         <h2>Communicable Diseases</h2>
@@ -768,17 +954,17 @@
                 <option value="known_negative">Known Negative</option>
                 <option value="known_positive">Known Positive</option>
             </select>
-             <div id="ms-stdHepPositiveSection" class="conditional hidden">
-                <label for="stdHepPositiveSpecify">Specify:</label>
-                <input type="text" id="stdHepPositiveSpecify" name="stdHepPositiveSpecify">
-            </div>
+                <div id="ms-stdHepPositiveSection" class="conditional hidden">
+                    <label for="stdHepPositiveSpecify">Specify:</label>
+                    <input type="text" id="stdHepPositiveSpecify" name="stdHepPositiveSpecify">
+                </div>
         </div>
 
         <label>Has client been tested for TB?</label>
-         <div class="radio-group">
-            <label><input type="radio" name="tbTest" value="yes"> Yes</label>
-            <label><input type="radio" name="tbTest" value="no"> No</label>
-        </div>
+            <div class="radio-group">
+                <label><input type="radio" name="tbTest" value="yes"> Yes</label>
+                <label><input type="radio" name="tbTest" value="no"> No</label>
+            </div>
         
         <div id="ms-tbTestYesSection" class="conditional hidden">
             <label>Test Result:</label>
@@ -808,10 +994,10 @@
 
         <h2>Substance Use</h2>
         <label>Tobacco use:</label>
-         <div class="radio-group">
-            <label><input type="radio" name="tobaccoUse" value="yes"> Yes</label>
-            <label><input type="radio" name="tobaccoUse" value="no"> No</label>
-        </div>
+            <div class="radio-group">
+                <label><input type="radio" name="tobaccoUse" value="yes"> Yes</label>
+                <label><input type="radio" name="tobaccoUse" value="no"> No</label>
+            </div>
 
         <div id="ms-tobaccoUseYesSection" class="conditional hidden">
             <label for="tobaccoAmount">Client reports tobacco use (amount):</label>
@@ -846,17 +1032,17 @@
         </div>
 
         <div id="ms-matNoSection" class="conditional hidden">
-             <div class="radio-group">
-                <label><input type="radio" name="matInterest" value="declined"> Client declined MAT at this time, client aware that if client is interested in MAT in the future to discuss with therapist or with nurse.</label>
-                <label><input type="radio" name="matInterest" value="accepted"> Client would like to see med provider for MAT and has been scheduled with medication provider.</label>
-            </div>
+                <div class="radio-group">
+                    <label><input type="radio" name="matInterest" value="declined"> Client declined MAT at this time, client aware that if client is interested in MAT in the future to discuss with therapist or with nurse.</label>
+                    <label><input type="radio" name="matInterest" value="accepted"> Client would like to see med provider for MAT and has been scheduled with medication provider.</label>
+                </div>
         </div>
 
         <label>Narcan / Overdose Prevention</label>
-         <div class="radio-group">
-            <label><input type="radio" name="narcanOffered" value="yes"> Narcan training offered and accepted</label>
-            <label><input type="radio" name="narcanOffered" value="no"> Narcan training offered and declined</label>
-        </div>
+            <div class="radio-group">
+                <label><input type="radio" name="narcanOffered" value="yes"> Narcan training offered and accepted</label>
+                <label><input type="radio" name="narcanOffered" value="no"> Narcan training offered and declined</label>
+            </div>
     </div>
     <!-- END: Container for Medical Screening -->
 
@@ -871,19 +1057,19 @@
         <label for="mdt-reason-high-risk">Reason on High Risk:</label>
         <textarea id="mdt-reason-high-risk"></textarea>
 
-        <label for="mdt-criteria-off-high-risk">Criteria to come off High Risk:</label>
+        <label for="mdt-criteria-off-high-risk">Criteria to Come Off High Risk:</label>
         <textarea id="mdt-criteria-off-high-risk"></textarea>
 
-        <label for="mdt-risk-factors">Risk factors:</label>
+        <label for="mdt-risk-factors">Risk Factors:</label>
         <textarea id="mdt-risk-factors"></textarea>
 
-        <label for="mdt-protective-factors">Protective factors:</label>
+        <label for="mdt-protective-factors">Protective Factors:</label>
         <textarea id="mdt-protective-factors"></textarea>
 
-        <label for="mdt-care-coordination">Care coordination needs:</label>
+        <label for="mdt-care-coordination">Care Coordination Needs:</label>
         <textarea id="mdt-care-coordination"></textarea>
 
-        <label for="mdt-stage-of-change">Stage of change / motivation level:</label>
+        <label for="mdt-stage-of-change">Stage of Change / Motivation Level:</label>
         <select id="mdt-stage-of-change">
             <option value="" selected disabled>Select a stage...</option>
             <option value="Precontemplation">Precontemplation</option>
@@ -896,38 +1082,38 @@
         </select>
         <input type="text" id="mdt-stage-of-change-other" class="hidden" placeholder="Specify other stage/motivation...">
 
-        <label for="mdt-safety-plan-completed">Safety Plan completed:</label>
+        <label for="mdt-safety-plan-completed">Safety Plan Completed:</label>
         <select id="mdt-safety-plan-completed">
             <option value="" selected disabled>Select...</option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
         </select>
 
-        <label for="mdt-safety-plan-applicable">Safety Plan applicable to current presentation:</label>
+        <label for="mdt-safety-plan-applicable">Safety Plan Applicable to Current Presentation:</label>
         <textarea id="mdt-safety-plan-applicable"></textarea>
 
-        <label for="mdt-mat-status">MAT status:</label>
+        <label for="mdt-mat-status">MAT Status:</label>
         <input type="text" id="mdt-mat-status">
 
-        <label for="mdt-last-tox-date">Date last Urine toxicology collected:</label>
+        <label for="mdt-last-tox-date">Date Last Urine Toxicology Collected:</label>
         <input type="date" id="mdt-last-tox-date">
 
-        <label for="mdt-tox-result">Result of toxicology screen:</label>
+        <label for="mdt-tox-result">Result of Toxicology Screen:</label>
         <textarea id="mdt-tox-result"></textarea>
 
-        <label for="mdt-client-engaging">Is client engaging?</label>
+        <label for="mdt-client-engaging">Is Client Engaging?</label>
         <input type="text" id="mdt-client-engaging">
 
-        <label for="mdt-most-recent-appt">Most recent appointment date:</label>
+        <label for="mdt-most-recent-appt">Most Recent Appointment Date:</label>
         <input type="date" id="mdt-most-recent-appt">
 
-        <label for="mdt-next-appt">Next appointment date:</label>
+        <label for="mdt-next-appt">Next Appointment Date:</label>
         <input type="date" id="mdt-next-appt">
 
-        <label for="mdt-progress-recommendations">Progress on most recent MDT recommendations:</label>
+        <label for="mdt-progress-recommendations">Progress on Most Recent MDT Recommendations:</label>
         <textarea id="mdt-progress-recommendations"></textarea>
 
-        <label for="mdt-guiding-questions">Guiding Question(s) for today’s MDT discussion:</label>
+        <label for="mdt-guiding-questions">Guiding Question(s) for Today’s MDT Discussion:</label>
         <textarea id="mdt-guiding-questions"></textarea>
     </div>
 
@@ -952,7 +1138,7 @@ Find a Rochester meeting: https://www.rochesteraa.org/
 Call (585) 232-6720 to speak to an AA support at our Central Office 
 
 ROCovery Fitness  
-1035 Dewey Avenue, Rochester, New York 14613 	
+1035 Dewey Avenue, Rochester, New York 14613   
 https://www.rocoveryfitness.org/ 
 </textarea>
             <button id="copy-peer-support-btn" class="copy-button" style="width:auto; padding:8px 16px; margin-top:0;">Copy</button>
@@ -977,13 +1163,13 @@ Rochester, NY
     <div id="med-mgmt-follow-up-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Medication Management Follow-up</h2>
 
-        <h3>CHIEF COMPLAINT:</h3>
+        <h3>Chief Complaint:</h3>
         <textarea id="mmfu-chief-complaint" placeholder="Client’s statement here"></textarea>
 
-        <h3>DIAGNOSIS:</h3>
+        <h3>Diagnosis:</h3>
         <div id="mmfu-diagnosis-container"></div>
 
-        <h3>SUBJECTIVE:</h3>
+        <h3>Subjective:</h3>
         <p>Client presents for <input type="text" id="mmfu-presenting-concern" class="inline-form-element" placeholder="Describe presenting concern">. Current medication regimen <textarea id="mmfu-med-regimen" placeholder="medication, dose, frequency" rows="2"></textarea> addresses the presenting concern.</p>
         <label for="mmfu-symptoms">Symptoms/Cravings:</label>
         <input type="text" id="mmfu-symptoms" placeholder="Document client’s current symptoms, cravings, or withdrawal signs.">
@@ -1014,13 +1200,13 @@ Rochester, NY
             <textarea id="mmfu-nicotine-details" rows="3"></textarea>
         </div>
 
-        <h3>OBJECTIVE:</h3>
+        <h3>Objective:</h3>
         <label for="mmfu-istop">I-STOP/Prescription Monitoring:</label>
         <textarea id="mmfu-istop" placeholder="Date(s) reviewed, medications dispensed, quantities."></textarea>
         <label for="mmfu-uds">UDS Results (Reviewed):</label>
         <textarea id="mmfu-uds" placeholder="Date, results, and how it informs assessment."></textarea>
 
-        <h3>ASSESSMENT:</h3>
+        <h3>Assessment:</h3>
         <label for="mmfu-interventions">Interventions:</label>
         <textarea id="mmfu-interventions" placeholder="Describe interventions used (review of labs, counseling, motivational interviewing, education, risk/benefit discussion, etc.)"></textarea>
         <label for="mmfu-med-plan">Medication Plan:</label>
@@ -1035,7 +1221,7 @@ Rochester, NY
             <option value="Client endorses SI & HI">Client endorses SI & HI</option>
         </select>
 
-        <h3>PLAN:</h3>
+        <h3>Plan:</h3>
         <div class="checkbox-container">
             <input type="checkbox" id="mmfu-plan-continue-meds">
             <label for="mmfu-plan-continue-meds">Continue medications as prescribed.</label>
@@ -1052,11 +1238,347 @@ Rochester, NY
         </div>
     </div>
 
+    <!-- Container for Opioid Use Disorder Short -->
+    <div id="opioid-use-disorder-short-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Opioid Use Disorder Short</h2>
+        <p>New patient visit.</p>
+        
+        <div class="ouds-inline-label" id="ouds-chief-complaint-display-label">
+            <label>Chief Complaint: Opioid Use Disorder</label>
+            <!-- Removed the input box for Chief Complaint as it's static now -->
+        </div>
+
+        <h3>Substance Use History</h3>
+        <div class="ouds-inline-label">
+            <label for="ouds-age-first-use">Age at first use:</label>
+            <input type="text" id="ouds-age-first-use">
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-types-substance">Type(s) of substance:</label>
+            <input type="text" id="ouds-types-substance">
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-frequency">Frequency of use:</label>
+            <input type="text" id="ouds-frequency">
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-prev-treatment">Previous treatment programs:</label>
+            <input type="text" id="ouds-prev-treatment">
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-prev-recovery">Previous periods in recovery:</label>
+            <input type="text" id="ouds-prev-recovery">
+        </div>
+        <div class="ouds-inline-label">
+            <label>Current active use:</label>
+            <div class="radio-group">
+                <label><input type="radio" name="ouds-active-use" value="yes"> Yes</label>
+                <label><input type="radio" name="ouds-active-use" value="no"> No</label>
+            </div>
+        </div>
+        <div id="ouds-last-use-date-row" class="conditional hidden ouds-inline-label">
+            <label for="ouds-last-use-date">Date of last use:</label>
+            <input type="date" id="ouds-last-use-date">
+        </div>
+
+        <h3>Pharmacotherapy</h3>
+        <div class="ouds-inline-label">
+            <label>Patient current on pharmacotherapy for SUD:</label>
+            <div class="radio-group">
+                <label><input type="radio" name="ouds-pharmacotherapy" value="yes"> Yes</label>
+                <label><input type="radio" name="ouds-pharmacotherapy" value="no"> No</label>
+            </div>
+        </div>
+        <div id="ouds-pharm-fields" class="conditional hidden">
+            <label for="ouds-symptoms">Symptoms/Cravings:</label>
+            <textarea id="ouds-symptoms" placeholder="Document client's current symptoms, cravings, or withdrawal signs."></textarea>
+            <label for="ouds-substance-use">Substance use:</label>
+            <textarea id="ouds-substance-use" placeholder="Document any substance use or alcohol use since started medication"></textarea>
+            <label for="ouds-adherence">Medication adherence:</label>
+            <textarea id="ouds-adherence" placeholder="Document if taking medications as prescribed."></textarea>
+            <label for="ouds-side-effects">Side effects/Complications:</label>
+            <textarea id="ouds-side-effects" placeholder="Note presence/absence of side effects."></textarea>
+        </div>
+        <h3>Any other substance use?</h3>
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; align-items: center; margin-bottom: 5px; font-weight: bold; padding-left: 42px;">
+    <span style="grid-column: 1;">Substance</span>
+    <span style="grid-column: 2;">Amount Used</span>
+    <span style="grid-column: 3;">Last Date of Use</span>
+</div>
+
+        <div id="ouds-substance-list">
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-alcohol"><label for="ouds-sub-alcohol">Alcohol:</label></div>
+                <input type="text" id="ouds-amt-alcohol" class="hidden" placeholder="Amount Used">
+                <input type="date" id="ouds-date-alcohol" class="hidden">
+            </div>
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-amphet"><label for="ouds-sub-amphet">Amphetamine / Methamphetamines / Crystal Meth:</label></div>
+                <input type="text" id="ouds-amt-amphet" class="hidden" placeholder="Amount Used">
+                <input type="date" id="ouds-date-amphet" class="hidden">
+            </div>
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-benzodiazepines"><label for="ouds-sub-benzodiazepines">Benzodiazepines:</label></div>
+                <input type="text" id="ouds-amt-benzodiazepines" class="hidden" placeholder="Amount Used">
+                <input type="date" id="ouds-date-benzodiazepines" class="hidden">
+            </div>
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-cocaine"><label for="ouds-sub-cocaine">Cocaine</label></div>
+                <input type="text" id="ouds-amt-cocaine" class="hidden" placeholder="Amount Used">
+                <input type="date" id="ouds-date-cocaine" class="hidden">
+            </div>
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-hallucinogens"><label for="ouds-sub-hallucinogens">Hallucinogens:</label></div>
+                <input type="text" id="ouds-amt-hallucinogens" class="hidden" placeholder="Amount Used">
+                <input type="date" id="ouds-date-hallucinogens" class="hidden">
+            </div>
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-illicit-opioids"><label for="ouds-sub-illicit-opioids">Illicit opioids:</label></div>
+                <input type="text" id="ouds-amt-illicit-opioids" class="hidden" placeholder="Amount Used">
+                <input type="date" id="ouds-date-illicit-opioids" class="hidden">
+            </div>
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-ivdu"><label for="ouds-sub-ivdu">IVDU:</label></div>
+                <input type="text" id="ouds-amt-ivdu" class="hidden" placeholder="Amount Used">
+                <input type="date" id="ouds-date-ivdu" class="hidden">
+            </div>
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-kratom"><label for="ouds-sub-kratom">Kratom:</label></div>
+                <input type="text" id="ouds-amt-kratom" class="hidden" placeholder="Amount Used">
+                <input type="date" id="ouds-date-kratom" class="hidden">
+            </div>
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-mdma"><label for="ouds-sub-mdma">MDMA:</label></div>
+                <input type="text" id="ouds-amt-mdma" class="hidden" placeholder="Amount Used">
+                <input type="date" id="ouds-date-mdma" class="hidden">
+            </div>
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-nicotine"><label for="ouds-sub-nicotine">Nicotine use:</label></div>
+                <input type="text" id="ouds-amt-nicotine" class="hidden" placeholder="Amount Used">
+                <input type="date" id="ouds-date-nicotine" class="hidden">
+            </div>
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-prescription-opioids"><label for="ouds-sub-prescription-opioids">Prescription opioids:</label></div>
+                <input type="text" id="ouds-amt-prescription-opioids" class="hidden" placeholder="Amount Used">
+                <input type="date" id="ouds-date-prescription-opioids" class="hidden">
+            </div>
+            <div class="ouds-substance-grid">
+                <div class="checkbox-container" style="margin:0; padding:0; background:none; border:none;"><input type="checkbox" id="ouds-sub-other"><label for="ouds-sub-other">Other:</label></div>
+                <input type="text" id="ouds-sub-other-text" class="hidden" placeholder="Identify other drug">
+                <div>
+                    <input type="text" id="ouds-amt-other" class="hidden" placeholder="Amount Used" style="width:100%; margin-bottom: 5px;">
+                    <input type="date" id="ouds-date-other" class="hidden" style="width:100%;">
+                </div>
+            </div>
+        </div>
+
+        <h3>Medical History Related to Substance Use:</h3>
+        <div class="checkbox-container"><input type="checkbox" id="ouds-med-ivdu"><label for="ouds-med-ivdu">History of IV drug use</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="ouds-med-shared"><label for="ouds-med-shared">History of shared needles</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="ouds-med-hep-c"><label for="ouds-med-hep-c">History of Hepatitis C</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="ouds-med-hiv"><label for="ouds-med-hiv">History of HIV</label></div>
+
+        <div class="ouds-inline-label">
+            <label for="ouds-pmh">PMH:</label>
+            <textarea id="ouds-pmh" rows="2"></textarea>
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-psych">Psych History:</label>
+            <textarea id="ouds-psych" rows="2"></textarea>
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-medications">Medications:</label>
+            <textarea id="ouds-medications" rows="2"></textarea>
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-allergies">Allergies:</label>
+            <textarea id="ouds-allergies" rows="2"></textarea>
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-pcp">PCP:</label>
+            <input type="text" id="ouds-pcp">
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-last-pcp-visit">Last Visit with PCP:</label>
+            <input type="date" id="ouds-last-pcp-visit">
+        </div>
+
+        <h3>Pertinent Review of Systems:</h3>
+        <div class="ouds-inline-label">
+            <label>- GI: Constipation:</label>
+            <div class="radio-group">
+                <label><input type="radio" name="ouds-gi-const" value="yes"> Yes</label>
+                <label><input type="radio" name="ouds-gi-const" value="no"> No</label>
+            </div>
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-psych-ideation">- Psychiatric: Suicidal or Homicidal Ideation:</label>
+            <select id="ouds-psych-ideation" class="inline-form-element">
+                <option value="Denies SI/HI">Denies SI/HI</option>
+                <option value="Indicates SI">Indicates SI</option>
+                <option value="Indicates HI">Indicates HI</option>
+                <option value="Indicates SI/HI">Indicates SI/HI</option>
+            </select>
+        </div>
+
+        <div class="ouds-inline-label">
+            <label for="ouds-family">Family History:</label>
+            <textarea id="ouds-family" rows="2"></textarea>
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-social">Social:</label>
+            <input type="text" id="ouds-social">
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-living">Current Living Situation:</label>
+            <input type="text" id="ouds-living">
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-employment">Employment:</label>
+            <input type="text" id="ouds-employment">
+        </div>
+        <div class="ouds-inline-label">
+            <label for="ouds-leisure">Leisure:</label>
+            <input type="text" id="ouds-leisure">
+        </div>
+
+        <h3>Objective:</h3>
+        <div class="ouds-inline-label">
+            <label for="ouds-mse">MSE:</label>
+            <div>
+                <textarea id="ouds-mse" rows="4" readonly placeholder="Click 'Open MSE Form' to complete..."></textarea>
+                <button type="button" id="open-mse-modal-btn" class="mse-button" style="width: auto; padding: 8px 16px;">Open Full MSE Form</button>
+            </div>
+        </div>
+        
+        <h3>I-STOP/Prescription Monitoring:</h3>
+        <textarea id="ouds-istop" placeholder="Date(s) reviewed, medications dispensed, quantities."></textarea>
+        
+        <h3>UDS Results (Reviewed):</h3>
+        <textarea id="ouds-uds" placeholder="Date, results, and how it informs assessment."></textarea>
+
+        <h3>Assessment:</h3>
+        <p>Opioid Use Disorder appropriate for pharmacotherapy</p>
+        <div class="checkbox-container"><input type="checkbox" id="ouds-assess-purpose"><label for="ouds-assess-purpose">Medication Purpose & Use</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="ouds-assess-side-effects"><label for="ouds-assess-side-effects">Potential Side Effects</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="ouds-assess-overdose"><label for="ouds-assess-overdose">Overdose Risk & Safety</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="ouds-assess-dental"><label for="ouds-assess-dental">Dental Health Considerations</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="ouds-assess-followup"><label for="ouds-assess-followup">Follow-up & Monitoring</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="ouds-assess-consent"><label for="ouds-assess-consent">Informed Consent</label></div>
+
+        <h3>Plan:</h3>
+        <div class="ouds-aligned-item">
+            <span>
+                <input type="checkbox" id="ouds-plan-start">
+                <label for="ouds-plan-start">Start buprenorphine as discussed</label>
+            </span>
+        </div>
+        <div class="ouds-aligned-item">
+            <span>
+                <input type="checkbox" id="ouds-plan-prescribe">
+                <label for="ouds-plan-prescribe">Provide prescription and instructions</label>
+            </span>
+        </div>
+        <div class="ouds-aligned-item">
+            <span>
+                <input type="checkbox" id="ouds-plan-naloxone">
+                <label for="ouds-plan-naloxone">Provide naloxone kit</label>
+            </span>
+        </div>
+        <div class="ouds-aligned-item">
+            <label for="ouds-plan-followup-time">Schedule follow-up in</label>
+            <input type="text" id="ouds-plan-followup-time" placeholder="time frame" class="inline-form-element">
+        </div>
+        <div class="ouds-aligned-item">
+            <span>
+                <input type="checkbox" id="ouds-plan-dental">
+                <label for="ouds-plan-dental">Encourage dental visit within next 3 months</label>
+            </span>
+        </div>
+
+        <h3>Time Statement</h3>
+        <p>Today's visit time consisted of the following:</p>
+        <div class="ouds-aligned-item">
+            <span>
+                <input type="checkbox" id="ouds-time-face">
+                <label for="ouds-time-face">Face to face/telephonic time:</label>
+            </span>
+            <input type="text" id="ouds-time-face-txt" class="inline-form-element">
+        </div>
+        <div class="ouds-aligned-item">
+            <span>
+                <input type="checkbox" id="ouds-time-doc">
+                <label for="ouds-time-doc">Documentation:</label>
+            </span>
+            <input type="text" id="ouds-time-doc-txt" class="inline-form-element">
+        </div>
+        <div class="ouds-aligned-item">
+            <span>
+                <input type="checkbox" id="ouds-time-coord">
+                <label for="ouds-time-coord">Coordination of care:</label>
+            </span>
+            <input type="text" id="ouds-time-coord-txt" class="inline-form-element">
+        </div>
+        <div class="ouds-aligned-item">
+            <span>
+                <input type="checkbox" id="ouds-time-total">
+                <label for="ouds-time-total">Total visit time:</label>
+            </span>
+            <input type="text" id="ouds-time-total-txt" class="inline-form-element">
+        </div>
+    </div>
+
     <!-- Read-only Note Output for Copying -->
     <div class="copy-area-container">
         <h2>Copy Area</h2>
         <textarea id="final-note-copy"></textarea>
         <button id="copy-button" class="copy-button">Copy Note to Clipboard</button>
+    </div>
+
+    <!-- MSE Modal -->
+    <div id="mse-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="mse-form-container" id="MSE">
+                <form autocomplete="off" onsubmit="return false;">
+                    <h1 style="text-align: center; font-size: 1.875rem; font-weight: 700; color: #1f2937; margin-bottom: 1.5rem;">Mental Status Exam</h1>
+                    <fieldset style="border: 1px solid #d1d5db; padding: 0.75rem; border-radius: 0.375rem; margin-bottom: 1rem;">
+                        <legend>Presets</legend>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <label style="display: flex; align-items: center;"><input style="height: 1rem; width: 1rem; border-radius: 0.25rem; border-color: #9ca3af; color: #4f46e5; focus:ring-indigo-500;" id="positiveMSE" onclick="togglePositiveMSE()" type="checkbox"> <span style="margin-left: 0.5rem;">Normal MSE</span></label>
+                            <label style="display: flex; align-items: center;"><input style="height: 1rem; width: 1rem; border-radius: 0.25rem; border-color: #9ca3af; color: #4f46e5; focus:ring-indigo-500;" id="telehealthpositiveMSE" onclick="TelehealthPositiveMSE()" type="checkbox"> <span style="margin-left: 0.5rem;">Telehealth Normal MSE</span></label><br>
+                           <button class="mse-button" onclick="clearAllMseCheckboxes();" type="button">
+                                Clear Form
+                            </button>
+                        </div>
+                    </fieldset>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <fieldset class="border p-3 rounded-md"><legend>Orientation</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Oriented x4</label><label><input onchange="updateMseText()" type="checkbox"> Time</label><label><input onchange="updateMseText()" type="checkbox"> Place</label><label><input onchange="updateMseText()" type="checkbox"> Situation</label><label><input onchange="updateMseText()" type="checkbox"> Person</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Orientation" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Clothing/Grooming</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Neat</label><label><input onchange="updateMseText()" type="checkbox"> Clean</label><label><input onchange="updateMseText()" type="checkbox"> Appropriately Dressed</label><label><input onchange="updateMseText()" type="checkbox"> Careless</label><label><input onchange="updateMseText()" type="checkbox"> Disheveled</label><label><input onchange="updateMseText()" type="checkbox"> Dirty</label><label><input onchange="updateMseText()" type="checkbox"> Inappropriate</label><label><input onchange="updateMseText()" type="checkbox"> Bizarre</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Clothing/Grooming" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Motor Activity</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Not Remarkable</label><label><input onchange="updateMseText()" type="checkbox"> Slowed</label><label><input onchange="updateMseText()" type="checkbox"> Repetitive</label><label><input onchange="updateMseText()" type="checkbox"> Restless</label><label><input onchange="updateMseText()" type="checkbox"> Agitated</label><label><input onchange="updateMseText()" type="checkbox"> Tremor</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Motor Activity" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Behavior</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Appropriate</label><label><input onchange="updateMseText()" type="checkbox"> Aggressive</label><label><input onchange="updateMseText()" type="checkbox"> Angry</label><label><input onchange="updateMseText()" type="checkbox"> Apathetic</label><label><input onchange="updateMseText()" type="checkbox"> Irritable</label><label><input onchange="updateMseText()" type="checkbox"> Passive</label><label><input onchange="updateMseText()" type="checkbox"> Manipulative</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Behavior" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Withdrawal</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Ct is in active withdrawal</label><label><input onchange="updateMseText()" type="checkbox"> Ct shows potential indicators of withdrawal</label><label><input onchange="updateMseText()" type="checkbox"> Ct does not show signs of withdrawal</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Withdrawal" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Attention</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Normal</label><label><input onchange="updateMseText()" type="checkbox"> Unaware</label><label><input onchange="updateMseText()" type="checkbox"> Distractible</label><label><input onchange="updateMseText()" type="checkbox"> Vigilant</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Attention" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Recall/Memory</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Normal</label><label><input onchange="updateMseText()" type="checkbox"> Short-term Impaired, Long-Term Intact</label><label><input onchange="updateMseText()" type="checkbox"> Short-term Intact, Long-term Impaired</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Recall/Memory" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Eye Contact</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Normal</label><label><input onchange="updateMseText()" type="checkbox"> Fleeting</label><label><input onchange="updateMseText()" type="checkbox"> Avoided</label><label><input onchange="updateMseText()" type="checkbox"> None</label><label><input onchange="updateMseText()" type="checkbox"> Staring</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Eye Contact" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Facial Expression</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Responsive</label><label><input onchange="updateMseText()" type="checkbox"> Tense</label><label><input onchange="updateMseText()" type="checkbox"> Anxious</label><label><input onchange="updateMseText()" type="checkbox"> Sad</label><label><input onchange="updateMseText()" type="checkbox"> Angry</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Facial Expression" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Attitude toward Evaluator</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Cooperative</label><label><input onchange="updateMseText()" type="checkbox"> Friendly</label><label><input onchange="updateMseText()" type="checkbox"> Guarded</label><label><input onchange="updateMseText()" type="checkbox"> Hostile</label><label><input onchange="updateMseText()" type="checkbox"> Indifferent</label><label><input onchange="updateMseText()" type="checkbox"> Ingratiating</label><label><input onchange="updateMseText()" type="checkbox"> Manipulative</label><label><input onchange="updateMseText()" type="checkbox"> Open</label><label><input onchange="updateMseText()" type="checkbox"> Seductive</label><label><input onchange="updateMseText()" type="checkbox"> Suspicious</label><label><input onchange="updateMseText()" type="checkbox"> Uncooperative</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Attitude toward Evaluator" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Affect</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Congruent</label><label><input onchange="updateMseText()" type="checkbox"> Incongruent</label><label><input onchange="updateMseText()" type="checkbox"> Appropriate</label><label><input onchange="updateMseText()" type="checkbox"> Inappropriate</label><label><input onchange="updateMseText()" type="checkbox"> Labile</label><label><input onchange="updateMseText()" type="checkbox"> Restricted</label><label><input onchange="updateMseText()" type="checkbox"> Flat</label><label><input onchange="updateMseText()" type="checkbox"> Reactive</label><label><input onchange="updateMseText()" type="checkbox"> Blunted</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Affect" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Mood</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Euthymic</label><label><input onchange="updateMseText()" type="checkbox"> Dysphoric</label><label><input onchange="updateMseText()" type="checkbox"> Anxious</label><label><input onchange="updateMseText()" type="checkbox"> Angry</label><label><input onchange="updateMseText()" type="checkbox"> Irritable</label><label><input onchange="updateMseText()" type="checkbox"> Pessimistic</label><label><input onchange="updateMseText()" type="checkbox"> Depressed</label><label><input onchange="updateMseText()" type="checkbox"> Hypomanic</label><label><input onchange="updateMseText()" type="checkbox"> Euphoric</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Mood" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Speech</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Normal</label><label><input onchange="updateMseText()" type="checkbox"> Loud</label><label><input onchange="updateMseText()" type="checkbox"> Blocked</label><label><input onchange="updateMseText()" type="checkbox"> Pressured</label><label><input onchange="updateMseText()" type="checkbox"> Flight of Ideas</label><label><input onchange="updateMseText()" type="checkbox"> Slurred</label><label><input onchange="updateMseText()" type="checkbox"> Soft</label><label><input onchange="updateMseText()" type="checkbox"> Stuttering</label><label><input onchange="updateMseText()" type="checkbox"> Mute</label><label><input onchange="updateMseText()" type="checkbox"> Verbose</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Speech" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Expression of Thought Content</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Congruent</label><label><input onchange="updateMseText()" type="checkbox"> Incongruent</label><label><input onchange="updateMseText()" type="checkbox"> Loose Associations</label><label><input onchange="updateMseText()" type="checkbox"> Suspicions</label><label><input onchange="updateMseText()" type="checkbox"> Delusions</label><label><input onchange="updateMseText()" type="checkbox"> Phobias</label><label><input onchange="updateMseText()" type="checkbox"> Obsessions</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Expression of Thought Content" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Organization of Thought</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Normal</label><label><input onchange="updateMseText()" type="checkbox"> Logical</label><label><input onchange="updateMseText()" type="checkbox"> Goal-directed</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Organization of Thought" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Perception</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> No Hallucinations or Delusions during Interview</label><label><input onchange="updateMseText()" type="checkbox"> Auditory Hallucinations</label><label><input onchange="updateMseText()" type="checkbox"> Visual Hallucinations</label><label><input onchange="updateMseText()" type="checkbox"> Olfactory Hallucinations</label><label><input onchange="updateMseText()" type="checkbox"> Tactile Hallucinations</label><label><input onchange="updateMseText()" type="checkbox"> Gustatory Hallucinations</label><label><input onchange="updateMseText()" type="checkbox"> Delusions Present</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Perception" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Insight</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Excellent</label><label><input onchange="updateMseText()" type="checkbox"> Good</label><label><input onchange="updateMseText()" type="checkbox"> Fair</label><label><input onchange="updateMseText()" type="checkbox"> Poor</label><label><input onchange="updateMseText()" type="checkbox"> nil</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Insight" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Judgment</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Excellent</label><label><input onchange="updateMseText()" type="checkbox"> Good</label><label><input onchange="updateMseText()" type="checkbox"> Fair</label><label><input onchange="updateMseText()" type="checkbox"> Poor</label><label><input onchange="updateMseText()" type="checkbox"> nil</label><label><input onchange="updateMseText()" type="checkbox"> Dangerous</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Judgment" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Decision Making</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> Normal</label><label><input onchange="updateMseText()" type="checkbox"> Only Simple</label><label><input onchange="updateMseText()" type="checkbox"> Impulsive</label><label><input onchange="updateMseText()" type="checkbox"> Confused</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Decision Making" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                        <fieldset class="border p-3 rounded-md"><legend>Safety</legend><div class="mse-category"><label><input onchange="updateMseText()" type="checkbox"> No evidence or report of SI/HI</label><label><input onchange="updateMseText()" type="checkbox"> Denies SI/HI</label><label><input onchange="updateMseText()" type="checkbox"> Reports HI</label><label><input onchange="updateMseText()" type="checkbox"> Reports Passive Suicidal Thoughts</label><label><input onchange="updateMseText()" type="checkbox"> Reports Suicide Plan</label><label><input onchange="updateMseText()" type="checkbox"> Reports Suicidal Intention</label><input class="mse-custom-input border-gray-300 rounded-md" data-category="Safety" oninput="updateMseText()" placeholder="Other" type="text"></div></fieldset>
+                    </div>
+                    <textarea class="w-full mt-4 p-2 border border-gray-300 rounded-md hidden" id="mseTextbox" rows="12"></textarea>
+                    <button class="mse-button" onclick="saveMseAndClose()" type="button">Save & Close</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -1084,6 +1606,7 @@ Rochester, NY
                 { value: 'medical-screening', label: 'Medical Screening' },
                 { value: 'med-mgmt-follow-up', label: 'Medication Management Follow-up' },
                 { value: 'narcan-kit', label: 'Narcan Education & Kit' },
+                { value: 'opioid-use-disorder-short', label: 'Opioid Use Disorder Short' },
                 { value: 'telehealth', label: 'Telehealth' }
             ]
         };
@@ -1112,6 +1635,7 @@ Rochester, NY
         staffTypeSelect.addEventListener('change', () => {
             const role = staffTypeSelect.value;
             populateNoteTypesForRole(role);
+            sortSelectOptions(noteTypeSelect);
             noteTypeSelect.value = '';
             // hide all containers and clear generated note area
             noteContainers.forEach(c => c.classList.add('hidden'));
@@ -1256,6 +1780,16 @@ Rochester, NY
     const mmfuNicotineDetailsSection = document.getElementById('mmfu-nicotine-details-section');
     const mmfuNicotineInterest = document.getElementById('mmfu-nicotine-interest');
     const mmfuNicotineDetails = document.getElementById('mmfu-nicotine-details');
+
+    // Opioid Use Disorder Short elements
+    const oudsActiveUseRadios = document.querySelectorAll('input[name="ouds-active-use"]');
+    const oudsLastUseDateRow = document.getElementById('ouds-last-use-date-row');
+    const oudsLastUseDateLabel = oudsLastUseDateRow.querySelector('label'); // Get the label
+    const oudsPharmRadios = document.querySelectorAll('input[name="ouds-pharmacotherapy"]');
+    const oudsPharmFields = document.getElementById('ouds-pharm-fields');
+    const oudsSubstances = [
+        'alcohol', 'amphet', 'benzodiazepines', 'cocaine', 'hallucinogens', 'illicit-opioids', 'ivdu', 'kratom', 'mdma', 'nicotine', 'prescription-opioids', 'other'
+    ];
 
 
     // Get containers
@@ -1855,36 +2389,36 @@ Rochester, NY
             noteParts.push(`Diagnosis:\n${diagnosis}`);
 
             noteParts.push(`Reason on High Risk:\n${mdtReasonHighRisk.value || '[Reason]'}`);
-            noteParts.push(`Criteria to come off High Risk:\n${mdtCriteriaOffHighRisk.value || '[Criteria]'}`);
-            noteParts.push(`Risk factors:\n${mdtRiskFactors.value || '[Factors]'}`);
-            noteParts.push(`Protective factors:\n${mdtProtectiveFactors.value || '[Factors]'}`);
-            noteParts.push(`Care coordination needs:\n${mdtCareCoordination.value || '[Needs]'}`);
+            noteParts.push(`Criteria to Come Off High Risk:\n${mdtCriteriaOffHighRisk.value || '[Criteria]'}`);
+            noteParts.push(`Risk Factors:\n${mdtRiskFactors.value || '[Factors]'}`);
+            noteParts.push(`Protective Factors:\n${mdtProtectiveFactors.value || '[Factors]'}`);
+            noteParts.push(`Care Coordination Needs:\n${mdtCareCoordination.value || '[Needs]'}`);
 
             let stageOfChange = mdtStageOfChange.value;
             if (stageOfChange === 'Other') {
                 stageOfChange = mdtStageOfChangeOther.value || '[Other Stage]';
             }
-            noteParts.push(`Stage of change / motivation level:\n${stageOfChange || '[Stage]'}`);
+            noteParts.push(`Stage of Change / Motivation Level:\n${stageOfChange || '[Stage]'}`);
 
-            noteParts.push(`Safety Plan completed:\n${mdtSafetyPlanCompleted.value || '[Yes/No]'}`);
-            noteParts.push(`Safety Plan applicable to current presentation:\n${mdtSafetyPlanApplicable.value || '[Details]'}`);
-            noteParts.push(`MAT status:\n${mdtMatStatus.value || '[Status]'}`);
-            noteParts.push(`Date last Urine toxicology collected:\n${mdtLastToxDate.value || '[Date]'}`);
-            noteParts.push(`Result of toxicology screen:\n${mdtToxResult.value || '[Result]'}`);
-            noteParts.push(`Is client engaging?:\n${mdtClientEngaging.value || '[Engaging Status]'}`);
-            noteParts.push(`Most recent appointment date:\n${mdtMostRecentAppt.value || '[Date]'}`);
-            noteParts.push(`Next appointment date:\n${mdtNextAppt.value || '[Date]'}`);
-            noteParts.push(`Progress on most recent MDT recommendations:\n${mdtProgressRecommendations.value || '[Progress]'}`);
-            noteParts.push(`Guiding Question(s) for today’s MDT discussion:\n${mdtGuidingQuestions.value || '[Questions]'}`);
+            noteParts.push(`Safety Plan Completed:\n${mdtSafetyPlanCompleted.value || '[Yes/No]'}`);
+            noteParts.push(`Safety Plan Applicable to Current Presentation:\n${mdtSafetyPlanApplicable.value || '[Details]'}`);
+            noteParts.push(`MAT Status:\n${mdtMatStatus.value || '[Status]'}`);
+            noteParts.push(`Date Last Urine Toxicology Collected:\n${mdtLastToxDate.value || '[Date]'}`);
+            noteParts.push(`Result of Toxicology Screen:\n${mdtToxResult.value || '[Result]'}`);
+            noteParts.push(`Is Client Engaging?:\n${mdtClientEngaging.value || '[Engaging Status]'}`);
+            noteParts.push(`Most Recent Appointment Date:\n${mdtMostRecentAppt.value || '[Date]'}`);
+            noteParts.push(`Next Appointment Date:\n${mdtNextAppt.value || '[Date]'}`);
+            noteParts.push(`Progress on Most Recent MDT Recommendations:\n${mdtProgressRecommendations.value || '[Progress]'}`);
+            noteParts.push(`Guiding Question(s) for Today’s MDT Discussion:\n${mdtGuidingQuestions.value || '[Questions]'}`);
 
             finalNote = noteParts.join('\n\n');
         } else if (selectedNoteType === 'med-mgmt-follow-up') {
         let noteParts = [];
-        noteParts.push(`CHIEF COMPLAINT:\n${document.getElementById('mmfu-chief-complaint').value || '[Client’s statement]'}`);
+        noteParts.push(`Chief Complaint:\n${document.getElementById('mmfu-chief-complaint').value || '[Client’s statement]'}`);
 
         const diagnoses = Array.from(document.querySelectorAll('#mmfu-diagnosis-container select'))
             .map(select => select.value.trim()).filter(val => val);
-        noteParts.push(`DIAGNOSIS:\n${diagnoses.length > 0 ? diagnoses.join('\n') : '[Diagnosis]'}`);
+        noteParts.push(`Diagnosis:\n${diagnoses.length > 0 ? diagnoses.join('\n') : '[Diagnosis]'}`);
 
         let subjectiveParts = [];
         const presentingConcern = document.getElementById('mmfu-presenting-concern').value || '[presenting concern]';
@@ -1902,7 +2436,7 @@ Rochester, NY
             if (nicotineUse === 'yes') {
                 const nicotineInterest = document.getElementById('mmfu-nicotine-interest').value;
                 if (nicotineInterest) {
-                    nicotineSentence += ` Ct ${nicotineInterest === 'yes' ? 'is' : 'is not'} interested in reduction or cessation of nicotine.`;
+                    nicotineSentence += ` Client ${nicotineInterest === 'yes' ? 'is' : 'is not'} interested in reduction or cessation of nicotine.`;
                 }
                 const nicotineDetails = document.getElementById('mmfu-nicotine-details').value;
                 if (nicotineDetails) {
@@ -1912,19 +2446,19 @@ Rochester, NY
             subjectiveParts.push(nicotineSentence);
         }
 
-        noteParts.push(`SUBJECTIVE:\n${subjectiveParts.join('\n\n')}`);
+        noteParts.push(`Subjective:\n${subjectiveParts.join('\n\n')}`);
 
         let objectiveParts = [];
         objectiveParts.push(`I-STOP/Prescription Monitoring:\n${document.getElementById('mmfu-istop').value || '[Not documented]'}`);
         objectiveParts.push(`UDS Results (Reviewed):\n${document.getElementById('mmfu-uds').value || '[Not documented]'}`);
-        noteParts.push(`OBJECTIVE:\n${objectiveParts.join('\n\n')}`);
+        noteParts.push(`Objective:\n${objectiveParts.join('\n\n')}`);
 
         let assessmentParts = [];
         assessmentParts.push(`Interventions: ${document.getElementById('mmfu-interventions').value || '[Not documented]'}`);
         assessmentParts.push(`Medication Plan: ${document.getElementById('mmfu-med-plan').value || '[Not documented]'}`);
         assessmentParts.push(`Client's Response: ${document.getElementById('mmfu-client-response').value || '[Not documented]'}`);
         assessmentParts.push(`Suicidality: ${document.getElementById('mmfu-suicidality').value}`);
-        noteParts.push(`ASSESSMENT:\n${assessmentParts.join('\n\n')}`);
+        noteParts.push(`Assessment:\n${assessmentParts.join('\n\n')}`);
 
         let planParts = [];
         if (document.getElementById('mmfu-plan-continue-meds').checked) planParts.push('Continue medications as prescribed.');
@@ -1934,15 +2468,125 @@ Rochester, NY
         const followupProvider = document.getElementById('mmfu-plan-followup-provider').value || '[provider]';
         planParts.push(`Follow up with ${followupProvider} as scheduled.`);
         if (document.getElementById('mmfu-plan-call-911').checked) planParts.push('Client agrees to call 911 and contact staff with any SI/HI or urgent mental health concerns.');
-        noteParts.push(`PLAN:\n${planParts.join('\n\n')}`);
+        noteParts.push(`Plan:\n${planParts.join('\n\n')}`);
 
         finalNote = noteParts.join('\n\n');
+        } else if (selectedNoteType === 'opioid-use-disorder-short') {
+            let noteParts = [];
+            noteParts.push("New patient visit.");
+            noteParts.push(`Chief Complaint: Opioid Use Disorder`); // Static Chief Complaint
+
+            let suh = [];
+            if (document.getElementById('ouds-age-first-use').value) suh.push(`Age at first use: ${document.getElementById('ouds-age-first-use').value}`);
+            if (document.getElementById('ouds-types-substance').value) suh.push(`Type(s) of substance: ${document.getElementById('ouds-types-substance').value}`);
+            if (document.getElementById('ouds-frequency').value) suh.push(`Frequency of use: ${document.getElementById('ouds-frequency').value}`);
+            if (document.getElementById('ouds-prev-treatment').value) suh.push(`Previous treatment programs: ${document.getElementById('ouds-prev-treatment').value}`);
+            if (document.getElementById('ouds-prev-recovery').value) suh.push(`Previous periods in recovery: ${document.getElementById('ouds-prev-recovery').value}`);
+            const activeUse = document.querySelector('input[name="ouds-active-use"]:checked');
+            if (activeUse) {
+                suh.push(`Current active use: ${activeUse.value}`);
+                if (activeUse.value === 'yes' && document.getElementById('ouds-last-use-date').value) {
+                    suh.push(`Date of last use: ${document.getElementById('ouds-last-use-date').value}`);
+                }
+            }
+            if (suh.length > 0) noteParts.push(`Substance Use History\n${suh.join('\n')}`);
+
+            let pharm = [];
+            const onPharm = document.querySelector('input[name="ouds-pharmacotherapy"]:checked');
+            if (onPharm) {
+                pharm.push(`Patient current on pharmacotherapy for SUD: ${onPharm.value}`);
+                if (onPharm.value === 'yes') {
+                    if (document.getElementById('ouds-symptoms').value) pharm.push(`Symptoms/cravings: ${document.getElementById('ouds-symptoms').value}`);
+                    if (document.getElementById('ouds-substance-use').value) pharm.push(`Substance use: ${document.getElementById('ouds-substance-use').value}`);
+                    if (document.getElementById('ouds-adherence').value) pharm.push(`Medication adherence: ${document.getElementById('ouds-adherence').value}`);
+                    if (document.getElementById('ouds-side-effects').value) pharm.push(`Side effects/complications: ${document.getElementById('ouds-side-effects').value}`);
+                }
+            }
+            if (pharm.length > 0) noteParts.push(`Pharmacotherapy\n${pharm.join('\n')}`);
+
+            let otherSubs = [];
+            oudsSubstances.forEach(key => {
+                const cb = document.getElementById(`ouds-sub-${key}`);
+                if (cb && cb.checked) {
+                    let detail = `${document.querySelector(`label[for="ouds-sub-${key}"]`).textContent}`;
+                    if (key === 'other' && document.getElementById('ouds-sub-other-text').value) {
+                        detail += ` (${document.getElementById('ouds-sub-other-text').value})`;
+                    }
+                    const amt = document.getElementById(`ouds-amt-${key}`).value;
+                    const date = document.getElementById(`ouds-date-${key}`).value;
+                    if (amt) detail += ` - Amount used: ${amt}`;
+                    if (date) detail += ` - Last date of use: ${date}`;
+                    otherSubs.push(detail);
+                }
+            });
+            if (otherSubs.length > 0) noteParts.push(`Any other substance use?\n${otherSubs.join('\n')}`);
+
+            let medHistory = [];
+            ['ivdu', 'shared', 'hep-c', 'hiv'].forEach(id => {
+                if (document.getElementById(`ouds-med-${id}`).checked) {
+                    medHistory.push(`${document.querySelector(`label[for="ouds-med-${id}"]`).textContent}`);
+                }
+            });
+            if (medHistory.length > 0) noteParts.push(`Medical History Related to Substance Use:\n${medHistory.join('\n')}`);
+
+            if (document.getElementById('ouds-pmh').value) noteParts.push(`PMH: ${document.getElementById('ouds-pmh').value}`);
+            if (document.getElementById('ouds-psych').value) noteParts.push(`Psych History: ${document.getElementById('ouds-psych').value}`);
+            if (document.getElementById('ouds-medications').value) noteParts.push(`Medications: ${document.getElementById('ouds-medications').value}`);
+            if (document.getElementById('ouds-allergies').value) noteParts.push(`Allergies: ${document.getElementById('ouds-allergies').value}`);
+            if (document.getElementById('ouds-pcp').value) noteParts.push(`PCP: ${document.getElementById('ouds-pcp').value}`);
+            if (document.getElementById('ouds-last-pcp-visit').value) noteParts.push(`Last Visit with PCP: ${document.getElementById('ouds-last-pcp-visit').value}`);
+
+            let ros = [];
+            const gi = document.querySelector('input[name="ouds-gi-const"]:checked');
+            if (gi) ros.push(`- GI: Constipation: ${gi.value}`);
+            const psych = document.getElementById('ouds-psych-ideation');
+            if (psych && psych.value) ros.push(`- Psychiatric: Suicidal or Homicidal Ideation: ${psych.value}`);
+            if (ros.length > 0) noteParts.push(`Pertinent Review of Systems:\n${ros.join('\n')}`);
+
+            if (document.getElementById('ouds-family').value) noteParts.push(`Family History: ${document.getElementById('ouds-family').value}`);
+            if (document.getElementById('ouds-social').value) noteParts.push(`Social: ${document.getElementById('ouds-social').value}`);
+            if (document.getElementById('ouds-living').value) noteParts.push(`Current Living Situation: ${document.getElementById('ouds-living').value}`);
+            if (document.getElementById('ouds-employment').value) noteParts.push(`Employment: ${document.getElementById('ouds-employment').value}`);
+            if (document.getElementById('ouds-leisure').value) noteParts.push(`Leisure: ${document.getElementById('ouds-leisure').value}`);
+
+            let objective = [];
+            if (document.getElementById('ouds-mse').value) objective.push(`MSE: ${document.getElementById('ouds-mse').value}`);
+            if (objective.length > 0) noteParts.push(`Objective:\n${objective.join('\n')}`);
+
+            if (document.getElementById('ouds-istop').value) noteParts.push(`I-STOP/Prescription Monitoring:\n${document.getElementById('ouds-istop').value}`);
+            if (document.getElementById('ouds-uds').value) noteParts.push(`UDS Results (Reviewed):\n${document.getElementById('ouds-uds').value}`);
+
+            let assessmentText = [];
+            if (document.getElementById('ouds-assess-purpose').checked) assessmentText.push("Medication Purpose & Use:\nDiscussed that buprenorphine is a partial opioid agonist used to treat opioid use disorder by reducing cravings and withdrawal symptoms. Explained the induction process and the need to be in mild to moderate withdrawal before first dose to avoid precipitated withdrawal. Reviewed dosing schedule, route of administration (typically sublingual or buccal), and importance of adherence.");
+            if (document.getElementById('ouds-assess-side-effects').checked) assessmentText.push("Potential Side Effects:\nReviewed common side effects (e.g., headache, constipation, nausea, sedation) and rare but serious risks (e.g., respiratory depression when combined with other sedatives, hepatic injury).");
+            if (document.getElementById('ouds-assess-overdose').checked) assessmentText.push("Overdose Risk & Safety:\nAdvised that risk of overdose is lower than full opioid agonists but present if combined with other CNS depressants (benzodiazepines, alcohol). Provided prescription for Naloxone and instructed patient/family on its use.");
+            if (document.getElementById('ouds-assess-dental').checked) assessmentText.push("Dental Health Considerations:\nEducated patient that use of buprenorphine, especially in sublingual/buccal forms, has been associated with dental problems (tooth decay, cavities, oral infections).\nRecommended:\no Rinsing mouth with water after each dose\no Waiting at least 1 hour after taking medication before brushing teeth (to avoid enamel damage)\no Maintaining regular dental hygiene and biannual dental visits\no Notifying dentist about buprenorphine use");
+            if (document.getElementById('ouds-assess-followup').checked) assessmentText.push("Follow-up & Monitoring:\nExplained need for regular follow-up appointments to assess response, side effects, urine drug testing, and support services (counseling, behavioral therapy).");
+            if (document.getElementById('ouds-assess-consent').checked) assessmentText.push("Informed Consent:\nPatient expressed understanding of risks and benefits, and agreed to start buprenorphine treatment.");
+            if (assessmentText.length > 0) noteParts.push(`Assessment:\nOpioid Use Disorder appropriate for pharmacotherapy\n\n${assessmentText.join('\n\n')}`);
+
+            let plan = [];
+            if (document.getElementById('ouds-plan-start').checked) plan.push("Start buprenorphine as discussed");
+            if (document.getElementById('ouds-plan-prescribe').checked) plan.push("Provide prescription and instructions");
+            if (document.getElementById('ouds-plan-naloxone').checked) plan.push("Provide naloxone kit");
+            if (document.getElementById('ouds-plan-followup-time').value) plan.push(`Schedule follow-up in ${document.getElementById('ouds-plan-followup-time').value}`);
+            if (document.getElementById('ouds-plan-dental').checked) plan.push("Encourage dental visit within next 3 months");
+            if (plan.length > 0) noteParts.push(`Plan:\n${plan.join('\n')}`);
+
+            let time = [];
+            if (document.getElementById('ouds-time-face').checked) time.push(`Face to face/telephonic time: ${document.getElementById('ouds-time-face-txt').value}`);
+            if (document.getElementById('ouds-time-doc').checked) time.push(`Documentation: ${document.getElementById('ouds-time-doc-txt').value}`);
+            if (document.getElementById('ouds-time-coord').checked) time.push(`Coordination of care: ${document.getElementById('ouds-time-coord-txt').value}`);
+            if (document.getElementById('ouds-time-total').checked) time.push(`Total visit time: ${document.getElementById('ouds-time-total-txt').value}`);
+            if (time.length > 0) noteParts.push(`Time Statement\nToday's visit time consisted of the following:\n${time.join('\n')}`);
+
+            finalNote = noteParts.join('\n\n');
+        }
+
+
+        finalNoteCopy.value = finalNote.trim();
+        autoResize(finalNoteCopy);
     }
-
-
-    finalNoteCopy.value = finalNote.trim();
-    autoResize(finalNoteCopy);
-}
 
     function toggleSafetyPlan(mainCheckbox, safetyPlanCheckbox) {
         safetyPlanCheckbox.disabled = !mainCheckbox.checked;
@@ -2013,6 +2657,41 @@ Rochester, NY
     soOverdoseRiskCheckbox.addEventListener('change', updateFinalNote);
     soGamblingRiskCheckbox.addEventListener('change', updateFinalNote);
 
+    // Opioid Use Disorder Short Listeners
+    const oudsInputs = document.querySelectorAll('#opioid-use-disorder-short-container input, #opioid-use-disorder-short-container textarea, #opioid-use-disorder-short-container select');
+    oudsInputs.forEach(input => {
+        input.addEventListener('input', updateFinalNote);
+        input.addEventListener('change', updateFinalNote);
+    });
+    oudsActiveUseRadios.forEach(radio => radio.addEventListener('change', () => {
+        oudsLastUseDateRow.classList.toggle('hidden', radio.value !== 'yes');
+        // Update label text if needed - now handled by initial HTML and only visibility changes.
+        oudsLastUseDateLabel.textContent = "Date of last use:";
+        updateFinalNote();
+    }));
+    oudsPharmRadios.forEach(radio => radio.addEventListener('change', () => {
+        oudsPharmFields.classList.toggle('hidden', radio.value !== 'yes');
+        updateFinalNote();
+    }));
+    oudsSubstances.forEach(key => {
+        const cb = document.getElementById(`ouds-sub-${key}`);
+        if (cb) {
+            cb.addEventListener('change', () => {
+                const isChecked = cb.checked;
+                const amtInput = document.getElementById(`ouds-amt-${key}`);
+                const dateInput = document.getElementById(`ouds-date-${key}`);
+                const otherTextInput = document.getElementById('ouds-sub-other-text');
+
+                if (amtInput) amtInput.classList.toggle('hidden', !isChecked);
+                if (dateInput) dateInput.classList.toggle('hidden', !isChecked);
+                if (key === 'other' && otherTextInput) {
+                    otherTextInput.classList.toggle('hidden', !isChecked);
+                }
+                updateFinalNote();
+            });
+        }
+    });
+
     // Med Mgmt Follow Up Listeners
     mmfuNicotineUse.addEventListener('change', () => {
         mmfuNicotineDetailsSection.classList.toggle('hidden', mmfuNicotineUse.value !== 'yes');
@@ -2021,6 +2700,9 @@ Rochester, NY
     document.querySelectorAll('#med-mgmt-follow-up-container input, #med-mgmt-follow-up-container select, #med-mgmt-follow-up-container textarea').forEach(el => {
         el.addEventListener('input', updateFinalNote);
         el.addEventListener('change', updateFinalNote);
+        if (el.tagName.toLowerCase() === 'textarea') {
+            el.addEventListener('input', () => autoResize(el));
+        }
     });
 
 
@@ -2192,7 +2874,7 @@ Rochester, NY
                     copyButton.style.backgroundColor = '#28a745';
                 }, 1500);
             } else {
-                 copyButton.textContent = 'Copy Failed';
+                    copyButton.textContent = 'Copy Failed';
             }
         } catch (err) {
             console.error('Fallback copy failed', err);
@@ -2201,7 +2883,7 @@ Rochester, NY
 
     // Initial call to populate the form on page load
     document.addEventListener('DOMContentLoaded', () => {
-        sortSelectOptions(noteTypeSelect); // Sort the main dropdown
+        // sortSelectOptions(noteTypeSelect); // Sort the main dropdown
         resetDiagnosisRows();
         resetGoalRows(clientGoalsContainer, treatmentGoalsContainer);
         resetGoalRows(soClientGoalsContainer, soTreatmentGoalsContainer);
@@ -2262,9 +2944,106 @@ Rochester, NY
     if (copyEvalSoGoal2Btn && evalSoGoal2Textbox) {
         copyEvalSoGoal2Btn.addEventListener('click', () => copyTextboxContent(evalSoGoal2Textbox, copyEvalSoGoal2Btn));
     }
+    
+    // --- MSE Modal and related logic ---
+    const mseModal = document.getElementById('mse-modal');
+    const openMseBtn = document.getElementById('open-mse-modal-btn');
+    const closeMseBtn = document.querySelector('#mse-modal .close-btn');
+
+    openMseBtn.onclick = function() {
+        mseModal.style.display = 'block';
+    }
+    closeMseBtn.onclick = function() {
+        mseModal.style.display = 'none';
+    }
+    window.onclick = function(event) {
+        if (event.target == mseModal) {
+            mseModal.style.display = 'none';
+        }
+    }
+
+    const positiveMseValues = ["Normal MSE", "Oriented x4", "Neat", "Clean", "Appropriately Dressed", "Not Remarkable", "Appropriate", "Normal", "Normal", "Normal", "Responsive", "Cooperative", "Congruent", "Appropriate", "Euthymic", "Normal", "Congruent", "Normal", "No Hallucinations or Delusions during Interview", "Good", "Good", "Normal", "No evidence or report of SI/HI"];
+    const telehealthMseValues = ["Telehealth Normal MSE", "Oriented x4", "Appropriate", "Normal", "Normal", "Normal", "Responsive", "Cooperative", "Congruent", "Euthymic", "Normal", "Congruent", "Normal", "No Hallucinations or Delusions during Interview", "Good", "Good", "Normal", "No evidence or report of SI/HI"];
+
+    function setCheckboxes(valuesToSelect) {
+        document.querySelectorAll('.mse-form-container input[type="checkbox"]').forEach(cb => {
+            const labelText = cb.parentElement.textContent.trim();
+            cb.checked = valuesToSelect.includes(labelText);
+        });
+        updateMseText();
+    }
+
+    function togglePositiveMSE() {
+        const cb = document.getElementById('positiveMSE');
+        if (cb.checked) {
+            document.getElementById('telehealthpositiveMSE').checked = false;
+            setCheckboxes(positiveMseValues);
+        } else {
+            clearAllMseCheckboxes();
+        }
+    }
+
+    function TelehealthPositiveMSE() {
+        const cb = document.getElementById('telehealthpositiveMSE');
+        if (cb.checked) {
+            document.getElementById('positiveMSE').checked = false;
+            setCheckboxes(telehealthMseValues);
+        } else {
+            clearAllMseCheckboxes();
+        }
+    }
+    
+    function clearAllMseCheckboxes() {
+        document.querySelectorAll('#MSE input[type="checkbox"]').forEach(cb => cb.checked = false);
+        document.querySelectorAll('#MSE input[type="text"]').forEach(input => input.value = '');
+        updateMseText();
+    }
+    
+    function updateMseText() {
+        const mseTextbox = document.getElementById("mseTextbox");
+        let text = "";
+        const fieldsets = document.querySelectorAll('.mse-form-container fieldset');
+
+        fieldsets.forEach(fieldset => {
+            const legend = fieldset.querySelector('legend');
+            if (!legend || legend.textContent === 'Presets') return;
+
+            const categoryName = legend.textContent;
+            const checkedItems = [];
+
+            fieldset.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                checkedItems.push(checkbox.parentElement.textContent.trim());
+            });
+
+            const customInput = fieldset.querySelector('input[type="text"]');
+            if (customInput && customInput.value.trim() !== "") {
+                checkedItems.push(customInput.value.trim());
+            }
+
+            if (checkedItems.length > 0) {
+                text += `${categoryName}: ${checkedItems.join(", ")}\n`;
+            }
+        });
+
+        mseTextbox.value = text.trim();
+    }
+
+    function saveMseAndClose() {
+        updateMseText(); // Ensure the text is up-to-date
+        const mseResult = document.getElementById("mseTextbox").value;
+        const mainMseTextarea = document.getElementById("ouds-mse");
+        mainMseTextarea.value = mseResult;
+        
+        // Trigger input event to update the main note copy area
+        mainMseTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+
+        mseModal.style.display = "none";
+    }
+
+    // Initial call to set up the form on page load.
+    document.addEventListener('DOMContentLoaded', updateMseText);
 
 </script>
 
 </body>
 </html>
-
