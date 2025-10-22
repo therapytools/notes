@@ -162,6 +162,18 @@
         <div class="darp-form-container">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Progress Note Form</h2>
             <form id="progressNoteForm" autocomplete="off">
+                
+                <!-- *** NEW INTERN SECTION *** -->
+                <div class="darp-inline-checkbox mb-2">
+                    <input id="internNoteCheckbox" name="internNoteCheckbox" type="checkbox" onchange="toggleInternNote(); updateDarpProgressNote();" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="internNoteCheckbox" class="font-medium text-gray-700">Intern Note</label>
+                </div>
+                
+                <div id="internStatementSection" class="bg-blue-100 p-4 rounded-md mb-4" style="display:none;">
+                    Intern informed client that they are a counselor-in-training completing an internship at the clinic under the supervision of a licensed clinician. Intern explained the supervisory relationship and the role of the supervisor in supporting client care and ensuring quality services. Client was informed that parts of sessions may be reviewed for supervision purposes. Intern obtained client’s verbal consent to proceed with treatment under intern status. Client expressed understanding and agreed to continue services.
+                </div>
+                <!-- *** END NEW INTERN SECTION *** -->
+
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">DATA:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="diagnoses">Diagnoses:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="diagnoses" name="diagnoses" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
@@ -241,6 +253,35 @@
                 <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">PLAN:</h3>
                 <label class="font-medium text-gray-700 mb-2" for="plan">Plan:</label>
                 <textarea class="p-2 border border-gray-300 rounded-md w-full" id="plan" name="plan" oninput="autoResize(this); updateDarpProgressNote();"></textarea>
+            
+                <!-- *** NEW INTERN INFO SECTION *** -->
+                <!-- This section is set to display:none by default and is controlled by the toggleInternNote() function -->
+                <div id="internInfoSection" class="bg-blue-100 p-4 rounded-md mt-6" style="display:none;">
+                    <h3 class="text-lg font-semibold mb-3">Internship Information</h3>
+                    <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 items-center">
+                        <label for="internName" class="font-medium text-gray-700 justify-self-end">Name of Intern:</label>
+                        <input type="text" id="internName" class="p-2 border border-gray-300 rounded-md w-full" oninput="updateDarpProgressNote()">
+                        
+                        <label for="supervisorName" class="font-medium text-gray-700 justify-self-end">Name of Supervisor:</label>
+                        <input type="text" id="supervisorName" class="p-2 border border-gray-300 rounded-md w-full" oninput="updateDarpProgressNote()">
+                        
+                        <label for="supervisorCredential" class="font-medium text-gray-700 justify-self-end">Supervisor Credential:</label>
+                        <input type="text" id="supervisorCredential" class="p-2 border border-gray-300 rounded-md w-full" oninput="updateDarpProgressNote()">
+                        
+                        <label for="supervisorCredentialNum" class="font-medium text-gray-700 justify-self-end">Supervisor Credential Number:</label>
+                        <input type="text" id="supervisorCredentialNum" class="p-2 border border-gray-300 rounded-md w-full" oninput="updateDarpProgressNote()">
+                    </div>
+                    <div class="flex gap-2 mt-4">
+                        <button type="button" id="saveInternInfo" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Save Information
+                        </button>
+                        <button type="button" id="clearInternInfo" class="px-4 py-2 bg-gray-500 text-white font-semibold rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400">
+                            Clear Information
+                        </button>
+                    </div>
+                </div>
+                <!-- *** END NEW INTERN INFO SECTION *** -->
+
             </form>
             <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-2">Generated Progress Note</h3>
             <textarea class="w-full p-2 border border-gray-300 rounded-md bg-gray-50" id="progressNote" oninput="autoResize(this)"></textarea>
@@ -320,7 +361,7 @@
         document.getElementById("telehealthpositiveMSE").checked = true;
         ["x4","appropriate","normalAttention","normalMemory","normalEyeContact","responsive","cooperative",
          "affectCongruent","euthymic","normalSpeech","expressionCongruent","normalOrganization",
-         "noHallucinations","insightGood","judgementGood","normalDecisionMaking","noSIHI"]
+         "noHallucJgZtVations","insightGood","judgementGood","normalDecisionMaking","noSIHI"]
          .forEach(id => {
             const el = document.getElementById(id);
             if(el) el.checked = true;
@@ -391,6 +432,66 @@
 
     // --- DARP (Progress Note) Logic ---
 
+    // *** NEW: Intern Note Logic ***
+    const internStatementText = "Intern informed client that they are a counselor-in-training completing an internship at the clinic under the supervision of a licensed clinician. Intern explained the supervisory relationship and the role of the supervisor in supporting client care and ensuring quality services. Client was informed that parts of sessions may be reviewed for supervision purposes. Intern obtained client’s verbal consent to proceed with treatment under intern status. Client expressed understanding and agreed to continue services.";
+
+    function toggleInternNote() {
+        const isChecked = document.getElementById('internNoteCheckbox').checked;
+        const displayStyle = isChecked ? 'block' : 'none';
+        
+        // This controls the top blue statement box
+        const statementSection = document.getElementById('internStatementSection');
+        if (statementSection) statementSection.style.display = displayStyle;
+        
+        // This controls the bottom blue information box
+        const infoSection = document.getElementById('internInfoSection');
+        if (infoSection) infoSection.style.display = displayStyle;
+    }
+
+    function saveInternInfo() {
+        const internData = {
+            name: document.getElementById('internName').value,
+            supervisor: document.getElementById('supervisorName').value,
+            credential: document.getElementById('supervisorCredential').value,
+            credentialNum: document.getElementById('supervisorCredentialNum').value
+        };
+        localStorage.setItem('internData', JSON.stringify(internData));
+        localStorage.setItem('autoCheckInternNote', 'true');
+        alert('Intern information saved.');
+    }
+
+    function clearInternInfo() {
+        localStorage.removeItem('internData');
+        localStorage.removeItem('autoCheckInternNote');
+        
+        document.getElementById('internName').value = '';
+        document.getElementById('supervisorName').value = '';
+        document.getElementById('supervisorCredential').value = '';
+        document.getElementById('supervisorCredentialNum').value = '';
+        
+        document.getElementById('internNoteCheckbox').checked = false;
+        toggleInternNote(); // This will hide the sections
+        updateDarpProgressNote();
+        alert('Saved intern information cleared.');
+    }
+
+    function loadInternInfo() {
+        if (localStorage.getItem('autoCheckInternNote') === 'true') {
+            const internData = JSON.parse(localStorage.getItem('internData'));
+            if (internData) {
+                document.getElementById('internName').value = internData.name || '';
+                document.getElementById('supervisorName').value = internData.supervisor || '';
+                document.getElementById('supervisorCredential').value = internData.credential || '';
+                document.getElementById('supervisorCredentialNum').value = internData.credentialNum || '';
+            }
+            document.getElementById('internNoteCheckbox').checked = true;
+        }
+        // Always run toggle to set initial visibility based on (potentially loaded) checkbox state
+        toggleInternNote();
+    }
+    // *** END: Intern Note Logic ***
+
+
     function addTreatmentGoalRow() {
         const container = document.getElementById('treatmentGoalsContainer');
         const goalRow = document.createElement('div');
@@ -440,6 +541,14 @@
     }
 
     function updateDarpProgressNote() {
+        let progressNote = "";
+        const isInternNote = document.getElementById('internNoteCheckbox')?.checked;
+
+        // *** NEW: Prepend intern statement ***
+        if (isInternNote) {
+            progressNote += `${internStatementText}\n\n`;
+        }
+        
         const mentalStatus = document.getElementById('mentalStatus')?.value || '';
         const problemsAddressed = document.getElementById('problemsAddressed')?.value || '';
         const diagnoses = document.getElementById('diagnoses')?.value || '';
@@ -471,7 +580,7 @@
         interventionsUsed += getInterventions('Person Centered');
         interventionsUsed += getInterventions('Motivational Interviewing');
 
-        let progressNote = "DATA:\n";
+        progressNote += "DATA:\n";
         if (diagnoses) progressNote += `Diagnoses:\n${diagnoses}\n\n`;
         if (problemsAddressed) progressNote += `Problems Addressed in the Counseling Session:\n${problemsAddressed}\n\n`;
         if (updatesProgressText) progressNote += `Updates and Progress to Client's Treatment Goals:\n${updatesProgressText}\n\n`;
@@ -488,6 +597,17 @@
 
         progressNote += "PLAN:\n";
         if (plan) progressNote += `${plan}`;
+
+        // *** NEW: Append intern signature block ***
+        if (isInternNote) {
+            const internName = document.getElementById('internName').value || '(Name of Intern)';
+            const supervisorName = document.getElementById('supervisorName').value || '(Name of Supervisor)';
+            const supervisorCredential = document.getElementById('supervisorCredential').value || '(Supervisor Credential)';
+            const supervisorCredentialNum = document.getElementById('supervisorCredentialNum').value || '(Credential Number)';
+            
+            const signature = `\n\n\nSession completed by ${internName}\nSession reviewed and signed by ${supervisorName}, ${supervisorCredential}, ${supervisorCredentialNum}`;
+            progressNote += signature;
+        }
 
         const noteBox = document.getElementById('progressNote');
         if (noteBox) {
@@ -566,6 +686,15 @@
         addTreatmentGoalRow();
         savedCustoms.forEach(addCustomElement);
         
+        // *** NEW: Load intern info and set up buttons ***
+        loadInternInfo(); 
+        const saveBtn = document.getElementById('saveInternInfo');
+        if (saveBtn) saveBtn.addEventListener('click', saveInternInfo);
+        
+        const clearBtn = document.getElementById('clearInternInfo');
+        if (clearBtn) clearBtn.addEventListener('click', clearInternInfo);
+        // *** END NEW ***
+        
         // Initial call to populate MSE field in DARP from the other tab
         if (document.getElementById('mseTextbox')) {
             updateMseText(); 
@@ -591,8 +720,10 @@
                 autoResize(mseTextbox);
             });
         }
+        
+        // Final update to ensure note is correct on load
+        updateDarpProgressNote();
     });
 </script>
 </body>
 </html>
-
