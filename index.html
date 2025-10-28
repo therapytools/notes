@@ -541,10 +541,10 @@
 
     // *** NEW FUNCTION ***
     function syncSessionDateToGoals(dateValue) {
-        // Find the first goal row's update textarea
-        const firstGoalUpdateTextarea = document.querySelector('#treatmentGoalsContainer .treatment-goal-row .treatment-goal-update');
+        // Find all goal row update textareas
+        const goalUpdateTextareas = document.querySelectorAll('#treatmentGoalsContainer .treatment-goal-row .treatment-goal-update');
         
-        if (firstGoalUpdateTextarea) {
+        goalUpdateTextareas.forEach(textarea => {
             let datePrefix = '';
             if (dateValue) {
                 const date = new Date(dateValue);
@@ -557,25 +557,26 @@
                 datePrefix = `${month}/${day}/${year} - `;
             }
             
-            let currentValue = firstGoalUpdateTextarea.value;
+            let currentValue = textarea.value;
             // Regex to find a date prefix like "MM/DD/YYYY - "
             const dateRegex = /^\d{2}\/\d{2}\/\d{4} - /;
             
             if (dateRegex.test(currentValue)) {
-                // If a date prefix already exists, replace it
-                firstGoalUpdateTextarea.value = currentValue.replace(dateRegex, datePrefix);
+                // If a date prefix already exists, replace only the date part, preserve the rest
+                textarea.value = currentValue.replace(dateRegex, datePrefix);
             } else if (currentValue.trim() === '') {
                 // If the textarea is empty, just add the new prefix
-                firstGoalUpdateTextarea.value = datePrefix;
+                textarea.value = datePrefix;
             } else {
                 // If the textarea has content but no date, prepend the new prefix
-                firstGoalUpdateTextarea.value = `${datePrefix}${currentValue}`;
+                textarea.value = `${datePrefix}${currentValue}`;
             }
             
             // Trigger updates
-            autoResize(firstGoalUpdateTextarea);
-            updateDarpProgressNote();
-        }
+            autoResize(textarea);
+        });
+        
+        updateDarpProgressNote();
     }
     // *** END NEW FUNCTION ***
 
