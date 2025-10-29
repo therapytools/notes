@@ -1878,6 +1878,31 @@ Rochester, NY
         <input type="text" id="auds-time-total-txt" class="inline-form-element">
     </div>
 </div>
+<div id="nurse-follow-up-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Nurse Follow Up</h2>
+
+        <label for="nurse-diag">Diagnosis:</label>
+        <textarea id="nurse-diag"></textarea>
+
+        <label for="nurse-goal">Goal:</label>
+        <textarea id="nurse-goal" placeholder="Client will maintain and improve overall health status through engagement with the medical team as needed, including medical monitoring and adherence to provider recommendations, to support recovery and well-being."></textarea>
+
+        <label for="nurse-reason">Reason for visit:</label>
+        <textarea id="nurse-reason" placeholder="One sentence, can be a client quote. Example: Client is presenting for a medical screening; Client is presenting for monitoring and support with referrals."></textarea>
+
+        <label for="nurse-services">Services provided & Client observations:</label>
+        <textarea id="nurse-services" placeholder="Should connect to selected goal. Example: I reviewed client's relevant medical history pertaining to their treatment in the clinic. I supported the client through (screening, monitoring, education, or referrals)...I observed client to...(how presenting in session, impressions)."></textarea>
+
+    <label>Interventions:</label>
+        <div id="nurse-interventions-container">
+                    </div>
+
+        <label for="nurse-response">Client's response:</label>
+        <textarea id="nurse-response" placeholder="Try to include a quote. Example: Client's response to your interventions - Client was responsive to education and discussion of referrals. Client identified clarity on next steps to pursue medication management."></textarea>
+
+        <label for="nurse-plan">Plan/Next Steps:</label>
+        <textarea id="nurse-plan" placeholder="How are you supporting them (scheduling follow-up, helping connect to a resource...) AND/OR How are they connecting to the clinic next (following up with their counselor, med management, a group?)."></textarea>
+    </div>
     <!-- Read-only Note Output for Copying -->
     <div class="copy-area-container">
         <h2>Copy Area</h2>
@@ -1956,6 +1981,7 @@ Rochester, NY
                 { value: 'medical-screening', label: 'Medical Screening' },
                 { value: 'med-mgmt-follow-up', label: 'Medication Management Follow-up' },
                 { value: 'narcan-kit', label: 'Narcan Education & Kit' },
+                { value: 'nurse-follow-up', label: 'Nurse Follow Up' },
                 { value: 'opioid-use-disorder-short', label: 'Opioid Use Disorder Short' },
                 { value: 'alcohol-use-disorder-short', label: 'Alcohol Use Disorder Short' },
                 { value: 'telehealth', label: 'Telehealth' }
@@ -2254,6 +2280,111 @@ Rochester, NY
         row.appendChild(button);
         mdtDiagnosisContainer.appendChild(row);
         updateFinalNote();
+    }
+const nurseInterventionOptions = `
+        <option value="" selected disabled>Select an intervention...</option>
+        <optgroup label="Monitoring">
+            <option value="Observed and recorded medication adherence and any side effects.">Observed and recorded medication adherence and any side effects.</option>
+            <option value="Monitored clients' responses to treatment and symptom changes.">Monitored clients' responses to treatment and symptom changes.</option>
+            <option value="Tracked medical documentation, lab results, and other relevant health indicators.">Tracked medical documentation, lab results, and other relevant health indicators.</option>
+            <option value="Assessed for signs of adverse reactions or complications related to medications.">Assessed for signs of adverse reactions or complications related to medications.</option>
+        </optgroup>
+        <optgroup label="Education">
+            <option value="Provided instruction on proper medication administration and dosing.">Provided instruction on proper medication administration and dosing.</option>
+            <option value="Taught clients about potential side effects and how to manage them.">Taught clients about potential side effects and how to manage them.</option>
+            <option value="Educated on lifestyle strategies to support overall health and recovery.">Educated on lifestyle strategies to support overall health and recovery.</option>
+            <option value="Reviewed the importance of attending follow-up appointments and lab tests.">Reviewed the importance of attending follow-up appointments and lab tests.</option>
+            <option value="Explained warning signs that required immediate medical attention.">Explained warning signs that required immediate medical attention.</option>
+            <option value="Educated on harm reduction strategies.">Educated on harm reduction strategies.</option>
+        </optgroup>
+        <optgroup label="Referrals">
+            <option value="(Pending guidance/direction from MD/NP) identified need for specialty care (e.g., cardiology, psychiatry) and facilitated referrals.">(Pending guidance/direction from MD/NP) identified need for specialty care (e.g., cardiology, psychiatry) and facilitated referrals.</option>
+            <option value="Identified community resources for primary care, dental needs, and communicable disease treatment and symptom management.">Identified community resources for primary care, dental needs, and communicable disease treatment and symptom management.</option>
+            <option value="Encouraged engagement with medical providers for additional support services and assessed client need for assistance in completing referrals.">Encouraged engagement with medical providers for additional support services and assessed client need for assistance in completing referrals.</option>
+            <option value="Provided contact information and guidance for support programs.">Provided contact information and guidance for support programs.</option>
+        </optgroup>
+        <optgroup label="Screening">
+            <option value="Conducted initial medical screenings to establish baseline health status.">Conducted initial medical screenings to establish baseline health status.</option>
+            <option value="Screened for medication side effects and adverse reactions.">Screened for medication side effects and adverse reactions.</option>
+            <option value="Assessed for comorbid conditions that could impact treatment.">Assessed for comorbid conditions that could impact treatment.</option>
+            <option value="Reassessed risk factors (e.g., substance use, falls, infection) at each visit.">Reassessed risk factors (e.g., substance use, falls, infection) at each visit.</option>
+        </optgroup>
+        <optgroup label="Plan/Next Steps">
+            <option value="Continued current medication regimen.">Continued current medication regimen.</option>
+            <option value="Encouraged continued attendance in counseling/group.">Encouraged continued attendance in counseling/group.</option>
+            <option value="Referred to RN/NP/MD for [e.g., medication concerns, side effects].">Referred to RN/NP/MD for [e.g., medication concerns, side effects].</option>
+            <option value="Scheduled next appointment for [date].">Scheduled next appointment for [date].</option>
+        </optgroup>
+        <option value="custom">Other (Type Custom)...</option>
+    `;
+
+function addNurseInterventionRow(isFirstRow = false) {
+        const container = document.getElementById('nurse-interventions-container');
+        const rowWrapper = document.createElement('div'); // Wrapper for dropdown row + textarea
+        rowWrapper.style.marginBottom = '15px'; // Add space between intervention blocks
+
+        const row = document.createElement('div');
+        row.className = 'dynamic-row';
+
+        const select = document.createElement('select');
+        select.innerHTML = nurseInterventionOptions;
+        select.style.marginBottom = '5px'; // Add small space below dropdown
+
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.display = 'flex';
+        buttonContainer.style.gap = '5px';
+
+        const addButton = document.createElement('button');
+        addButton.type = 'button';
+        addButton.className = 'add-btn';
+        addButton.textContent = '+';
+        addButton.onclick = () => addNurseInterventionRow();
+        buttonContainer.appendChild(addButton);
+
+        if (!isFirstRow) { // Only add remove button if it's not the first row
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'remove-btn';
+            removeButton.textContent = '-';
+            removeButton.onclick = () => {
+                rowWrapper.remove();
+                updateFinalNote();
+            };
+            buttonContainer.appendChild(removeButton);
+        }
+
+        row.appendChild(select);
+        row.appendChild(buttonContainer);
+        rowWrapper.appendChild(row); // Add dropdown row to wrapper
+
+        // Textarea initially hidden, shown on selection
+        const textarea = document.createElement('textarea');
+        textarea.placeholder = "Customize or enter new intervention...";
+        textarea.rows = 2;
+        textarea.classList.add('hidden'); // Start hidden
+        textarea.style.width = 'calc(100% - 58px)'; // Adjust width to align roughly under dropdown
+        textarea.style.marginLeft = '0px'; // Align left
+        textarea.style.marginTop = '0px'; // Remove top margin
+        textarea.addEventListener('input', () => {
+            autoResize(textarea);
+            updateFinalNote();
+        });
+        rowWrapper.appendChild(textarea); // Add textarea to wrapper
+
+        select.addEventListener('change', () => {
+            const selectedValue = select.value;
+            if (selectedValue) { // If something valid is selected (not the placeholder)
+                textarea.value = selectedValue === 'custom' ? '' : selectedValue;
+                textarea.classList.remove('hidden'); // Show the textarea
+                autoResize(textarea);
+            } else {
+                textarea.classList.add('hidden'); // Hide if placeholder selected again
+            }
+            updateFinalNote();
+        });
+
+        container.appendChild(rowWrapper);
+        updateFinalNote(); // Update note after adding row initially
     }
 
     function resetDiagnosisRows() {
@@ -3141,7 +3272,37 @@ document.getElementById('ouds-psych-ideation').addEventListener('change', (event
 
     finalNote = noteParts.join('\n\n');
 }   
-        finalNoteCopy.value = finalNote.trim();
+    else if (selectedNoteType === 'nurse-follow-up') {
+            let noteParts = [];
+            const diag = document.getElementById('nurse-diag').value;
+            const goal = document.getElementById('nurse-goal').value;
+            const reason = document.getElementById('nurse-reason').value;
+            const services = document.getElementById('nurse-services').value;
+            const response = document.getElementById('nurse-response').value;
+            const plan = document.getElementById('nurse-plan').value;
+
+            if (diag) noteParts.push(`Diagnosis:\n${diag}`);
+            if (goal) noteParts.push(`Goal:\n${goal}`);
+            if (reason) noteParts.push(`Reason for visit:\n${reason}`);
+            if (services) noteParts.push(`Services provided & Client observations:\n${services}`);
+
+let interventions = [];
+            // Find all textareas within the container, excluding hidden ones
+            document.querySelectorAll('#nurse-interventions-container textarea:not(.hidden)').forEach(textarea => {
+                if (textarea.value.trim() !== '') {
+                    interventions.push(`- ${textarea.value.trim()}`);
+                }
+            });
+            if (interventions.length > 0) {
+                noteParts.push(`Interventions:\n${interventions.join('\n')}`);
+            }
+
+            if (response) noteParts.push(`Client's response:\n${response}`);
+            if (plan) noteParts.push(`Plan/Next Steps:\n${plan}`);
+
+            finalNote = noteParts.join('\n\n');
+            }
+finalNoteCopy.value = finalNote.trim();
         autoResize(finalNoteCopy);
     }
 
@@ -3172,7 +3333,7 @@ document.getElementById('ouds-psych-ideation').addEventListener('change', (event
     }
 
 
-    // EVENT LISTENERS
+// EVENT LISTENERS
     noteTypeSelect.addEventListener('change', () => {
         const selection = noteTypeSelect.value;
         if (selection === 'eval-cd') {
@@ -3190,6 +3351,9 @@ document.getElementById('ouds-psych-ideation').addEventListener('change', (event
             const container = document.getElementById('mmfu-diagnosis-container');
             container.innerHTML = '';
             addMmfuDiagnosisRow();
+        } else if (selection === 'nurse-follow-up') {
+            document.getElementById('nurse-interventions-container').innerHTML = '';
+            addNurseInterventionRow(true); // Add the first row automatically
         }
         updateFinalNote();
     });
@@ -3668,8 +3832,24 @@ document.getElementById('ouds-psych-ideation').addEventListener('change', (event
 
     // Initial call to set up the form on page load.
     document.addEventListener('DOMContentLoaded', updateMseText);
-
+// Nurse Follow Up Listeners
+    [
+        document.getElementById('nurse-diag'),
+        document.getElementById('nurse-goal'),
+        document.getElementById('nurse-reason'),
+        document.getElementById('nurse-services'),
+        document.getElementById('nurse-response'),
+        document.getElementById('nurse-plan')
+    ].forEach(el => {
+        if(el) {
+            el.addEventListener('input', () => {
+                autoResize(el);
+                updateFinalNote();
+            });
+        }
+    });
+    
+         
 </script>
-
 </body>
 </html>
