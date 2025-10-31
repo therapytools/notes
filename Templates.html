@@ -2427,11 +2427,196 @@ Rochester, NY
         </div>
     </div>
 
+    <!-- Drug Treatment Court Report Container -->
+    <div id="drug-treatment-court-report-container" class="note-container hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; margin-bottom:20px;">
+            <h2 style="margin:0; flex-grow:1;">Drug Treatment Court Report</h2>
+            <button type="button" onclick="clearDrugTreatmentCourtReport()" style="background-color:#dc3545; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold; white-space:nowrap; font-size:14px; flex-shrink:0;">Clear Report</button>
+        </div>
+        
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+            <div>
+                <label for="dtc-clientName">Client Name</label>
+                <input type="text" id="dtc-clientName" onchange="updateFinalNote()">
+            </div>
+            <div>
+                <label for="dtc-careCoordination">Care Coordination Sources</label>
+                <input type="text" id="dtc-careCoordination" placeholder="e.g., probation, parole, mental health" onchange="updateFinalNote()">
+            </div>
+            <div>
+                <label for="dtc-initialCourtDate">Last Court Date</label>
+                <input type="date" id="dtc-initialCourtDate" onchange="handleDtcLudVisibility(); updateFinalNote()">
+            </div>
+            <div>
+                <label for="dtc-courtPrepDate">Next Court Date</label>
+                <input type="date" id="dtc-courtPrepDate" onchange="updateFinalNote()">
+            </div>
+        </div>
+
+        <h3 style="margin-top:16px;">Client Progress & Attendance</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+            <div>
+                <label for="dtc-checkingIn">Checking In with Case Manager</label>
+                <select id="dtc-checkingIn" onchange="updateFinalNote()">
+                    <option value="">Select an option</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div>
+                <label for="dtc-treatmentSchedule">Treatment Schedule</label>
+                <input type="text" id="dtc-treatmentSchedule" placeholder="e.g., # individuals/week, # groups/week" onchange="updateFinalNote()">
+            </div>
+        </div>
+
+        <label style="display:block;">Overall Appointment Attendance</label>
+        <div style="display:flex; align-items:center; margin-bottom:16px; gap:8px;">
+            <select id="dtc-hasNotHas" onchange="updateFinalNote()" style="width:auto; min-width:120px;">
+                <option value="">Select an option</option>
+                <option value="has">has</option>
+                <option value="has not">has not</option>
+            </select>
+            <span style="color:#666;">kept all appointments as scheduled.</span>
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <label>Individual Sessions</label>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <input type="number" id="dtc-individualAttended" placeholder="Attended" onchange="updateDtcMissedStatus(); updateFinalNote()">
+                <span style="color:#666; font-weight:bold;">/</span>
+                <input type="number" id="dtc-individualTotal" placeholder="Total" onchange="updateDtcMissedStatus(); updateFinalNote()">
+            </div>
+            <div id="dtc-individualMissedContainer" style="display:none; margin-bottom:16px;">
+                <input type="text" id="dtc-individualMissed" placeholder="Dates missed, excused status" onchange="updateFinalNote()">
+            </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <label>Group Sessions</label>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <input type="number" id="dtc-groupAttended" placeholder="Attended" onchange="updateDtcMissedStatus(); updateFinalNote()">
+                <span style="color:#666; font-weight:bold;">/</span>
+                <input type="number" id="dtc-groupTotal" placeholder="Total" onchange="updateDtcMissedStatus(); updateFinalNote()">
+            </div>
+            <div id="dtc-groupMissedContainer" style="display:none; margin-bottom:16px;">
+                <input type="text" id="dtc-groupMissed" placeholder="Dates missed, excused status" onchange="updateFinalNote()">
+            </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <label>Medication Appointments</label>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <input type="number" id="dtc-medAttended" placeholder="Attended" onchange="updateDtcMissedStatus(); updateFinalNote()">
+                <span style="color:#666; font-weight:bold;">/</span>
+                <input type="number" id="dtc-medTotal" placeholder="Total" onchange="updateDtcMissedStatus(); updateFinalNote()">
+            </div>
+            <div id="dtc-medMissedContainer" style="display:none; margin-bottom:16px;">
+                <input type="text" id="dtc-medMissed" placeholder="Dates missed, excused status" onchange="updateFinalNote()">
+            </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+            <div>
+                <label for="dtc-nextDate">Next Appointment Date</label>
+                <input type="date" id="dtc-nextDate" onchange="updateFinalNote()">
+            </div>
+            <div>
+                <label for="dtc-appointmentType">Next Appointment Type</label>
+                <input type="text" id="dtc-appointmentType" placeholder="e.g., Individual Session" onchange="updateFinalNote()">
+            </div>
+        </div>
+
+        <h3 style="margin-top:16px;">Toxicology & Substance Use</h3>
+        <div style="margin-bottom:16px;">
+            <label for="dtc-lud">Last Use Date (LUD)</label>
+            <input type="date" id="dtc-lud" onchange="handleDtcLudVisibility(); updateFinalNote()">
+            <div id="dtc-ludExtra" style="display:none; margin-top:12px; padding:12px; background-color:#f9f9f9; border:1px solid #ddd; border-radius:4px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <label for="dtc-ludResponse">Response</label>
+                        <select id="dtc-ludResponse" onchange="updateFinalNote()">
+                            <option value=""></option>
+                            <option value="reported promptly">Reported promptly</option>
+                            <option value="not reported promptly">Not reported promptly</option>
+                            <option value="denies use">Denies Use</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="dtc-ludSubstance">Substance(s)</label>
+                        <input type="text" id="dtc-ludSubstance" placeholder="e.g., Alcohol, Cannabis" oninput="updateFinalNote()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <label>Toxicology Screens at Treatment</label>
+            <label style="display:flex; align-items:center; margin-top:8px; margin-bottom:8px;">
+                <input type="checkbox" id="dtc-toxNotScreened" onchange="updateFinalNote()">
+                <span style="margin-left:8px; color:#666;">N/A - not screened since last court date</span>
+            </label>
+            <div id="dtc-toxContainer"></div>
+            <button type="button" class="mse-button" onclick="addDtcToxRow();" style="background-color:#28a745; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">+ Add Screen</button>
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <label>Random Screens</label>
+            <label style="display:flex; align-items:center; margin-top:8px; margin-bottom:8px;">
+                <input type="checkbox" id="dtc-randomNotScreened" onchange="updateFinalNote()">
+                <span style="margin-left:8px; color:#666;">N/A - not screened since last court date</span>
+            </label>
+            <div id="dtc-randomContainer"></div>
+            <button type="button" class="mse-button" onclick="addDtcRandomRow();" style="background-color:#28a745; color:white; border:none; padding:8px 16px; border-radius:4px; cursor:pointer;">+ Add Screen</button>
+        </div>
+
+        <label style="display:block;">Medication-Assisted Treatment (MAT)</label>
+        <div style="display:flex; align-items:center; margin-top:8px; margin-bottom:16px; gap:8px;">
+            <span style="color:#666;">Client</span>
+            <select id="dtc-matAttendance" onchange="updateFinalNote()" style="width:auto; min-width:120px;">
+                <option value=""></option>
+                <option value="is">is</option>
+                <option value="is not">is not</option>
+            </select>
+            <span style="color:#666;">attending MAT appointments as scheduled.</span>
+        </div>
+
+        <h3 style="margin-top:16px;">Additional Notes</h3>
+        <div style="margin-bottom:16px;">
+            <label for="dtc-probation">Probation Notes</label>
+            <textarea id="dtc-probation" oninput="updateFinalNote()" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; min-height:100px; resize:vertical;"></textarea>
+        </div>
+        <div style="margin-bottom:16px;">
+            <label for="dtc-mentalHealth">Mental Health Notes</label>
+            <textarea id="dtc-mentalHealth" oninput="updateFinalNote()" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; min-height:100px; resize:vertical;"></textarea>
+        </div>
+        <div style="margin-bottom:16px;">
+            <label for="dtc-additionalNotes">Additional Notes</label>
+            <textarea id="dtc-additionalNotes" oninput="updateFinalNote()" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; min-height:100px; resize:vertical;"></textarea>
+        </div>
+    </div>
+
     <!-- Read-only Note Output for Copying -->
     <div class="copy-area-container">
         <h2>Copy Area</h2>
-        <textarea id="final-note-copy"></textarea>
-        <button id="copy-button" class="copy-button">Copy Note to Clipboard</button>
+        <div id="dtc-validation-warning" style="display:none; background-color:#fff3cd; border:2px solid #dc3545; color:#dc3545; padding:15px; border-radius:4px; margin-bottom:20px; font-weight:bold;">
+            ⚠️ Not all required fields have been filled. Please complete the following:
+            <ul id="dtc-missing-fields" style="margin-top:10px; margin-bottom:0;"></ul>
+        </div>
+        
+        <div id="single-note-copy-area">
+            <textarea id="final-note-copy"></textarea>
+            <button id="copy-button" class="copy-button">Copy Note to Clipboard</button>
+        </div>
+        
+        <div id="dtc-dual-copy-area" style="display:none;">
+            <h3 style="margin-top:20px;">Progress Note</h3>
+            <textarea id="dtc-progress-note-copy" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; min-height:150px; resize:vertical;"></textarea>
+            <button id="dtc-progress-copy-button" class="copy-button" onclick="copyDtcText('dtc-progress-note-copy', this)">Copy Progress Note to Clipboard</button>
+            
+            <h3 style="margin-top:20px;">Court Note</h3>
+            <textarea id="dtc-court-note-copy" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; min-height:150px; resize:vertical;"></textarea>
+            <button id="dtc-court-copy-button" class="copy-button" onclick="copyDtcText('dtc-court-note-copy', this)">Copy Court Note to Clipboard</button>
+        </div>
     </div>
 
     <!-- MSE Modal -->
@@ -2491,6 +2676,7 @@ Rochester, NY
                 { value: 'closing-note-admitted', label: 'Closing Note – Admitted' },
                 { value: 'closing-note-non-admitted', label: 'Closing Note – Non-Admitted' },
                 { value: 'discharge-plan', label: 'Discharge Plan' },
+                { value: 'drug-treatment-court-report', label: 'Drug Treatment Court Report' },
                 { value: 'entry-cd', label: 'Entry Session - Chemical Dependency' },
                 { value: 'entry-so', label: 'Entry Session - Significant Other' },
                 { value: 'eval-cd', label: 'Evaluation - Chemical Dependency' },
@@ -2928,6 +3114,298 @@ function addNurseInterventionRow(isFirstRow = false) {
     function autoResize(element) {
         element.style.height = 'auto';
         element.style.height = (element.scrollHeight) + 'px';
+    }
+
+    function autoResizeDtcTextareas(progressElement, courtElement) {
+        if (progressElement) {
+            progressElement.style.height = 'auto';
+            progressElement.style.height = (progressElement.scrollHeight) + 'px';
+        }
+        if (courtElement) {
+            courtElement.style.height = 'auto';
+            courtElement.style.height = (courtElement.scrollHeight) + 'px';
+        }
+    }
+
+    // Drug Treatment Court Report Helper Functions
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString + 'T00:00:00');
+        return new Intl.DateTimeFormat('en-US').format(date);
+    }
+
+    function handleDtcLudVisibility() {
+        const ludInput = document.getElementById('dtc-lud').value;
+        const initialCourtDateInput = document.getElementById('dtc-initialCourtDate').value;
+        const ludExtraDiv = document.getElementById('dtc-ludExtra');
+
+        if (!ludInput || !initialCourtDateInput) {
+            ludExtraDiv.style.display = 'none';
+            return;
+        }
+        const ludDate = new Date(ludInput);
+        const initialCourtDate = new Date(initialCourtDateInput);
+        if (ludDate >= initialCourtDate) {
+            ludExtraDiv.style.display = 'block';
+        } else {
+            ludExtraDiv.style.display = 'none';
+        }
+    }
+
+    function updateDtcMissedStatus() {
+        const individualAttended = Number(document.getElementById('dtc-individualAttended').value) || 0;
+        const individualTotal = Number(document.getElementById('dtc-individualTotal').value) || 0;
+        document.getElementById('dtc-individualMissedContainer').style.display = (individualAttended >= individualTotal) ? 'none' : 'block';
+
+        const groupAttended = Number(document.getElementById('dtc-groupAttended').value) || 0;
+        const groupTotal = Number(document.getElementById('dtc-groupTotal').value) || 0;
+        document.getElementById('dtc-groupMissedContainer').style.display = (groupAttended >= groupTotal) ? 'none' : 'block';
+
+        const medAttended = Number(document.getElementById('dtc-medAttended').value) || 0;
+        const medTotal = Number(document.getElementById('dtc-medTotal').value) || 0;
+        document.getElementById('dtc-medMissedContainer').style.display = (medAttended >= medTotal) ? 'none' : 'block';
+    }
+
+    function toggleDtcSubstance(selectElem) {
+        const row = selectElem.closest('.dynamic-row');
+        const substanceInput = row.querySelector('.substance-input');
+        if (substanceInput) {
+            substanceInput.style.display = (selectElem.value === "positive") ? "block" : "none";
+            if (selectElem.value !== "positive") {
+                substanceInput.value = "";
+            }
+        }
+    }
+
+    function copyDtcText(elementId, button) {
+        const textarea = document.getElementById(elementId);
+        textarea.select();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(textarea.value).then(() => {
+                const originalText = button.innerText;
+                button.innerText = 'Copied!';
+                setTimeout(() => { button.innerText = originalText; }, 2000);
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+                fallbackCopyText(textarea.value, button);
+            });
+        } else {
+            fallbackCopyText(textarea.value, button);
+        }
+    }
+
+    function fallbackCopyText(text, button) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                const originalText = button.innerText;
+                button.innerText = 'Copied!';
+                setTimeout(() => { button.innerText = originalText; }, 2000);
+            }
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+        document.body.removeChild(textArea);
+    }
+
+    function validateDtcRequiredFields() {
+        const requiredFields = [
+            { id: 'dtc-clientName', label: 'Client Name' },
+            { id: 'dtc-initialCourtDate', label: 'Last Court Date' },
+            { id: 'dtc-courtPrepDate', label: 'Next Court Date' },
+            { id: 'dtc-checkingIn', label: 'Checking In with Case Manager' },
+            { id: 'dtc-treatmentSchedule', label: 'Treatment Schedule' },
+            { id: 'dtc-hasNotHas', label: 'Overall Appointment Attendance' },
+            { id: 'dtc-nextDate', label: 'Next Appointment Date' },
+            { id: 'dtc-appointmentType', label: 'Next Appointment Type' },
+            { id: 'dtc-lud', label: 'Last Use Date' }
+        ];
+
+        const missingFields = [];
+        
+        requiredFields.forEach(field => {
+            const element = document.getElementById(field.id);
+            const value = element?.value || '';
+            if (!value || value.trim() === '') {
+                missingFields.push(field.label);
+            }
+        });
+
+        // Check if at least one toxicology screen is filled or checkbox is marked
+        const toxNotScreenedCheckbox = document.getElementById('dtc-toxNotScreened');
+        const toxContainer = document.getElementById('dtc-toxContainer');
+        const hasToxData = toxNotScreenedCheckbox.checked || Array.from(toxContainer.querySelectorAll('input[type="date"]')).some(input => input.value);
+        if (!hasToxData) {
+            missingFields.push('Toxicology Screens at Treatment');
+        }
+
+        // Check if at least one random screen is filled or checkbox is marked
+        const randomNotScreenedCheckbox = document.getElementById('dtc-randomNotScreened');
+        const randomContainer = document.getElementById('dtc-randomContainer');
+        const hasRandomData = randomNotScreenedCheckbox.checked || Array.from(randomContainer.querySelectorAll('input[type="date"]')).some(input => input.value);
+        if (!hasRandomData) {
+            missingFields.push('Random Screens');
+        }
+
+        // Show or hide warning
+        const warningDiv = document.getElementById('dtc-validation-warning');
+        const missingFieldsList = document.getElementById('dtc-missing-fields');
+        
+        if (missingFields.length > 0) {
+            warningDiv.style.display = 'block';
+            missingFieldsList.innerHTML = missingFields.map(field => `<li>${field}</li>`).join('');
+        } else {
+            warningDiv.style.display = 'none';
+            missingFieldsList.innerHTML = '';
+        }
+
+        return missingFields.length === 0;
+    }
+
+    function clearDrugTreatmentCourtReport() {
+        // Clear all text inputs and text areas
+        const textInputIds = [
+            'dtc-clientName',
+            'dtc-careCoordination',
+            'dtc-treatmentSchedule',
+            'dtc-appointmentType',
+            'dtc-ludSubstance',
+            'dtc-probation',
+            'dtc-mentalHealth',
+            'dtc-additionalNotes',
+            'dtc-individualMissed',
+            'dtc-groupMissed',
+            'dtc-medMissed'
+        ];
+        textInputIds.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.value = '';
+            }
+        });
+
+        // Clear all date inputs
+        const dateInputIds = [
+            'dtc-initialCourtDate',
+            'dtc-courtPrepDate',
+            'dtc-nextDate',
+            'dtc-lud'
+        ];
+        dateInputIds.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.value = '';
+            }
+        });
+
+        // Clear all select dropdowns
+        const selectIds = [
+            'dtc-checkingIn',
+            'dtc-hasNotHas',
+            'dtc-ludResponse',
+            'dtc-matAttendance'
+        ];
+        selectIds.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.value = '';
+            }
+        });
+
+        // Clear all number inputs
+        const numberInputIds = [
+            'dtc-individualAttended',
+            'dtc-individualTotal',
+            'dtc-groupAttended',
+            'dtc-groupTotal',
+            'dtc-medAttended',
+            'dtc-medTotal'
+        ];
+        numberInputIds.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.value = '';
+            }
+        });
+
+        // Clear all checkboxes
+        const checkboxIds = [
+            'dtc-toxNotScreened',
+            'dtc-randomNotScreened'
+        ];
+        checkboxIds.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.checked = false;
+            }
+        });
+
+        // Clear toxicology and random screen rows
+        document.getElementById('dtc-toxContainer').innerHTML = '';
+        document.getElementById('dtc-randomContainer').innerHTML = '';
+
+        // Reset form visibility
+        handleDtcLudVisibility();
+        updateDtcMissedStatus();
+
+        // Clear the copy boxes
+        document.getElementById('dtc-progress-note-copy').value = '';
+        document.getElementById('dtc-court-note-copy').value = '';
+
+        // Clear validation warning
+        document.getElementById('dtc-validation-warning').style.display = 'none';
+        document.getElementById('dtc-missing-fields').innerHTML = '';
+
+        // Reinitialize with empty rows
+        addDtcToxRow();
+        addDtcRandomRow();
+
+        // Trigger update
+        updateFinalNote();
+    }
+
+    function addDtcToxRow() {
+        const container = document.getElementById('dtc-toxContainer');
+        const row = document.createElement('div');
+        row.className = 'dynamic-row dtc-tox-row';
+        row.style.cssText = 'display:flex; align-items:center; gap:10px; margin-bottom:8px; padding:10px; background-color:#f9f9f9; border-radius:4px;';
+        row.innerHTML = `
+            <input type="date" class="input-field dtcToxDate" onchange="updateFinalNote()" style="flex-grow:1; margin:0; padding:8px;">
+            <select class="select-field dtcToxResult" onchange="toggleDtcSubstance(this); updateFinalNote()" style="flex-grow:1; margin:0; padding:8px;">
+                <option value="negative">Negative</option>
+                <option value="positive">Positive</option>
+                <option value="pending">Pending</option>
+            </select>
+            <input type="text" class="input-field substance-input dtcToxSubstance" placeholder="Substance(s)" style="flex-grow:1; margin:0; padding:8px; display:none;" onchange="updateFinalNote()">
+            <button type="button" style="flex-shrink:0; width:38px; height:38px; padding:0; background-color:#dc3545; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold;" onclick="this.parentElement.remove(); updateFinalNote();">X</button>
+        `;
+        container.appendChild(row);
+    }
+
+    function addDtcRandomRow() {
+        const container = document.getElementById('dtc-randomContainer');
+        const row = document.createElement('div');
+        row.className = 'dynamic-row dtc-random-row';
+        row.style.cssText = 'display:flex; align-items:center; gap:10px; margin-bottom:8px; padding:10px; background-color:#f9f9f9; border-radius:4px;';
+        row.innerHTML = `
+            <input type="date" class="input-field dtcRandomDate" onchange="updateFinalNote()" style="flex-grow:1; margin:0; padding:8px;">
+            <select class="select-field dtcRandomResult" onchange="toggleDtcSubstance(this); updateFinalNote()" style="flex-grow:1; margin:0; padding:8px;">
+                <option value="negative">Negative</option>
+                <option value="positive">Positive</option>
+                <option value="missed random">Missed Random</option>
+            </select>
+            <input type="text" class="input-field substance-input dtcRandomSubstance" placeholder="Substance(s)" style="flex-grow:1; margin:0; padding:8px; display:none;" onchange="updateFinalNote()">
+            <button type="button" style="flex-shrink:0; width:38px; height:38px; padding:0; background-color:#dc3545; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold;" onclick="this.parentElement.remove(); updateFinalNote();">X</button>
+        `;
+        container.appendChild(row);
     }
 
     function updateFinalNote() {
@@ -4178,9 +4656,224 @@ let interventions = [];
             }
             
             finalNote = noteParts.join('\n\n');
+            } else if (selectedNoteType === 'drug-treatment-court-report') {
+            // Drug Treatment Court Report note generation
+            let progressText = '';
+            let courtText = '';
+
+            const lastCourtDate = formatDate(document.getElementById('dtc-initialCourtDate').value);
+            if (lastCourtDate) {
+                progressText += `Since last court date ${lastCourtDate}, writer provided treatment report via Unified Court System portal UCMS to coordinate care with Drug Treatment Court per request of Michelle Devine.\n\n`;
             }
-finalNoteCopy.value = finalNote.trim();
-        autoResize(finalNoteCopy);
+            progressText += "To complete this client's DTC report, writer previously spoke one on one with client and summarized client's treatment schedule and attendance.\n\n";
+            progressText += "In addition, writer checks client's UDS results in both eCR and the New York State Unified Court System portal UCMS.\n\n";
+
+            const courtPrepDate = formatDate(document.getElementById('dtc-courtPrepDate').value);
+            if (courtPrepDate) {
+                progressText += `Writer also prepared for court and ways to support and advocate for client in the court room on ${courtPrepDate}. Writer prepared a report for treatment court, which included an update on client's presentation in services inclusive of client's individual session attendance, group session attendance, weekly check-ins as required by court, random toxicology screens as required by court, and toxicology screens (and results) provided by client to Delphi Rise. \n\n`;
+            }
+
+            const careCoordination = document.getElementById('dtc-careCoordination').value;
+            if (careCoordination) {
+                progressText += `Writer also coordinated care with ${careCoordination}.\n\n`;
+            }
+            progressText += "SEE Criminal Drug Treatment Court Appearance Report completed and scanned into client's chart.";
+
+            // --- Court Note Generation ---
+            if (lastCourtDate) {
+                courtText += `Since last court date ${lastCourtDate}:\n\n`;
+            }
+
+            const clientName = document.getElementById('dtc-clientName').value;
+            const hasNotHas = document.getElementById('dtc-hasNotHas').value;
+            if (hasNotHas) {
+                courtText += `${clientName || 'Client'} ${hasNotHas} kept all appointments as scheduled.\n`;
+            }
+
+            const checkingIn = document.getElementById('dtc-checkingIn').value;
+            if (checkingIn === 'Yes') {
+                courtText += `Checking in with case manager per requirements: Yes\n\n`;
+            } else if (checkingIn === 'No') {
+                courtText += `NOT checking in with case manager per requirements.\n\n`;
+            }
+
+            const lud = formatDate(document.getElementById('dtc-lud').value);
+            if (lud) {
+                courtText += `LUD: ${lud}`;
+                const ludExtra = document.getElementById('dtc-ludExtra');
+                if (ludExtra && ludExtra.style.display !== 'none') {
+                    const ludResponse = document.getElementById('dtc-ludResponse').value;
+                    const ludSubstance = document.getElementById('dtc-ludSubstance').value;
+                    if (ludResponse) {
+                        courtText += ` (${ludResponse}`;
+                        if (ludSubstance) courtText += `, ${ludSubstance}`;
+                        courtText += `)`;
+                    }
+                }
+                courtText += '\n\n';
+            }
+
+            const treatmentSchedule = document.getElementById('dtc-treatmentSchedule').value;
+            if (treatmentSchedule) {
+                courtText += `Treatment Schedule: ${treatmentSchedule}\n\n`;
+            }
+
+            // Attendance Details
+            const individualAttended = document.getElementById('dtc-individualAttended').value;
+            const individualTotal = document.getElementById('dtc-individualTotal').value;
+            if (individualAttended && individualTotal) {
+                courtText += `Attended ${individualAttended}/${individualTotal} individual sessions`;
+                if (Number(individualAttended) < Number(individualTotal) && document.getElementById('dtc-individualMissed').value) {
+                    courtText += ` (${document.getElementById('dtc-individualMissed').value})`;
+                }
+                courtText += '.\n';
+            }
+
+            const groupAttended = document.getElementById('dtc-groupAttended').value;
+            const groupTotal = document.getElementById('dtc-groupTotal').value;
+            if (groupAttended && groupTotal) {
+                courtText += `Attended ${groupAttended}/${groupTotal} group sessions`;
+                if (Number(groupAttended) < Number(groupTotal) && document.getElementById('dtc-groupMissed').value) {
+                    courtText += ` (${document.getElementById('dtc-groupMissed').value})`;
+                }
+                courtText += '.\n';
+            }
+
+            const medAttended = document.getElementById('dtc-medAttended').value;
+            const medTotal = document.getElementById('dtc-medTotal').value;
+            if (medAttended && medTotal) {
+                courtText += `Attended ${medAttended}/${medTotal} medication appointments`;
+                if (Number(medAttended) < Number(medTotal) && document.getElementById('dtc-medMissed').value) {
+                    courtText += ` (${document.getElementById('dtc-medMissed').value})`;
+                }
+                courtText += '.\n';
+            }
+
+            const nextDate = formatDate(document.getElementById('dtc-nextDate').value);
+            const appointmentType = document.getElementById('dtc-appointmentType').value;
+            if (nextDate && appointmentType) {
+                courtText += `\nNext Appointment: ${nextDate} - ${appointmentType}\n\n`;
+            } else {
+                courtText += '\n';
+            }
+
+            // Toxicology Screens
+            courtText += `Toxicology Screens at Treatment:\n`;
+            if (document.getElementById('dtc-toxNotScreened').checked) {
+                courtText += `N/A - not screened since last court date\n\n`;
+            } else {
+                const toxRows = document.querySelectorAll('#dtc-toxContainer .dtc-tox-row');
+                const filledToxRows = Array.from(toxRows).filter(r => {
+                    const dateVal = r.querySelector('input[type="date"]')?.value;
+                    return dateVal && dateVal.trim() !== '';
+                });
+                
+                if (filledToxRows.length === 0) {
+                    courtText += 'No screens reported.\n\n';
+                } else {
+                    filledToxRows.forEach(row => {
+                        const dateInput = row.querySelector('input[type="date"]');
+                        const resultSelect = row.querySelector('select');
+                        const substanceInput = row.querySelector('input[type="text"]');
+                        
+                        const toxDate = formatDate(dateInput?.value);
+                        const toxResult = resultSelect?.value;
+                        const toxSubstance = substanceInput?.value;
+                        
+                        if (toxDate) {
+                            courtText += `${toxDate} - ${toxResult}`;
+                            if (toxResult === 'positive' && toxSubstance) {
+                                courtText += ` (${toxSubstance})`;
+                            }
+                            courtText += '\n';
+                        }
+                    });
+                    courtText += '\n';
+                }
+            }
+
+            // Random Screens
+            courtText += `Random Screens:\n`;
+            if (document.getElementById('dtc-randomNotScreened').checked) {
+                courtText += `N/A - not screened since last court date\n\n`;
+            } else {
+                const randomRows = document.querySelectorAll('#dtc-randomContainer .dtc-random-row');
+                const filledRandomRows = Array.from(randomRows).filter(r => {
+                    const dateVal = r.querySelector('input[type="date"]')?.value;
+                    return dateVal && dateVal.trim() !== '';
+                });
+                
+                if (filledRandomRows.length === 0) {
+                    courtText += 'No screens reported.\n\n';
+                } else {
+                    filledRandomRows.forEach(row => {
+                        const dateInput = row.querySelector('input[type="date"]');
+                        const resultSelect = row.querySelector('select');
+                        const substanceInput = row.querySelector('input[type="text"]');
+                        
+                        const randomDate = formatDate(dateInput?.value);
+                        const randomResult = resultSelect?.value;
+                        const randomSubstance = substanceInput?.value;
+                        
+                        if (randomDate) {
+                            courtText += `${randomDate} - ${randomResult}`;
+                            if (randomResult === 'positive' && randomSubstance) {
+                                courtText += ` (${randomSubstance})`;
+                            }
+                            courtText += '\n';
+                        }
+                    });
+                    courtText += '\n';
+                }
+            }
+
+            const matAttendance = document.getElementById('dtc-matAttendance').value;
+            if (matAttendance) {
+                courtText += `MAT: Client ${matAttendance} attending MAT appts as scheduled.\n\n`;
+            }
+
+            const probation = document.getElementById('dtc-probation').value;
+            if (probation) {
+                courtText += `Probation: ${probation}\n\n`;
+            }
+
+            const mentalHealth = document.getElementById('dtc-mentalHealth').value;
+            if (mentalHealth) {
+                courtText += `Mental Health: ${mentalHealth}\n\n`;
+            }
+            
+            const additionalNotes = document.getElementById('dtc-additionalNotes').value;
+            if (additionalNotes) {
+                courtText += `Additional Notes: ${additionalNotes}\n`;
+            }
+
+            finalNote = `PROGRESS NOTE:\n\n${progressText.trim()}\n\n---\n\nCOURT NOTE:\n\n${courtText.trim()}`;
+            
+            // For DTC, populate separate text areas
+            const dtcProgressCopy = document.getElementById('dtc-progress-note-copy');
+            const dtcCourtCopy = document.getElementById('dtc-court-note-copy');
+            dtcProgressCopy.value = progressText.trim();
+            dtcCourtCopy.value = courtText.trim();
+            // Auto-resize the textareas to fit content
+            autoResizeDtcTextareas(dtcProgressCopy, dtcCourtCopy);
+            }
+        
+        // Toggle copy area visibility based on note type
+        const singleCopyArea = document.getElementById('single-note-copy-area');
+        const dtcDualCopyArea = document.getElementById('dtc-dual-copy-area');
+        
+        if (selectedNoteType === 'drug-treatment-court-report') {
+            singleCopyArea.style.display = 'none';
+            dtcDualCopyArea.style.display = 'block';
+            // Validate required fields for DTC
+            validateDtcRequiredFields();
+        } else {
+            singleCopyArea.style.display = 'block';
+            dtcDualCopyArea.style.display = 'none';
+            document.getElementById('dtc-validation-warning').style.display = 'none';
+            finalNoteCopy.value = finalNote.trim();
+            autoResize(finalNoteCopy);
+        }
     }
 
     function toggleSafetyPlan(mainCheckbox, safetyPlanCheckbox) {
@@ -4238,6 +4931,9 @@ finalNoteCopy.value = finalNote.trim();
         } else if (selection === 'ciwa-ar-assessment') {
             // Initialize CIWA-Ar Assessment
             initCiwaArAssessment();
+        } else if (selection === 'drug-treatment-court-report') {
+            // Initialize Drug Treatment Court Report
+            initDrugTreatmentCourtReport();
         }
         updateFinalNote();
     });
@@ -4883,6 +5579,19 @@ Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
                     updateFinalNote();
                 });
             }
+        }
+    }
+
+    function initDrugTreatmentCourtReport() {
+        // Initialize form visibility
+        handleDtcLudVisibility();
+        updateDtcMissedStatus();
+        // Initialize with first tox and random rows if empty
+        if (document.getElementById('dtc-toxContainer').children.length === 0) {
+            addDtcToxRow();
+        }
+        if (document.getElementById('dtc-randomContainer').children.length === 0) {
+            addDtcRandomRow();
         }
     }
 
