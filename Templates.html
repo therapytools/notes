@@ -1933,11 +1933,11 @@ Rochester, NY
         <label for="op-chief">Chief Complaint</label>
         <div style="display:flex; gap:8px; align-items:center;">
             <select id="op-chief-quick" style="min-width: 220px;">
+                <option value="">Select an option</option>
                 <option value="I want to stop drinking">I want to stop drinking</option>
                 <option value="Follow-up for alcohol detox">Follow-up for alcohol detox</option>
-                <option value="Other">Other...</option>
             </select>
-            <input type="text" id="op-chief" value="I want to stop drinking" style="flex:1; padding:8px;" />
+            <input type="text" id="op-chief" value="" style="flex:1; padding:8px;" />
         </div>
 
         <h3 style="margin-top:12px;">History of Present Illness (HPI)</h3>
@@ -2134,14 +2134,75 @@ Rochester, NY
         </div>
 
         <label>Supportive/Adjunctive Medications (select as appropriate):</label>
-        <div style="display:grid; grid-template-columns: repeat(2,1fr); gap:8px;">
-            <label><input type="checkbox" id="op-med-thiamine"> Thiamine 100 mg PO/IM daily</label>
-            <label><input type="checkbox" id="op-med-folate"> Folic acid 1 mg PO daily</label>
-            <label><input type="checkbox" id="op-med-multivit"> Multivitamin daily</label>
-            <label><input type="checkbox" id="op-med-clonidine"> Clonidine PRN</label>
-            <label><input type="checkbox" id="op-med-hydroxyzine"> Hydroxyzine PRN</label>
-            <label><input type="checkbox" id="op-med-gabapentin"> Gabapentin as adjunct</label>
-        </div>
+        <table style="width:100%; border-collapse:collapse; margin-bottom:12px; font-size:0.95em;">
+            <thead style="background-color:#f0f0f0; border-bottom:2px solid #333;">
+                <tr>
+                    <th style="border:1px solid #ddd; padding:8px; text-align:left; width:30px;"></th>
+                    <th style="border:1px solid #ddd; padding:8px; text-align:left;">Indication</th>
+                    <th style="border:1px solid #ddd; padding:8px; text-align:left;">Medication</th>
+                    <th style="border:1px solid #ddd; padding:8px; text-align:left;">Typical Dose</th>
+                    <th style="border:1px solid #ddd; padding:8px; text-align:left;">Prescriber Guidance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px; text-align:center;"><input type="checkbox" id="op-med-thiamine"></td>
+                    <td style="border:1px solid #ddd; padding:8px;">Vitamin supplementation</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Thiamine</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="op-med-thiamine-dose" value="100 mg PO/IM daily" style="width:100%; padding:4px; box-sizing:border-box;" /></td>
+                    <td style="border:1px solid #ddd; padding:8px; font-size:0.85em; font-style:italic; color:#555;">Give before glucose</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px; text-align:center;"><input type="checkbox" id="op-med-folate"></td>
+                    <td style="border:1px solid #ddd; padding:8px;">Vitamin supplementation</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Folic acid</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="op-med-folate-dose" value="1 mg PO daily" style="width:100%; padding:4px; box-sizing:border-box;" /></td>
+                    <td style="border:1px solid #ddd; padding:8px; font-size:0.85em; font-style:italic; color:#555;"></td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px; text-align:center;"><input type="checkbox" id="op-med-multivit"></td>
+                    <td style="border:1px solid #ddd; padding:8px;">Vitamin supplementation</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Multivitamin</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="op-med-multivit-dose" value="daily" style="width:100%; padding:4px; box-sizing:border-box;" /></td>
+                    <td style="border:1px solid #ddd; padding:8px; font-size:0.85em; font-style:italic; color:#555;"></td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px; text-align:center;"><input type="checkbox" id="op-med-clonidine"></td>
+                    <td style="border:1px solid #ddd; padding:8px;">Autonomic symptoms</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Clonidine</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="op-med-clonidine-dose" value="0.1–0.2 mg PO q6–8h PRN" style="width:100%; padding:4px; box-sizing:border-box;" /></td>
+                    <td style="border:1px solid #ddd; padding:8px; font-size:0.85em; font-style:italic; color:#555;">Hold if SBP <90</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px; text-align:center;"><input type="checkbox" id="op-med-hydroxyzine"></td>
+                    <td style="border:1px solid #ddd; padding:8px;">Anxiety/Insomnia</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Hydroxyzine</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="op-med-hydroxyzine-dose" value="25–50 mg PO q6h PRN" style="width:100%; padding:4px; box-sizing:border-box;" /></td>
+                    <td style="border:1px solid #ddd; padding:8px; font-size:0.85em; font-style:italic; color:#555;">Non-addictive</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px; text-align:center;"><input type="checkbox" id="op-med-gabapentin"></td>
+                    <td style="border:1px solid #ddd; padding:8px;">Adjunct</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Gabapentin</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="op-med-gabapentin-dose" value="300–600 mg PO TID" style="width:100%; padding:4px; box-sizing:border-box;" /></td>
+                    <td style="border:1px solid #ddd; padding:8px; font-size:0.85em; font-style:italic; color:#555;">Can be used concurrently or as taper</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px; text-align:center;"><input type="checkbox" id="op-med-trazodone"></td>
+                    <td style="border:1px solid #ddd; padding:8px;">Sleep</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Trazodone</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="op-med-trazodone-dose" value="50–100 mg PO HS PRN" style="width:100%; padding:4px; box-sizing:border-box;" /></td>
+                    <td style="border:1px solid #ddd; padding:8px; font-size:0.85em; font-style:italic; color:#555;"></td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px; text-align:center;"><input type="checkbox" id="op-med-ondansetron"></td>
+                    <td style="border:1px solid #ddd; padding:8px;">Nausea</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Ondansetron</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><input type="text" id="op-med-ondansetron-dose" value="4 mg PO q8h PRN" style="width:100%; padding:4px; box-sizing:border-box;" /></td>
+                    <td style="border:1px solid #ddd; padding:8px; font-size:0.85em; font-style:italic; color:#555;"></td>
+                </tr>
+            </tbody>
+        </table>
 
         <label>Monitoring</label>
         <div style="display:flex; flex-direction:column; gap:6px;">
@@ -3598,8 +3659,8 @@ let interventions = [];
             let noteParts = [];
             
             // Chief Complaint
-            const opChief = document.getElementById('op-chief')?.value || '[Not documented]';
-            noteParts.push(`Chief Complaint:\n${opChief}`);
+            const opChief = document.getElementById('op-chief')?.value;
+            if (opChief) noteParts.push(`Chief Complaint:\n${opChief}`);
             
             // HPI
             let hpiParts = [];
@@ -3823,16 +3884,24 @@ let interventions = [];
             // Supportive/adjunctive medications
             let supportParts = [];
             const supportMeds = [
-                { id: 'op-med-thiamine', label: 'Thiamine 100 mg PO/IM daily' },
-                { id: 'op-med-folate', label: 'Folic acid 1 mg PO daily' },
-                { id: 'op-med-multivit', label: 'Multivitamin daily' },
-                { id: 'op-med-clonidine', label: 'Clonidine PRN' },
-                { id: 'op-med-hydroxyzine', label: 'Hydroxyzine PRN' },
-                { id: 'op-med-gabapentin', label: 'Gabapentin as adjunct' }
+                { id: 'op-med-thiamine', indication: 'Vitamin supplementation', med: 'Thiamine', doseId: 'op-med-thiamine-dose', notesId: 'op-med-thiamine-notes' },
+                { id: 'op-med-folate', indication: 'Vitamin supplementation', med: 'Folic acid', doseId: 'op-med-folate-dose', notesId: 'op-med-folate-notes' },
+                { id: 'op-med-multivit', indication: 'Vitamin supplementation', med: 'Multivitamin', doseId: 'op-med-multivit-dose', notesId: 'op-med-multivit-notes' },
+                { id: 'op-med-clonidine', indication: 'Autonomic symptoms', med: 'Clonidine', doseId: 'op-med-clonidine-dose', notesId: 'op-med-clonidine-notes' },
+                { id: 'op-med-hydroxyzine', indication: 'Anxiety/Insomnia', med: 'Hydroxyzine', doseId: 'op-med-hydroxyzine-dose', notesId: 'op-med-hydroxyzine-notes' },
+                { id: 'op-med-gabapentin', indication: 'Adjunct', med: 'Gabapentin', doseId: 'op-med-gabapentin-dose', notesId: 'op-med-gabapentin-notes' },
+                { id: 'op-med-trazodone', indication: 'Sleep', med: 'Trazodone', doseId: 'op-med-trazodone-dose', notesId: 'op-med-trazodone-notes' },
+                { id: 'op-med-ondansetron', indication: 'Nausea', med: 'Ondansetron', doseId: 'op-med-ondansetron-dose', notesId: 'op-med-ondansetron-notes' }
             ];
             supportMeds.forEach(item => {
                 if (document.getElementById(item.id)?.checked) {
-                    supportParts.push(`• ${item.label}`);
+                    const dose = document.getElementById(item.doseId)?.value || '';
+                    
+                    let medLine = item.indication + ': ' + item.med;
+                    if (dose) medLine += ', ' + dose;
+                    medLine += '.';
+                    
+                    supportParts.push('• ' + medLine);
                 }
             });
             if (supportParts.length > 0) {
