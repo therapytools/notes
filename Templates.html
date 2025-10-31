@@ -1900,8 +1900,30 @@ Rochester, NY
         <label for="nurse-response">Client's response:</label>
         <textarea id="nurse-response" placeholder="Try to include a quote. Example: Client's response to your interventions - Client was responsive to education and discussion of referrals. Client identified clarity on next steps to pursue medication management."></textarea>
 
-        <label for="nurse-plan">Plan/Next Steps:</label>
-        <textarea id="nurse-plan" placeholder="How are you supporting them (scheduling follow-up, helping connect to a resource...) AND/OR How are they connecting to the clinic next (following up with their counselor, med management, a group?)."></textarea>
+        <label>Plan/Next Steps:</label>
+        <div id="nurse-plan-checkboxes" style="background-color: #f8f9fa; border: 1px solid #e0e0e0; padding: 15px; margin: 10px 0; border-radius: 4px;">
+            <div class="checkbox-container" style="background-color: transparent; border: none; padding: 0; margin: 12px 0; display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" id="nurse-plan-checkbox-1" data-text="Continued current medication regimen." style="flex-shrink: 0;">
+                <label for="nurse-plan-checkbox-1" style="margin: 0; flex-grow: 1;">Continued current medication regimen</label>
+            </div>
+            <div class="checkbox-container" style="background-color: transparent; border: none; padding: 0; margin: 12px 0; display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" id="nurse-plan-checkbox-2" data-text="Encouraged continued attendance in counseling/group." style="flex-shrink: 0;">
+                <label for="nurse-plan-checkbox-2" style="margin: 0; flex-grow: 1;">Encouraged continued attendance in counseling/group</label>
+            </div>
+            <div class="checkbox-container" style="background-color: transparent; border: none; padding: 0; margin: 12px 0; display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" id="nurse-plan-checkbox-3" data-text="Referred to RN/NP/MD for " style="flex-shrink: 0;">
+                <label for="nurse-plan-checkbox-3" style="margin: 0;">Referred to RN/NP/MD for</label>
+                <input type="text" id="nurse-plan-custom-3" placeholder="e.g., medication concerns" style="flex: 1; min-width: 200px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+            </div>
+            <div class="checkbox-container" style="background-color: transparent; border: none; padding: 0; margin: 12px 0; display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" id="nurse-plan-checkbox-4" data-text="Scheduled next appointment for " style="flex-shrink: 0;">
+                <label for="nurse-plan-checkbox-4" style="margin: 0;">Scheduled next appointment for</label>
+                <input type="date" id="nurse-plan-custom-4" style="flex: 1; min-width: 200px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+            </div>
+        </div>
+
+        <label for="nurse-plan">Additional Notes:</label>
+        <textarea id="nurse-plan" placeholder="Add any additional plan/next steps information. Checked items above will be included in the note."></textarea>
     </div>
     <!-- Read-only Note Output for Copying -->
     <div class="copy-area-container">
@@ -2286,7 +2308,6 @@ const nurseInterventionOptions = `
         <optgroup label="Monitoring">
             <option value="Observed and recorded medication adherence and any side effects.">Observed and recorded medication adherence and any side effects.</option>
             <option value="Monitored clients' responses to treatment and symptom changes.">Monitored clients' responses to treatment and symptom changes.</option>
-            <option value="Tracked medical documentation, lab results, and other relevant health indicators.">Tracked medical documentation, lab results, and other relevant health indicators.</option>
             <option value="Assessed for signs of adverse reactions or complications related to medications.">Assessed for signs of adverse reactions or complications related to medications.</option>
         </optgroup>
         <optgroup label="Education">
@@ -3298,7 +3319,39 @@ let interventions = [];
             }
 
             if (response) noteParts.push(`Client's response:\n${response}`);
-            if (plan) noteParts.push(`Plan/Next Steps:\n${plan}`);
+            
+            // Build Plan/Next Steps from checked items and manual text
+            let planItems = [];
+            for (let i = 1; i <= 4; i++) {
+                const checkbox = document.getElementById(`nurse-plan-checkbox-${i}`);
+                if (checkbox && checkbox.checked) {
+                    let text = checkbox.getAttribute('data-text');
+                    if (i === 3 || i === 4) {
+                        const customInput = document.getElementById(`nurse-plan-custom-${i}`);
+                        if (customInput && customInput.value.trim()) {
+                            text += customInput.value.trim();
+                            // For date input (checkbox 4), format the date nicely
+                            if (i === 4) {
+                                const dateObj = new Date(customInput.value + 'T00:00:00');
+                                if (!isNaN(dateObj.getTime())) {
+                                    text = text.replace(customInput.value, dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
+                                }
+                            }
+                            text += '.';
+                        }
+                    }
+                    planItems.push(text);
+                }
+            }
+            
+            // Combine checked items with manual textarea content
+            let fullPlanText = planItems.join('\n');
+            if (plan) {
+                if (fullPlanText) fullPlanText += '\n' + plan;
+                else fullPlanText = plan;
+            }
+            
+            if (fullPlanText) noteParts.push(`Plan/Next Steps:\n${fullPlanText}`);
 
             finalNote = noteParts.join('\n\n');
             }
@@ -3354,6 +3407,7 @@ finalNoteCopy.value = finalNote.trim();
         } else if (selection === 'nurse-follow-up') {
             document.getElementById('nurse-interventions-container').innerHTML = '';
             addNurseInterventionRow(true); // Add the first row automatically
+            initNursePlanCheckboxes(); // Initialize plan checkboxes
         }
         updateFinalNote();
     });
@@ -3832,6 +3886,40 @@ finalNoteCopy.value = finalNote.trim();
 
     // Initial call to set up the form on page load.
     document.addEventListener('DOMContentLoaded', updateMseText);
+
+    // Function to update final note from checkboxes (does not modify textarea)
+    function updateNursePlanFromCheckboxes() {
+        // Just trigger the final note update - the logic is now in updateFinalNote
+        updateFinalNote();
+    }
+
+    // Attach listeners to plan checkboxes when nurse-follow-up is loaded
+    function initNursePlanCheckboxes() {
+        for (let i = 1; i <= 4; i++) {
+            const checkbox = document.getElementById(`nurse-plan-checkbox-${i}`);
+            if (checkbox) {
+                checkbox.addEventListener('change', updateNursePlanFromCheckboxes);
+            }
+            
+            // For checkboxes with custom input
+            if (i === 3 || i === 4) {
+                const customInput = document.getElementById(`nurse-plan-custom-${i}`);
+                if (customInput) {
+                    customInput.addEventListener('input', () => {
+                        if (document.getElementById(`nurse-plan-checkbox-${i}`).checked) {
+                            updateNursePlanFromCheckboxes();
+                        }
+                    });
+                    customInput.addEventListener('keyup', () => {
+                        if (document.getElementById(`nurse-plan-checkbox-${i}`).checked) {
+                            updateNursePlanFromCheckboxes();
+                        }
+                    });
+                }
+            }
+        }
+    }
+    
 // Nurse Follow Up Listeners
     [
         document.getElementById('nurse-diag'),
