@@ -1925,6 +1925,244 @@ Rochester, NY
         <label for="nurse-plan">Additional Notes:</label>
         <textarea id="nurse-plan" placeholder="Add any additional plan/next steps information. Checked items above will be included in the note."></textarea>
     </div>
+    
+    <!-- Container for OP Alcohol Detox -->
+    <div id="op-alcohol-detox-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">OP Alcohol Detox</h2>
+
+        <label for="op-chief">Chief Complaint</label>
+        <div style="display:flex; gap:8px; align-items:center;">
+            <select id="op-chief-quick" style="min-width: 220px;">
+                <option value="I want to stop drinking">I want to stop drinking</option>
+                <option value="Follow-up for alcohol detox">Follow-up for alcohol detox</option>
+                <option value="Other">Other...</option>
+            </select>
+            <input type="text" id="op-chief" value="I want to stop drinking" style="flex:1; padding:8px;" />
+        </div>
+
+        <h3 style="margin-top:12px;">History of Present Illness (HPI)</h3>
+        <label>Alcohol use history:</label>
+        <label>Onset and duration of alcohol use:</label>
+        <input type="text" id="op-hpi-onset" class="inline-form-element" placeholder="e.g., since teens" />
+        <label>Current quantity and frequency:</label>
+        <input type="text" id="op-hpi-qty" class="inline-form-element" placeholder="e.g., 6 drinks/day" />
+        <label>Type of alcohol (beer, wine, liquor):</label>
+        <input type="text" id="op-hpi-type" class="inline-form-element" placeholder="e.g., beer" />
+        <label>Last drink (date/time):</label>
+        <input type="text" id="op-hpi-last-drink" class="inline-form-element" placeholder="date/time" />
+        <label>Previous withdrawal symptoms (e.g., tremor, seizure, hallucination, delirium):</label>
+        <input type="text" id="op-hpi-prev-withdrawal" class="inline-form-element" />
+        <label>Prior detox attempts or rehab programs:</label>
+        <textarea id="op-hpi-prior-detox" rows="3"></textarea>
+        <label>Duration of sobriety periods:</label>
+        <input type="text" id="op-hpi-duration-sobriety" class="inline-form-element" />
+        <label>Triggers or reasons for relapse (if applicable):</label>
+        <textarea id="op-hpi-triggers" rows="3"></textarea>
+
+        <label style="margin-top:10px;">Withdrawal symptoms currently:</label>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px;">
+            <label><input type="checkbox" id="op-w-tremor"> Tremor</label>
+            <label><input type="checkbox" id="op-w-anxiety"> Anxiety</label>
+            <label><input type="checkbox" id="op-w-nausea"> Nausea/Vomiting</label>
+            <label><input type="checkbox" id="op-w-sweating"> Sweating</label>
+            <label><input type="checkbox" id="op-w-insomnia"> Insomnia</label>
+            <label><input type="checkbox" id="op-w-hallucinations"> Hallucinations</label>
+            <label><input type="checkbox" id="op-w-seizures"> Seizures</label>
+            <label><input type="checkbox" id="op-w-headache"> Headache</label>
+            <label><input type="checkbox" id="op-w-palpitations"> Palpitations</label>
+            <div style="grid-column: 1 / -1; display:flex; gap:8px; align-items:center;"><label style="margin:0;"><input type="checkbox" id="op-w-other"> Other:</label><input type="text" id="op-w-other-text" placeholder="specify" style="flex:1; padding:6px;"/></div>
+        </div>
+
+        <label>Associated symptoms:</label>
+        <textarea id="op-associated" rows="3" placeholder="Depression, anxiety, suicidal ideation, cravings, etc."></textarea>
+        <label>Support system:</label>
+        <textarea id="op-support" rows="2" placeholder="Family/friends/support groups"></textarea>
+        <label>Social history:</label>
+        <textarea id="op-social" rows="2" placeholder="Living situation, employment, legal issues, driving, access to care"></textarea>
+        <label>Motivation and goals:</label>
+        <textarea id="op-motivation" rows="2" placeholder="Readiness to change (1–10), treatment goals"></textarea>
+
+        <h3 style="margin-top:12px;">Past Medical History</h3>
+        <label>Medical:</label>
+        <textarea id="op-pmh-medical" rows="2" placeholder="(e.g., liver disease, hypertension, pancreatitis, seizure disorder)"></textarea>
+        <label>Psychiatric:</label>
+        <textarea id="op-pmh-psych" rows="2" placeholder="(e.g., depression, anxiety, bipolar, PTSD)"></textarea>
+        <label>Surgical:</label>
+        <textarea id="op-pmh-surgical" rows="2"></textarea>
+        <label>Allergies:</label>
+        <textarea id="op-pmh-allergies" rows="2"></textarea>
+        <label>Medications:</label>
+        <textarea id="op-pmh-meds" rows="2" placeholder="(include psychiatric, antihypertensives, etc.)"></textarea>
+        <label>Substance Use:</label>
+        <textarea id="op-pmh-substance" rows="2" placeholder="Tobacco, other drugs, prescription misuse"></textarea>
+
+        <h3 style="margin-top:12px;">Family History</h3>
+        <textarea id="op-family" rows="2" placeholder="Alcoholism, mental illness, seizure disorder, suicide, etc."></textarea>
+
+        <h3 style="margin-top:12px;">Review of Systems (pertinent positives/negatives)</h3>
+        <label>Constitutional:</label>
+        <textarea id="op-ros-const" rows="2" placeholder="Fatigue, sweats, tremor"></textarea>
+        <label>Neuro:</label>
+        <textarea id="op-ros-neuro" rows="2" placeholder="Headache, dizziness, confusion, seizure"></textarea>
+        <label>Psych:</label>
+        <textarea id="op-ros-psych" rows="2" placeholder="Anxiety, irritability, depression, hallucinations, suicidal ideation"></textarea>
+        <label>GI:</label>
+        <textarea id="op-ros-gi" rows="2" placeholder="Nausea, vomiting, abdominal pain"></textarea>
+        <label>Cardiac:</label>
+        <textarea id="op-ros-cardiac" rows="2" placeholder="Palpitations, chest pain"></textarea>
+
+        <h3 style="margin-top:12px;">Objective</h3>
+        <label>Vital Signs:</label>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <input type="text" id="op-vs-bp" placeholder="BP" style="width:120px; padding:6px;" />
+            <input type="text" id="op-vs-hr" placeholder="HR" style="width:80px; padding:6px;" />
+            <input type="text" id="op-vs-rr" placeholder="RR" style="width:80px; padding:6px;" />
+            <input type="text" id="op-vs-temp" placeholder="Temp" style="width:100px; padding:6px;" />
+            <input type="text" id="op-vs-spo2" placeholder="SpO₂" style="width:100px; padding:6px;" />
+        </div>
+
+        <label>Physical Exam:</label>
+        <label>General:</label>
+        <textarea id="op-pe-general" rows="2" placeholder="Alert / drowsy / anxious / tremulous"></textarea>
+        <label>Neuro:</label>
+        <textarea id="op-pe-neuro" rows="2" placeholder="Tremor present? Orientation? Gait? Reflexes?"></textarea>
+        <label>Psychiatric:</label>
+        <textarea id="op-pe-psych" rows="2" placeholder="Mood, affect, thought process, insight/judgment"></textarea>
+
+        <label>Withdrawal Scale: CIWA-Ar</label>
+        <div style="display:flex; gap:8px; align-items:center;">
+            <input type="number" id="op-ciwa-score" placeholder="CIWA-Ar score" style="width:140px; padding:6px;" min="0" max="70" oninput="updateDossingDisplay(); updateFinalNote();" />
+            <button type="button" class="mse-button" id="open-ciwa-btn" style="width:auto; padding:8px 12px;">Open CIWA-Ar</button>
+        </div>
+        <div style="background-color:#f0f4f8; border-left:4px solid #3b82f6; padding:10px; margin:8px 0; font-size:0.9em;">
+            <strong>CIWA-Ar Interpretation Scale:</strong><br/>
+            0–9: Minimal/mild withdrawal risk; monitor for symptom progression<br/>
+            10–19: Moderate withdrawal risk; pharmacological support recommended (benzodiazepine-based detoxification)<br/>
+            20+: Severe withdrawal risk; strongly recommend inpatient detoxification and intensive pharmacological management
+        </div>
+
+        <label>Labs/Studies:</label>
+        <div style="display:grid; grid-template-columns: auto 1fr; gap:8px; align-items:center;">
+            <label><input type="checkbox" id="op-lab-cbc"> CBC</label><input type="text" id="op-lab-cbc-txt" placeholder="result/notes" style="width:100%;" />
+            <label><input type="checkbox" id="op-lab-cmp"> CMP</label><input type="text" id="op-lab-cmp-txt" placeholder="result/notes" style="width:100%;" />
+            <label><input type="checkbox" id="op-lab-lfts"> LFTs</label><input type="text" id="op-lab-lfts-txt" placeholder="result/notes" style="width:100%;" />
+            <label><input type="checkbox" id="op-lab-mag"> Magnesium</label><input type="text" id="op-lab-mag-txt" placeholder="result/notes" style="width:100%;" />
+            <label><input type="checkbox" id="op-lab-phos"> Phosphate</label><input type="text" id="op-lab-phos-txt" placeholder="result/notes" style="width:100%;" />
+            <label><input type="checkbox" id="op-lab-uds"> Urine drug screen</label><input type="text" id="op-lab-uds-txt" placeholder="result/notes" style="width:100%;" />
+            <label><input type="checkbox" id="op-lab-ethanol"> Serum ethanol</label><input type="text" id="op-lab-ethanol-txt" placeholder="result/notes" style="width:100%;" />
+            <label><input type="checkbox" id="op-lab-preg"> Pregnancy test</label><input type="text" id="op-lab-preg-txt" placeholder="result/notes" style="width:100%;" />
+        </div>
+
+        <h3 style="margin-top:12px;">Assessment</h3>
+        <label>Primary Diagnosis:</label>
+        <select id="op-primary-dx">
+            <option value="">Select an option</option>
+            <option value="Alcohol Use Disorder, mild, with acute withdrawal">Alcohol Use Disorder, mild, with acute withdrawal</option>
+            <option value="Alcohol Use Disorder, moderate, with acute withdrawal">Alcohol Use Disorder, moderate, with acute withdrawal</option>
+            <option value="Alcohol Use Disorder, severe, with acute withdrawal">Alcohol Use Disorder, severe, with acute withdrawal</option>
+        </select>
+        <label>Secondary Diagnoses:</label>
+        <input type="text" id="op-secondary-dx" placeholder="e.g., Anxiety, Hypertension" />
+        <label>Risk Assessment:</label>
+        <label>Withdrawal risk:</label>
+        <select id="op-withdrawal-risk"><option value="">Select an option</option><option>Mild</option><option>Moderate</option><option>Severe</option></select>
+        <label>Seizure or DT risk:</label>
+        <select id="op-seizure-risk"><option value="">Select an option</option><option>Low</option><option>Moderate</option><option>High</option></select>
+        <label>Social support adequate for outpatient management:</label>
+        <div class="radio-group"><label><input type="radio" name="op-support-adequate" value="Yes"> Yes</label><label><input type="radio" name="op-support-adequate" value="No"> No</label></div>
+        <label>Safety concerns (SI/HI, medical instability):</label>
+        <div class="radio-group"><label><input type="radio" name="op-safety-concerns" value="Yes"> Yes</label><label><input type="radio" name="op-safety-concerns" value="No"> No</label></div>
+        <div id="op-safety-details-container" class="conditional hidden"><label>Safety Concerns and Safety Plan:</label><textarea id="op-safety-details" rows="3"></textarea></div>
+
+        <h3 style="margin-top:12px;">Plan</h3>
+        <label>Detoxification / Medication Management</label>
+        <label style="font-weight:bold; color:#666; font-size:0.95em;">Appropriateness:</label>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+            <label><input type="checkbox" id="op-plan-outpatient"> Outpatient detox appropriate</label>
+            <label><input type="checkbox" id="op-plan-inpatient"> Consider inpatient referral (reason: <input type="text" id="op-plan-inpatient-reason" placeholder="reason" style="width:300px; padding:6px;"/>)</label>
+            <label><input type="checkbox" id="op-plan-decline-inpatient"> Patient declines inpatient referral.  Patient declined recommended level of care and preferrable to treat in Outpatient setting as risks outweigh benefits.  Patient aware of risks of declining recommended level of care.</label>
+        </div>
+
+        <h3 style="margin-top:16px;">Dosing - Fixed Schedule Benzodiazepine or Gabapentin Regimen</h3>
+        <div style="background-color:#f9f9f9; border:1px solid #ddd; padding:10px; margin-bottom:12px; font-size:0.9em;">
+            <p><strong>Instructions:</strong> Use this simplified taper schedule for patients appropriate for outpatient management. If any concern for misuse, oversedation or liver function would use gabapentin.</p>
+            <p><strong>CIWA-Ar score:</strong> <span id="op-dosing-ciwa-display" style="font-weight:bold; color:#0ea5e9;">[Enter CIWA score above]</span></p>
+        </div>
+
+        <div style="background-color:#fff3cd; border-left:4px solid #ffc107; padding:10px; margin:8px 0;">
+            <strong>If CIWA less than 7 or patient perceived as low–moderate risk of withdrawal symptoms:</strong>
+        </div>
+        <div style="padding:10px; margin-left:10px;">
+            <p style="font-size:0.9em;">Recommended medication options (choose one):</p>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
+                <label style="display:flex; align-items:center; cursor:pointer;">
+                    <input type="radio" name="op-dosing-low-risk" value="gabapentin" id="op-dosing-gabapentin-low" onchange="toggleDossingOption(this);" /> 
+                    <span style="margin-left:8px;">Gabapentin 300 mg</span>
+                </label>
+                <label style="display:flex; align-items:center; cursor:pointer;">
+                    <input type="radio" name="op-dosing-low-risk" value="diazepam" id="op-dosing-diazepam-low" onchange="toggleDossingOption(this);" /> 
+                    <span style="margin-left:8px;">Diazepam 5 mg</span>
+                </label>
+                <label style="display:flex; align-items:center; cursor:pointer;">
+                    <input type="radio" name="op-dosing-low-risk" value="chlordiazepoxide" id="op-dosing-chlord-low" onchange="toggleDossingOption(this);" /> 
+                    <span style="margin-left:8px;">Chlordiazepoxide 25 mg</span>
+                </label>
+            </div>
+        </div>
+
+        <div style="background-color:#fff3cd; border-left:4px solid #ffc107; padding:10px; margin:16px 0 8px 0;">
+            <strong>If CIWA greater than 7 or patient perceived as moderate–high risk of withdrawal symptoms:</strong>
+        </div>
+        <div style="padding:10px; margin-left:10px;">
+            <p style="font-size:0.9em;">Recommended medication options (choose one):</p>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
+                <label style="display:flex; align-items:center; cursor:pointer;">
+                    <input type="radio" name="op-dosing-high-risk" value="diazepam" id="op-dosing-diazepam-high" onchange="toggleDossingOption(this);" /> 
+                    <span style="margin-left:8px;">Diazepam 10 mg</span>
+                </label>
+                <label style="display:flex; align-items:center; cursor:pointer;">
+                    <input type="radio" name="op-dosing-high-risk" value="chlordiazepoxide" id="op-dosing-chlord-high" onchange="toggleDossingOption(this);" /> 
+                    <span style="margin-left:8px;">Chlordiazepoxide 50 mg</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Display selected dosing schedule -->
+        <div id="op-dosing-schedule-display" style="background-color:#e8f4f8; border:1px solid #0ea5e9; padding:12px; margin:12px 0; display:none;">
+            <strong>Dosing Schedule:</strong>
+            <div id="op-dosing-schedule-content" style="margin-top:8px; font-size:0.9em; white-space:pre-wrap; font-family:monospace;"></div>
+        </div>
+
+        <label>Supportive/Adjunctive Medications (select as appropriate):</label>
+        <div style="display:grid; grid-template-columns: repeat(2,1fr); gap:8px;">
+            <label><input type="checkbox" id="op-med-thiamine"> Thiamine 100 mg PO/IM daily</label>
+            <label><input type="checkbox" id="op-med-folate"> Folic acid 1 mg PO daily</label>
+            <label><input type="checkbox" id="op-med-multivit"> Multivitamin daily</label>
+            <label><input type="checkbox" id="op-med-clonidine"> Clonidine PRN</label>
+            <label><input type="checkbox" id="op-med-hydroxyzine"> Hydroxyzine PRN</label>
+            <label><input type="checkbox" id="op-med-gabapentin"> Gabapentin as adjunct</label>
+        </div>
+
+        <label>Monitoring</label>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+            <label><input type="checkbox" id="op-monitor-daily"> Daily follow-up</label>
+            <label><input type="checkbox" id="op-monitor-ciwa"> CIWA-Ar scoring at each contact</label>
+            <label><input type="checkbox" id="op-monitor-hold-benzo"> Hold benzodiazepine if sedated or hypotensive</label>
+            <label><input type="checkbox" id="op-monitor-hydration"> Encourage hydration, nutrition, and rest</label>
+            <label><input type="checkbox" id="op-monitor-safety-plan"> Safety plan: call 911 or go to ED if seizures, confusion, hallucinations, or suicidality</label>
+        </div>
+
+        <label>Follow-up</label>
+        <label><input type="checkbox" id="op-followup-return"> Return in <input type="text" id="op-followup-days" placeholder="# days" style="width:80px; padding:6px;"/> days or sooner if worsening</label>
+        <label><input type="checkbox" id="op-followup-reviewlabs"> Review labs and progress at next visit</label>
+
+        <label>Patient Education</label>
+        <label><input type="checkbox" id="op-edu-warning"> Reviewed withdrawal warning signs</label>
+        <label><input type="checkbox" id="op-edu-avoid"> Avoid alcohol and sedatives during taper</label>
+        <label><input type="checkbox" id="op-edu-avoid-driving"> Avoid driving or operating machinery while sedated</label>
+        <label><input type="checkbox" id="op-edu-hydration"> Reinforced hydration, nutrition, and support engagement</label>
+
+    </div>
     <!-- Read-only Note Output for Copying -->
     <div class="copy-area-container">
         <h2>Copy Area</h2>
@@ -2004,6 +2242,7 @@ Rochester, NY
                 { value: 'med-mgmt-follow-up', label: 'Medication Management Follow-up' },
                 { value: 'narcan-kit', label: 'Narcan Education & Kit' },
                 { value: 'nurse-follow-up', label: 'Nurse Follow Up' },
+                { value: 'op-alcohol-detox', label: 'OP Alcohol Detox' },
                 { value: 'opioid-use-disorder-short', label: 'Opioid Use Disorder Short' },
                 { value: 'alcohol-use-disorder-short', label: 'Alcohol Use Disorder Short' },
                 { value: 'telehealth', label: 'Telehealth' }
@@ -2915,7 +3154,7 @@ function addNurseInterventionRow(isFirstRow = false) {
             noteParts.push(`Guiding Question(s) for Today’s MDT Discussion:\n${mdtGuidingQuestions.value || '[Questions]'}`);
 
             finalNote = noteParts.join('\n\n');
-        } else if (selectedNoteType === 'med-mgmt-follow-up') {
+    } else if (selectedNoteType === 'med-mgmt-follow-up') {
         let noteParts = [];
         noteParts.push(`Chief Complaint:\n${document.getElementById('mmfu-chief-complaint').value || '[Client’s statement]'}`);
 
@@ -2974,7 +3213,7 @@ function addNurseInterventionRow(isFirstRow = false) {
         noteParts.push(`Plan:\n${planParts.join('\n\n')}`);
 
         finalNote = noteParts.join('\n\n');
-        } else if (selectedNoteType === 'opioid-use-disorder-short') {
+    } else if (selectedNoteType === 'opioid-use-disorder-short') {
             let noteParts = [];
             noteParts.push("New patient visit.");
             noteParts.push(`Chief Complaint: Opioid Use Disorder`); // Static Chief Complaint
@@ -3354,6 +3593,297 @@ let interventions = [];
             if (fullPlanText) noteParts.push(`Plan/Next Steps:\n${fullPlanText}`);
 
             finalNote = noteParts.join('\n\n');
+            } else if (selectedNoteType === 'op-alcohol-detox') {
+            // OP Alcohol Detox note generation with CIWA-Ar interpretation
+            let noteParts = [];
+            
+            // Chief Complaint
+            const opChief = document.getElementById('op-chief')?.value || '[Not documented]';
+            noteParts.push(`Chief Complaint:\n${opChief}`);
+            
+            // HPI
+            let hpiParts = [];
+            const opHpiOnset = document.getElementById('op-hpi-onset')?.value;
+            if (opHpiOnset) hpiParts.push(`Onset of use: ${opHpiOnset}`);
+            const opHpiQty = document.getElementById('op-hpi-qty')?.value;
+            if (opHpiQty) hpiParts.push(`Quantity/frequency: ${opHpiQty}`);
+            const opHpiType = document.getElementById('op-hpi-type')?.value;
+            if (opHpiType) hpiParts.push(`Type(s) of alcohol: ${opHpiType}`);
+            const opHpiLastDrink = document.getElementById('op-hpi-last-drink')?.value;
+            if (opHpiLastDrink) hpiParts.push(`Last drink: ${opHpiLastDrink}`);
+            const opHpiPrevWithdrawal = document.getElementById('op-hpi-prev-withdrawal')?.value;
+            if (opHpiPrevWithdrawal) hpiParts.push(`Prior withdrawal experiences: ${opHpiPrevWithdrawal}`);
+            const opHpiPriorDetox = document.getElementById('op-hpi-prior-detox')?.value;
+            if (opHpiPriorDetox) hpiParts.push(`Prior detoxifications: ${opHpiPriorDetox}`);
+            const opHpiDurationSobriety = document.getElementById('op-hpi-duration-sobriety')?.value;
+            if (opHpiDurationSobriety) hpiParts.push(`Longest period of sobriety: ${opHpiDurationSobriety}`);
+            const opHpiTriggers = document.getElementById('op-hpi-triggers')?.value;
+            if (opHpiTriggers) hpiParts.push(`Identified triggers: ${opHpiTriggers}`);
+            
+            if (hpiParts.length > 0) noteParts.push(`History of Present Illness:\n${hpiParts.join('\n')}`);
+            
+            // Withdrawal Symptoms Assessment
+            let withdrawalSymptoms = [];
+            const wsMap = {
+                'op-w-tremor': 'Tremor',
+                'op-w-anxiety': 'Anxiety',
+                'op-w-nausea': 'Nausea/vomiting',
+                'op-w-sweating': 'Diaphoresis/sweating',
+                'op-w-insomnia': 'Insomnia',
+                'op-w-hallucinations': 'Hallucinations',
+                'op-w-seizures': 'Seizures',
+                'op-w-headache': 'Headache',
+                'op-w-palpitations': 'Palpitations',
+                'op-w-other': 'Other symptoms'
+            };
+            for (const [id, label] of Object.entries(wsMap)) {
+                if (document.getElementById(id)?.checked) {
+                    withdrawalSymptoms.push(label);
+                }
+            }
+            if (withdrawalSymptoms.length > 0) noteParts.push(`Withdrawal Symptoms Present:\n${withdrawalSymptoms.join(', ')}`);
+            
+            const opAssociated = document.getElementById('op-associated')?.value;
+            if (opAssociated) noteParts.push(`Associated symptoms/comorbidities:\n${opAssociated}`);
+            
+            // Social/Support History
+            const opSupport = document.getElementById('op-support')?.value;
+            if (opSupport) noteParts.push(`Support system/family involvement:\n${opSupport}`);
+            
+            const opSocial = document.getElementById('op-social')?.value;
+            if (opSocial) noteParts.push(`Social history:\n${opSocial}`);
+            
+            const opMotivation = document.getElementById('op-motivation')?.value;
+            if (opMotivation) noteParts.push(`Readiness for treatment/motivation:\n${opMotivation}`);
+            
+            // PMH and Family History
+            const opPmh = document.getElementById('op-pmh')?.value;
+            if (opPmh) noteParts.push(`Past Medical History:\n${opPmh}`);
+            
+            const opFamily = document.getElementById('op-family')?.value;
+            if (opFamily) noteParts.push(`Family History:\n${opFamily}`);
+            
+            // ROS
+            let rosParts = [];
+            const rosItems = [
+                { id: 'op-ros-gi', label: 'GI' },
+                { id: 'op-ros-cardiovascular', label: 'Cardiovascular' },
+                { id: 'op-ros-neuro', label: 'Neurological' },
+                { id: 'op-ros-psych', label: 'Psychiatric' },
+                { id: 'op-ros-other', label: 'Other' }
+            ];
+            rosItems.forEach(item => {
+                const val = document.getElementById(item.id)?.value;
+                if (val) rosParts.push(`${item.label}: ${val}`);
+            });
+            if (rosParts.length > 0) noteParts.push(`Review of Systems:\n${rosParts.join('\n')}`);
+            
+            // Objective: Vitals & Physical Exam
+            let objectiveParts = [];
+            const vitalsItems = [
+                { id: 'op-vs-bp', label: 'BP' },
+                { id: 'op-vs-hr', label: 'HR' },
+                { id: 'op-vs-rr', label: 'RR' },
+                { id: 'op-vs-temp', label: 'Temp' },
+                { id: 'op-vs-o2', label: 'O2 sat' }
+            ];
+            let vitalsParts = [];
+            vitalsItems.forEach(item => {
+                const val = document.getElementById(item.id)?.value;
+                if (val) vitalsParts.push(`${item.label}: ${val}`);
+            });
+            if (vitalsParts.length > 0) objectiveParts.push(`Vitals:\n${vitalsParts.join(', ')}`);
+            
+            const peItems = [
+                { id: 'op-pe-general', label: 'General' },
+                { id: 'op-pe-neuro', label: 'Neuro exam' },
+                { id: 'op-pe-cardiac', label: 'Cardiac' },
+                { id: 'op-pe-lungs', label: 'Lungs' },
+                { id: 'op-pe-abdomen', label: 'Abdomen' },
+                { id: 'op-pe-extremities', label: 'Extremities' }
+            ];
+            let peParts = [];
+            peItems.forEach(item => {
+                const val = document.getElementById(item.id)?.value;
+                if (val) peParts.push(`${item.label}: ${val}`);
+            });
+            if (peParts.length > 0) objectiveParts.push(`Physical Exam:\n${peParts.join('\n')}`);
+            
+            // CIWA-Ar Score with Interpretation
+            const ciwaScore = document.getElementById('op-ciwa-score')?.value;
+            if (ciwaScore) {
+                let ciwaInterpretation = '';
+                const score = parseInt(ciwaScore);
+                if (score <= 9) {
+                    ciwaInterpretation = 'minimal/mild withdrawal risk; monitor for symptom progression';
+                } else if (score <= 19) {
+                    ciwaInterpretation = 'moderate withdrawal risk; pharmacological support recommended (benzodiazepine-based detoxification)';
+                } else {
+                    ciwaInterpretation = 'severe withdrawal risk; strongly recommend inpatient detoxification and intensive pharmacological management';
+                }
+                objectiveParts.push(`CIWA-Ar Assessment: Score ${ciwaScore} — ${ciwaInterpretation}`);
+            }
+            
+            if (objectiveParts.length > 0) noteParts.push(`Objective:\n${objectiveParts.join('\n\n')}`);
+            
+            // Labs
+            let labsParts = [];
+            const labItems = [
+                { id: 'op-lab-cbc', label: 'CBC' },
+                { id: 'op-lab-cmp', label: 'CMP' },
+                { id: 'op-lab-lfts', label: 'LFTs' },
+                { id: 'op-lab-mag', label: 'Magnesium' },
+                { id: 'op-lab-phos', label: 'Phosphate' },
+                { id: 'op-lab-uds', label: 'Urine drug screen' },
+                { id: 'op-lab-ethanol', label: 'Serum ethanol' },
+                { id: 'op-lab-preg', label: 'Pregnancy test' }
+            ];
+            labItems.forEach(item => {
+                const checkbox = document.getElementById(item.id);
+                if (checkbox?.checked) {
+                    const notes = document.getElementById(`${item.id}-txt`)?.value;
+                    let labText = item.label;
+                    if (notes) labText += `: ${notes}`;
+                    labsParts.push(labText);
+                }
+            });
+            if (labsParts.length > 0) noteParts.push(`Diagnostic Testing:\n${labsParts.join('\n')}`);
+            
+            // Assessment
+            let assessmentParts = [];
+            const primaryDx = document.getElementById('op-primary-dx')?.value;
+            if (primaryDx) assessmentParts.push(`Primary Diagnosis: ${primaryDx}`);
+            
+            const secondaryDx = document.getElementById('op-secondary-dx')?.value;
+            if (secondaryDx) assessmentParts.push(`Secondary Diagnoses: ${secondaryDx}`);
+            
+            const withdrawalRisk = document.getElementById('op-withdrawal-risk')?.value;
+            if (withdrawalRisk) assessmentParts.push(`Withdrawal Risk: ${withdrawalRisk}`);
+            
+            const seizureRisk = document.getElementById('op-seizure-risk')?.value;
+            if (seizureRisk) assessmentParts.push(`Seizure/DT Risk: ${seizureRisk}`);
+            
+            const supportAdequate = document.querySelector('input[name="op-support-adequate"]:checked');
+            if (supportAdequate) assessmentParts.push(`Social support adequate for outpatient management: ${supportAdequate.value}`);
+            
+            const safetyConcerns = document.querySelector('input[name="op-safety-concerns"]:checked');
+            if (safetyConcerns) assessmentParts.push(`Safety concerns (SI/HI, medical instability): ${safetyConcerns.value}`);
+            
+            const safetyDetails = document.getElementById('op-safety-details')?.value;
+            if (safetyDetails) assessmentParts.push(`Safety Plan Details:\n${safetyDetails}`);
+            
+            if (assessmentParts.length > 0) noteParts.push(`Assessment:\n${assessmentParts.join('\n')}`);
+            
+            // Plan: Detoxification Regimen with Dosing Option
+            let planParts = [];
+            
+            // Check for low-risk medication selection
+            const lowRiskSelected = document.querySelector('input[name="op-dosing-low-risk"]:checked');
+            const highRiskSelected = document.querySelector('input[name="op-dosing-high-risk"]:checked');
+            
+            if (lowRiskSelected) {
+                const med = lowRiskSelected.value;
+                let medLabel = '';
+                if (med === 'gabapentin') medLabel = 'Gabapentin 300 mg';
+                else if (med === 'diazepam') medLabel = 'Diazepam 5 mg';
+                else if (med === 'chlordiazepoxide') medLabel = 'Chlordiazepoxide 25 mg';
+                
+                planParts.push(`Dosing - Fixed Schedule Benzodiazepine/Gabapentin Regimen\n\nMedication: ${medLabel}\n\nSchedule:\n• Day 1: 1 tab QID (4 doses/day)\n• Day 2: 1 tab TID (3 doses/day)\n• Day 3: 1 tab BID (2 doses/day)\n• Day 4: 1 tab once daily\n\nPRN: Prescribe 5 additional tablets for breakthrough withdrawal symptoms.\n\nTotal dispensed: 15 tablets (10 scheduled + 5 PRN).`);
+            }
+            
+            if (highRiskSelected) {
+                const med = highRiskSelected.value;
+                let medLabel = '';
+                if (med === 'diazepam') medLabel = 'Diazepam 10 mg';
+                else if (med === 'chlordiazepoxide') medLabel = 'Chlordiazepoxide 50 mg';
+                
+                planParts.push(`Dosing - Fixed Schedule Benzodiazepine Regimen (Moderate-High Risk)\n\nMedication: ${medLabel}\n\nSchedule:\n• Day 1: 1 tab QID (4 doses/day)\n• Day 2: 1 tab TID (3 doses/day)\n• Day 3: 1 tab BID (2 doses/day)\n• Day 4: 1 tab once daily\n\nPRN: Prescribe 5 additional tablets for breakthrough symptoms.\n\nTotal dispensed: 15 tablets (10 scheduled + 5 PRN).`);
+            }
+            
+            // Include dosing option dropdown if selected (legacy)
+            const dosingOption = document.getElementById('op-dosing-option')?.value;
+            if (dosingOption && !lowRiskSelected && !highRiskSelected) {
+                planParts.push(`Benzodiazepine Detoxification Strategy:\n${dosingOption}`);
+            }
+            const dosingOther = document.getElementById('op-dosing-other')?.value;
+            if (dosingOther && document.getElementById('op-dosing-option')?.value === 'Other (specify in plan notes)') {
+                planParts.push(`Alternative Dosing Approach:\n${dosingOther}`);
+            }
+            
+            // Outpatient vs inpatient decision
+            if (document.getElementById('op-plan-outpatient')?.checked) planParts.push('• Outpatient detoxification appropriate');
+            if (document.getElementById('op-plan-inpatient')?.checked) {
+                const inpatientReason = document.getElementById('op-plan-inpatient-reason')?.value;
+                let inpatientText = '• Consider inpatient referral';
+                if (inpatientReason) inpatientText += ` (${inpatientReason})`;
+                planParts.push(inpatientText);
+            }
+            if (document.getElementById('op-plan-decline-inpatient')?.checked) planParts.push('• Patient declines inpatient referral');
+            
+            // Supportive/adjunctive medications
+            let supportParts = [];
+            const supportMeds = [
+                { id: 'op-med-thiamine', label: 'Thiamine 100 mg PO/IM daily' },
+                { id: 'op-med-folate', label: 'Folic acid 1 mg PO daily' },
+                { id: 'op-med-multivit', label: 'Multivitamin daily' },
+                { id: 'op-med-clonidine', label: 'Clonidine PRN' },
+                { id: 'op-med-hydroxyzine', label: 'Hydroxyzine PRN' },
+                { id: 'op-med-gabapentin', label: 'Gabapentin as adjunct' }
+            ];
+            supportMeds.forEach(item => {
+                if (document.getElementById(item.id)?.checked) {
+                    supportParts.push(`• ${item.label}`);
+                }
+            });
+            if (supportParts.length > 0) {
+                planParts.push(`\nSupportive/Adjunctive Medications:\n${supportParts.join('\n')}`);
+            }
+            
+            if (planParts.length > 0) noteParts.push(`Plan:\n${planParts.join('\n')}`);
+            
+            // Monitoring
+            let monitoringParts = [];
+            const monitoringItems = [
+                { id: 'op-monitor-daily', label: 'Daily follow-up' },
+                { id: 'op-monitor-ciwa', label: 'CIWA-Ar scoring at each contact' },
+                { id: 'op-monitor-hold-benzo', label: 'Hold benzodiazepine if sedated or hypotensive' },
+                { id: 'op-monitor-hydration', label: 'Encourage hydration, nutrition, and rest' },
+                { id: 'op-monitor-safety-plan', label: 'Safety plan: call 911 or go to ED if seizures, confusion, hallucinations, or suicidality' }
+            ];
+            monitoringItems.forEach(item => {
+                if (document.getElementById(item.id)?.checked) {
+                    monitoringParts.push(`• ${item.label}`);
+                }
+            });
+            if (monitoringParts.length > 0) noteParts.push(`Monitoring:\n${monitoringParts.join('\n')}`);
+            
+            // Follow-up
+            let followupParts = [];
+            if (document.getElementById('op-followup-return')?.checked) {
+                const days = document.getElementById('op-followup-days')?.value || 'as specified';
+                followupParts.push(`• Return in ${days} days or sooner if worsening`);
+            }
+            if (document.getElementById('op-followup-reviewlabs')?.checked) {
+                followupParts.push('• Review labs and progress at next visit');
+            }
+            if (followupParts.length > 0) noteParts.push(`Follow-up:\n${followupParts.join('\n')}`);
+            
+            // Education
+            let educationParts = [];
+            const educationItems = [
+                { id: 'op-edu-warning', label: 'Reviewed withdrawal warning signs' },
+                { id: 'op-edu-avoid', label: 'Avoid alcohol and sedatives during taper' },
+                { id: 'op-edu-avoid-driving', label: 'Avoid driving or operating machinery while sedated' },
+                { id: 'op-edu-hydration', label: 'Reinforced hydration, nutrition, and support engagement' }
+            ];
+            educationItems.forEach(item => {
+                if (document.getElementById(item.id)?.checked) {
+                    educationParts.push(`• ${item.label}`);
+                }
+            });
+            if (educationParts.length > 0) noteParts.push(`Patient Education:\n${educationParts.join('\n')}`);
+            
+            finalNote = noteParts.join('\n\n');
             }
 finalNoteCopy.value = finalNote.trim();
         autoResize(finalNoteCopy);
@@ -3408,6 +3938,9 @@ finalNoteCopy.value = finalNote.trim();
             document.getElementById('nurse-interventions-container').innerHTML = '';
             addNurseInterventionRow(true); // Add the first row automatically
             initNursePlanCheckboxes(); // Initialize plan checkboxes
+        } else if (selection === 'op-alcohol-detox') {
+            // Initialize OP Alcohol Detox inputs and listeners
+            initOpAlcoholDetox();
         }
         updateFinalNote();
     });
@@ -3918,6 +4451,213 @@ finalNoteCopy.value = finalNote.trim();
                 }
             }
         }
+    }
+    
+    // Initialize OP Alcohol Detox inputs & listeners
+    function toggleDossingOption(radio) {
+        // If clicking the same radio twice, deselect it
+        if (radio.wasChecked) {
+            radio.checked = false;
+            radio.wasChecked = false;
+            // Clear opposite group
+            const oppositeName = radio.name === 'op-dosing-low-risk' ? 'op-dosing-high-risk' : 'op-dosing-low-risk';
+            document.querySelectorAll(`input[name=${oppositeName}]`).forEach(r => {
+                r.wasChecked = false;
+                r.checked = false;
+            });
+        } else {
+            // Set this one, clear opposite group
+            const oppositeName = radio.name === 'op-dosing-low-risk' ? 'op-dosing-high-risk' : 'op-dosing-low-risk';
+            document.querySelectorAll(`input[name=${oppositeName}]`).forEach(r => {
+                r.wasChecked = false;
+                r.checked = false;
+            });
+            radio.wasChecked = true;
+        }
+        updateDossingDisplay();
+    }
+
+    function updateDossingDisplay() {
+        // Update CIWA display
+        const ciwaScore = document.getElementById('op-ciwa-score')?.value;
+        const ciwaDisplay = document.getElementById('op-dosing-ciwa-display');
+        if (ciwaDisplay) {
+            ciwaDisplay.textContent = ciwaScore || '[Enter CIWA score above]';
+        }
+        
+        // Check which dosing option is selected
+        const lowRiskSelected = document.querySelector('input[name="op-dosing-low-risk"]:checked');
+        const highRiskSelected = document.querySelector('input[name="op-dosing-high-risk"]:checked');
+        const displayDiv = document.getElementById('op-dosing-schedule-display');
+        const contentDiv = document.getElementById('op-dosing-schedule-content');
+        
+        if (!displayDiv || !contentDiv) return;
+        
+        let scheduleText = '';
+        if (lowRiskSelected) {
+            const med = lowRiskSelected.value;
+            let medLabel = '';
+            if (med === 'gabapentin') medLabel = 'Gabapentin 300 mg';
+            else if (med === 'diazepam') medLabel = 'Diazepam 5 mg';
+            else if (med === 'chlordiazepoxide') medLabel = 'Chlordiazepoxide 25 mg';
+            
+            scheduleText = `Medication: ${medLabel}
+
+Schedule:
+• Day 1: 1 tab QID (4 doses/day)
+• Day 2: 1 tab TID (3 doses/day)
+• Day 3: 1 tab BID (2 doses/day)
+• Day 4: 1 tab once daily
+
+PRN: Prescribe 5 additional tablets for breakthrough withdrawal symptoms.
+
+Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
+        } else if (highRiskSelected) {
+            const med = highRiskSelected.value;
+            let medLabel = '';
+            if (med === 'diazepam') medLabel = 'Diazepam 10 mg';
+            else if (med === 'chlordiazepoxide') medLabel = 'Chlordiazepoxide 50 mg';
+            
+            scheduleText = `Medication: ${medLabel}
+
+Schedule:
+• Day 1: 1 tab QID (4 doses/day)
+• Day 2: 1 tab TID (3 doses/day)
+• Day 3: 1 tab BID (2 doses/day)
+• Day 4: 1 tab once daily
+
+PRN: Prescribe 5 additional tablets for breakthrough symptoms.
+
+Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
+        }
+        
+        if (scheduleText) {
+            contentDiv.textContent = scheduleText;
+            displayDiv.style.display = 'block';
+        } else {
+            displayDiv.style.display = 'none';
+            contentDiv.textContent = '';
+        }
+        
+        updateFinalNote();
+    }
+
+    function initOpAlcoholDetox() {
+        // Quick-set chief complaint
+        const quick = document.getElementById('op-chief-quick');
+        const chief = document.getElementById('op-chief');
+        if (quick && chief) {
+            quick.addEventListener('change', () => {
+                if (quick.value === 'Other') chief.value = '';
+                else chief.value = quick.value;
+                updateFinalNote();
+            });
+            chief.addEventListener('input', updateFinalNote);
+        }
+
+        // Wire most inputs to updateFinalNote
+        const container = document.getElementById('op-alcohol-detox-container');
+        if (!container) return;
+        const inputs = container.querySelectorAll('input, textarea, select');
+        inputs.forEach(el => el.addEventListener('input', updateFinalNote));
+        inputs.forEach(el => el.addEventListener('change', updateFinalNote));
+
+        // CIWA button
+        const ciwaBtn = document.getElementById('open-ciwa-btn');
+        if (ciwaBtn) ciwaBtn.addEventListener('click', openCIWAModal);
+
+        // Safety concerns toggle
+        const safetyRadios = document.getElementsByName('op-safety-concerns');
+        safetyRadios.forEach(r => r.addEventListener('change', () => {
+            const details = document.getElementById('op-safety-details-container');
+            if (!details) return;
+            const anyYes = Array.from(safetyRadios).some(rr => rr.checked && rr.value === 'Yes');
+            details.classList.toggle('hidden', !anyYes);
+        }));
+    }
+
+    // CIWA modal open/save functions
+    function openCIWAModal() {
+        // create modal if not present
+        if (!document.getElementById('ciwa-modal')) {
+            const modal = document.createElement('div');
+            modal.id = 'ciwa-modal';
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <h2>CIWA-Ar</h2>
+                    <div id="ciwa-questions" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; max-height:60vh; overflow:auto;">
+                    </div>
+                    <div style="margin-top:10px; display:flex; gap:8px; align-items:center;"><strong>Score: </strong><input type="text" id="ciwa-score-output" style="width:120px;" readonly /></div>
+                    <div style="margin-top:12px;"><button id="ciwa-save-btn" class="mse-button">Save & Close</button></div>
+                </div>`;
+            document.body.appendChild(modal);
+
+            // add questions
+            const qContainer = modal.querySelector('#ciwa-questions');
+            const items = [
+                { label: 'Nausea and vomiting', options: ['no nausea and no vomiting', 'mild nausea with no vomiting', '', '', 'intermittent nausea with dry heaves', '', '', 'constant nausea, frequent dry heaves and vomiting'] },
+                { label: 'Tactile disturbances', options: ['none', 'very mild itching, pins and needles, burning or numbness', 'mild itching, pins and needles, burning or numbness', 'moderate itching, pins and needles, burning or numbness', 'moderately severe hallucinations', 'severe hallucinations', 'extremely severe hallucinations', 'continuous hallucinations'] },
+                { label: 'Tremor', options: ['no tremor', 'not visible, but can be felt fingertip to fingertip', '', '', 'moderate, with patient\'s arms extended', '', '', 'severe, even with arms not extended'] },
+                { label: 'Auditory disturbances', options: ['not present', 'very mild harshness or ability to frighten', 'mild harshness or ability to frighten', 'moderate harshness or ability to frighten', 'moderately severe hallucinations', 'severe hallucinations', 'extremely severe hallucinations', 'continuous hallucinations'] },
+                { label: 'Paroxysmal sweats', options: ['no sweat visible', 'barely perceptible sweating, palms moist', '', '', 'beads of sweat obvious on forehead', '', '', 'drenching sweats'] },
+                { label: 'Visual disturbances', options: ['not present', 'very mild sensitivity', 'mild sensitivity', 'moderate sensitivity', 'moderately severe hallucinations', 'severe hallucinations', 'extremely severe hallucinations', 'continuous hallucinations'] },
+                { label: 'Anxiety', options: ['no anxiety, at ease', 'mild anxious', '', '', 'moderately anxious, or guarded, so anxiety is inferred', '', '', 'equivalent to acute panic states'] },
+                { label: 'Headache/fullness in head', options: ['not present', 'very mild', 'mild', 'moderate', 'moderately severe', 'severe', 'very severe', 'extremely severe'] },
+                { label: 'Agitation', options: ['normal activity', 'somewhat more than normal activity', '', '', 'moderately fidgety and restless', '', '', 'paces back and forth during most of interview'] },
+                { label: 'Orientation and clouding of sensorium', options: ['oriented and can do serial additions', 'cannot do serial additions or is uncertain about date', 'disoriented for date by no more than 2 calendar days', 'disoriented for date by more than 2 calendar days', 'disoriented for place/or person', '', '', ''] }
+            ];
+            items.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.innerHTML = `<label style="display:block; font-weight:bold; margin-bottom:4px;">${item.label}</label>`;
+                const select = document.createElement('select');
+                select.id = `ciwa-q-${idx}`;
+                select.style.width = '100%';
+                // Add "Select an option" as first choice
+                const selectOpt = document.createElement('option');
+                selectOpt.value = '';
+                selectOpt.textContent = 'Select an option';
+                select.appendChild(selectOpt);
+                for (let i=0;i<=7;i++) {
+                    const opt = document.createElement('option');
+                    opt.value = i;
+                    const desc = item.options[i] ? ` - ${item.options[i]}` : '';
+                    opt.textContent = i + desc;
+                    select.appendChild(opt);
+                }
+                select.addEventListener('change', computeCIWAScore);
+                div.appendChild(select);
+                qContainer.appendChild(div);
+            });
+
+            // close
+            modal.querySelector('.close-btn').addEventListener('click', () => modal.style.display = 'none');
+            modal.querySelector('#ciwa-save-btn').addEventListener('click', saveCIWAAndClose);
+        }
+        document.getElementById('ciwa-modal').style.display = 'block';
+        computeCIWAScore();
+    }
+
+    function computeCIWAScore() {
+        let score = 0;
+        for (let i=0;i<10;i++) {
+            const sel = document.getElementById(`ciwa-q-${i}`);
+            if (sel) score += parseInt(sel.value || '0',10);
+        }
+        const out = document.getElementById('ciwa-score-output');
+        if (out) out.value = score;
+    }
+
+    function saveCIWAAndClose() {
+        const modal = document.getElementById('ciwa-modal');
+        if (!modal) return;
+        const score = document.getElementById('ciwa-score-output').value;
+        const ciwaField = document.getElementById('op-ciwa-score');
+        if (ciwaField) ciwaField.value = score;
+        modal.style.display = 'none';
+        updateDossingDisplay();
+        updateFinalNote();
     }
     
 // Nurse Follow Up Listeners
