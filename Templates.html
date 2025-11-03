@@ -5574,12 +5574,19 @@ Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
         for (let i = 0; i < 10; i++) {
             const q = document.getElementById(`ciwa-q-${i}`);
             if (q) {
+                // Use both 'change' and 'input' to ensure it fires in all situations
                 q.addEventListener('change', () => {
+                    computeCIWAScore();
+                    updateFinalNote();
+                });
+                q.addEventListener('input', () => {
                     computeCIWAScore();
                     updateFinalNote();
                 });
             }
         }
+        // Calculate initial score
+        computeCIWAScore();
     }
 
     function initDrugTreatmentCourtReport() {
@@ -5631,7 +5638,7 @@ Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
                 const div = document.createElement('div');
                 div.innerHTML = `<label style="display:block; font-weight:bold; margin-bottom:4px;">${item.label}</label><p style="font-size:0.75em; font-style:italic; color:#666; margin:0 0 6px 0;">${item.ask}</p>`;
                 const select = document.createElement('select');
-                select.id = `ciwa-q-${idx}`;
+                select.id = `ciwa-modal-q-${idx}`;
                 select.style.width = '100%';
                 // Add "Select an option" as first choice
                 const selectOpt = document.createElement('option');
@@ -5645,7 +5652,7 @@ Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
                     opt.textContent = i + desc;
                     select.appendChild(opt);
                 }
-                select.addEventListener('change', computeCIWAScore);
+                select.addEventListener('change', () => computeCIWAScoreModal());
                 div.appendChild(select);
                 qContainer.appendChild(div);
             });
@@ -5655,19 +5662,41 @@ Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
             modal.querySelector('#ciwa-save-btn').addEventListener('click', saveCIWAAndClose);
         }
         document.getElementById('ciwa-modal').style.display = 'block';
-        computeCIWAScore();
+        computeCIWAScoreModal();
     }
 
     function computeCIWAScore() {
         let score = 0;
-        for (let i=0;i<10;i++) {
+        for (let i = 0; i < 10; i++) {
             const sel = document.getElementById(`ciwa-q-${i}`);
-            if (sel) score += parseInt(sel.value || '0',10);
+            if (sel && sel.value) {
+                const val = parseInt(sel.value, 10);
+                if (!isNaN(val)) {
+                    score += val;
+                }
+            }
+        }
+        const embedded = document.getElementById('ciwa-embedded-score');
+        if (embedded) {
+            embedded.textContent = score;
+        }
+    }
+
+    function computeCIWAScoreModal() {
+        let score = 0;
+        for (let i = 0; i < 10; i++) {
+            const sel = document.getElementById(`ciwa-modal-q-${i}`);
+            if (sel && sel.value) {
+                const val = parseInt(sel.value, 10);
+                if (!isNaN(val)) {
+                    score += val;
+                }
+            }
         }
         const out = document.getElementById('ciwa-score-output');
-        if (out) out.value = score;
-        const embedded = document.getElementById('ciwa-embedded-score');
-        if (embedded) embedded.textContent = score;
+        if (out) {
+            out.value = score;
+        }
     }
 
     function saveCIWAAndClose() {
