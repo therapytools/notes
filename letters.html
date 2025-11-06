@@ -1196,10 +1196,9 @@
         }
 
         async function downloadPDF() {
-            // Ensure the text is generated before downloading, especially for EV letter
-            generateReport();
+            // Store the current text value BEFORE calling generateReport to preserve manual edits
+            const currentReportText = document.getElementById('generatedText').value;
             const { jsPDF } = window.jspdf;
-            const reportText = document.getElementById('generatedText').value;
             const signaturePreview = document.getElementById('signaturePreview');
             const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
 
@@ -1209,8 +1208,8 @@
             const pdfContentDiv = document.getElementById('pdf-content');
 
             // Find the last occurrence of "Sincerely," to split the main body from the signature part.
-            const sincerelyIndex = reportText.lastIndexOf('Sincerely,');
-            const mainBody = (sincerelyIndex !== -1) ? reportText.substring(0, sincerelyIndex).trim() : reportText;
+            const sincerelyIndex = currentReportText.lastIndexOf('Sincerely,');
+            const mainBody = (sincerelyIndex !== -1) ? currentReportText.substring(0, sincerelyIndex).trim() : currentReportText;
             pdfTextContent.innerText = mainBody;
 
             // Handle the signature block based on whether an image is present
@@ -1229,16 +1228,18 @@
             pdfContentDiv.classList.remove('hidden');
             pdfContentDiv.style.position = 'absolute';
             pdfContentDiv.style.left = '-9999px';
-            const canvas = await html2canvas(pdfContentDiv, { scale: 3, useCORS: true });
+            // Increased scale to 4 for better quality, and set backgroundColor to ensure crisp output
+            const canvas = await html2canvas(pdfContentDiv, { scale: 4, useCORS: true, backgroundColor: '#ffffff', logging: false });
             pdfContentDiv.classList.add('hidden');
             pdfContentDiv.style.position = '';
             pdfContentDiv.style.left = '';
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter' });
+            const imgData = canvas.toDataURL('image/png', 1.0);
+            // Use 'MEDIUM' compression instead of 'FAST' for better quality
+            const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter', compress: true });
             const imgProps = pdf.getImageProperties(imgData);
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'MEDIUM');
             
             const letterType = document.getElementById('letterType').value;
             let clientFirstName = 'Client';
