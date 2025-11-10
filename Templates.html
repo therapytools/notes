@@ -768,6 +768,52 @@
         </div>
     </div>
 
+    <!-- Time Off Coverage Template -->
+    <div id="time-off-coverage-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Time Off Coverage Checklist</h2>
+        <div style="margin: 20px 0; font-size: 14px;">
+            <table id="toc-grid-table" style="width: 100%; border-collapse: collapse; border: 1px solid #999;">
+                <tr style="background-color: #f0f0f0;">
+                    <td style="border: 1px solid #999; padding: 10px; font-weight: bold; width: 50%;">TASK:</td>
+                    <td style="border: 1px solid #999; padding: 10px; font-weight: bold; width: 50%;">STATUS/ASSIGNMENT:</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9;">Away message (voicemail, email)</td>
+                    <td style="border: 1px solid #999; padding: 10px;"><input type="text" id="toc-away-message" oninput="updateFinalNote()" style="width: 95%; border: none; background: transparent;"></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9;">Group Coverage</td>
+                    <td style="border: 1px solid #999; padding: 10px;"><input type="text" id="toc-group-coverage" oninput="updateFinalNote()" style="width: 95%; border: none; background: transparent;"></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9;">Client coverage</td>
+                    <td style="border: 1px solid #999; padding: 10px;"><input type="text" id="toc-client-coverage" oninput="updateFinalNote()" style="width: 95%; border: none; background: transparent;"></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9;">MDT notes prepared</td>
+                    <td style="border: 1px solid #999; padding: 10px;"><input type="text" id="toc-mdt-notes" oninput="updateFinalNote()" style="width: 95%; border: none; background: transparent;"></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9;">Front Desk notified</td>
+                    <td style="border: 1px solid #999; padding: 10px;"><input type="text" id="toc-front-desk" oninput="updateFinalNote()" style="width: 95%; border: none; background: transparent;"></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9;">RAS appointment changed in RAS portal</td>
+                    <td style="border: 1px solid #999; padding: 10px;"><input type="text" id="toc-ras-portal" oninput="updateFinalNote()" style="width: 95%; border: none; background: transparent;"></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9;">Timecard completed (including PTO requests) – double check before leave.</td>
+                    <td style="border: 1px solid #999; padding: 10px;"><input type="text" id="toc-timecard" oninput="updateFinalNote()" style="width: 95%; border: none; background: transparent;"></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9;">Ten11 accurate (no booked client appointments)</td>
+                    <td style="border: 1px solid #999; padding: 10px;"><input type="text" id="toc-ten11" oninput="updateFinalNote()" style="width: 95%; border: none; background: transparent;"></td>
+                </tr>
+            </table>
+        </div>
+        <button id="toc-copy-button" class="copy-button" onclick="copyTocGrid()" style="display:none; margin-top: 15px;">Copy Grid to Clipboard</button>
+    </div>
+
     <div id="closing-note-admitted-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Closing Note Details</h2>
         <p>Client was discharged due to <input type="text" id="closing-reason" placeholder="reason for discharge...">. Treatment recommendations include <input type="text" id="closing-recommendations" placeholder="recommended treatment plan...">. The client 
@@ -2684,7 +2730,8 @@ Rochester, NY
                 { value: 'mat-education', label: 'MAT Education' },
                 { value: 'mdt', label: 'MDT Note' },
                 { value: 'narcan-kit', label: 'Narcan Education & Kit' },
-                { value: 'telehealth', label: 'Telehealth' }
+                { value: 'telehealth', label: 'Telehealth' },
+                { value: 'time-off-coverage', label: 'Time Off Coverage' }
             ],
             medical: [
                 { value: 'injections', label: 'Injections' },
@@ -3214,6 +3261,86 @@ function addNurseInterventionRow(isFirstRow = false) {
             console.error('Fallback: Oops, unable to copy', err);
         }
         document.body.removeChild(textArea);
+    }
+
+    function copyTocGrid() {
+        const table = document.getElementById('toc-grid-table');
+        const button = document.getElementById('toc-copy-button');
+        
+        // Create a clean HTML table optimized for email with equal width columns
+        let cleanHtml = '<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 600px; font-family: Arial, sans-serif;">\n';
+        
+        // Header row with grid lines and equal width
+        cleanHtml += '<tr style="background-color: #f0f0f0; border: 1px solid #000;"><td style="border: 1px solid #000; width: 50%; font-weight: bold;"><strong>TASK:</strong></td><td style="border: 1px solid #000; width: 50%; font-weight: bold;"><strong>STATUS/ASSIGNMENT:</strong></td></tr>\n';
+        
+        // Data rows - extract values from inputs with grid lines and equal width
+        const rows = table.querySelectorAll('tr');
+        for (let i = 1; i < rows.length; i++) {
+            const cells = rows[i].querySelectorAll('td');
+            if (cells.length >= 2) {
+                const task = cells[0].textContent.trim();
+                const input = cells[1].querySelector('input');
+                const status = input ? input.value : cells[1].textContent.trim();
+                cleanHtml += `<tr style="border: 1px solid #000;"><td style="border: 1px solid #000; width: 50%; vertical-align: top;">${task}</td><td style="border: 1px solid #000; width: 50%; vertical-align: top;">${status}</td></tr>\n`;
+            }
+        }
+        
+        cleanHtml += '</table>';
+        
+        if (navigator.clipboard) {
+            // Create blob for HTML and text versions
+            const htmlBlob = new Blob([cleanHtml], { type: 'text/html' });
+            
+            // Also create tab-separated text for Excel
+            const textContent = Array.from(rows).slice(1).map(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 2) {
+                    const task = cells[0].textContent.trim();
+                    const input = cells[1].querySelector('input');
+                    const status = input ? input.value : cells[1].textContent.trim();
+                    return `${task}\t${status}`;
+                }
+            }).join('\n');
+            
+            const textBlob = new Blob([textContent], { type: 'text/plain' });
+            
+            const data = new ClipboardItem({ 
+                'text/html': htmlBlob,
+                'text/plain': textBlob 
+            });
+            
+            navigator.clipboard.write([data]).then(() => {
+                const originalText = button.innerText;
+                button.innerText = 'Copied!';
+                setTimeout(() => { button.innerText = originalText; }, 2000);
+            }).catch(() => {
+                // Fallback if write fails
+                navigator.clipboard.writeText(cleanHtml).then(() => {
+                    const originalText = button.innerText;
+                    button.innerText = 'Copied!';
+                    setTimeout(() => { button.innerText = originalText; }, 2000);
+                });
+            });
+        } else {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = cleanHtml;
+            textArea.style.top = '0';
+            textArea.style.left = '0';
+            textArea.style.position = 'fixed';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                const originalText = button.innerText;
+                button.innerText = 'Copied!';
+                setTimeout(() => { button.innerText = originalText; }, 2000);
+            } catch (err) {
+                console.error('Could not copy grid', err);
+            }
+            document.body.removeChild(textArea);
+        }
     }
 
     function validateDtcRequiredFields() {
@@ -4656,6 +4783,20 @@ let interventions = [];
             }
             
             finalNote = noteParts.join('\n\n');
+            } else if (selectedNoteType === 'time-off-coverage') {
+            // Time Off Coverage - Grid format (not a generated note)
+            // Build the table content for copying
+            let gridContent = 'TASK:\tSTATUS/ASSIGNMENT:\n';
+            gridContent += 'Away message (voicemail, email)\t' + (document.getElementById('toc-away-message').value || '') + '\n';
+            gridContent += 'Group Coverage\t' + (document.getElementById('toc-group-coverage').value || '') + '\n';
+            gridContent += 'Client coverage\t' + (document.getElementById('toc-client-coverage').value || '') + '\n';
+            gridContent += 'MDT notes prepared\t' + (document.getElementById('toc-mdt-notes').value || '') + '\n';
+            gridContent += 'Front Desk notified\t' + (document.getElementById('toc-front-desk').value || '') + '\n';
+            gridContent += 'RAS appointment changed in RAS portal\t' + (document.getElementById('toc-ras-portal').value || '') + '\n';
+            gridContent += 'Timecard completed (including PTO requests) – double check before leave.\t' + (document.getElementById('toc-timecard').value || '') + '\n';
+            gridContent += 'Ten11 accurate (no booked client appointments)\t' + (document.getElementById('toc-ten11').value || '');
+            
+            finalNote = gridContent;
             } else if (selectedNoteType === 'drug-treatment-court-report') {
             // Drug Treatment Court Report note generation
             let progressText = '';
@@ -4861,15 +5002,22 @@ let interventions = [];
         // Toggle copy area visibility based on note type
         const singleCopyArea = document.getElementById('single-note-copy-area');
         const dtcDualCopyArea = document.getElementById('dtc-dual-copy-area');
+        const tocCopyButton = document.getElementById('toc-copy-button');
         
         if (selectedNoteType === 'drug-treatment-court-report') {
             singleCopyArea.style.display = 'none';
             dtcDualCopyArea.style.display = 'block';
+            if (tocCopyButton) tocCopyButton.style.display = 'none';
             // Validate required fields for DTC
             validateDtcRequiredFields();
+        } else if (selectedNoteType === 'time-off-coverage') {
+            singleCopyArea.style.display = 'none';
+            dtcDualCopyArea.style.display = 'none';
+            if (tocCopyButton) tocCopyButton.style.display = 'block';
         } else {
             singleCopyArea.style.display = 'block';
             dtcDualCopyArea.style.display = 'none';
+            if (tocCopyButton) tocCopyButton.style.display = 'none';
             document.getElementById('dtc-validation-warning').style.display = 'none';
             finalNoteCopy.value = finalNote.trim();
             autoResize(finalNoteCopy);
