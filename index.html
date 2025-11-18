@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Therapy Tools</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./dist/output.css" rel="stylesheet">
     <style>
         /* Custom styles for the tab interface */
         .tab-button {
@@ -78,6 +78,7 @@
             border: 1px solid #d1d5db;
             border-radius: 8px;
             box-sizing: border-box;
+            border-color: #d1d5db !important;
         }
         .darp-inline-checkbox {
             display: flex;
@@ -480,7 +481,7 @@
     function addTreatmentGoalRow() {
         const container = document.getElementById('treatmentGoalsContainer');
         const goalRow = document.createElement('div');
-        goalRow.className = 'treatment-goal-row flex items-start gap-2 p-2 border rounded-md';
+        goalRow.className = 'treatment-goal-row flex items-start gap-2 p-2 border border-gray-300 rounded-md';
 
         const dateInput = document.getElementById('sessionDate');
         let datePrefix = '';
