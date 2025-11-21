@@ -21,6 +21,42 @@
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
+        .goal-row-with-quotes {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .quote-mark {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            line-height: 1;
+            min-width: 30px;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+        }
+        .goal-input-wrapper {
+            flex: 1;
+        }
+        .goal-input-wrapper input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin: 0;
+        }
+        .goal-input-wrapper input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+        .goal-button-wrapper {
+            display: flex;
+            gap: 5px;
+        }
         h1, h2, h3 {
             color: #2c3e50;
         }
@@ -585,7 +621,7 @@
     <div id="entry-cd-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Note Details</h2>
         <p>The client has identified personal goals to support their recovery, including:</p>
-        <div id="client-goals-container"></div>
+        <div id="client-goals-container" class="goals-container"></div>
         <p>Based on the client’s psychosocial needs, current presentation, and clinical history, the client is expected to benefit from the following treatment plan goals:</p>
         <div id="treatment-goals-container"></div>
         <p>The clinician reviewed all services available through the Outpatient clinic, with a focus on peer support, medication management, and therapeutic group offerings. Corresponding handouts were provided to support the client’s engagement and alignment with their identified recovery goals.</p>
@@ -595,7 +631,7 @@
     <div id="entry-so-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Note Details</h2>
         <p>The client has identified personal goals to support their recovery, including:</p>
-        <div id="so-client-goals-container"></div>
+        <div id="so-client-goals-container" class="goals-container"></div>
         <p>Based on the client’s psychosocial needs, current presentation, and clinical history, the client is expected to benefit from the following treatment plan goals:</p>
         <div id="so-treatment-goals-container"></div>
         <p>The clinician reviewed all services available through the Outpatient clinic, with a focus on peer support, medication management, and therapeutic group offerings. Corresponding handouts were provided to support the client’s engagement and alignment with their identified recovery goals.</p>
@@ -2972,6 +3008,50 @@ Rochester, NY
         updateFinalNote();
     }
     
+    function createClientGoalRow(container, placeholder) {
+        const row = document.createElement('div');
+        row.className = 'goal-row-with-quotes';
+        
+        const openQuote = document.createElement('div');
+        openQuote.className = 'quote-mark';
+        openQuote.textContent = '\u201c';
+        
+        const inputWrapper = document.createElement('div');
+        inputWrapper.className = 'goal-input-wrapper';
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = placeholder;
+        input.addEventListener('input', updateFinalNote);
+        inputWrapper.appendChild(input);
+        
+        const closeQuote = document.createElement('div');
+        closeQuote.className = 'quote-mark';
+        closeQuote.textContent = '\u201d';
+        
+        const buttonWrapper = document.createElement('div');
+        buttonWrapper.className = 'goal-button-wrapper';
+        const button = document.createElement('button');
+        button.type = 'button';
+        
+        if (container.children.length === 0) {
+            button.className = 'add-btn';
+            button.textContent = '+';
+            button.onclick = () => createClientGoalRow(container, placeholder);
+        } else {
+            button.className = 'remove-btn';
+            button.textContent = '-';
+            button.onclick = () => { row.remove(); updateFinalNote(); };
+        }
+        buttonWrapper.appendChild(button);
+        
+        row.appendChild(openQuote);
+        row.appendChild(inputWrapper);
+        row.appendChild(closeQuote);
+        row.appendChild(buttonWrapper);
+        container.appendChild(row);
+        updateFinalNote();
+    }
+    
     function addDiagnosisRow() {
         const row = document.createElement('div');
         row.className = 'dynamic-row';
@@ -3154,7 +3234,12 @@ function addNurseInterventionRow(isFirstRow = false) {
     function resetGoalRows(clientContainer, treatmentContainer) {
         clientContainer.innerHTML = '';
         treatmentContainer.innerHTML = '';
-        createDynamicRow(clientContainer, 'Enter client goal...');
+        // Use createClientGoalRow for client goals (which have quotation marks)
+        if (clientContainer.id === 'client-goals-container' || clientContainer.id === 'so-client-goals-container') {
+            createClientGoalRow(clientContainer, 'Enter client goal in their own words...');
+        } else {
+            createDynamicRow(clientContainer, 'Enter client goal...');
+        }
         createDynamicRow(treatmentContainer, 'Enter treatment plan goal...');
     }
 
