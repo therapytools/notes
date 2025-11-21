@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Letter Generator</title>
-    <link href="./dist/output.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.5.0/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -1196,140 +1196,85 @@
         }
 
         async function downloadPDF() {
-            try {
-                // Verify jsPDF is loaded
-                if (!window.jspdf) {
-                    throw new Error('jsPDF library not loaded. Please ensure JavaScript is enabled and reload the page.');
-                }
-                
-                // Store the current text value
-                const currentReportText = document.getElementById('generatedText').value;
-                const { jsPDF } = window.jspdf;
-                const signaturePreview = document.getElementById('signaturePreview');
-                const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
+            // Store the current text value BEFORE calling generateReport to preserve manual edits
+            const currentReportText = document.getElementById('generatedText').value;
+            const { jsPDF } = window.jspdf;
+            const signaturePreview = document.getElementById('signaturePreview');
+            const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
 
-                // Create PDF directly from text without html2canvas to avoid oklch color parsing issues
-                const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
-                const pageHeight = pdf.internal.pageSize.getHeight();
-                const pageWidth = pdf.internal.pageSize.getWidth();
-                const margins = 20;
-                const textWidth = pageWidth - (margins * 2);
-                
-                pdf.setFont('Helvetica', 'normal');
-                pdf.setFontSize(11);
-                
-                let yPosition = margins;
-                
-                // Add logo if available
-                const logoUrl = document.getElementById('pdf-logo').src;
-                if (logoUrl && logoUrl.startsWith('data:image')) {
-                    try {
-                        pdf.addImage(logoUrl, 'PNG', margins, yPosition, 40, 25);
-                        yPosition += 35;
-                    } catch (e) {
-                        console.warn('Could not add logo:', e);
-                    }
-                }
-                
-                // Split text into lines and add to PDF
-                const lines = pdf.splitTextToSize(currentReportText, textWidth);
-                
-                // Add signature image if available
-                let signatureHeight = 0;
-                if (hasSignatureImage) {
-                    signatureHeight = 30;
-                }
-                
-                // Calculate space needed for text
-                const lineHeight = 7;
-                const totalTextHeight = lines.length * lineHeight;
-                const spaceForeSignature = hasSignatureImage ? 40 : 0;
-                
-                // Check if we need multiple pages
-                if (yPosition + totalTextHeight + spaceForeSignature > pageHeight - margins) {
-                    // Multi-page support
-                    let pageNumber = 1;
-                    for (let i = 0; i < lines.length; i++) {
-                        if (yPosition + lineHeight > pageHeight - margins) {
-                            pdf.addPage();
-                            yPosition = margins;
-                            pageNumber++;
-                        }
-                        pdf.text(lines[i], margins, yPosition);
-                        yPosition += lineHeight;
-                    }
-                    
-                    // Add signature on final page if needed
-                    if (hasSignatureImage && yPosition + signatureHeight < pageHeight - margins) {
-                        yPosition += 10;
-                        try {
-                            pdf.addImage(signaturePreview.src, 'PNG', margins, yPosition, 40, signatureHeight);
-                        } catch (e) {
-                            console.warn('Could not add signature:', e);
-                        }
-                    }
-                } else {
-                    // Single page
-                    for (let i = 0; i < lines.length; i++) {
-                        if (yPosition + lineHeight > pageHeight - margins) {
-                            pdf.addPage();
-                            yPosition = margins;
-                        }
-                        pdf.text(lines[i], margins, yPosition);
-                        yPosition += lineHeight;
-                    }
-                    
-                    // Add signature if available
-                    if (hasSignatureImage && yPosition + signatureHeight < pageHeight - margins) {
-                        yPosition += 10;
-                        try {
-                            pdf.addImage(signaturePreview.src, 'PNG', margins, yPosition, 40, signatureHeight);
-                        } catch (e) {
-                            console.warn('Could not add signature:', e);
-                        }
-                    }
-                }
-                
-                const letterType = document.getElementById('letterType').value;
-                let clientFirstName = 'Client';
-                let clientLastName = 'Report';
+            const pdfTextContent = document.getElementById('pdf-text-content');
+            const pdfSignatureImg = document.getElementById('pdf-signature');
+            const pdfSignatureBlock = document.getElementById('pdf-signature-block');
+            const pdfContentDiv = document.getElementById('pdf-content');
 
-                switch(letterType) {
-                    case 'treatmentNotRec':
-                        clientFirstName = document.getElementById('clientFirstName').value;
-                        clientLastName = document.getElementById('clientLastName').value;
-                        break;
-                    case 'evalInProgress':
-                        clientFirstName = document.getElementById('eipClientFirstName').value;
-                        clientLastName = document.getElementById('eipClientLastName').value;
-                        break;
-                    case 'reEngagement':
-                        clientFirstName = document.getElementById('reClientFirstName').value;
-                        clientLastName = document.getElementById('reClientLastName').value;
-                        break;
-                    case 'treatmentRec':
-                        clientFirstName = document.getElementById('trClientFirstName').value;
-                        clientLastName = document.getElementById('trClientLastName').value;
-                        break;
-                    case 'discharge':
-                        clientFirstName = document.getElementById('disClientFirstName').value;
-                        clientLastName = document.getElementById('disClientLastName').value;
-                        break;
-                    case 'enrollmentVerification':
-                        clientFirstName = document.getElementById('evClientFirstName').value;
-                        clientLastName = document.getElementById('evClientLastName').value;
-                        break;
-                }
-                const clientName = `${clientFirstName} ${clientLastName}`.trim() || 'report';
-                pdf.save(`${clientName.replace(/\s/g, '_')}_Report.pdf`);
-                showNotification('PDF downloaded successfully!');
-            } catch (error) {
-                console.error('PDF download error:', error);
-                showNotification(`Error downloading PDF: ${error.message}`, true);
+            // Find the last occurrence of "Sincerely," to split the main body from the signature part.
+            const sincerelyIndex = currentReportText.lastIndexOf('Sincerely,');
+            const mainBody = (sincerelyIndex !== -1) ? currentReportText.substring(0, sincerelyIndex).trim() : currentReportText;
+            pdfTextContent.innerText = mainBody;
+
+            // Handle the signature block based on whether an image is present
+            if (hasSignatureImage) {
+                pdfSignatureImg.src = signaturePreview.src;
+                pdfSignatureImg.style.display = 'block';
+                // If there is an image, the text block appears directly below it with no extra spacing.
+                pdfSignatureBlock.innerText = getSignatureBlock();
+            } else {
+                pdfSignatureImg.src = "";
+                pdfSignatureImg.style.display = 'none';
+                // If there is NO image, add three line breaks before the text block for manual signing space.
+                pdfSignatureBlock.innerText = `\n\n\n${getSignatureBlock()}`;
             }
+
+            pdfContentDiv.classList.remove('hidden');
+            pdfContentDiv.style.position = 'absolute';
+            pdfContentDiv.style.left = '-9999px';
+            // Increased scale to 4 for better quality, and set backgroundColor to ensure crisp output
+            const canvas = await html2canvas(pdfContentDiv, { scale: 4, useCORS: true, backgroundColor: '#ffffff', logging: false });
+            pdfContentDiv.classList.add('hidden');
+            pdfContentDiv.style.position = '';
+            pdfContentDiv.style.left = '';
+            const imgData = canvas.toDataURL('image/png', 1.0);
+            // Use 'MEDIUM' compression instead of 'FAST' for better quality
+            const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter', compress: true });
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'MEDIUM');
+            
+            const letterType = document.getElementById('letterType').value;
+            let clientFirstName = 'Client';
+            let clientLastName = 'Report';
+
+            switch(letterType) {
+                case 'treatmentNotRec':
+                    clientFirstName = document.getElementById('clientFirstName').value;
+                    clientLastName = document.getElementById('clientLastName').value;
+                    break;
+                case 'evalInProgress':
+                    clientFirstName = document.getElementById('eipClientFirstName').value;
+                    clientLastName = document.getElementById('eipClientLastName').value;
+                    break;
+                case 'reEngagement':
+                    clientFirstName = document.getElementById('reClientFirstName').value;
+                    clientLastName = document.getElementById('reClientLastName').value;
+                    break;
+                case 'treatmentRec':
+                    clientFirstName = document.getElementById('trClientFirstName').value;
+                    clientLastName = document.getElementById('trClientLastName').value;
+                    break;
+                case 'discharge':
+                    clientFirstName = document.getElementById('disClientFirstName').value;
+                    clientLastName = document.getElementById('disClientLastName').value;
+                    break;
+                case 'enrollmentVerification':
+                    clientFirstName = document.getElementById('evClientFirstName').value;
+                    clientLastName = document.getElementById('evClientLastName').value;
+                    break;
+            }
+            const clientName = `${clientFirstName} ${clientLastName}`.trim() || 'report';
+            pdf.save(`${clientName.replace(/\s/g, '_')}_Report.pdf`);
         }
     </script>
 </body>
 </html>
-
 
