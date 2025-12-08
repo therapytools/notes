@@ -584,13 +584,13 @@ Sincerely,</textarea>
     
             <!-- Hidden div for PDF generation (Shared) -->
     <div id="pdf-content" class="hidden" style="width: 8.5in; height: 11in; background: white; color: black; font-size: 10pt; line-height: 1.5; box-sizing: border-box; position: relative;">
-          <!-- PDF Header with logo always at top left -->
-          <div id="pdf-header" style="position: absolute; top: 1in; left: 1in; width: 100%; height: 80px;">
+          <!-- PDF Header with logo pinned to top with 1" horizontal margin, 0.5" vertical margin -->
+          <div id="pdf-header" style="position: absolute; top: 0.5in; left: 1in; width: 6.5in; height: 80px;">
                <img id="pdf-logo" src="" alt="Delphi Rise Logo" style="height: 80px;">
           </div>
-          <!-- Vertically centered content area, with body and signature block sharing the same alignment/margins -->
-          <div id="pdf-main-content" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; pointer-events: none;">
-               <div style="max-width: 6.5in; width: 100%; pointer-events: auto;">
+          <!-- Content area - will be positioned dynamically based on page count -->
+          <div id="pdf-main-content" style="position: absolute; top: 1.2in; left: 1in; right: 1in; width: 6.5in; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; pointer-events: none; overflow: visible;">
+               <div style="width: 100%; max-width: 6.5in; pointer-events: auto; text-align: left;">
                     <div id="pdf-text-content" style="white-space: pre-wrap;"></div>
                     <div id="pdf-signature-area" style="margin-top: 1rem;">
                         <div>Sincerely,</div>
@@ -599,7 +599,8 @@ Sincerely,</textarea>
                     </div>
                </div>
           </div>
-          <div id="pdf-footer" style="position: absolute; bottom: 1in; right: 1in; text-align: right; font-size: 8pt; color: #555; line-height: 1.2;">
+          <!-- PDF Footer pinned to bottom with 0.5" vertical margin, right aligned -->
+          <div id="pdf-footer" style="position: absolute; bottom: 0.5in; right: 1in; text-align: right; font-size: 8pt; color: #555; line-height: 1.2;">
                Treatment | Prevention | Care Management | Counseling<br>
                72 Hinchey Road, Rochester, NY 14624 | 585-467-2230<br>
                www.delphirise.org
@@ -1304,53 +1305,164 @@ Sincerely,</textarea>
         }
 
         async function downloadPDF() {
-            // Store the current text value BEFORE calling generateReport to preserve manual edits
-            const currentReportText = document.getElementById('generatedText').value;
             const { jsPDF } = window.jspdf;
+            const currentReportText = document.getElementById('generatedText').value;
             const signaturePreview = document.getElementById('signaturePreview');
             const hasSignatureImage = signaturePreview.src && signaturePreview.src.startsWith('data:image') && !signaturePreview.classList.contains('hidden');
 
+            const pdfContentDiv = document.getElementById('pdf-content');
+            const pdfHeader = document.getElementById('pdf-header');
+            const pdfFooter = document.getElementById('pdf-footer');
+            const pdfMainContent = document.getElementById('pdf-main-content');
             const pdfTextContent = document.getElementById('pdf-text-content');
             const pdfSignatureImg = document.getElementById('pdf-signature');
             const pdfSignatureBlock = document.getElementById('pdf-signature-block');
-            const pdfContentDiv = document.getElementById('pdf-content');
 
-            // Find the last occurrence of "Sincerely," to split the main body from the signature part.
+            // 1. Prepare Content
             const sincerelyIndex = currentReportText.lastIndexOf('Sincerely,');
             const mainBody = (sincerelyIndex !== -1) ? currentReportText.substring(0, sincerelyIndex).trim() : currentReportText;
             pdfTextContent.innerText = mainBody;
 
-            // Handle the signature block based on whether an image is present
             if (hasSignatureImage) {
-                // Process the signature image to remove any background before adding to PDF
                 const processedSignatureData = await processSignatureImage(signaturePreview.src);
                 pdfSignatureImg.src = processedSignatureData;
                 pdfSignatureImg.style.display = 'block';
-                // If there is an image, the text block appears directly below it with no extra spacing.
                 pdfSignatureBlock.innerText = getSignatureBlock();
             } else {
                 pdfSignatureImg.src = "";
                 pdfSignatureImg.style.display = 'none';
-                // If there is NO image, add three line breaks before the text block for manual signing space.
                 pdfSignatureBlock.innerText = `\n\n\n${getSignatureBlock()}`;
             }
 
+            // 2. Setup for Measurement
             pdfContentDiv.classList.remove('hidden');
             pdfContentDiv.style.position = 'absolute';
             pdfContentDiv.style.left = '-9999px';
-            // Use lower scale to avoid compression artifacts, then convert with lossless PNG
-            const canvas = await html2canvas(pdfContentDiv, { scale: 2, useCORS: true, backgroundColor: null, logging: false, allowTaint: true });
+            pdfContentDiv.style.height = 'auto'; 
+            pdfContentDiv.style.minHeight = '11in';
+            
+            // Set default top for measurement
+            pdfMainContent.style.top = '1.5in'; 
+            pdfMainContent.style.bottom = 'auto';
+            
+            // Measure content height (convert px to inches)
+            // We measure the scrollHeight of the main content container
+            const contentHeightPx = pdfMainContent.scrollHeight;
+            const contentHeightIn = contentHeightPx / 96; 
+            
+            // Threshold for single page (11in - 1.5in top - 1.5in bottom = 8in safe area)
+            const isSinglePage = contentHeightIn < 8.0;
+            
+            const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter' });
+            const pdfWidth = 8.5;
+            const pdfHeight = 11;
+
+            if (isSinglePage) {
+                // --- Single Page: Vertically Centered ---
+                // Calculate top offset to center content relative to the page
+                // Center point is 5.5in. Top = 5.5 - (Height/2).
+                let topOffset = 5.5 - (contentHeightIn / 2);
+                // Ensure it doesn't go too high (overlap header)
+                if (topOffset < 1.5) topOffset = 1.5;
+                
+                pdfMainContent.style.top = `${topOffset}in`;
+                pdfContentDiv.style.height = '11in'; // Lock height for single page render
+                
+                const canvas = await html2canvas(pdfContentDiv, { scale: 2, useCORS: true, logging: false });
+                const imgData = canvas.toDataURL('image/png');
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                
+            } else {
+                // --- Multi-Page: Top Aligned (1.5in margin) ---
+                pdfMainContent.style.top = '1.5in';
+                pdfContentDiv.style.height = 'auto'; // Allow expansion
+                
+                // Capture Header and Footer separately
+                // We clone them to a temp container to capture them cleanly without layout interference
+                const tempContainer = document.createElement('div');
+                tempContainer.style.position = 'absolute';
+                tempContainer.style.left = '-9999px';
+                tempContainer.style.width = '8.5in';
+                tempContainer.style.height = '11in';
+                tempContainer.style.background = 'white';
+                document.body.appendChild(tempContainer);
+
+                // Clone Header
+                const headerClone = pdfHeader.cloneNode(true);
+                tempContainer.appendChild(headerClone);
+                const headerCanvas = await html2canvas(headerClone, { scale: 2, backgroundColor: null });
+                const headerImgData = headerCanvas.toDataURL('image/png');
+                tempContainer.removeChild(headerClone);
+
+                // Clone Footer
+                const footerClone = pdfFooter.cloneNode(true);
+                tempContainer.appendChild(footerClone);
+                const footerCanvas = await html2canvas(footerClone, { scale: 2, backgroundColor: null });
+                const footerImgData = footerCanvas.toDataURL('image/png');
+                document.body.removeChild(tempContainer);
+
+                // Render Main Content (Hide header/footer to avoid duplication in the continuous strip)
+                const originalHeaderDisplay = pdfHeader.style.display;
+                const originalFooterDisplay = pdfFooter.style.display;
+                pdfHeader.style.display = 'none';
+                pdfFooter.style.display = 'none';
+
+                const contentCanvas = await html2canvas(pdfContentDiv, { scale: 2, useCORS: true, logging: false });
+                
+                pdfHeader.style.display = originalHeaderDisplay;
+                pdfFooter.style.display = originalFooterDisplay;
+
+                const contentImgData = contentCanvas.toDataURL('image/png');
+                const imgHeight = (contentCanvas.height * pdfWidth) / contentCanvas.width;
+                
+                let heightLeft = imgHeight;
+                let position = 0;
+                let page = 1;
+
+                while (heightLeft > 0) {
+                    if (page > 1) pdf.addPage();
+                    
+                    // Add Content Slice
+                    // position is negative, moving the image up
+                    pdf.addImage(contentImgData, 'PNG', 0, position, pdfWidth, imgHeight);
+                    
+                    // Add Header (on all pages)
+                    // Calculate header height ratio
+                    const headerH = (headerCanvas.height * pdfWidth) / headerCanvas.width; // Assuming full width capture
+                    // The header clone was in a 8.5in container, so width matches pdfWidth
+                    // But we need to be careful about the capture size.
+                    // html2canvas captures the element size. pdfHeader is 6.5in wide.
+                    // But we put it in a 8.5in container.
+                    // Let's just place it using the known dimensions from CSS
+                    // Header is at left: 1in, width: 6.5in.
+                    // We can just overlay the image we captured.
+                    // If we captured the element directly, it's 6.5in wide.
+                    const headerProps = pdf.getImageProperties(headerImgData);
+                    const headerPdfH = (headerProps.height * 6.5) / headerProps.width;
+                    pdf.addImage(headerImgData, 'PNG', 1, 0.5, 6.5, headerPdfH);
+
+                    // Add Footer (on all pages)
+                    const footerProps = pdf.getImageProperties(footerImgData);
+                    // Footer is right aligned, width 6.5in effectively (or auto).
+                    // The footer div has text-align right.
+                    // Let's assume we place it at bottom.
+                    const footerPdfH = (footerProps.height * 6.5) / footerProps.width;
+                    pdf.addImage(footerImgData, 'PNG', 1, 10.5, 6.5, footerPdfH);
+
+                    heightLeft -= 11;
+                    position -= 11;
+                    page++;
+                }
+            }
+
+            // Cleanup
             pdfContentDiv.classList.add('hidden');
             pdfContentDiv.style.position = '';
             pdfContentDiv.style.left = '';
-            const imgData = canvas.toDataURL('image/png');
-            // Create PDF without compression to preserve image quality and prevent grey artifacts
-            const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter', compress: false });
-            const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            
+            pdfContentDiv.style.height = '';
+            pdfMainContent.style.top = '';
+
+            // Generate Filename
             const letterType = document.getElementById('letterType').value;
             let clientFirstName = 'Client';
             let clientLastName = 'Report';
