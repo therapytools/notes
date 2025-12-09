@@ -471,6 +471,7 @@
         <option value="" selected disabled>Select role...</option>
         <option value="counseling">Counseling Staff</option>
         <option value="medical">Medical Staff</option>
+        <option value="psychiatric">Psychiatric Staff</option>
     </select>
 
     <label for="note-type-select" style="margin-top:12px;">Select Note Type:</label>
@@ -2677,6 +2678,371 @@ Rochester, NY
         </div>
     </div>
 
+    <!-- Container for Psychiatric Assessment -->
+    <div id="psychiatric-assessment-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Detailed Psychiatric Assessment</h2>
+
+        <!-- Identifying Information -->
+        <h3>Identifying Information</h3>
+        <textarea id="psych-identifying-info" placeholder="Enter identifying information..."></textarea>
+
+        <!-- Chief Complaint -->
+        <h3>Chief Complaint</h3>
+        <textarea id="psych-chief-complaint" placeholder="Enter chief complaint..."></textarea>
+
+        <!-- HPI -->
+        <h3>HPI: Historical Evidence Relevant to Current Presentation</h3>
+        <label>Current Symptoms:</label>
+        <textarea id="psych-current-symptoms" placeholder="Enter current symptoms..."></textarea>
+
+        <label>Recent Psychosocial Stressors:</label>
+        <textarea id="psych-psychosocial-stressors" placeholder="Enter recent psychosocial stressors..."></textarea>
+
+        <label>Reason Patient is Presenting Now:</label>
+        <textarea id="psych-reason-presenting" placeholder="Enter reason for presenting..."></textarea>
+
+        <!-- Psychiatric ROS -->
+        <h3>Psychiatric ROS</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Depression:</label>
+                <input type="text" id="psych-ros-depression" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Mania:</label>
+                <input type="text" id="psych-ros-mania" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Psychotic Disorder:</label>
+                <input type="text" id="psych-ros-psychotic" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Anxiety:</label>
+                <input type="text" id="psych-ros-anxiety" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Panic:</label>
+                <input type="text" id="psych-ros-panic" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">OCD:</label>
+                <input type="text" id="psych-ros-ocd" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">PTSD:</label>
+                <input type="text" id="psych-ros-ptsd" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Social Phobia:</label>
+                <input type="text" id="psych-ros-social-phobia" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Somatoform:</label>
+                <input type="text" id="psych-ros-somatoform" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Eating Disorders:</label>
+                <input type="text" id="psych-ros-eating-disorders" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Cognitive Disorders:</label>
+                <input type="text" id="psych-ros-cognitive-disorders" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Learning Difficulties:</label>
+                <input type="text" id="psych-ros-learning-difficulties" placeholder="" style="margin: 0;">
+            </div>
+        </div>
+
+        <!-- Past Psychiatric History -->
+        <h3>Past Psychiatric History</h3>
+        <label>Previous Symptoms, Past Diagnoses, and Current Psychiatric Diagnoses:</label>
+        <textarea id="psych-past-diagnoses" placeholder="Enter previous symptoms and diagnoses..."></textarea>
+
+        <label>History of Psychiatric Treatment:</label>
+        <textarea id="psych-treatment-history" placeholder="">Outpatient:
+Inpatient:</textarea>
+
+        <label>History of Psychotropic Medication Use and Reactions:</label>
+        <textarea id="psych-medication-history" placeholder="Enter medication history and reactions..."></textarea>
+
+        <label>Substance Use (Past and Present):</label>
+        <textarea id="psych-substance-use" placeholder="Enter substance use history..."></textarea>
+
+        <!-- Lethality -->
+        <h3>Lethality</h3>
+        <label>Current Ideation:</label>
+        <input type="text" id="psych-current-ideation" placeholder="">
+
+        <label>Previous Ideation:</label>
+        <input type="text" id="psych-previous-ideation" placeholder="">
+
+        <label>Previous Attempt:</label>
+        <input type="text" id="psych-previous-attempt" placeholder="">
+
+        <!-- Risk Factors -->
+        <h3 style="margin-bottom: 0;">Risk Factors</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; padding: 10px; background-color: #f9f9f9; border-radius: 4px;">
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-male"> Male</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-female"> Female</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-advanced-age"> Advanced in Age</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-active-ideation"> Active Ideation</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-recent-loss"> Recent Loss</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-passive-ideation"> Passive Ideation</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-isolation"> Isolation</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-plan"> Plan</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-poor-support"> Poor Support System</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-method-available"> Method Available</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-married"> Married</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-intent"> Intent to Carry Out</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-impulsive-behaviors"> Recent Impulsive Behaviors</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-command-hallucinations"> Command Hallucinations</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-chronic-mental-illness"> Diagnoses of Chronic Mental Illness</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-risk-history-assault"> History of Assault</label>
+        </div>
+
+        <!-- Protective Factors -->
+        <h3 style="margin-bottom: 8px;">Protective Factors</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; padding: 10px; background-color: #f0f8f0; border-radius: 4px;">
+            <label style="margin: 0;"><input type="checkbox" id="psych-protect-higher-power"> Belief in a Higher Power</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-protect-married"> Married</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-protect-suicide-wrong"> Belief that Suicide is Wrong</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-protect-support-system"> Strong Support System</label>
+        </div>
+
+        <!-- Past Medical History -->
+        <h3>Past Medical History</h3>
+        <label>Current and/or Previous Medical Problems/Surgeries:</label>
+        <textarea id="psych-medical-problems" placeholder="Enter medical history..."></textarea>
+
+        <label>Allergies (Meds/Dyes/Food/Environmental):</label>
+        <textarea id="psych-allergies" placeholder="Enter allergies..."></textarea>
+
+        <label>Type of Treatment (Prescription, Over-the-Counter, Home Remedies):</label>
+        <textarea id="psych-current-treatment" placeholder="Enter current treatments..."></textarea>
+
+        <label>Pregnant/Regular Periods/Breastfeeding:</label>
+        <textarea id="psych-pregnancy-info" placeholder="Enter pregnancy/period/breastfeeding information..."></textarea>
+
+        <label>Breastfeeding:</label>
+        <div style="margin-bottom: 15px;">
+            <label style="display: inline; font-weight: normal; margin-right: 15px;">
+                <input type="radio" name="psych-breastfeeding" value="yes"> Yes
+            </label>
+            <label style="display: inline; font-weight: normal;">
+                <input type="radio" name="psych-breastfeeding" value="no"> No
+            </label>
+        </div>
+
+        <label>Regular Exercise:</label>
+        <div style="margin-bottom: 10px;">
+            <label style="display: inline; font-weight: normal; margin-right: 15px;">
+                <input type="radio" name="psych-exercise" value="yes"> Yes
+            </label>
+            <label style="display: inline; font-weight: normal;">
+                <input type="radio" name="psych-exercise" value="no"> No
+            </label>
+        </div>
+        <label>Method and Frequency:</label>
+        <textarea id="psych-exercise-details" placeholder="Enter exercise method and frequency..."></textarea>
+
+        <!-- Family Psychiatric History -->
+        <h3>Family Psychiatric History</h3>
+        <label>Psychiatric Disorders:</label>
+        <textarea id="psych-family-psychiatric" placeholder="Enter family psychiatric history..."></textarea>
+
+        <label>Suicide:</label>
+        <textarea id="psych-family-suicide" placeholder="Enter family suicide history..."></textarea>
+
+        <label>Suicide Attempts:</label>
+        <textarea id="psych-family-suicide-attempts" placeholder="Enter family suicide attempts..."></textarea>
+
+        <label>Alcohol Abuse:</label>
+        <textarea id="psych-family-alcohol" placeholder="Enter family alcohol abuse history..."></textarea>
+
+        <label>Substance Abuse:</label>
+        <textarea id="psych-family-substance" placeholder="Enter family substance abuse history..."></textarea>
+
+        <!-- Social History -->
+        <h3>Social History</h3>
+        <label>Source of Income:</label>
+        <select id="psych-income-source">
+            <option value="" selected disabled>Select income source...</option>
+            <option value="alimony">Alimony or Child Support</option>
+            <option value="family">Family or Spouse Contribution</option>
+            <option value="none">None</option>
+            <option value="sna">Safety Net Assistance (SNA)</option>
+            <option value="ssi">SSI / SSDI / Social Security</option>
+            <option value="tanf">TANF (Temporary Assistance for Needy Families)</option>
+            <option value="va">Veterans Affairs Benefits</option>
+            <option value="wages">Wages or Salary</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="text" id="psych-income-source-other" placeholder="Please specify..." style="display: none; margin-top: 10px;">
+
+        <label>Occupational History:</label>
+        <textarea id="psych-occupational-history" placeholder="Enter occupational history..."></textarea>
+
+        <label>Level of Education Completed:</label>
+        <select id="psych-education-level">
+            <option value="" selected disabled>Select education level...</option>
+            <optgroup label="Primary and Secondary">
+                <option value="some-elementary">Some Elementary School</option>
+                <option value="completed-elementary">Completed Elementary School</option>
+                <option value="some-middle">Some Middle School</option>
+                <option value="completed-middle">Completed Middle School</option>
+                <option value="some-high">Some High School</option>
+                <option value="high-school-diploma">High School Diploma</option>
+                <option value="ged">GED or Equivalent</option>
+            </optgroup>
+            <optgroup label="Post-Secondary (Non-Degree)">
+                <option value="some-college">Some College</option>
+                <option value="certificate">Certificate Program Completed</option>
+                <option value="trade">Trade or Vocational Program Completed</option>
+                <option value="apprenticeship">Apprenticeship Completed</option>
+            </optgroup>
+            <optgroup label="Undergraduate Degrees">
+                <option value="associate">Associate Degree (AA, AS, AAS)</option>
+                <option value="some-bachelor">Some Bachelor's Coursework</option>
+                <option value="bachelor">Bachelor's Degree (BA, BS, BSW, etc.)</option>
+            </optgroup>
+            <optgroup label="Graduate Degrees">
+                <option value="some-graduate">Some Graduate Coursework</option>
+                <option value="graduate-certificate">Graduate Certificate</option>
+                <option value="masters">Master's Degree (MA, MS, MSW, MBA, MEd, etc.)</option>
+            </optgroup>
+            <optgroup label="Doctoral and Advanced">
+                <option value="some-doctoral">Some Doctoral Coursework</option>
+                <option value="professional-doctorate">Professional Doctorate (MD, DO, DDS, DVM, PsyD, PharmD, JD)</option>
+                <option value="research-doctorate">Research Doctorate (PhD, EdD, etc.)</option>
+            </optgroup>
+            <optgroup label="Post-Doctoral">
+                <option value="postdoctoral">Post-doctoral Training or Fellowship Completed</option>
+            </optgroup>
+        </select>
+
+        <label>Relationship Status:</label>
+        <select id="psych-relationship-status">
+            <option value="" selected disabled>Select relationship status...</option>
+            <option value="married">Married</option>
+            <option value="separated">Separated</option>
+            <option value="widowed">Widowed</option>
+            <option value="divorced">Divorced</option>
+            <option value="single">Single</option>
+            <option value="partnered">Partnered</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="text" id="psych-relationship-other" placeholder="Please specify..." style="display: none; margin-top: 10px;">
+
+        <label>Number of Children:</label>
+        <input type="number" id="psych-num-children" min="0" placeholder="0">
+
+        <label>Who Lives in Home:</label>
+        <input type="text" id="psych-lives-in-home" placeholder="">
+
+        <label>Quality of Significant Other Relationship:</label>
+        <input type="text" id="psych-relationship-quality" placeholder="">
+
+        <label>Support Network:</label>
+        <textarea id="psych-support-network" placeholder="Enter support network information..."></textarea>
+
+        <label>Legal Issues:</label>
+        <textarea id="psych-legal-issues" placeholder="Enter legal issues..."></textarea>
+
+        <!-- Developmental History -->
+        <h3>Developmental History</h3>
+        <label>Raised Where:</label>
+        <input type="text" id="psych-raised-where" placeholder="">
+
+        <label>Raised By:</label>
+        <input type="text" id="psych-raised-by" placeholder="">
+
+        <label>Siblings:</label>
+        <input type="text" id="psych-siblings" placeholder="">
+
+        <label>Childhood Description:</label>
+        <textarea id="psych-childhood-description" placeholder="Enter childhood description..."></textarea>
+
+        <label>Performance at School:</label>
+        <input type="text" id="psych-school-performance" placeholder="">
+
+        <label>High School Friends:</label>
+        <input type="text" id="psych-high-school-friends" placeholder="">
+
+        <label>High School Activities:</label>
+        <textarea id="psych-high-school-activities" placeholder="Enter high school activities..."></textarea>
+
+        <label>Current Hobbies:</label>
+        <textarea id="psych-current-hobbies" placeholder="Enter current hobbies..."></textarea>
+
+        <!-- Mental Status Exam -->
+        <h3>Mental Status Exam</h3>
+        <button class="mse-button" onclick="openPsychMSEModal()" style="margin-bottom: 15px;">Open Mental Status Exam Form</button>
+        <textarea id="psych-mse-output" readonly placeholder="Mental Status Exam results will appear here..."></textarea>
+
+        <!-- Assessment -->
+        <h3>Assessment</h3>
+        <textarea id="psych-assessment" placeholder="Enter assessment..."></textarea>
+
+        <!-- Plan -->
+        <h3 style="margin-bottom: 10px;">Plan</h3>
+        <div style="padding: 10px; background-color: #f9f9f9; border-radius: 4px; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-plan-mat-contract"> Discussed MAT contract with patient. Pt was given opportunity to ask questions</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-plan-signed-contract"> Patient signed the treatment contract and received a copy</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-plan-continue-treatment"> Continue outpatient chemical dependency treatment</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-plan-abstain-education"> Educated patient on the importance of abstaining from substance use</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-plan-med-substance"> Reviewed that medications may be less effective or potentially harmful when combined with substance use</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-plan-med-education"> Provided education on prescribed medications and their role in managing symptoms</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-plan-medication-timeline"> Reviewed expected timeframe for medication effectiveness and discussed that dose adjustments may be required to reach therapeutic benefit</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-plan-crisis-safety"> Reviewed crisis safety procedures and confirmed patient understanding</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-plan-follow-up-importance"> Reviewed the importance of consistent follow up with the treatment team to support treatment goals</label>
+            <label style="display: block; margin-bottom: 0;"><input type="checkbox" id="psych-plan-contact-info"> Patient has contact information for the office if support or questions arise before the next visit</label>
+        </div>
+
+        <label>Additional Plan Notes:</label>
+        <textarea id="psych-plan-notes" placeholder="Enter additional plan notes..."></textarea>
+
+        <label>Follow Up:</label>
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 15px;">
+            <span>F/u with me in</span>
+            <input type="text" id="psych-followup-timeframe" placeholder="e.g., 1 week, 2 weeks" style="width: 150px;">
+        </div>
+
+        <!-- Time Statement -->
+        <h3>Time Statement</h3>
+        <label>Face to Face/Telephonic Time:</label>
+        <input type="text" id="psych-time-face-to-face" placeholder="e.g., 45 minutes">
+
+        <label>Documentation:</label>
+        <input type="text" id="psych-time-documentation" placeholder="e.g., 15 minutes">
+
+        <label>Coordination of Care:</label>
+        <input type="text" id="psych-time-coordination" placeholder="e.g., 10 minutes">
+
+        <label>Total Visit Time:</label>
+        <input type="text" id="psych-time-total" placeholder="e.g., 70 minutes">
+
+        <!-- DSM-5 Diagnosis -->
+        <h3>DSM-5 Diagnosis</h3>
+        <textarea id="psych-dsm5-diagnosis" placeholder="Enter DSM-5 diagnoses..."></textarea>
+
+        <!-- Assessment Tools -->
+        <h3 style="margin-bottom: 10px;">Assessment Tools Needed at Next Appointment</h3>
+        <div style="padding: 10px; background-color: #f9f9f9; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-tool-depression"> Depression Scale</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-tool-anxiety"> Anxiety Scale</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-tool-mmse"> MMSE</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-tool-panic"> Panic Attack Record</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-tool-adhd"> ADD/ADHD</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-tool-bipolar"> Bipolar Scale</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-tool-geriatric"> Geriatric Depression Scale</label>
+            <label style="display: block; margin-bottom: 0;">
+                <input type="checkbox" id="psych-tool-other"> Other: 
+                <input type="text" id="psych-tool-other-specify" placeholder="Specify..." style="display: none; width: 200px;">
+            </label>
+        </div>
+    </div>
+
     <!-- Read-only Note Output for Copying -->
     <div class="copy-area-container">
         <h2>Copy Area</h2>
@@ -2781,6 +3147,9 @@ Rochester, NY
                 { value: 'opioid-use-disorder-short', label: 'Opioid Use Disorder Short' },
                 { value: 'alcohol-use-disorder-short', label: 'Alcohol Use Disorder Short' },
                 { value: 'telehealth', label: 'Telehealth' }
+            ],
+            psychiatric: [
+                { value: 'psychiatric-assessment', label: 'Psychiatric Assessment' }
             ]
         };
 
@@ -3620,6 +3989,60 @@ function addNurseInterventionRow(isFirstRow = false) {
         container.appendChild(row);
     }
 
+    // Psychiatric Assessment Listeners
+    const psychAssessmentDetails = document.getElementById('psych-assessment-details');
+    if (psychAssessmentDetails) {
+        psychAssessmentDetails.addEventListener('input', () => {
+            autoResize(psychAssessmentDetails);
+            updateFinalNote();
+        });
+    }
+
+    // Setup psychiatric assessment form listeners
+    function initPsychiatricAssessmentListeners() {
+        // All textareas and inputs
+        const psychInputs = document.querySelectorAll('[id^="psych-"]');
+        psychInputs.forEach(input => {
+            if (input.id !== 'psych-mse-output' && input.id !== 'psych-tool-other-specify') {
+                input.addEventListener('input', updateFinalNote);
+                input.addEventListener('change', updateFinalNote);
+                if (input.tagName.toLowerCase() === 'textarea') {
+                    input.addEventListener('input', () => autoResize(input));
+                }
+            }
+        });
+
+        // Income source other
+        const incomeSourceSelect = document.getElementById('psych-income-source');
+        const incomeSourceOther = document.getElementById('psych-income-source-other');
+        if (incomeSourceSelect && incomeSourceOther) {
+            incomeSourceSelect.addEventListener('change', () => {
+                incomeSourceOther.style.display = (incomeSourceSelect.value === 'other') ? 'block' : 'none';
+                updateFinalNote();
+            });
+        }
+
+        // Relationship status other
+        const relationshipSelect = document.getElementById('psych-relationship-status');
+        const relationshipOther = document.getElementById('psych-relationship-other');
+        if (relationshipSelect && relationshipOther) {
+            relationshipSelect.addEventListener('change', () => {
+                relationshipOther.style.display = (relationshipSelect.value === 'other') ? 'block' : 'none';
+                updateFinalNote();
+            });
+        }
+
+        // Other assessment tool checkbox
+        const otherToolCheckbox = document.getElementById('psych-tool-other');
+        const otherToolSpecify = document.getElementById('psych-tool-other-specify');
+        if (otherToolCheckbox && otherToolSpecify) {
+            otherToolCheckbox.addEventListener('change', () => {
+                otherToolSpecify.style.display = (otherToolCheckbox.checked) ? 'inline' : 'none';
+                updateFinalNote();
+            });
+        }
+    }
+
     function updateFinalNote() {
         const selectedNoteType = noteTypeSelect.value;
         let finalNote = '';
@@ -3684,6 +4107,27 @@ function addNurseInterventionRow(isFirstRow = false) {
             } else {
                 finalNote = baseNote;
             }
+        } else if (selectedNoteType === 'psychiatric-assessment') {
+            const details = document.getElementById('psych-assessment-details').value || '[ASSESSMENT DETAILS]';
+            finalNote = `Psychiatric Assessment:\n\n${details}`;
+        } else if (selectedNoteType === 'psychiatric-assessment') {
+            const identifyingInfo = document.getElementById('psych-identifying-info').value || '[Identifying Information]';
+            const chiefComplaint = document.getElementById('psych-chief-complaint').value || '[Chief Complaint]';
+            const currentSymptoms = document.getElementById('psych-current-symptoms').value || '[Current Symptoms]';
+            const psychosocialStressors = document.getElementById('psych-psychosocial-stressors').value || '[Recent Psychosocial Stressors]';
+            const reasonPresenting = document.getElementById('psych-reason-presenting').value || '[Reason for Presenting]';
+            const assessment = document.getElementById('psych-assessment').value || '[Assessment]';
+            const dsmDiagnosis = document.getElementById('psych-dsm5-diagnosis').value || '[DSM-5 Diagnosis]';
+
+            finalNote = `DETAILED PSYCHIATRIC ASSESSMENT\n\n`;
+            finalNote += `IDENTIFYING INFORMATION:\n${identifyingInfo}\n\n`;
+            finalNote += `CHIEF COMPLAINT:\n${chiefComplaint}\n\n`;
+            finalNote += `HPI (Historical Evidence Relevant to Current Presentation):\n`;
+            finalNote += `Current Symptoms: ${currentSymptoms}\n`;
+            finalNote += `Recent Psychosocial Stressors: ${psychosocialStressors}\n`;
+            finalNote += `Reason Patient is Presenting Now: ${reasonPresenting}\n\n`;
+            finalNote += `ASSESSMENT:\n${assessment}\n\n`;
+            finalNote += `DSM-5 DIAGNOSIS:\n${dsmDiagnosis}`;
         } else if (selectedNoteType === 'eval-so') {
             const diagnosis = soDiagnosisSelect.value || '[SELECT A DIAGNOSIS]';
             const details = soDetailsTextarea.value || '[DETAILS OF CRITERIA MET]';
@@ -5167,6 +5611,9 @@ let interventions = [];
         } else if (selection === 'drug-treatment-court-report') {
             // Initialize Drug Treatment Court Report
             initDrugTreatmentCourtReport();
+        } else if (selection === 'psychiatric-assessment') {
+            // Initialize Psychiatric Assessment
+            initPsychiatricAssessmentListeners();
         }
         updateFinalNote();
     });
@@ -5896,6 +6343,15 @@ Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
         }
         document.getElementById('ciwa-modal').style.display = 'block';
         computeCIWAScoreModal();
+    }
+
+    // Psychiatric Assessment MSE modal
+    function openPsychMSEModal() {
+        const mseModal = document.getElementById('mse-modal');
+        if (mseModal) {
+            activeMseTargetId = 'psych-mse-output';
+            mseModal.style.display = 'block';
+        }
     }
 
     function computeCIWAScore() {
