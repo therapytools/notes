@@ -5293,12 +5293,41 @@ let interventions = [];
             
             finalNote = noteParts.join('\n\n');
             } else if (selectedNoteType === 'ciwa-ar-assessment') {
-            // CIWA-Ar Assessment note generation
+            // CIWA-Ar Assessment note generation - includes all questions and responses
             let noteParts = [];
             
-            const ciwaScore = document.getElementById('ciwa-score-output')?.value || '';
+            // Define CIWA-Ar questions with their labels
+            const ciwaQuestions = [
+                { id: 'ciwa-q-0', label: 'Nausea and Vomiting' },
+                { id: 'ciwa-q-1', label: 'Tremor' },
+                { id: 'ciwa-q-2', label: 'Paroxysmal Sweats' },
+                { id: 'ciwa-q-3', label: 'Anxiety' },
+                { id: 'ciwa-q-5', label: 'Headache, Fullness in Head' },
+                { id: 'ciwa-q-6', label: 'Auditory Disturbances' },
+                { id: 'ciwa-q-7', label: 'Visual Disturbances' },
+                { id: 'ciwa-q-8', label: 'Tactile Disturbances' },
+                { id: 'ciwa-q-4', label: 'Agitation' },
+                { id: 'ciwa-q-9', label: 'Orientation and Clouding of Sensorium' }
+            ];
             
-            if (ciwaScore) {
+            // Collect all responses
+            let responsesParts = [];
+            ciwaQuestions.forEach(q => {
+                const select = document.getElementById(q.id);
+                if (select && select.value) {
+                    const selectedOption = select.options[select.selectedIndex];
+                    responsesParts.push(`${q.label}: ${selectedOption.text}`);
+                }
+            });
+            
+            if (responsesParts.length > 0) {
+                noteParts.push(`CIWA-Ar Responses:\n${responsesParts.join('\n')}`);
+            }
+            
+            // Get the calculated score
+            const ciwaScore = document.getElementById('ciwa-embedded-score')?.textContent || '';
+            
+            if (ciwaScore && ciwaScore !== '0') {
                 let interpretation = '';
                 const scoreNum = parseInt(ciwaScore, 10);
                 if (scoreNum <= 9) {
@@ -5308,7 +5337,7 @@ let interventions = [];
                 } else {
                     interpretation = 'Severe withdrawal risk; strongly recommend inpatient detoxification and intensive pharmacological management';
                 }
-                noteParts.push(`CIWA-Ar Score: ${ciwaScore}\nInterpretation: ${interpretation}`);
+                noteParts.push(`CIWA-Ar Total Score: ${ciwaScore}\n\nInterpretation: ${interpretation}`);
             }
             
             finalNote = noteParts.join('\n\n');
