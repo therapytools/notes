@@ -3022,9 +3022,9 @@ Inpatient:</textarea>
         <label>Total Visit Time:</label>
         <input type="text" id="psych-time-total" placeholder="e.g., 70 minutes">
 
-        <!-- DSM-5 Diagnosis -->
-        <h3>DSM-5 Diagnosis</h3>
-        <textarea id="psych-dsm5-diagnosis" placeholder="Enter DSM-5 diagnoses..."></textarea>
+        <!-- Psychiatric Diagnostic Impressions -->
+        <h3>Psychiatric Diagnostic Impressions</h3>
+        <textarea id="psych-dsm5-diagnosis" placeholder="Ex: Depression, Anxiety, PTSD, Rule-Outs… If client meets clear Diagnostic criteria for an F code, feel free to add that here, however general impressions are okay."></textarea>
 
         <!-- Assessment Tools -->
         <h3 style="margin-bottom: 10px;">Assessment Tools Needed at Next Appointment</h3>
@@ -4117,7 +4117,7 @@ function addNurseInterventionRow(isFirstRow = false) {
             const psychosocialStressors = document.getElementById('psych-psychosocial-stressors').value || '[Recent Psychosocial Stressors]';
             const reasonPresenting = document.getElementById('psych-reason-presenting').value || '[Reason for Presenting]';
             const assessment = document.getElementById('psych-assessment').value || '[Assessment]';
-            const dsmDiagnosis = document.getElementById('psych-dsm5-diagnosis').value || '[DSM-5 Diagnosis]';
+            const dsmDiagnosis = document.getElementById('psych-dsm5-diagnosis').value || '[Psychiatric Diagnostic Impressions]';
 
             finalNote = `DETAILED PSYCHIATRIC ASSESSMENT\n\n`;
             finalNote += `IDENTIFYING INFORMATION:\n${identifyingInfo}\n\n`;
@@ -4127,7 +4127,7 @@ function addNurseInterventionRow(isFirstRow = false) {
             finalNote += `Recent Psychosocial Stressors: ${psychosocialStressors}\n`;
             finalNote += `Reason Patient is Presenting Now: ${reasonPresenting}\n\n`;
             finalNote += `ASSESSMENT:\n${assessment}\n\n`;
-            finalNote += `DSM-5 DIAGNOSIS:\n${dsmDiagnosis}`;
+            finalNote += `PSYCHIATRIC DIAGNOSTIC IMPRESSIONS:\n${dsmDiagnosis}`;
         } else if (selectedNoteType === 'eval-so') {
             const diagnosis = soDiagnosisSelect.value || '[SELECT A DIAGNOSIS]';
             const details = soDetailsTextarea.value || '[DETAILS OF CRITERIA MET]';
