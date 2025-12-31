@@ -913,6 +913,46 @@
         </div>
     </div>
 
+    <div id="complex-coordination-of-care-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Complex Coordination of Care</h2>
+
+        <h3 style="margin-top: 10px; margin-bottom: 10px;">Criteria for Note</h3>
+        <div class="checkbox-container">
+            <input type="checkbox" id="ccc-staff-completed">
+            <label for="ccc-staff-completed">A counselor, intern, or medical provider completed the service.</label>
+        </div>
+        <div class="checkbox-container hidden" id="ccc-non-routine-row">
+            <input type="checkbox" id="ccc-non-routine">
+            <label for="ccc-non-routine">The service is non-routine, meaning it applies only to a minority of clients or occurs under limited or special circumstances.</label>
+        </div>
+
+        <div id="ccc-body" class="hidden" style="margin-top: 10px;">
+            <h3 style="margin-top: 0;">Instructions</h3>
+            <p><strong>Documentation of Interaction:</strong> Staff should document who they are speaking with and ensure the conversation aligns with approved categories, including referrals to housing or legal services; interactions with landlords, employers, or other service providers; coordination with the PCP; referral to treatment; contacts with foster care agencies, foster parents, or biological parents; completion of HRA applications; updated psychosocial assessments; SPOA applications; referrals to higher levels of care; letters for entitlements/benefits; and calls related to referrals. (Court report preparation is internally allowed for complex care.)</p>
+            <p><strong>Clinical Relevance:</strong> The note must explain how the interaction supports the client’s next steps, advances treatment goals, and reduces barriers to engagement or recovery.</p>
+
+            <h4 style="margin-top: 14px; margin-bottom: 6px;">Narrative Example</h4>
+            <div style="background-color: #f1f1f1; color: #555; padding: 12px; border-radius: 4px; border: 1px solid #ddd;">
+                Staff (counselor) spoke with the client’s landlord to clarify housing concerns and explore options for stable housing, as the client recently had an emotional outburst toward another tenant and is at risk for eviction. This conversation directly supports the client’s treatment goals by reducing barriers to recovery and promoting engagement in a stable living environment. Staff documented the interaction, the client’s responses, and next steps, including follow-up with the primary counselor to address emotional regulation techniques. The intervention was clinically necessary to address immediate housing risks and aligns with approved categories of referral and coordination to support recovery.
+            </div>
+
+            <label for="ccc-note-text" style="margin-top: 16px; display: block;">Note:</label>
+            <textarea id="ccc-note-text" placeholder="Enter narrative here..." style="min-height: 160px;"></textarea>
+
+            <h3 style="margin-top: 16px;">Verification</h3>
+            <div class="checkbox-container">
+                <input type="checkbox" id="ccc-verify-next-steps">
+                <label for="ccc-verify-next-steps">The note explains how the interaction supports the client's next steps.</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="ccc-verify-goals">
+                <label for="ccc-verify-goals">The note explains how the service advances treatment goals and reduces barriers to engagement or recovery.</label>
+            </div>
+
+            <div id="ccc-verification-warning" class="hidden" style="color: #b00020; font-weight: bold; margin-top: 8px;">The note cannot be generated until all verification boxes are checked.</div>
+        </div>
+    </div>
+
     <!-- Time Off Coverage Template -->
     <div id="time-off-coverage-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Time Off Coverage Checklist</h2>
@@ -3293,6 +3333,7 @@ Rochester, NY
             counseling: [
                 { value: 'closing-note-admitted', label: 'Closing Note – Admitted' },
                 { value: 'closing-note-non-admitted', label: 'Closing Note – Non-Admitted' },
+                { value: 'complex-coordination-of-care', label: 'Complex Coordination of Care' },
                 { value: 'discharge-plan', label: 'Discharge Plan' },
                 { value: 'drug-treatment-court-report', label: 'Drug Treatment Court Report' },
                 { value: 'entry-cd', label: 'Entry Session - Chemical Dependency' },
@@ -3309,6 +3350,7 @@ Rochester, NY
                 { value: 'injections', label: 'Injections' },
                 { value: 'mat-education', label: 'MAT Education' },
                 { value: 'medical-screening', label: 'Medical Screening' },
+                { value: 'complex-coordination-of-care', label: 'Complex Coordination of Care' },
                 { value: 'med-mgmt-follow-up', label: 'Medication Management Follow-up' },
                 { value: 'narcan-kit', label: 'Narcan Education & Kit' },
                 { value: 'nurse-follow-up', label: 'Nurse Follow Up' },
@@ -3319,7 +3361,8 @@ Rochester, NY
                 { value: 'telehealth', label: 'Telehealth' }
             ],
             psychiatric: [
-                { value: 'psychiatric-assessment', label: 'Psychiatric Assessment' }
+                { value: 'psychiatric-assessment', label: 'Psychiatric Assessment' },
+                { value: 'complex-coordination-of-care', label: 'Complex Coordination of Care' }
             ]
         };
 
@@ -3507,6 +3550,16 @@ Rochester, NY
     // Get containers
     const noteContainers = document.querySelectorAll('.note-container');
 
+    // Complex Coordination of Care elements
+    const cccStaffCheckbox = document.getElementById('ccc-staff-completed');
+    const cccNonRoutineRow = document.getElementById('ccc-non-routine-row');
+    const cccNonRoutineCheckbox = document.getElementById('ccc-non-routine');
+    const cccBody = document.getElementById('ccc-body');
+    const cccNoteTextarea = document.getElementById('ccc-note-text');
+    const cccVerifyNextSteps = document.getElementById('ccc-verify-next-steps');
+    const cccVerifyGoals = document.getElementById('ccc-verify-goals');
+    const cccVerificationWarning = document.getElementById('ccc-verification-warning');
+
     const diagnosisOptionsHTML = `
         <option value="" selected disabled>Select a diagnosis...</option>
         <optgroup label="F10: Alcohol Use Disorder"><option value="F10.10: Alcohol use disorder, mild">F10.10: Alcohol use disorder, mild</option><option value="F10.20: Alcohol use disorder, moderate">F10.20: Alcohol use disorder, moderate</option><option value="F10.20: Alcohol use disorder, severe">F10.20: Alcohol use disorder, severe</option></optgroup>
@@ -3545,6 +3598,25 @@ Rochester, NY
         row.appendChild(button);
         container.appendChild(row);
         updateFinalNote();
+    }
+
+    function syncCccVisibility() {
+        if (!cccStaffCheckbox || !cccNonRoutineRow || !cccNonRoutineCheckbox || !cccBody) return;
+
+        const showNonRoutine = cccStaffCheckbox.checked;
+        cccNonRoutineRow.classList.toggle('hidden', !showNonRoutine);
+        if (!showNonRoutine) {
+            cccNonRoutineCheckbox.checked = false;
+        }
+
+        const showBody = showNonRoutine && cccNonRoutineCheckbox.checked;
+        cccBody.classList.toggle('hidden', !showBody);
+
+        if (!showBody) {
+            if (cccVerifyNextSteps) cccVerifyNextSteps.checked = false;
+            if (cccVerifyGoals) cccVerifyGoals.checked = false;
+            if (cccVerificationWarning) cccVerificationWarning.classList.add('hidden');
+        }
     }
     
     function createClientGoalRow(container, placeholder) {
@@ -4736,6 +4808,25 @@ function addNurseInterventionRow(isFirstRow = false) {
             const joinedNote = noteParts.filter(Boolean).map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('. ');
             if(joinedNote) {
                 finalNote = joinedNote + '.';
+            }
+
+        } else if (selectedNoteType === 'complex-coordination-of-care') {
+            syncCccVisibility();
+
+            const staffCompleted = cccStaffCheckbox && cccStaffCheckbox.checked;
+            const nonRoutine = cccNonRoutineCheckbox && cccNonRoutineCheckbox.checked;
+            const verificationComplete = (cccVerifyNextSteps && cccVerifyNextSteps.checked) && (cccVerifyGoals && cccVerifyGoals.checked);
+            const showWarning = (cccVerificationWarning && nonRoutine && staffCompleted) && !verificationComplete;
+
+            if (cccVerificationWarning) {
+                cccVerificationWarning.classList.toggle('hidden', !showWarning);
+            }
+
+            if (staffCompleted && nonRoutine && verificationComplete) {
+                const narrative = (cccNoteTextarea && cccNoteTextarea.value.trim()) ? cccNoteTextarea.value.trim() : '[Enter narrative]';
+                finalNote = `The client was seen for the following, non-routine service, which supports the client's treatment, advances their goals, and reduces barriers to recovery:\n\n${narrative}`;
+            } else {
+                finalNote = '';
             }
 
         } else if (selectedNoteType === 'closing-note-admitted') {
@@ -6047,6 +6138,21 @@ let interventions = [];
         options.forEach(option => selectElement.add(option));
     }
 
+    // Complex Coordination of Care listeners
+    if (cccStaffCheckbox && cccNonRoutineCheckbox) {
+        cccStaffCheckbox.addEventListener('change', () => { syncCccVisibility(); updateFinalNote(); });
+        cccNonRoutineCheckbox.addEventListener('change', () => { syncCccVisibility(); updateFinalNote(); });
+    }
+    [cccNoteTextarea, cccVerifyNextSteps, cccVerifyGoals].forEach(el => {
+        if (el) {
+            el.addEventListener('input', updateFinalNote);
+            el.addEventListener('change', updateFinalNote);
+        }
+    });
+    if (cccNoteTextarea) {
+        cccNoteTextarea.addEventListener('input', () => autoResize(cccNoteTextarea));
+    }
+
 
 // EVENT LISTENERS
     noteTypeSelect.addEventListener('change', () => {
@@ -6401,6 +6507,7 @@ let interventions = [];
         toggleSafetyPlan(cdNoMhProviderTextCheckbox, cdSafetyPlanNoProviderCheckbox);
         toggleSafetyPlan(soHasMhProviderTextCheckbox, soSafetyPlanHasProviderCheckbox);
         toggleSafetyPlan(soNoMhProviderTextCheckbox, soSafetyPlanNoProviderCheckbox);
+        syncCccVisibility();
         updateFinalNote();
     });
 
