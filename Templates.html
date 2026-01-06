@@ -2887,6 +2887,29 @@ Rochester, NY
             <label for="dtc-additionalNotes">Additional Notes</label>
             <textarea id="dtc-additionalNotes" oninput="updateFinalNote()" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; min-height:100px; resize:vertical;"></textarea>
         </div>
+
+        <h3 style="margin-top:16px;">Clinician Information for Complex Coordination of Care Note</h3>
+        <div style="display:grid; grid-template-columns:1fr; gap:12px; margin-bottom:12px;">
+            <div>
+                <label for="dtc-ccc-service-by">Who completed the Drug Treatment Court Reporting?</label>
+                <input type="text" id="dtc-ccc-service-by" placeholder="Name" onchange="updateFinalNote()">
+            </div>
+            <div>
+                <label for="dtc-ccc-role">Role of the person who completed the service:</label>
+                <select id="dtc-ccc-role" onchange="updateFinalNote()">
+                    <option value="" selected disabled>Select role...</option>
+                    <option value="Counselor">Counselor</option>
+                    <option value="Intern">Intern</option>
+                    <option value="Medical Provider">Medical Provider</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div id="dtc-ccc-role-warning" class="hidden" style="color:#b00020; font-weight:bold; margin-top:6px;">Complex Coordination of Care Services can only be completed by a counselor, intern, or medical provider.</div>
+            </div>
+        </div>
+        <div style="margin-bottom:16px;">
+            <label for="dtc-ccc-coordination-with">Who did you coordinate care with?</label>
+            <input type="text" id="dtc-ccc-coordination-with" placeholder="Agency / Name" style="max-width: 520px;" onchange="updateFinalNote()">
+        </div>
     </div>
 
     <!-- Container for Psychiatric Assessment -->
@@ -5971,6 +5994,15 @@ let interventions = [];
             let progressText = '';
             let courtText = '';
 
+                const dtcCccServiceBy = (document.getElementById('dtc-ccc-service-by')?.value || '').trim();
+                const dtcCccRoleSelect = document.getElementById('dtc-ccc-role');
+                const dtcCccRole = (dtcCccRoleSelect?.value || '').trim();
+                const dtcCccRoleWarning = document.getElementById('dtc-ccc-role-warning');
+                if (dtcCccRoleWarning) {
+                    dtcCccRoleWarning.classList.toggle('hidden', dtcCccRole !== 'Other');
+                }
+                const dtcCccCoordinationWith = (document.getElementById('dtc-ccc-coordination-with')?.value || '').trim();
+
             const lastCourtDate = formatDate(document.getElementById('dtc-initialCourtDate').value);
             if (lastCourtDate) {
                 progressText += `Since last court date ${lastCourtDate}, writer provided treatment report via Unified Court System portal UCMS to coordinate care with Drug Treatment Court per request of Michelle Devine.\n\n`;
@@ -5986,6 +6018,12 @@ let interventions = [];
             const careCoordination = document.getElementById('dtc-careCoordination').value;
             if (careCoordination) {
                 progressText += `Writer also coordinated care with ${careCoordination}.\n\n`;
+            }
+            if (dtcCccServiceBy || dtcCccRole) {
+                progressText += `Drug Treatment Court reporting completed by ${dtcCccServiceBy || '[Service completed by]'}${dtcCccRole ? ` (${dtcCccRole})` : ''}.\n\n`;
+            }
+            if (dtcCccCoordinationWith) {
+                progressText += `Coordinated with: ${dtcCccCoordinationWith}.\n\n`;
             }
             progressText += "SEE Criminal Drug Treatment Court Appearance Report completed and scanned into client's chart.\n\n";
             progressText += "This support helps the client meet court-mandated requirements and advance treatment goals by providing consistent guidance, accountability, and coordination of care while addressing barriers to court compliance such as transportation, scheduling, and understanding mandated expectations.";
@@ -6954,6 +6992,20 @@ Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
         if (document.getElementById('dtc-randomContainer').children.length === 0) {
             addDtcRandomRow();
         }
+
+        // Clinician info listeners
+        const dtcCccServiceBy = document.getElementById('dtc-ccc-service-by');
+        const dtcCccCoordinationWith = document.getElementById('dtc-ccc-coordination-with');
+        const dtcCccRoleSelect = document.getElementById('dtc-ccc-role');
+        const dtcCccRoleWarning = document.getElementById('dtc-ccc-role-warning');
+        const toggleDtcCccRoleWarning = () => {
+            if (!dtcCccRoleWarning || !dtcCccRoleSelect) return;
+            dtcCccRoleWarning.classList.toggle('hidden', dtcCccRoleSelect.value !== 'Other');
+        };
+        if (dtcCccServiceBy) dtcCccServiceBy.addEventListener('input', updateFinalNote);
+        if (dtcCccCoordinationWith) dtcCccCoordinationWith.addEventListener('input', updateFinalNote);
+        if (dtcCccRoleSelect) dtcCccRoleSelect.addEventListener('change', () => { toggleDtcCccRoleWarning(); updateFinalNote(); });
+        toggleDtcCccRoleWarning();
     }
 
     // CIWA modal open/save functions
