@@ -3322,9 +3322,9 @@ Rochester, NY
         </div>
         
         <div id="dtc-dual-copy-area" style="display:none;">
-            <h3 style="margin-top:20px;">Progress Note</h3>
+            <h3 style="margin-top:20px;">Complex Coordination of Care Note</h3>
             <textarea id="dtc-progress-note-copy" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; min-height:150px; resize:vertical;"></textarea>
-            <button id="dtc-progress-copy-button" class="copy-button" onclick="copyDtcText('dtc-progress-note-copy', this)">Copy Progress Note to Clipboard</button>
+            <button id="dtc-progress-copy-button" class="copy-button" onclick="copyDtcText('dtc-progress-note-copy', this)">Copy Complex Coordination of Care Note to Clipboard</button>
             
             <h3 style="margin-top:20px;">Court Note</h3>
             <textarea id="dtc-court-note-copy" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; min-height:150px; resize:vertical;"></textarea>
@@ -5978,7 +5978,8 @@ let interventions = [];
             if (careCoordination) {
                 progressText += `Writer also coordinated care with ${careCoordination}.\n\n`;
             }
-            progressText += "SEE Criminal Drug Treatment Court Appearance Report completed and scanned into client's chart.";
+            progressText += "SEE Criminal Drug Treatment Court Appearance Report completed and scanned into client's chart.\n\n";
+            progressText += "This support helps the client meet court-mandated requirements and advance treatment goals by providing consistent guidance, accountability, and coordination of care while addressing barriers to court compliance such as transportation, scheduling, and understanding mandated expectations.";
 
             // --- Court Note Generation ---
             if (lastCourtDate) {
@@ -6148,7 +6149,7 @@ let interventions = [];
                 courtText += `Additional Notes: ${additionalNotes}\n`;
             }
 
-            finalNote = `PROGRESS NOTE:\n\n${progressText.trim()}\n\n---\n\nCOURT NOTE:\n\n${courtText.trim()}`;
+            finalNote = `COMPLEX COORDINATION OF CARE NOTE:\n\n${progressText.trim()}\n\n---\n\nCOURT NOTE:\n\n${courtText.trim()}`;
             
             // For DTC, populate separate text areas
             const dtcProgressCopy = document.getElementById('dtc-progress-note-copy');
