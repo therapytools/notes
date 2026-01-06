@@ -223,6 +223,22 @@
         .hidden {
                 display: none !important;
         }
+        .ccc-role-warning {
+            color: #b00020;
+            border: 1px solid #b00020;
+            background: #fff5f5;
+            padding: 8px;
+            width: 100%;
+            max-width: 520px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+        .ccc-blocked {
+            pointer-events: none;
+            opacity: 0.55;
+        }
         .inline-form-element {
             display: inline-block;
             width: auto;
@@ -917,39 +933,78 @@
         <h2 style="margin-top: 20px;">Complex Coordination of Care</h2>
 
         <h3 style="margin-top: 10px; margin-bottom: 10px;">Criteria for Note</h3>
-        <div class="checkbox-container">
-            <input type="checkbox" id="ccc-staff-completed">
-            <label for="ccc-staff-completed">A counselor, intern, or medical provider completed the service.</label>
-        </div>
-        <div class="checkbox-container hidden" id="ccc-non-routine-row">
+        <div class="checkbox-container" id="ccc-non-routine-row">
             <input type="checkbox" id="ccc-non-routine">
             <label for="ccc-non-routine">The service is non-routine, meaning it applies only to a minority of clients or occurs under limited or special circumstances.</label>
         </div>
 
         <div id="ccc-body" class="hidden" style="margin-top: 10px;">
-            <h3 style="margin-top: 0;">Instructions</h3>
-            <p><strong>Documentation of Interaction:</strong> Staff should document who they are speaking with and ensure the conversation aligns with approved categories, including referrals to housing or legal services; interactions with landlords, employers, or other service providers; coordination with the PCP; referral to treatment; contacts with foster care agencies, foster parents, or biological parents; completion of HRA applications; updated psychosocial assessments; SPOA applications; referrals to higher levels of care; letters for entitlements/benefits; and calls related to referrals. (Court report preparation is internally allowed for complex care.)</p>
-            <p><strong>Clinical Relevance:</strong> The note must explain how the interaction supports the client’s next steps, advances treatment goals, and reduces barriers to engagement or recovery.</p>
+            <h3 style="margin-top: 0;">Who completed the service?</h3>
+            <label for="ccc-service-by">Service completed by:</label>
+            <input type="text" id="ccc-service-by" placeholder="Name" style="max-width: 320px;">
 
-            <h4 style="margin-top: 14px; margin-bottom: 6px;">Narrative Example</h4>
-            <div style="background-color: #f1f1f1; color: #555; padding: 12px; border-radius: 4px; border: 1px solid #ddd;">
-                Staff (counselor) spoke with the client’s landlord to clarify housing concerns and explore options for stable housing, as the client recently had an emotional outburst toward another tenant and is at risk for eviction. This conversation directly supports the client’s treatment goals by reducing barriers to recovery and promoting engagement in a stable living environment. Staff documented the interaction, the client’s responses, and next steps, including follow-up with the primary counselor to address emotional regulation techniques. The intervention was clinically necessary to address immediate housing risks and aligns with approved categories of referral and coordination to support recovery.
+            <label for="ccc-role">Role of the person who completed the service:</label>
+            <select id="ccc-role" style="max-width: 340px;">
+                <option value="" selected disabled>Select role...</option>
+                <option value="Counselor">Counselor</option>
+                <option value="Intern">Intern</option>
+                <option value="Medical Provider">Medical Provider</option>
+                <option value="Other">Other</option>
+            </select>
+            <div id="ccc-role-warning" class="hidden ccc-role-warning">Complex Coordination of Care Services can only be completed by a counselor, intern, or medical provider.</div>
+
+            <div id="ccc-blockable">
+                <label for="ccc-coordination-with">Who did you coordinate care with?</label>
+                <input type="text" id="ccc-coordination-with" placeholder="Agency / Name" style="max-width: 520px;">
+
+                <label for="ccc-category">Category of Service:</label>
+                <select id="ccc-category" style="max-width: 520px;">
+                    <option value="" selected disabled>Select category...</option>
+                    <option value="Referrals to housing services">Referrals to housing services</option>
+                    <option value="Referrals to legal services">Referrals to legal services</option>
+                    <option value="Interactions with landlords">Interactions with landlords</option>
+                    <option value="Interactions with employers">Interactions with employers</option>
+                    <option value="Interactions with other service providers">Interactions with other service providers</option>
+                    <option value="Coordination with the primary care provider (PCP)">Coordination with the primary care provider (PCP)</option>
+                    <option value="Referral to treatment">Referral to treatment</option>
+                    <option value="Contacts with foster care agencies">Contacts with foster care agencies</option>
+                    <option value="Contacts with foster parents">Contacts with foster parents</option>
+                    <option value="Contacts with biological parents">Contacts with biological parents</option>
+                    <option value="Completion of HRA applications">Completion of HRA applications</option>
+                    <option value="Updated psychosocial assessments">Updated psychosocial assessments</option>
+                    <option value="SPOA applications">SPOA applications</option>
+                    <option value="Referrals to higher levels of care">Referrals to higher levels of care</option>
+                    <option value="Letters for entitlements or benefits">Letters for entitlements or benefits</option>
+                    <option value="Calls related to referrals">Calls related to referrals</option>
+                    <option value="Court report preparation">Court report preparation</option>
+                </select>
+
+                <label for="ccc-support-next-steps">How does interaction support the client's next steps:</label>
+                <textarea id="ccc-support-next-steps" placeholder="Describe how this interaction advances next steps, reduces barriers, or supports recovery." style="min-height: 120px;"></textarea>
+
+                <div style="margin-top: 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 12px;">
+                    <button type="button" id="ccc-example-toggle" class="copy-button" style="max-width: 220px; margin: 0; width: auto;">Narrative Example</button>
+                    <span id="ccc-example-helper" style="color: #555; font-size: 14px;">Press to view an example.</span>
+                </div>
+                <div id="ccc-example" class="hidden" style="background-color: #f1f1f1; color: #555; padding: 12px; border-radius: 4px; border: 1px solid #ddd; margin-top: 8px;">
+                    Staff (counselor) spoke with the client’s landlord to clarify housing concerns and explore options for stable housing, as the client recently had an emotional outburst toward another tenant and is at risk for eviction. This conversation directly supports the client’s treatment goals by reducing barriers to recovery and promoting engagement in a stable living environment. Staff documented the interaction, the client’s responses, and next steps, including follow-up with the primary counselor to address emotional regulation techniques. The intervention was clinically necessary to address immediate housing risks and aligns with approved categories of referral and coordination to support recovery.
+                </div>
+
+                <label for="ccc-note-text" style="margin-top: 16px; display: block;">Narrative:</label>
+                <textarea id="ccc-note-text" placeholder="Enter narrative here..." style="min-height: 160px;"></textarea>
+
+                <h3 style="margin-top: 16px;">Verification</h3>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="ccc-verify-next-steps">
+                    <label for="ccc-verify-next-steps">The note explains how the interaction supports the client's next steps.</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="ccc-verify-goals">
+                    <label for="ccc-verify-goals">The note explains how the service advances treatment goals and reduces barriers to engagement or recovery.</label>
+                </div>
+
+                <div id="ccc-verification-warning" class="hidden" style="color: #b00020; font-weight: bold; margin-top: 8px;">Complete all fields and verification checkboxes to generate the note.</div>
             </div>
-
-            <label for="ccc-note-text" style="margin-top: 16px; display: block;">Note:</label>
-            <textarea id="ccc-note-text" placeholder="Enter narrative here..." style="min-height: 160px;"></textarea>
-
-            <h3 style="margin-top: 16px;">Verification</h3>
-            <div class="checkbox-container">
-                <input type="checkbox" id="ccc-verify-next-steps">
-                <label for="ccc-verify-next-steps">The note explains how the interaction supports the client's next steps.</label>
-            </div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="ccc-verify-goals">
-                <label for="ccc-verify-goals">The note explains how the service advances treatment goals and reduces barriers to engagement or recovery.</label>
-            </div>
-
-            <div id="ccc-verification-warning" class="hidden" style="color: #b00020; font-weight: bold; margin-top: 8px;">The note cannot be generated until all verification boxes are checked.</div>
         </div>
     </div>
 
@@ -3551,10 +3606,17 @@ Rochester, NY
     const noteContainers = document.querySelectorAll('.note-container');
 
     // Complex Coordination of Care elements
-    const cccStaffCheckbox = document.getElementById('ccc-staff-completed');
-    const cccNonRoutineRow = document.getElementById('ccc-non-routine-row');
     const cccNonRoutineCheckbox = document.getElementById('ccc-non-routine');
     const cccBody = document.getElementById('ccc-body');
+    const cccServiceByInput = document.getElementById('ccc-service-by');
+    const cccRoleSelect = document.getElementById('ccc-role');
+    const cccRoleWarning = document.getElementById('ccc-role-warning');
+    const cccBlockable = document.getElementById('ccc-blockable');
+    const cccCoordinationWithInput = document.getElementById('ccc-coordination-with');
+    const cccCategorySelect = document.getElementById('ccc-category');
+    const cccSupportNextSteps = document.getElementById('ccc-support-next-steps');
+    const cccExampleToggle = document.getElementById('ccc-example-toggle');
+    const cccExample = document.getElementById('ccc-example');
     const cccNoteTextarea = document.getElementById('ccc-note-text');
     const cccVerifyNextSteps = document.getElementById('ccc-verify-next-steps');
     const cccVerifyGoals = document.getElementById('ccc-verify-goals');
@@ -3601,21 +3663,17 @@ Rochester, NY
     }
 
     function syncCccVisibility() {
-        if (!cccStaffCheckbox || !cccNonRoutineRow || !cccNonRoutineCheckbox || !cccBody) return;
+        if (!cccNonRoutineCheckbox || !cccBody) return;
 
-        const showNonRoutine = cccStaffCheckbox.checked;
-        cccNonRoutineRow.classList.toggle('hidden', !showNonRoutine);
-        if (!showNonRoutine) {
-            cccNonRoutineCheckbox.checked = false;
-        }
-
-        const showBody = showNonRoutine && cccNonRoutineCheckbox.checked;
+        const showBody = cccNonRoutineCheckbox.checked;
         cccBody.classList.toggle('hidden', !showBody);
 
         if (!showBody) {
             if (cccVerifyNextSteps) cccVerifyNextSteps.checked = false;
             if (cccVerifyGoals) cccVerifyGoals.checked = false;
             if (cccVerificationWarning) cccVerificationWarning.classList.add('hidden');
+            if (cccRoleWarning) cccRoleWarning.classList.add('hidden');
+            if (cccBlockable) cccBlockable.classList.remove('ccc-blocked');
         }
     }
     
@@ -4813,18 +4871,32 @@ function addNurseInterventionRow(isFirstRow = false) {
         } else if (selectedNoteType === 'complex-coordination-of-care') {
             syncCccVisibility();
 
-            const staffCompleted = cccStaffCheckbox && cccStaffCheckbox.checked;
             const nonRoutine = cccNonRoutineCheckbox && cccNonRoutineCheckbox.checked;
+            const roleIsOther = cccRoleSelect && cccRoleSelect.value === 'Other';
+            const serviceByFilled = !!(cccServiceByInput && cccServiceByInput.value.trim());
+            const roleFilled = !!(cccRoleSelect && cccRoleSelect.value);
+            const coordinatedWithFilled = !!(cccCoordinationWithInput && cccCoordinationWithInput.value.trim());
+            const categoryFilled = !!(cccCategorySelect && cccCategorySelect.value);
+            const supportFilled = !!(cccSupportNextSteps && cccSupportNextSteps.value.trim());
+            const narrativeFilled = !!(cccNoteTextarea && cccNoteTextarea.value.trim());
             const verificationComplete = (cccVerifyNextSteps && cccVerifyNextSteps.checked) && (cccVerifyGoals && cccVerifyGoals.checked);
-            const showWarning = (cccVerificationWarning && nonRoutine && staffCompleted) && !verificationComplete;
+
+            const allComplete = nonRoutine && !roleIsOther && verificationComplete && serviceByFilled && roleFilled && coordinatedWithFilled && categoryFilled && supportFilled && narrativeFilled;
+            const showWarning = (cccVerificationWarning && nonRoutine && !allComplete);
 
             if (cccVerificationWarning) {
                 cccVerificationWarning.classList.toggle('hidden', !showWarning);
             }
 
-            if (staffCompleted && nonRoutine && verificationComplete) {
-                const narrative = (cccNoteTextarea && cccNoteTextarea.value.trim()) ? cccNoteTextarea.value.trim() : '[Enter narrative]';
-                finalNote = `The client was seen for the following, non-routine service, which supports the client's treatment, advances their goals, and reduces barriers to recovery:\n\n${narrative}`;
+            if (allComplete) {
+                const serviceBy = cccServiceByInput.value.trim();
+                const role = cccRoleSelect.value;
+                const coordinatedWith = cccCoordinationWithInput.value.trim();
+                const category = cccCategorySelect.value;
+                const support = cccSupportNextSteps.value.trim();
+                const narrative = cccNoteTextarea.value.trim();
+
+                finalNote = `Complex Coordination of Care (non-routine).\n\nService completed by: ${serviceBy} (${role}).\nCoordinated with: ${coordinatedWith}.\nCategory of service: ${category}.\nHow this interaction supports the client's next steps: ${support}.\n\nNarrative:\n${narrative}`;
             } else {
                 finalNote = '';
             }
@@ -6139,18 +6211,35 @@ let interventions = [];
     }
 
     // Complex Coordination of Care listeners
-    if (cccStaffCheckbox && cccNonRoutineCheckbox) {
-        cccStaffCheckbox.addEventListener('change', () => { syncCccVisibility(); updateFinalNote(); });
+    if (cccNonRoutineCheckbox) {
         cccNonRoutineCheckbox.addEventListener('change', () => { syncCccVisibility(); updateFinalNote(); });
     }
-    [cccNoteTextarea, cccVerifyNextSteps, cccVerifyGoals].forEach(el => {
+    if (cccRoleSelect) {
+        cccRoleSelect.addEventListener('change', () => {
+            const showRoleWarning = cccRoleSelect.value === 'Other';
+            if (cccRoleWarning) cccRoleWarning.classList.toggle('hidden', !showRoleWarning);
+            if (cccBlockable) cccBlockable.classList.toggle('ccc-blocked', showRoleWarning);
+            updateFinalNote();
+        });
+    }
+    [cccServiceByInput, cccCoordinationWithInput, cccCategorySelect, cccSupportNextSteps, cccNoteTextarea, cccVerifyNextSteps, cccVerifyGoals].forEach(el => {
         if (el) {
             el.addEventListener('input', updateFinalNote);
             el.addEventListener('change', updateFinalNote);
         }
     });
+    if (cccSupportNextSteps) {
+        cccSupportNextSteps.addEventListener('input', () => autoResize(cccSupportNextSteps));
+    }
     if (cccNoteTextarea) {
         cccNoteTextarea.addEventListener('input', () => autoResize(cccNoteTextarea));
+    }
+    if (cccExampleToggle && cccExample) {
+        cccExampleToggle.addEventListener('click', () => {
+            const isHidden = cccExample.classList.contains('hidden');
+            cccExample.classList.toggle('hidden', !isHidden);
+            cccExampleToggle.textContent = isHidden ? 'Hide Narrative Example' : 'Narrative Example';
+        });
     }
 
 
