@@ -3278,18 +3278,23 @@ Rochester, NY
         <label>Face to Face/Telephonic Time:</label>
         <input type="text" id="psych-time-face-to-face" placeholder="e.g., 45 minutes">
 
+        <div style="margin-top: 8px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <span>Of the face-to-face time,</span>
+            <select id="psych-psychotherapy-minutes" style="min-width: 110px;" onchange="updateFinalNote();">
+                <option value="" selected disabled>Select...</option>
+                <option value="0-15">0-15</option>
+                <option value="16+">16+</option>
+                <option value="31+">31+</option>
+            </select>
+            <span>minutes were spent in psychotherapy.</span>
+        </div>
+        <div id="psych-psychotherapy-warning" class="hidden" style="color:#b00020; font-weight:bold; margin-top:6px;">Contact Kate to Notify Billing</div>
+
         <label>Documentation:</label>
         <input type="text" id="psych-time-documentation" placeholder="e.g., 15 minutes">
 
         <label>Coordination of Care:</label>
         <input type="text" id="psych-time-coordination" placeholder="e.g., 10 minutes">
-
-        <label>Total Visit Time:</label>
-        <select id="psych-time-total">
-            <option value="">Select time</option>
-            <option value="16+ minutes">16+ minutes</option>
-            <option value="31+ minutes">31+ minutes</option>
-        </select>
 
         <!-- Assessment Tools -->
         <h3 style="margin-bottom: 10px;">Assessment Tools Needed at Next Appointment</h3>
@@ -4660,13 +4665,17 @@ function addNurseInterventionRow(isFirstRow = false) {
             // Time Statement
             const timeParts = [];
             const faceToFace = val('psych-time-face-to-face');
+            const psychotherapyMinutes = (document.getElementById('psych-psychotherapy-minutes')?.value || '').trim();
+            const psychotherapyWarning = document.getElementById('psych-psychotherapy-warning');
+            if (psychotherapyWarning) {
+                psychotherapyWarning.classList.toggle('hidden', psychotherapyMinutes !== '0-15');
+            }
             const documentationTime = val('psych-time-documentation');
             const coordinationTime = val('psych-time-coordination');
-            const totalTime = val('psych-time-total');
             if (faceToFace) timeParts.push(`Face to Face/Telephonic Time: ${faceToFace}`);
+            if (psychotherapyMinutes) timeParts.push(`Of the face-to-face time, ${psychotherapyMinutes} minutes were spent in psychotherapy.`);
             if (documentationTime) timeParts.push(`Documentation: ${documentationTime}`);
             if (coordinationTime) timeParts.push(`Coordination of Care: ${coordinationTime}`);
-            if (totalTime) timeParts.push(`Total Visit Time: ${totalTime}`);
             if (timeParts.length > 0) sections.push(`TIME STATEMENT:\n${timeParts.join('\n')}`);
 
             // Assessment tools
