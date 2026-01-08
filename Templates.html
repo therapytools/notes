@@ -1534,6 +1534,685 @@ Rochester, NY
         </div>
     </div>
 
+    <!-- Container for Initial - Nurse Smoking Cessation -->
+    <div id="nurse-smoking-initial-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Smoking Cessation - Nurse - Initial</h2>
+
+        <label for="nsi-diagnosis">Diagnosis:</label>
+        <textarea id="nsi-diagnosis" placeholder="Add diagnosis here. Before signing/locking, confirm Tobacco Use Disorder is documented in SA6 MultiAxial or TGI Initial."></textarea>
+
+        <label for="nsi-goal">Goal:</label>
+        <textarea id="nsi-goal">Client will maintain and improve overall health status through engagement with the medical team as needed, including medical monitoring and adherence to provider recommendations, to support recovery and well-being.</textarea>
+
+        <label for="nsi-chief">Chief Complaint/Reason for visit:</label>
+        <textarea id="nsi-chief"></textarea>
+
+        <h3 style="margin-top: 16px;">Tobacco Use History</h3>
+        <p style="margin: 4px 0 10px 0;">Client reports (include age of onset for each one reported and if currently using or not):</p>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:10px; background:#f9f9f9; padding:12px; border:1px solid #e0e0e0; border-radius:6px;">
+            <label style="display:flex; flex-direction:column; gap:6px;">Cigarettes (regular or light)<input type="text" id="nsi-prod-cigarettes" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Cigars (large cigars, cigarillos, little cigars)<input type="text" id="nsi-prod-cigars" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Pipe tobacco<input type="text" id="nsi-prod-pipe" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Hookah / waterpipe<input type="text" id="nsi-prod-hookah" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Bidis or kreteks (clove cigarettes)<input type="text" id="nsi-prod-bidis" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Roll-your-own cigarettes<input type="text" id="nsi-prod-ryo" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Chewing tobacco / leaf tobacco<input type="text" id="nsi-prod-chew" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Snuff (dry or moist)<input type="text" id="nsi-prod-snuff" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Snus (small pouches)<input type="text" id="nsi-prod-snus" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Dissolvable tobacco products (lozenges, strips, sticks)<input type="text" id="nsi-prod-dissolvable" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">E-cigarettes / vaping devices (nicotine-containing)<input type="text" id="nsi-prod-ecig" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Heated tobacco products (HTPs, e.g., IQOS)<input type="text" id="nsi-prod-htp" placeholder="Age of onset; current/not"></label>
+        </div>
+
+        <label for="nsi-comorbidities" style="margin-top: 12px;">Client medical co-morbidities include per client report:</label>
+        <div id="nsi-comorbidities" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:8px; background:#f9f9f9; padding:10px; border:1px solid #e0e0e0; border-radius:6px;">
+            <label><input type="checkbox" data-text="COPD"> COPD</label>
+            <label><input type="checkbox" data-text="Coronary Artery Disease"> Coronary Artery Disease</label>
+            <label><input type="checkbox" data-text="High Blood Pressure"> High Blood Pressure</label>
+            <label><input type="checkbox" data-text="Stroke"> Stroke</label>
+            <label><input type="checkbox" data-text="Asthma"> Asthma</label>
+            <label><input type="checkbox" data-text="Diabetes"> Diabetes</label>
+            <label><input type="checkbox" data-text="Depression"> Depression</label>
+        </div>
+        <input type="text" id="nsi-comorbid-other" placeholder="Other (specify)" style="margin-top:6px; max-width:520px;">
+
+        <h3 style="margin-top: 16px;">Tobacco Treatment History</h3>
+        <label for="nsi-quit-attempts">Client reports the following quit attempts:</label>
+        <textarea id="nsi-quit-attempts"></textarea>
+
+        <label>Client reports using the following to quit (checkboxes for past, now):</label>
+        <table style="width:100%; border-collapse: collapse; margin-bottom:10px;">
+            <thead>
+                <tr>
+                    <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Method</th>
+                    <th style="text-align:center; border-bottom:1px solid #ccc; padding:6px;">Past</th>
+                    <th style="text-align:center; border-bottom:1px solid #ccc; padding:6px;">Now</th>
+                </tr>
+            </thead>
+            <tbody id="nsi-quit-aids-body">
+                <tr><td>Nicotine patch</td><td style="text-align:center;"><input type="checkbox" id="nsi-method-patch-past"></td><td style="text-align:center;"><input type="checkbox" id="nsi-method-patch-now"></td></tr>
+                <tr><td>Nicotine gum</td><td style="text-align:center;"><input type="checkbox" id="nsi-method-gum-past"></td><td style="text-align:center;"><input type="checkbox" id="nsi-method-gum-now"></td></tr>
+                <tr><td>Nicotine lozenge</td><td style="text-align:center;"><input type="checkbox" id="nsi-method-lozenge-past"></td><td style="text-align:center;"><input type="checkbox" id="nsi-method-lozenge-now"></td></tr>
+                <tr><td>Nicotine nasal spray</td><td style="text-align:center;"><input type="checkbox" id="nsi-method-nasal-past"></td><td style="text-align:center;"><input type="checkbox" id="nsi-method-nasal-now"></td></tr>
+                <tr><td>Nicotine inhaler</td><td style="text-align:center;"><input type="checkbox" id="nsi-method-inhaler-past"></td><td style="text-align:center;"><input type="checkbox" id="nsi-method-inhaler-now"></td></tr>
+                <tr><td>Bupropion SR</td><td style="text-align:center;"><input type="checkbox" id="nsi-method-bupropion-past"></td><td style="text-align:center;"><input type="checkbox" id="nsi-method-bupropion-now"></td></tr>
+                <tr><td>Varenicline</td><td style="text-align:center;"><input type="checkbox" id="nsi-method-varenicline-past"></td><td style="text-align:center;"><input type="checkbox" id="nsi-method-varenicline-now"></td></tr>
+                <tr><td>Other</td><td style="text-align:center;"><input type="checkbox" id="nsi-method-other-past"></td><td style="text-align:center;"><input type="checkbox" id="nsi-method-other-now"></td></tr>
+            </tbody>
+        </table>
+        <input type="text" id="nsi-method-other-text" placeholder="If Other, describe" style="width:100%; max-width:520px;">
+
+        <label for="nsi-reasons-past" style="margin-top:10px;">Client reports the following reasons to quit tobacco in the past:</label>
+        <textarea id="nsi-reasons-past"></textarea>
+
+        <label for="nsi-reasons-now">Client reports the following reasons to quit tobacco now:</label>
+        <textarea id="nsi-reasons-now"></textarea>
+
+        <label for="nsi-liked">When client uses tobacco, they like the following effects:</label>
+        <textarea id="nsi-liked"></textarea>
+
+        <label for="nsi-disliked">When client uses tobacco, they report disliking the following effects:</label>
+        <textarea id="nsi-disliked"></textarea>
+
+        <label style="margin-top:10px;">In the past when trying to quit, withdrawal symptoms the client has struggled with include:</label>
+        <div id="nsi-withdrawal-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:8px; background:#f8f9fa; padding:10px; border:1px solid #e0e0e0; border-radius:6px;">
+            <label><input type="checkbox" id="nsi-withdrawal-cravings"> Strong cravings for nicotine</label>
+            <label><input type="checkbox" id="nsi-withdrawal-irritability"> Irritability, anger, or frustration</label>
+            <label><input type="checkbox" id="nsi-withdrawal-anxiety"> Anxiety, restlessness, or feeling on edge</label>
+            <label><input type="checkbox" id="nsi-withdrawal-mood"> Depressed mood or low motivation</label>
+            <label><input type="checkbox" id="nsi-withdrawal-concentration"> Difficulty concentrating or mental fog</label>
+            <label><input type="checkbox" id="nsi-withdrawal-headaches"> Headaches</label>
+            <label><input type="checkbox" id="nsi-withdrawal-fatigue"> Fatigue or low energy</label>
+            <label><input type="checkbox" id="nsi-withdrawal-sleep"> Sleep problems (insomnia or vivid dreams)</label>
+            <label><input type="checkbox" id="nsi-withdrawal-appetite"> Increased appetite or weight gain</label>
+            <label><input type="checkbox" id="nsi-withdrawal-gi"> Gastrointestinal discomfort (e.g., constipation, stomach upset)</label>
+            <label><input type="checkbox" id="nsi-withdrawal-cough"> Cough or sore throat</label>
+            <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="nsi-withdrawal-other"> Other <input type="text" id="nsi-withdrawal-other-text" placeholder="specify" style="flex:1;"></label>
+        </div>
+
+        <label for="nsi-relapse-reasons" style="margin-top:10px;">Past reasons for relapse following quit attempts include:</label>
+        <textarea id="nsi-relapse-reasons"></textarea>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-top:10px;">
+            <label style="display:flex; flex-direction:column; gap:6px;">Willingness to stop using tobacco (0-10):<input type="number" min="0" max="10" id="nsi-willingness"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Ability to stop using tobacco (0-10):<input type="number" min="0" max="10" id="nsi-ability"></label>
+        </div>
+
+        <label style="margin-top:12px;">Client's Stage of Change:</label>
+        <div id="nsi-stage-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:8px;">
+            <label><input type="checkbox" id="nsi-stage-precontemplation" data-text="Precontemplation"> Precontemplation</label>
+            <label><input type="checkbox" id="nsi-stage-contemplation" data-text="Contemplation"> Contemplation</label>
+            <label><input type="checkbox" id="nsi-stage-preparation" data-text="Preparation"> Preparation</label>
+            <label><input type="checkbox" id="nsi-stage-action" data-text="Action"> Action</label>
+            <label><input type="checkbox" id="nsi-stage-maintenance" data-text="Maintenance"> Maintenance</label>
+            <label><input type="checkbox" id="nsi-stage-relapse" data-text="Relapse (or Recycling)"> Relapse (or Recycling)</label>
+        </div>
+
+        <h3 style="margin-top:16px;">Interventions used</h3>
+            <div id="nsf-interventions" style="background:#f8f9fa; padding:12px; border:1px solid #e0e0e0; border-radius:6px; display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:8px;">
+            <label><input type="checkbox" data-text="Collected tobacco use history and previous attempts to quit." id="nsi-int-history"> Collected tobacco use history and previous attempts to quit.</label>
+            <label><input type="checkbox" data-text="Provided education on the risks of tobacco use, including pulmonary disease (e.g., COPD, lung cancer) and cardiovascular disease." id="nsi-int-risks"> Provided education on the risks of tobacco use, including pulmonary disease (e.g., COPD, lung cancer) and cardiovascular disease.</label>
+            <label><input type="checkbox" data-text="Encouraged attaching nicotine gum or lozenges to the cigarette pack using a rubber band to keep alternatives visible and support choice during cravings." id="nsi-int-rubber-band"> Educated on harm reduction strategies by encouraging client to attach nicotine gum or lozenges to the cigarette pack using a rubber band to keep alternatives visible and support choice during cravings.</label>
+            <label><input type="checkbox" data-text="Encouraged reducing visual and physical access to cigarettes (out of sight/off counters/hard-to-reach locations)." id="nsi-int-access"> Educated on harm reduction strategies by encouraging client to reduce visual and physical access to cigarettes by keeping them out of sight, off counters, and stored in hard-to-reach locations (e.g., car, upstairs).</label>
+            <label><input type="checkbox" data-text="Encouraged changing morning routines to reduce conditioned cravings." id="nsi-int-morning"> Educated on harm reduction strategies by encouraging client to change morning routines (e.g., switching coffee brands or choosing alternative drinks such as tea, water, or juice) to reduce conditioned cravings.</label>
+            <label><input type="checkbox" data-text="Encouraged prolonging time to first cigarette in the morning using behavioral strategies and nicotine gum upon waking." id="nsi-int-first-cig"> Educated on harm reduction strategies by encouraging client to prolong time to first cigarette in the morning using behavioral strategies (e.g., setting a phone alarm) and nicotine gum upon waking.</label>
+            <label><input type="checkbox" data-text="Reviewed the importance of time to first cigarette as a strong predictor of nicotine dependence." id="nsi-int-time-predictor"> Reviewed the importance of time to first cigarette as a strong predictor of nicotine dependence.</label>
+            <label><input type="checkbox" data-text="Encouraged prolonging time between cigarettes throughout the day as much as possible." id="nsi-int-prolong-day"> Educated on harm reduction strategies by encouraging client to prolong time between cigarettes throughout the day as much as possible.</label>
+            <label><input type="checkbox" data-text="Educated on nicotine replacement therapy options to reduce urges." id="nsi-int-nrt"> Educated client on nicotine replacement therapy options to reduce urges.</label>
+            <label><input type="checkbox" data-text="Advised client not to smoke while wearing a prescribed nicotine patch." id="nsi-int-no-smoke-patch"> Advised client not to smoke while wearing a prescribed nicotine patch.</label>
+            <label><input type="checkbox" data-text="Encouraged counting cigarettes each morning and setting a daily smoking limit (starting at X cigarettes)." id="nsi-int-limit"> Educated on harm reduction strategies by encouraging client to count cigarettes each morning and set a daily smoking limit (starting at X cigarettes).</label>
+            <label><input type="checkbox" data-text="Developed a gradual reduction plan to decrease the daily cigarette allotment by one cigarette every two days." id="nsi-int-gradual"> Educated on harm reduction strategies by developing a gradual reduction plan to decrease the daily cigarette allotment by one cigarette every two days.</label>
+            <label><input type="checkbox" data-text="Encouraged using sugar-free candy or gum prior to smoking to interrupt habitual responses during cravings." id="nsi-int-candy"> Educated on harm reduction strategies by encouraging client to use sugar-free candy or gum prior to smoking to interrupt habitual responses during cravings.</label>
+            <label><input type="checkbox" data-text="Reviewed the importance of attending follow-up appointments." id="nsi-int-followup"> Reviewed the importance of attending follow-up appointments.</label>
+            <label><input type="checkbox" data-text="Explained warning signs that required immediate medical attention." id="nsi-int-warnings"> Explained warning signs that required immediate medical attention.</label>
+            <label><input type="checkbox" data-text="Provided client with resources and offered support in connecting to those resources." id="nsi-int-resources"> Provided client with resources and offered support in connecting to those resources.</label>
+        </div>
+            <label style="display:flex; flex-direction:column; gap:6px; grid-column:1 / -1; margin-top:4px;">Other interventions (if applicable):
+                <textarea id="nsi-interventions-other" rows="3" oninput="updateFinalNote()" placeholder="Enter additional interventions provided..."></textarea>
+            </label>
+
+        <div style="margin-top:12px;">
+            <h4 style="margin: 0 0 8px 0;">Resources (check if provided):</h4>
+            <div id="nsi-resources" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:8px;">
+                <label><input type="checkbox" id="nsi-res-handout" data-text='The following smoking cessation resources were provided: "Commit to Quit" online tobacco cessation support group (Thursdays 12:00pm to 1:00pm) https://www.urmc.rochester.edu/community-health/patient-care/stop-smoking/nicotine-cessation-support-group.aspx; Call the NY State Quit Line at 1-866-697-8487 for more resources; "Kick Buts" tobacco cessation texting & free NRT program (585) 504-9461 https://www.urmc.rochester.edu/news/story/wilmot-launches-new-fully-remote-smoking-cessation-program-with-free-medications-in-27-county-region; "Build Your Quit Plan" (Smokefree.gov) https://smokefree.gov/build-your-quit-plan; "How to Quit Smoking" (CDC) https://www.cdc.gov/tobacco/quit_smoking/how_to_quit/index.htm; "Tips for Quitting" (CDC) https://www.cdc.gov/tobacco/campaign/tips/quit-smoking/quit-smoking-medications/tips-for-quitting/index.html; "Health Benefits of Quitting Smoking Over Time" (American Cancer Society) https://www.cancer.org/healthy/stay-away-from-tobacco/benefits-of-quitting-smoking-over-time.html; "Clearing the Air" (National Cancer Institute) https://www.cancer.gov/publications/patient-education/clearing-the-air-pdf#:~:text=You%20can%20call%20the%20National,800%E2%80%93784%E2%80%938669).'> Smoking cessation resources provided</label>
+            </div>
+        </div>
+
+        <label for="nsi-response" style="margin-top:12px;">Client Response to interventions:</label>
+        <textarea id="nsi-response"></textarea>
+
+        <h3 style="margin-top:16px;">Plan/Next Steps</h3>
+        <div id="nsi-plan-options" style="background:#f8f9fa; padding:12px; border:1px solid #e0e0e0; border-radius:6px; display:grid; grid-template-columns: 1fr; gap:10px;">
+            <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="nsi-plan-attendance"> Encourage continued attendance to counseling and/or groups</label>
+            <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="nsi-plan-prescriber"> Referred to Prescriber for medication management</label>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="nsi-plan-next">
+                <span>Scheduled next appointment for:</span>
+                <input type="date" id="nsi-plan-next-date" style="flex:1; min-width:180px;">
+            </div>
+            <label style="grid-column:1 / -1; display:flex; flex-direction:column; gap:6px; margin-top:4px;">Other next steps:
+                <textarea id="nsi-plan-other" rows="3" oninput="updateFinalNote()" placeholder="Enter additional plan/next steps..."></textarea>
+            </label>
+        </div>
+    </div>
+
+    <!-- Container for Follow-up - Nurse Smoking Cessation -->
+    <div id="nurse-smoking-followup-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Smoking Cessation - Nurse - Follow Up</h2>
+
+        <label for="nsf-diagnosis">Diagnosis:</label>
+        <textarea id="nsf-diagnosis" placeholder="Add diagnosis here. Before signing/locking, confirm Tobacco Use Disorder is documented in SA6 MultiAxial or TGI Initial."></textarea>
+
+        <label for="nsf-goal">Goal:</label>
+        <textarea id="nsf-goal">Client will maintain and improve overall health status through engagement with the medical team as needed, including medical monitoring and adherence to provider recommendations, to support recovery and well-being.</textarea>
+
+        <label for="nsf-chief">Chief Complaint/Reason for visit:</label>
+        <textarea id="nsf-chief"></textarea>
+
+        <label for="nsf-progress" style="margin-top:12px;">Client's report of how their efforts towards smoking cessation are going since last visit:</label>
+        <textarea id="nsf-progress"></textarea>
+
+        <label for="nsf-reasons-continue">Client reports the following reasons to continue working towards quitting:</label>
+        <textarea id="nsf-reasons-continue"></textarea>
+
+        <label for="nsf-liked">When client uses tobacco, they like the following effects:</label>
+        <textarea id="nsf-liked"></textarea>
+
+        <label for="nsf-disliked">When client uses tobacco, they report disliking the following effects:</label>
+        <textarea id="nsf-disliked"></textarea>
+
+        <label style="margin-top:10px;">Client reports the following withdrawal symptoms:</label>
+        <div id="nsf-withdrawal-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:8px; background:#f8f9fa; padding:10px; border:1px solid #e0e0e0; border-radius:6px;">
+            <label><input type="checkbox" id="nsf-withdrawal-cravings"> Strong cravings for nicotine</label>
+            <label><input type="checkbox" id="nsf-withdrawal-irritability"> Irritability, anger, or frustration</label>
+            <label><input type="checkbox" id="nsf-withdrawal-anxiety"> Anxiety, restlessness, or feeling on edge</label>
+            <label><input type="checkbox" id="nsf-withdrawal-mood"> Depressed mood or low motivation</label>
+            <label><input type="checkbox" id="nsf-withdrawal-concentration"> Difficulty concentrating or mental fog</label>
+            <label><input type="checkbox" id="nsf-withdrawal-headaches"> Headaches</label>
+            <label><input type="checkbox" id="nsf-withdrawal-fatigue"> Fatigue or low energy</label>
+            <label><input type="checkbox" id="nsf-withdrawal-sleep"> Sleep problems (insomnia or vivid dreams)</label>
+            <label><input type="checkbox" id="nsf-withdrawal-appetite"> Increased appetite or weight gain</label>
+            <label><input type="checkbox" id="nsf-withdrawal-gi"> Gastrointestinal discomfort (e.g., constipation, stomach upset)</label>
+            <label><input type="checkbox" id="nsf-withdrawal-cough"> Cough or sore throat</label>
+            <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="nsf-withdrawal-other"> Other <input type="text" id="nsf-withdrawal-other-text" placeholder="specify" style="flex:1;"></label>
+            <label><input type="checkbox" id="nsf-withdrawal-none"> None</label>
+        </div>
+
+        <label for="nsf-relapse-reason" style="margin-top:10px;">If client relapsed following their most recent quit attempt, include reason here:</label>
+        <textarea id="nsf-relapse-reason"></textarea>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-top:10px;">
+            <label style="display:flex; flex-direction:column; gap:6px;">Willingness to stop using tobacco (0-10):<input type="number" min="0" max="10" id="nsf-willingness"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Ability to stop using tobacco (0-10):<input type="number" min="0" max="10" id="nsf-ability"></label>
+        </div>
+
+        <label style="margin-top:12px;">Client's Stage of Change:</label>
+        <div id="nsf-stage-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:8px;">
+            <label><input type="checkbox" id="nsf-stage-precontemplation" data-text="Precontemplation"> Precontemplation</label>
+            <label><input type="checkbox" id="nsf-stage-contemplation" data-text="Contemplation"> Contemplation</label>
+            <label><input type="checkbox" id="nsf-stage-preparation" data-text="Preparation"> Preparation</label>
+            <label><input type="checkbox" id="nsf-stage-action" data-text="Action"> Action</label>
+            <label><input type="checkbox" id="nsf-stage-maintenance" data-text="Maintenance"> Maintenance</label>
+            <label><input type="checkbox" id="nsf-stage-relapse" data-text="Relapse (or Recycling)"> Relapse (or Recycling)</label>
+        </div>
+
+        <h3 style="margin-top:16px;">Interventions used</h3>
+        <div id="psf-interventions" style="background:#f8f9fa; padding:12px; border:1px solid #e0e0e0; border-radius:6px; display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:8px; position:relative;">
+            <label><input type="checkbox" data-text="Collected tobacco use history and previous attempts to quit." id="nsf-int-history"> Collected Tobacco use history and previous attempts to quit.</label>
+            <label><input type="checkbox" data-text="Provided education on the risks of tobacco use, including pulmonary disease (e.g., COPD, lung cancer) and cardiovascular disease." id="nsf-int-risks"> Provided education on the risks of tobacco use, including pulmonary disease (e.g., COPD, lung cancer) and cardiovascular disease.</label>
+            <label><input type="checkbox" data-text="Encouraged attaching nicotine gum or lozenges to the cigarette pack using a rubber band to keep alternatives visible and support choice during cravings." id="nsf-int-rubber-band"> Educated on harm reduction strategies by encouraging client to attach nicotine gum or lozenges to the cigarette pack using a rubber band to keep alternatives visible and support choice during cravings.</label>
+            <label><input type="checkbox" data-text="Encouraged reducing visual and physical access to cigarettes (out of sight/off counters/hard-to-reach locations)." id="nsf-int-access"> Educated on harm reduction strategies by encouraging client to reduce visual and physical access to cigarettes by keeping them out of sight, off counters, and stored in hard-to-reach locations (e.g., car, upstairs).</label>
+            <label><input type="checkbox" data-text="Encouraged changing morning routines to reduce conditioned cravings." id="nsf-int-morning"> Educated on harm reduction strategies by encouraging client to change morning routines (e.g., switching coffee brands or choosing alternative drinks such as tea, water, or juice) to reduce conditioned cravings.</label>
+            <label><input type="checkbox" data-text="Encouraged prolonging time to first cigarette in the morning using behavioral strategies and nicotine gum upon waking." id="nsf-int-first-cig"> Educated on harm reduction strategies by encouraging client to prolong time to first cigarette in the morning using behavioral strategies (e.g., setting a phone alarm) and nicotine gum upon waking.</label>
+            <label><input type="checkbox" data-text="Reviewed the importance of time to first cigarette as a strong predictor of nicotine dependence." id="nsf-int-time-predictor"> Reviewed the importance of time to first cigarette as a strong predictor of nicotine dependence.</label>
+            <label><input type="checkbox" data-text="Encouraged prolonging time between cigarettes throughout the day as much as possible." id="nsf-int-prolong-day"> Educated on harm reduction strategies by encouraging client to prolong time between cigarettes throughout the day as much as possible.</label>
+            <label><input type="checkbox" data-text="Educated on nicotine replacement therapy options to reduce urges." id="nsf-int-nrt"> Educated client on nicotine replacement therapy options to reduce urges.</label>
+            <label><input type="checkbox" data-text="Advised client not to smoke while wearing a prescribed nicotine patch." id="nsf-int-no-smoke-patch"> Advised client not to smoke while wearing a prescribed nicotine patch.</label>
+            <label><input type="checkbox" data-text="Encouraged counting cigarettes each morning and setting a daily smoking limit (starting at X cigarettes)." id="nsf-int-limit"> Educated on harm reduction strategies by encouraging client to count cigarettes each morning and set a daily smoking limit (starting at X cigarettes).</label>
+            <label><input type="checkbox" data-text="Developed a gradual reduction plan to decrease the daily cigarette allotment by one cigarette every two days." id="nsf-int-gradual"> Educated on harm reduction strategies by developing a gradual reduction plan to decrease the daily cigarette allotment by one cigarette every two days.</label>
+            <label><input type="checkbox" data-text="Encouraged using sugar-free candy or gum prior to smoking to interrupt habitual responses during cravings." id="nsf-int-candy"> Educated on harm reduction strategies by encouraging by encouraging client to use sugar-free candy or gum prior to smoking to interrupt habitual responses during cravings.</label>
+            <label><input type="checkbox" data-text="Reviewed the importance of attending follow-up appointments." id="nsf-int-followup"> Reviewed the importance of attending follow-up appointments.</label>
+            <label><input type="checkbox" data-text="Explained warning signs that required immediate medical attention." id="nsf-int-warnings"> Explained warning signs that required immediate medical attention.</label>
+            <label><input type="checkbox" data-text="Observed and recorded Smoking Cessation medication adherence and screened for any side effects." id="nsf-int-adherence"> Observed and recorded Smoking Cessation medication adherence and screened for any side effects.</label>
+            <label><input type="checkbox" data-text="Monitored clients' responses to the Smoking Cessation treatment and symptom changes." id="nsf-int-monitor"> Monitored clients’ responses to the Smoking Cessation treatment and symptom changes.</label>
+            <label><input type="checkbox" data-text="Assessed for signs of adverse reactions or complications related to medications." id="nsf-int-adverse"> Assessed for signs of adverse reactions or complications related to medications.</label>
+            <label><input type="checkbox" data-text="Provided client with resources and offered support in connecting to those resources." id="nsf-int-resources"> Provided client with resources and offered support in connecting to those resources.</label>
+            <label style="display:flex; flex-direction:column; gap:6px; grid-column:1 / -1; margin-top:4px;">Other interventions (if applicable):
+                <textarea id="nsf-interventions-other" rows="3" oninput="updateFinalNote()" placeholder="Enter additional interventions provided..."></textarea>
+            </label>
+        </div>
+
+        <div style="margin-top:12px;">
+            <h4 style="margin: 0 0 8px 0;">Resources (check if provided):</h4>
+            <div id="nsf-resources" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:8px;">
+                <label><input type="checkbox" id="nsf-res-handout" data-text='The following smoking cessation resources were provided: "Commit to Quit" online tobacco cessation support group (Thursdays 12:00pm to 1:00pm) https://www.urmc.rochester.edu/community-health/patient-care/stop-smoking/nicotine-cessation-support-group.aspx; Call the NY State Quit Line at 1-866-697-8487 for more resources; "Kick Buts" tobacco cessation texting & free NRT program (585) 504-9461 https://www.urmc.rochester.edu/news/story/wilmot-launches-new-fully-remote-smoking-cessation-program-with-free-medications-in-27-county-region; "Build Your Quit Plan" (Smokefree.gov) https://smokefree.gov/build-your-quit-plan; "How to Quit Smoking" (CDC) https://www.cdc.gov/tobacco/quit_smoking/how_to_quit/index.htm; "Tips for Quitting" (CDC) https://www.cdc.gov/tobacco/campaign/tips/quit-smoking/quit-smoking-medications/tips-for-quitting/index.html; "Health Benefits of Quitting Smoking Over Time" (American Cancer Society) https://www.cancer.org/healthy/stay-away-from-tobacco/benefits-of-quitting-smoking-over-time.html; "Clearing the Air" (National Cancer Institute) https://www.cancer.gov/publications/patient-education/clearing-the-air-pdf#:~:text=You%20can%20call%20the%20National,800%E2%80%93784%E2%80%938669).'> Smoking cessation resources provided</label>
+            </div>
+        </div>
+
+        <label for="nsf-response" style="margin-top:12px;">Client Response to interventions:</label>
+        <textarea id="nsf-response"></textarea>
+
+        <h3 style="margin-top:16px;">Plan/Next Steps</h3>
+        <div id="nsf-plan-options" style="background:#f8f9fa; padding:12px; border:1px solid #e0e0e0; border-radius:6px; display:grid; grid-template-columns: 1fr; gap:10px;">
+            <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="nsf-plan-attendance"> Encourage continued attendance to counseling and/or groups</label>
+            <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="nsf-plan-prescriber"> Referred to Prescriber for medication management</label>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="nsf-plan-next">
+                <span>Scheduled next appointment for:</span>
+                <input type="date" id="nsf-plan-next-date" style="flex:1; min-width:180px;">
+            </div>
+            <label style="grid-column:1 / -1; display:flex; flex-direction:column; gap:6px; margin-top:4px;">Other next steps:
+                <textarea id="nsf-plan-other" rows="3" oninput="updateFinalNote()" placeholder="Enter additional plan/next steps..."></textarea>
+            </label>
+        </div>
+    </div>
+
+    <!-- Container for Initial - Prescriber Smoking Cessation -->
+    <div id="prescriber-smoking-initial-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Smoking Cessation - Prescriber - Initial</h2>
+
+        <label for="psi-diagnosis">Diagnosis:</label>
+        <textarea id="psi-diagnosis" placeholder="Add diagnosis here. Before signing/locking, confirm Tobacco Use Disorder is documented in SA6 MultiAxial or TGI Initial."></textarea>
+
+        <label for="psi-goal">Goal:</label>
+        <textarea id="psi-goal">Client will maintain and improve overall health status through engagement with the medical team as needed, including medical monitoring and adherence to provider recommendations, to support recovery and well-being.</textarea>
+
+        <label for="psi-chief">Chief Complaint/Reason for visit:</label>
+        <textarea id="psi-chief"></textarea>
+
+        <h3 style="margin-top: 16px;">Tobacco Use History</h3>
+        <p style="margin: 4px 0 10px 0;">Client reports (include age of onset for each one reported and if currently using or not):</p>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:10px; background:#f9f9f9; padding:12px; border:1px solid #e0e0e0; border-radius:6px;">
+            <label style="display:flex; flex-direction:column; gap:6px;">Cigarettes (regular or light)<input type="text" id="psi-prod-cigarettes" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Cigars (large cigars, cigarillos, little cigars)<input type="text" id="psi-prod-cigars" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Pipe tobacco<input type="text" id="psi-prod-pipe" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Hookah / waterpipe<input type="text" id="psi-prod-hookah" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Bidis or kreteks (clove cigarettes)<input type="text" id="psi-prod-bidis" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Roll-your-own cigarettes<input type="text" id="psi-prod-ryo" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Chewing tobacco / leaf tobacco<input type="text" id="psi-prod-chew" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Snuff (dry or moist)<input type="text" id="psi-prod-snuff" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Snus (small pouches)<input type="text" id="psi-prod-snus" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Dissolvable tobacco products (lozenges, strips, sticks)<input type="text" id="psi-prod-dissolvable" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">E-cigarettes / vaping devices (nicotine-containing)<input type="text" id="psi-prod-ecig" placeholder="Age of onset; current/not"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Heated tobacco products (HTPs, e.g., IQOS)<input type="text" id="psi-prod-htp" placeholder="Age of onset; current/not"></label>
+        </div>
+
+        <label for="psi-comorbidities" style="margin-top: 12px;">Client medical co-morbidities include per client report:</label>
+        <div id="psi-comorbidities" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:8px; background:#f9f9f9; padding:10px; border:1px solid #e0e0e0; border-radius:6px;">
+            <label><input type="checkbox" data-text="COPD"> COPD</label>
+            <label><input type="checkbox" data-text="Coronary Artery Disease"> Coronary Artery Disease</label>
+            <label><input type="checkbox" data-text="High Blood Pressure"> High Blood Pressure</label>
+            <label><input type="checkbox" data-text="Stroke"> Stroke</label>
+            <label><input type="checkbox" data-text="Asthma"> Asthma</label>
+            <label><input type="checkbox" data-text="Diabetes"> Diabetes</label>
+            <label><input type="checkbox" data-text="Depression"> Depression</label>
+        </div>
+        <input type="text" id="psi-comorbid-other" placeholder="Other (specify)" style="margin-top:6px; max-width:520px;">
+
+        <h3 style="margin-top: 16px;">Tobacco Treatment History</h3>
+        <label for="psi-quit-attempts">Client reports the following quit attempts:</label>
+        <textarea id="psi-quit-attempts"></textarea>
+
+        <label>Client reports using the following to quit (checkboxes for past, now):</label>
+        <table style="width:100%; border-collapse: collapse; margin-bottom:10px;">
+            <thead>
+                <tr>
+                    <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Method</th>
+                    <th style="text-align:center; border-bottom:1px solid #ccc; padding:6px;">Past</th>
+                    <th style="text-align:center; border-bottom:1px solid #ccc; padding:6px;">Now</th>
+                </tr>
+            </thead>
+            <tbody id="psi-quit-aids-body">
+                <tr><td>Nicotine patch</td><td style="text-align:center;"><input type="checkbox" id="psi-method-patch-past"></td><td style="text-align:center;"><input type="checkbox" id="psi-method-patch-now"></td></tr>
+                <tr><td>Nicotine gum</td><td style="text-align:center;"><input type="checkbox" id="psi-method-gum-past"></td><td style="text-align:center;"><input type="checkbox" id="psi-method-gum-now"></td></tr>
+                <tr><td>Nicotine lozenge</td><td style="text-align:center;"><input type="checkbox" id="psi-method-lozenge-past"></td><td style="text-align:center;"><input type="checkbox" id="psi-method-lozenge-now"></td></tr>
+                <tr><td>Nicotine nasal spray</td><td style="text-align:center;"><input type="checkbox" id="psi-method-nasal-past"></td><td style="text-align:center;"><input type="checkbox" id="psi-method-nasal-now"></td></tr>
+                <tr><td>Nicotine inhaler</td><td style="text-align:center;"><input type="checkbox" id="psi-method-inhaler-past"></td><td style="text-align:center;"><input type="checkbox" id="psi-method-inhaler-now"></td></tr>
+                <tr><td>Bupropion SR</td><td style="text-align:center;"><input type="checkbox" id="psi-method-bupropion-past"></td><td style="text-align:center;"><input type="checkbox" id="psi-method-bupropion-now"></td></tr>
+                <tr><td>Varenicline</td><td style="text-align:center;"><input type="checkbox" id="psi-method-varenicline-past"></td><td style="text-align:center;"><input type="checkbox" id="psi-method-varenicline-now"></td></tr>
+                <tr><td>Other</td><td style="text-align:center;"><input type="checkbox" id="psi-method-other-past"></td><td style="text-align:center;"><input type="checkbox" id="psi-method-other-now"></td></tr>
+            </tbody>
+        </table>
+        <input type="text" id="psi-method-other-text" placeholder="If Other, describe" style="width:100%; max-width:520px;">
+
+        <label for="psi-reasons-past" style="margin-top:10px;">Client reports the following reasons to quit using tobacco in the past:</label>
+        <textarea id="psi-reasons-past"></textarea>
+
+        <label for="psi-reasons-now">Client reports the following reasons to quit using tobacco now:</label>
+        <textarea id="psi-reasons-now"></textarea>
+
+        <label for="psi-liked">When client uses tobacco, they like the following effects:</label>
+        <textarea id="psi-liked"></textarea>
+
+        <label for="psi-disliked">When client uses tobacco, they report disliking the following effects:</label>
+        <textarea id="psi-disliked"></textarea>
+
+        <label style="margin-top:10px;">In the past when trying to quit, withdrawal symptoms the client has struggled with include:</label>
+        <div id="psi-withdrawal-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:8px; background:#f8f9fa; padding:10px; border:1px solid #e0e0e0; border-radius:6px;">
+            <label><input type="checkbox" id="psi-withdrawal-cravings"> Strong cravings for nicotine</label>
+            <label><input type="checkbox" id="psi-withdrawal-irritability"> Irritability, anger, or frustration</label>
+            <label><input type="checkbox" id="psi-withdrawal-anxiety"> Anxiety, restlessness, or feeling on edge</label>
+            <label><input type="checkbox" id="psi-withdrawal-mood"> Depressed mood or low motivation</label>
+            <label><input type="checkbox" id="psi-withdrawal-concentration"> Difficulty concentrating or mental fog</label>
+            <label><input type="checkbox" id="psi-withdrawal-headaches"> Headaches</label>
+            <label><input type="checkbox" id="psi-withdrawal-fatigue"> Fatigue or low energy</label>
+            <label><input type="checkbox" id="psi-withdrawal-sleep"> Sleep problems (insomnia or vivid dreams)</label>
+            <label><input type="checkbox" id="psi-withdrawal-appetite"> Increased appetite or weight gain</label>
+            <label><input type="checkbox" id="psi-withdrawal-gi"> Gastrointestinal discomfort (e.g., constipation, stomach upset)</label>
+            <label><input type="checkbox" id="psi-withdrawal-cough"> Cough or sore throat</label>
+            <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="psi-withdrawal-other"> Other <input type="text" id="psi-withdrawal-other-text" placeholder="specify" style="flex:1;"></label>
+        </div>
+
+        <label for="psi-relapse-reasons" style="margin-top:10px;">Past reasons for relapse following quit attempts include:</label>
+        <textarea id="psi-relapse-reasons"></textarea>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-top:10px;">
+            <label style="display:flex; flex-direction:column; gap:6px;">Willingness to stop using tobacco (0-10):<input type="number" min="0" max="10" id="psi-willingness"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Ability to stop using tobacco (0-10):<input type="number" min="0" max="10" id="psi-ability"></label>
+        </div>
+
+        <label style="margin-top:12px;">Client's Stage of Change:</label>
+        <div id="psi-stage-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:8px;">
+            <label><input type="checkbox" id="psi-stage-precontemplation" data-text="Precontemplation"> Precontemplation</label>
+            <label><input type="checkbox" id="psi-stage-contemplation" data-text="Contemplation"> Contemplation</label>
+            <label><input type="checkbox" id="psi-stage-preparation" data-text="Preparation"> Preparation</label>
+            <label><input type="checkbox" id="psi-stage-action" data-text="Action"> Action</label>
+            <label><input type="checkbox" id="psi-stage-maintenance" data-text="Maintenance"> Maintenance</label>
+            <label><input type="checkbox" id="psi-stage-relapse" data-text="Relapse (or Recycling)"> Relapse (or Recycling)</label>
+        </div>
+
+        <h3 style="margin-top:16px;">Interventions used</h3>
+        <div id="psi-interventions" style="background:#f8f9fa; padding:12px; border:1px solid #e0e0e0; border-radius:6px; display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:8px; position:relative;">
+            <div style="grid-column:1 / -1; display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap;">
+                <label style="display:flex; flex-direction:column; gap:6px; flex:1; min-width:240px;">Client's nicotine dependence score based on the Heaviness of Smoking Index (HSI) is:
+                    <input type="text" id="psi-hsi-score" placeholder="e.g., 4 points, moderate dependence">
+                </label>
+                <button type="button" class="copy-button" style="height:32px; padding:0 10px;" onclick="openHsiModal('psi')">HSI Scale</button>
+            </div>
+            <label><input type="checkbox" data-text="Collected tobacco use history and previous attempts to quit." id="psi-int-history"> Collected Tobacco use history and previous attempts to quit.</label>
+            <label><input type="checkbox" data-text="Assessed for comorbid conditions that could impact treatment." id="psi-int-comorbid"> Assessed for comorbid conditions that could impact treatment.</label>
+            <label><input type="checkbox" data-text="Provided education on the risks of tobacco use, including pulmonary disease (e.g., COPD, lung cancer) and cardiovascular disease." id="psi-int-risks"> Provided education on the risks of tobacco use, including pulmonary disease (e.g., COPD, lung cancer) and cardiovascular disease.</label>
+            <label><input type="checkbox" data-text="Encouraged attaching nicotine gum or lozenges to the cigarette pack using a rubber band to keep alternatives visible and support choice during cravings." id="psi-int-rubber-band"> Educated on harm reduction strategies by encouraging client to attach nicotine gum or lozenges to the cigarette pack using a rubber band to keep alternatives visible and support choice during cravings.</label>
+            <label><input type="checkbox" data-text="Encouraged reducing visual and physical access to cigarettes (out of sight/off counters/hard-to-reach locations)." id="psi-int-access"> Educated on harm reduction strategies by encouraging client to reduce visual and physical access to cigarettes by keeping them out of sight, off counters, and stored in hard-to-reach locations (e.g., car, upstairs).</label>
+            <label><input type="checkbox" data-text="Encouraged changing morning routines to reduce conditioned cravings." id="psi-int-morning"> Educated on harm reduction strategies by encouraging client to change morning routines (e.g., switching coffee brands or choosing alternative drinks such as tea, water, or juice) to reduce conditioned cravings.</label>
+            <label><input type="checkbox" data-text="Encouraged prolonging time to first cigarette in the morning using behavioral strategies and nicotine gum upon waking." id="psi-int-first-cig"> Educated on harm reduction strategies by encouraging client to prolong time to first cigarette in the morning using behavioral strategies (e.g., setting a phone alarm) and nicotine gum upon waking.</label>
+            <label><input type="checkbox" data-text="Reviewed the importance of time to first cigarette as a strong predictor of nicotine dependence." id="psi-int-time-predictor"> Reviewed the importance of time to first cigarette as a strong predictor of nicotine dependence.</label>
+            <label><input type="checkbox" data-text="Encouraged prolonging time between cigarettes throughout the day as much as possible." id="psi-int-prolong-day"> Educated on harm reduction strategies by encouraging client to prolong time between cigarettes throughout the day as much as possible.</label>
+            <label><input type="checkbox" data-text="Educated on nicotine replacement therapy options to reduce urges." id="psi-int-nrt"> Educated client on nicotine replacement therapy options to reduce urges.</label>
+            <label><input type="checkbox" data-text="Discussed pharmacotherapy options including Wellbutrin, Chantix, nortriptyline, clonidine, or other agents." id="psi-int-pharma"> Educated on pharmacotherapy options including Wellbutrin, Chantix, nortriptyline, clonidine, or other agents.</label>
+            <label><input type="checkbox" data-text="Advised client not to smoke while wearing a prescribed nicotine patch." id="psi-int-no-smoke-patch"> Advised client not to smoke while wearing a prescribed nicotine patch.</label>
+            <label><input type="checkbox" data-text="Encouraged counting cigarettes each morning and setting a daily smoking limit (starting at X cigarettes)." id="psi-int-limit"> Educated on harm reduction strategies by encouraging client to count cigarettes each morning and set a daily smoking limit (starting at X cigarettes).</label>
+            <label><input type="checkbox" data-text="Developed a gradual reduction plan to decrease the daily cigarette allotment by one cigarette every two days." id="psi-int-gradual"> Educated on harm reduction strategies by developing a gradual reduction plan to decrease the daily cigarette allotment by one cigarette every two days.</label>
+            <label><input type="checkbox" data-text="Encouraged using sugar-free candy or gum prior to smoking to interrupt habitual responses during cravings." id="psi-int-candy"> Educated on harm reduction strategies by encouraging client to use sugar-free candy or gum prior to smoking to interrupt habitual responses during cravings.</label>
+            <label><input type="checkbox" data-text="Reviewed the importance of attending follow-up appointments." id="psi-int-followup"> Reviewed the importance of attending follow-up appointments.</label>
+            <label><input type="checkbox" data-text="Explained warning signs that required immediate medical attention." id="psi-int-warnings"> Explained warning signs that required immediate medical attention.</label>
+            <label><input type="checkbox" data-text="Provided instruction on proper medication administration and dosing." id="psi-int-admin"> Provided instruction on proper medication administration and dosing.</label>
+            <label><input type="checkbox" data-text="Provided client with resources and offered support in connecting to those resources." id="psi-int-resources"> Provided client with resources and offered support in connecting to those resources.</label>
+            <label style="display:flex; flex-direction:column; gap:6px; grid-column:1 / -1;">Other interventions (if applicable):
+                <textarea id="psi-interventions-other" rows="3" oninput="updateFinalNote()" placeholder="Enter additional interventions provided..."></textarea>
+            </label>
+
+            <div style="grid-column:1 / -1; margin-top:4px; display:flex; flex-direction:column; gap:6px;">
+                <h4 style="margin:0;">Pharmacotherapy options discussed (check all that apply):</h4>
+                <div id="psi-pharma-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:8px;">
+                    <label><input type="checkbox" data-text="Wellbutrin was discussed as an option." id="psi-pharma-wellbutrin"> Wellbutrin</label>
+                    <label><input type="checkbox" data-text="Chantix was discussed as an option." id="psi-pharma-chantix"> Chantix</label>
+                    <label><input type="checkbox" data-text="Nortriptyline was discussed as an option." id="psi-pharma-nortriptyline"> Nortriptyline</label>
+                    <label><input type="checkbox" data-text="Clonidine was discussed as an option." id="psi-pharma-clonidine"> Clonidine</label>
+                    <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="psi-pharma-other" data-text="Other pharmacotherapy option discussed."> Other <input type="text" id="psi-pharma-other-text" placeholder="specify" style="flex:1;"></label>
+                </div>
+            </div>
+        </div>
+
+        <div id="psi-hsi-modal" class="hidden" style="position:fixed; inset:0; background:rgba(0,0,0,0.55); display:flex; align-items:center; justify-content:center; padding:16px; z-index:9999;">
+            <div style="background:#fff; border-radius:8px; padding:16px; max-width:520px; width:100%; box-shadow:0 4px 18px rgba(0,0,0,0.18);">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px;">
+                    <h3 style="margin:0;">Heaviness of Smoking Index (HSI)</h3>
+                    <button type="button" class="copy-button" style="width:auto; padding:6px 10px;" onclick="closeHsiModal('psi')">Close</button>
+                </div>
+                <p style="margin:0 0 10px 0; font-size:14px; color:#444;">Answer both questions; the score (0-6) will auto-fill the HSI field with an interpretation (Low 0-2, Medium 3-4, High 5-6).</p>
+
+                <div style="margin-bottom:10px;">
+                    <strong>1) On the days that you smoke, how soon after you wake up do you have your first cigarette?</strong>
+                    <div style="display:grid; gap:6px; margin-top:6px;">
+                        <label><input type="radio" name="psi-hsi-q1" value="3" data-label="Within 5 minutes"> Within 5 minutes (3 points)</label>
+                        <label><input type="radio" name="psi-hsi-q1" value="2" data-label="6-30 minutes"> 6-30 minutes (2 points)</label>
+                        <label><input type="radio" name="psi-hsi-q1" value="1" data-label="31-60 minutes"> 31-60 minutes (1 point)</label>
+                        <label><input type="radio" name="psi-hsi-q1" value="0" data-label="After 60 minutes"> After 60 minutes (0 points)</label>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                    <strong>2) How many cigarettes do you typically smoke per day?</strong>
+                    <div style="display:grid; gap:6px; margin-top:6px;">
+                        <label><input type="radio" name="psi-hsi-q2" value="0" data-label="10 or fewer"> 10 or fewer (0 points)</label>
+                        <label><input type="radio" name="psi-hsi-q2" value="1" data-label="11-20"> 11-20 (1 point)</label>
+                        <label><input type="radio" name="psi-hsi-q2" value="2" data-label="21-30"> 21-30 (2 points)</label>
+                        <label><input type="radio" name="psi-hsi-q2" value="3" data-label="31 or more"> 31 or more (3 points)</label>
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:4px;">
+                    <button type="button" class="copy-button" style="width:auto; padding:8px 14px; background:#6c757d;" onclick="closeHsiModal('psi')">Cancel</button>
+                    <button type="button" class="copy-button" style="width:auto; padding:8px 14px;" onclick="saveHsiModal('psi')">Apply to HSI</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:12px;">
+            <h4 style="margin: 0 0 8px 0;">Resources (check if provided):</h4>
+            <div id="psi-resources" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:8px;">
+                <label><input type="checkbox" id="psi-res-handout" data-text='The following smoking cessation resources were provided: "Commit to Quit" online tobacco cessation support group (Thursdays 12:00pm to 1:00pm) https://www.urmc.rochester.edu/community-health/patient-care/stop-smoking/nicotine-cessation-support-group.aspx; Call the NY State Quit Line at 1-866-697-8487 for more resources; "Kick Buts" tobacco cessation texting & free NRT program (585) 504-9461 https://www.urmc.rochester.edu/news/story/wilmot-launches-new-fully-remote-smoking-cessation-program-with-free-medications-in-27-county-region; "Build Your Quit Plan" (Smokefree.gov) https://smokefree.gov/build-your-quit-plan; "How to Quit Smoking" (CDC) https://www.cdc.gov/tobacco/quit_smoking/how_to_quit/index.htm; "Tips for Quitting" (CDC) https://www.cdc.gov/tobacco/campaign/tips/quit-smoking/quit-smoking-medications/tips-for-quitting/index.html; "Health Benefits of Quitting Smoking Over Time" (American Cancer Society) https://www.cancer.org/healthy/stay-away-from-tobacco/benefits-of-quitting-smoking-over-time.html; "Clearing the Air" (National Cancer Institute) https://www.cancer.gov/publications/patient-education/clearing-the-air-pdf#:~:text=You%20can%20call%20the%20National,800%E2%80%93784%E2%80%938669).'> Smoking cessation resources provided</label>
+            </div>
+        </div>
+
+        <label for="psi-response" style="margin-top:12px;">Client Response to interventions:</label>
+        <textarea id="psi-response"></textarea>
+
+        <h3 style="margin-top:16px;">Plan/Next Steps</h3>
+        <label>Medication Plan:</label>
+        <div id="psi-med-plan-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:8px; margin-top:6px;">
+            <label><input type="checkbox" data-text="Nicotine patch" id="psi-med-plan-patch"> Nicotine patch</label>
+            <label><input type="checkbox" data-text="Nicotine gum" id="psi-med-plan-gum"> Nicotine gum</label>
+            <label><input type="checkbox" data-text="Nicotine lozenge" id="psi-med-plan-lozenge"> Nicotine lozenge</label>
+            <label><input type="checkbox" data-text="Nicotine nasal spray" id="psi-med-plan-nasal"> Nicotine nasal spray</label>
+            <label><input type="checkbox" data-text="Nicotine inhaler" id="psi-med-plan-inhaler"> Nicotine inhaler</label>
+            <label><input type="checkbox" data-text="Bupropion SR" id="psi-med-plan-bupropion"> Bupropion SR</label>
+            <label><input type="checkbox" data-text="Varenicline" id="psi-med-plan-varenicline"> Varenicline</label>
+            <label><input type="checkbox" data-text="Continue current medication regimen as prescribed" id="psi-med-plan-continue"> Continue current medication regimen as prescribed</label>
+            <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="psi-med-plan-other-option" data-text="Other"> Other <input type="text" id="psi-med-plan-other" placeholder="specify" style="flex:1;"></label>
+        </div>
+
+        <div id="psi-plan-options" style="background:#f8f9fa; padding:12px; border:1px solid #e0e0e0; border-radius:6px; display:grid; grid-template-columns: 1fr; gap:10px; margin-top:12px;">
+            <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="psi-plan-attendance"> Encourage continued attendance to counseling and/or groups</label>
+            <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="psi-plan-lpn"> Referred to LPN for monitoring and support</label>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="psi-plan-next">
+                <span>Scheduled next appointment for:</span>
+                <input type="date" id="psi-plan-next-date" style="flex:1; min-width:180px;">
+            </div>
+        </div>
+        <label for="psi-plan-other" style="margin-top:12px;">Other next steps:</label>
+        <textarea id="psi-plan-other" rows="3" oninput="updateFinalNote()" placeholder="Enter additional plan/next steps..."></textarea>
+    </div>
+
+    <!-- Container for Follow-up - Prescriber Smoking Cessation -->
+    <div id="prescriber-smoking-followup-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Smoking Cessation - Prescriber - Follow Up</h2>
+
+        <label for="psf-diagnosis">Diagnosis:</label>
+        <textarea id="psf-diagnosis" placeholder="Add diagnosis here. Before signing/locking, confirm Tobacco Use Disorder is documented in SA6 MultiAxial or TGI Initial."></textarea>
+
+        <label for="psf-goal">Goal:</label>
+        <textarea id="psf-goal">Client will maintain and improve overall health status through engagement with the medical team as needed, including medical monitoring and adherence to provider recommendations, to support recovery and well-being.</textarea>
+
+        <label for="psf-chief">Chief Complaint/Reason for visit:</label>
+        <textarea id="psf-chief"></textarea>
+
+        <label for="psf-progress" style="margin-top:12px;">Client's report of how their efforts towards smoking cessation are going since last visit:</label>
+        <textarea id="psf-progress"></textarea>
+
+        <label for="psf-reasons-continue">Client reports the following reasons to continue working towards quitting:</label>
+        <textarea id="psf-reasons-continue"></textarea>
+
+        <label for="psf-liked">When client uses tobacco, they like the following effects:</label>
+        <textarea id="psf-liked"></textarea>
+
+        <label for="psf-disliked">When client uses tobacco, they report disliking the following effects:</label>
+        <textarea id="psf-disliked"></textarea>
+
+        <label style="margin-top:10px;">Client reports the following withdrawal symptoms:</label>
+        <div id="psf-withdrawal-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:8px; background:#f8f9fa; padding:10px; border:1px solid #e0e0e0; border-radius:6px;">
+            <label><input type="checkbox" id="psf-withdrawal-cravings"> Strong cravings for nicotine</label>
+            <label><input type="checkbox" id="psf-withdrawal-irritability"> Irritability, anger, or frustration</label>
+            <label><input type="checkbox" id="psf-withdrawal-anxiety"> Anxiety, restlessness, or feeling on edge</label>
+            <label><input type="checkbox" id="psf-withdrawal-mood"> Depressed mood or low motivation</label>
+            <label><input type="checkbox" id="psf-withdrawal-concentration"> Difficulty concentrating or mental fog</label>
+            <label><input type="checkbox" id="psf-withdrawal-headaches"> Headaches</label>
+            <label><input type="checkbox" id="psf-withdrawal-fatigue"> Fatigue or low energy</label>
+            <label><input type="checkbox" id="psf-withdrawal-sleep"> Sleep problems (insomnia or vivid dreams)</label>
+            <label><input type="checkbox" id="psf-withdrawal-appetite"> Increased appetite or weight gain</label>
+            <label><input type="checkbox" id="psf-withdrawal-gi"> Gastrointestinal discomfort (e.g., constipation, stomach upset)</label>
+            <label><input type="checkbox" id="psf-withdrawal-cough"> Cough or sore throat</label>
+            <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="psf-withdrawal-other"> Other <input type="text" id="psf-withdrawal-other-text" placeholder="specify" style="flex:1;"></label>
+            <label><input type="checkbox" id="psf-withdrawal-none"> None</label>
+        </div>
+
+        <label for="psf-relapse-reason" style="margin-top:10px;">If client relapsed following their most recent quit attempt, include reason here:</label>
+        <textarea id="psf-relapse-reason"></textarea>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-top:10px;">
+            <label style="display:flex; flex-direction:column; gap:6px;">Willingness to stop using tobacco (0-10):<input type="number" min="0" max="10" id="psf-willingness"></label>
+            <label style="display:flex; flex-direction:column; gap:6px;">Ability to stop using tobacco (0-10):<input type="number" min="0" max="10" id="psf-ability"></label>
+        </div>
+
+        <label style="margin-top:12px;">Client's Stage of Change:</label>
+        <div id="psf-stage-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:8px;">
+            <label><input type="checkbox" id="psf-stage-precontemplation" data-text="Precontemplation"> Precontemplation</label>
+            <label><input type="checkbox" id="psf-stage-contemplation" data-text="Contemplation"> Contemplation</label>
+            <label><input type="checkbox" id="psf-stage-preparation" data-text="Preparation"> Preparation</label>
+            <label><input type="checkbox" id="psf-stage-action" data-text="Action"> Action</label>
+            <label><input type="checkbox" id="psf-stage-maintenance" data-text="Maintenance"> Maintenance</label>
+            <label><input type="checkbox" id="psf-stage-relapse" data-text="Relapse (or Recycling)"> Relapse (or Recycling)</label>
+        </div>
+
+        <h3 style="margin-top:16px;">Interventions used</h3>
+        <div id="psf-interventions" style="background:#f8f9fa; padding:12px; border:1px solid #e0e0e0; border-radius:6px; display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:8px; position:relative;">
+            <div style="grid-column:1 / -1; display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap;">
+                <label style="display:flex; flex-direction:column; gap:6px; flex:1; min-width:240px;">Client's nicotine dependence score based on the Heaviness of Smoking Index (HSI) is:
+                    <input type="text" id="psf-hsi-score" placeholder="e.g., 3 points, mild dependence">
+                </label>
+                <button type="button" class="copy-button" style="height:32px; padding:0 10px;" onclick="openHsiModal('psf')">HSI Scale</button>
+            </div>
+            <label><input type="checkbox" data-text="Provided education on the risks of tobacco use, including pulmonary disease (e.g., COPD, lung cancer) and cardiovascular disease." id="psf-int-risks"> Provided education on the risks of tobacco use, including pulmonary disease (e.g., COPD, lung cancer) and cardiovascular disease.</label>
+            <label><input type="checkbox" data-text="Assessed for comorbid conditions that could impact treatment." id="psf-int-comorbid"> Assessed for comorbid conditions that could impact treatment</label>
+            <label><input type="checkbox" data-text="Encouraged attaching nicotine gum or lozenges to the cigarette pack using a rubber band to keep alternatives visible and support choice during cravings." id="psf-int-rubber-band"> Educated on harm reduction strategies by encouraging client to attach nicotine gum or lozenges to the cigarette pack using a rubber band to keep alternatives visible and support choice during cravings.</label>
+            <label><input type="checkbox" data-text="Encouraged reducing visual and physical access to cigarettes (out of sight/off counters/hard-to-reach locations)." id="psf-int-access"> Educated on harm reduction strategies by encouraging client to reduce visual and physical access to cigarettes by keeping them out of sight, off counters, and stored in hard-to-reach locations (e.g., car, upstairs).</label>
+            <label><input type="checkbox" data-text="Encouraged changing morning routines to reduce conditioned cravings." id="psf-int-morning"> Educated on harm reduction strategies by encouraging client to change morning routines (e.g., switching coffee brands or choosing alternative drinks such as tea, water, or juice) to reduce conditioned cravings.</label>
+            <label><input type="checkbox" data-text="Encouraged prolonging time to first cigarette in the morning using behavioral strategies and nicotine gum upon waking." id="psf-int-first-cig"> Educated on harm reduction strategies by encouraging client to prolong time to first cigarette in the morning using behavioral strategies (e.g., setting a phone alarm) and nicotine gum upon waking.</label>
+            <label><input type="checkbox" data-text="Reviewed the importance of time to first cigarette as a strong predictor of nicotine dependence." id="psf-int-time-predictor"> Reviewed the importance of time to first cigarette as a strong predictor of nicotine dependence.</label>
+            <label><input type="checkbox" data-text="Encouraged prolonging time between cigarettes throughout the day as much as possible." id="psf-int-prolong-day"> Educated on harm reduction strategies by encouraging client to prolong time between cigarettes throughout the day as much as possible.</label>
+            <label><input type="checkbox" data-text="Educated on nicotine replacement therapy options to reduce urges." id="psf-int-nrt"> Educated client on nicotine replacement therapy options to reduce urges.</label>
+            <label><input type="checkbox" data-text="Discussed pharmacotherapy options including Wellbutrin, Chantix, nortriptyline, clonidine, or other agents." id="psf-int-pharma"> Educated on pharmacotherapy options including (check all that apply) Wellbutrin, Chantix, nortriptyline, clonidine, Other.</label>
+            <label><input type="checkbox" data-text="Advised client not to smoke while wearing a prescribed nicotine patch." id="psf-int-no-smoke-patch"> Advised client not to smoke while wearing a prescribed nicotine patch.</label>
+            <label><input type="checkbox" data-text="Encouraged counting cigarettes each morning and setting a daily smoking limit (starting at X cigarettes)." id="psf-int-limit"> Educated on harm reduction strategies by encouraging client to count cigarettes each morning and set a daily smoking limit (starting at X cigarettes).</label>
+            <label><input type="checkbox" data-text="Developed a gradual reduction plan to decrease the daily cigarette allotment by one cigarette every two days." id="psf-int-gradual"> Educated on harm reduction strategies by developing a gradual reduction plan to decrease the daily cigarette allotment by one cigarette every two days.</label>
+            <label><input type="checkbox" data-text="Encouraged using sugar-free candy or gum prior to smoking to interrupt habitual responses during cravings." id="psf-int-candy"> Educated on harm reduction strategies by encouraging client to use sugar-free candy or gum prior to smoking to interrupt habitual responses during cravings.</label>
+            <label><input type="checkbox" data-text="Reviewed the importance of attending follow-up appointments." id="psf-int-followup"> Reviewed the importance of attending follow-up appointments.</label>
+            <label><input type="checkbox" data-text="Explained warning signs that required immediate medical attention." id="psf-int-warnings"> Explained warning signs that required immediate medical attention.</label>
+            <label><input type="checkbox" data-text="Observed and recorded Smoking Cessation medication adherence and screened for any side effects." id="psf-int-adherence"> Observed and recorded Smoking Cessation medication adherence and screened for any side effects.</label>
+            <label><input type="checkbox" data-text="Monitored clients' responses to the Smoking Cessation treatment and symptom changes." id="psf-int-monitor"> Monitored clients’ responses to the Smoking Cessation treatment and symptom changes.</label>
+            <label><input type="checkbox" data-text="Assessed for signs of adverse reactions or complications related to medications." id="psf-int-adverse"> Assessed for signs of adverse reactions or complications related to medications.</label>
+            <label><input type="checkbox" data-text="Provided instruction on proper medication administration and dosing." id="psf-int-admin"> Provided instruction on proper medication administration and dosing.</label>
+            <label><input type="checkbox" data-text="Provided client with resources and offered support in connecting to those resources." id="psf-int-resources"> Provided client with resources and offered support in connecting to those resources.</label>
+            <label style="display:flex; flex-direction:column; gap:6px; grid-column:1 / -1;">Other interventions (if applicable):
+                <textarea id="psf-interventions-other" rows="3" oninput="updateFinalNote()" placeholder="Enter additional interventions provided..."></textarea>
+            </label>
+
+            <div style="grid-column:1 / -1; margin-top:4px; display:flex; flex-direction:column; gap:6px;">
+                <h4 style="margin:0;">Pharmacotherapy options discussed (check all that apply):</h4>
+                <div id="psf-pharma-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:8px;">
+                    <label><input type="checkbox" data-text="Wellbutrin was discussed as an option." id="psf-pharma-wellbutrin"> Wellbutrin</label>
+                    <label><input type="checkbox" data-text="Chantix was discussed as an option." id="psf-pharma-chantix"> Chantix</label>
+                    <label><input type="checkbox" data-text="Nortriptyline was discussed as an option." id="psf-pharma-nortriptyline"> Nortriptyline</label>
+                    <label><input type="checkbox" data-text="Clonidine was discussed as an option." id="psf-pharma-clonidine"> Clonidine</label>
+                    <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="psf-pharma-other" data-text="Other pharmacotherapy option discussed."> Other <input type="text" id="psf-pharma-other-text" placeholder="specify" style="flex:1;"></label>
+                </div>
+            </div>
+        </div>
+
+        <div id="psf-hsi-modal" class="hidden" style="position:fixed; inset:0; background:rgba(0,0,0,0.55); display:flex; align-items:center; justify-content:center; padding:16px; z-index:9999;">
+            <div style="background:#fff; border-radius:8px; padding:16px; max-width:520px; width:100%; box-shadow:0 4px 18px rgba(0,0,0,0.18);">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px;">
+                    <h3 style="margin:0;">Heaviness of Smoking Index (HSI)</h3>
+                    <button type="button" class="copy-button" style="width:auto; padding:6px 10px;" onclick="closeHsiModal('psf')">Close</button>
+                </div>
+                <p style="margin:0 0 10px 0; font-size:14px; color:#444;">Answer both questions; the score (0-6) will auto-fill the HSI field with an interpretation (Low 0-2, Medium 3-4, High 5-6).</p>
+
+                <div style="margin-bottom:10px;">
+                    <strong>1) On the days that you smoke, how soon after you wake up do you have your first cigarette?</strong>
+                    <div style="display:grid; gap:6px; margin-top:6px;">
+                        <label><input type="radio" name="psf-hsi-q1" value="3" data-label="Within 5 minutes"> Within 5 minutes (3 points)</label>
+                        <label><input type="radio" name="psf-hsi-q1" value="2" data-label="6-30 minutes"> 6-30 minutes (2 points)</label>
+                        <label><input type="radio" name="psf-hsi-q1" value="1" data-label="31-60 minutes"> 31-60 minutes (1 point)</label>
+                        <label><input type="radio" name="psf-hsi-q1" value="0" data-label="After 60 minutes"> After 60 minutes (0 points)</label>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                    <strong>2) How many cigarettes do you typically smoke per day?</strong>
+                    <div style="display:grid; gap:6px; margin-top:6px;">
+                        <label><input type="radio" name="psf-hsi-q2" value="0" data-label="10 or fewer"> 10 or fewer (0 points)</label>
+                        <label><input type="radio" name="psf-hsi-q2" value="1" data-label="11-20"> 11-20 (1 point)</label>
+                        <label><input type="radio" name="psf-hsi-q2" value="2" data-label="21-30"> 21-30 (2 points)</label>
+                        <label><input type="radio" name="psf-hsi-q2" value="3" data-label="31 or more"> 31 or more (3 points)</label>
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:4px;">
+                    <button type="button" class="copy-button" style="width:auto; padding:8px 14px; background:#6c757d;" onclick="closeHsiModal('psf')">Cancel</button>
+                    <button type="button" class="copy-button" style="width:auto; padding:8px 14px;" onclick="saveHsiModal('psf')">Apply to HSI</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:12px;">
+            <h4 style="margin: 0 0 8px 0;">Resources (check if provided):</h4>
+            <div id="psf-resources" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:8px;">
+                <label><input type="checkbox" id="psf-res-handout" data-text='The following smoking cessation resources were provided: "Commit to Quit" online tobacco cessation support group (Thursdays 12:00pm to 1:00pm) https://www.urmc.rochester.edu/community-health/patient-care/stop-smoking/nicotine-cessation-support-group.aspx; Call the NY State Quit Line at 1-866-697-8487 for more resources; "Kick Buts" tobacco cessation texting & free NRT program (585) 504-9461 https://www.urmc.rochester.edu/news/story/wilmot-launches-new-fully-remote-smoking-cessation-program-with-free-medications-in-27-county-region; "Build Your Quit Plan" (Smokefree.gov) https://smokefree.gov/build-your-quit-plan; "How to Quit Smoking" (CDC) https://www.cdc.gov/tobacco/quit_smoking/how_to_quit/index.htm; "Tips for Quitting" (CDC) https://www.cdc.gov/tobacco/campaign/tips/quit-smoking/quit-smoking-medications/tips-for-quitting/index.html; "Health Benefits of Quitting Smoking Over Time" (American Cancer Society) https://www.cancer.org/healthy/stay-away-from-tobacco/benefits-of-quitting-smoking-over-time.html; "Clearing the Air" (National Cancer Institute) https://www.cancer.gov/publications/patient-education/clearing-the-air-pdf#:~:text=You%20can%20call%20the%20National,800%E2%80%93784%E2%80%938669).'> Smoking cessation resources provided</label>
+            </div>
+        </div>
+
+        <label for="psf-response" style="margin-top:12px;">Client Response to interventions:</label>
+        <textarea id="psf-response"></textarea>
+
+        <h3 style="margin-top:16px;">Plan/Next Steps</h3>
+        <label>Medication Plan:</label>
+        <div id="psf-med-plan-options" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:8px; margin-top:6px;">
+            <label><input type="checkbox" data-text="Nicotine patch" id="psf-med-plan-patch"> Nicotine patch</label>
+            <label><input type="checkbox" data-text="Nicotine gum" id="psf-med-plan-gum"> Nicotine gum</label>
+            <label><input type="checkbox" data-text="Nicotine lozenge" id="psf-med-plan-lozenge"> Nicotine lozenge</label>
+            <label><input type="checkbox" data-text="Nicotine nasal spray" id="psf-med-plan-nasal"> Nicotine nasal spray</label>
+            <label><input type="checkbox" data-text="Nicotine inhaler" id="psf-med-plan-inhaler"> Nicotine inhaler</label>
+            <label><input type="checkbox" data-text="Bupropion SR" id="psf-med-plan-bupropion"> Bupropion SR</label>
+            <label><input type="checkbox" data-text="Varenicline" id="psf-med-plan-varenicline"> Varenicline</label>
+            <label><input type="checkbox" data-text="Continue current medication regimen as prescribed" id="psf-med-plan-continue"> Continue current medication regimen as prescribed</label>
+            <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="psf-med-plan-other-option" data-text="Other"> Other <input type="text" id="psf-med-plan-other" placeholder="specify" style="flex:1;"></label>
+        </div>
+
+        <div id="psf-plan-options" style="background:#f8f9fa; padding:12px; border:1px solid #e0e0e0; border-radius:6px; display:grid; grid-template-columns: 1fr; gap:10px; margin-top:12px;">
+            <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="psf-plan-attendance"> Encourage continued attendance to counseling and/or groups</label>
+            <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="psf-plan-lpn"> Referred to LPN for monitoring and support</label>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="psf-plan-next">
+                <span>Scheduled next appointment for:</span>
+                <input type="date" id="psf-plan-next-date" style="flex:1; min-width:180px;">
+            </div>
+        </div>
+        <label for="psf-plan-other" style="margin-top:12px;">Other next steps:</label>
+        <textarea id="psf-plan-other" rows="3" oninput="updateFinalNote()" placeholder="Enter additional plan/next steps..."></textarea>
+    </div>
+
     <!-- Container for Opioid Use Disorder Short -->
     <div id="opioid-use-disorder-short-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Opioid Use Disorder Short</h2>
@@ -3434,6 +4113,10 @@ Rochester, NY
                 { value: 'mat-education', label: 'MAT Education' },
                 { value: 'medical-screening', label: 'Medical Screening' },
                 { value: 'complex-coordination-of-care', label: 'Complex Coordination of Care' },
+                { value: 'nurse-smoking-initial', label: 'Smoking Cessation - Nurse - Initial' },
+                { value: 'nurse-smoking-followup', label: 'Smoking Cessation - Nurse - Follow Up' },
+                { value: 'prescriber-smoking-initial', label: 'Smoking Cessation - Prescriber - Initial' },
+                { value: 'prescriber-smoking-followup', label: 'Smoking Cessation - Prescriber - Follow Up' },
                 { value: 'med-mgmt-follow-up', label: 'Medication Management Follow-up' },
                 { value: 'narcan-kit', label: 'Narcan Education & Kit' },
                 { value: 'nurse-follow-up', label: 'Nurse Follow Up' },
@@ -4281,6 +4964,337 @@ function addNurseInterventionRow(isFirstRow = false) {
         updateFinalNote();
     }
 
+    const smokingProductFields = [
+        { id: 'cigarettes', label: 'Cigarettes (regular or light)' },
+        { id: 'cigars', label: 'Cigars (large cigars, cigarillos, little cigars)' },
+        { id: 'pipe', label: 'Pipe tobacco' },
+        { id: 'hookah', label: 'Hookah / waterpipe' },
+        { id: 'bidis', label: 'Bidis or kreteks (clove cigarettes)' },
+        { id: 'ryo', label: 'Roll-your-own cigarettes' },
+        { id: 'chew', label: 'Chewing tobacco / leaf tobacco' },
+        { id: 'snuff', label: 'Snuff (dry or moist)' },
+        { id: 'snus', label: 'Snus (small pouches)' },
+        { id: 'dissolvable', label: 'Dissolvable tobacco products (lozenges, strips, sticks)' },
+        { id: 'ecig', label: 'E-cigarettes / vaping devices (nicotine-containing)' },
+        { id: 'htp', label: 'Heated tobacco products (HTPs, e.g., IQOS)' }
+    ];
+
+    const smokingQuitMethods = [
+        { key: 'patch', label: 'Nicotine patch' },
+        { key: 'gum', label: 'Nicotine gum' },
+        { key: 'lozenge', label: 'Nicotine lozenge' },
+        { key: 'nasal', label: 'Nicotine nasal spray' },
+        { key: 'inhaler', label: 'Nicotine inhaler' },
+        { key: 'bupropion', label: 'Bupropion SR' },
+        { key: 'varenicline', label: 'Varenicline' },
+        { key: 'other', label: 'Other' }
+    ];
+
+    const smokingWithdrawalItems = [
+        { key: 'cravings', label: 'Strong cravings for nicotine' },
+        { key: 'irritability', label: 'Irritability, anger, or frustration' },
+        { key: 'anxiety', label: 'Anxiety, restlessness, or feeling on edge' },
+        { key: 'mood', label: 'Depressed mood or low motivation' },
+        { key: 'concentration', label: 'Difficulty concentrating or mental fog' },
+        { key: 'headaches', label: 'Headaches' },
+        { key: 'fatigue', label: 'Fatigue or low energy' },
+        { key: 'sleep', label: 'Sleep problems (insomnia or vivid dreams)' },
+        { key: 'appetite', label: 'Increased appetite or weight gain' },
+        { key: 'gi', label: 'Gastrointestinal discomfort (e.g., constipation, stomach upset)' },
+        { key: 'cough', label: 'Cough or sore throat' },
+        { key: 'other', label: 'Other' }
+    ];
+
+    const smokingStageItems = [
+        { key: 'precontemplation', label: 'Precontemplation' },
+        { key: 'contemplation', label: 'Contemplation' },
+        { key: 'preparation', label: 'Preparation' },
+        { key: 'action', label: 'Action' },
+        { key: 'maintenance', label: 'Maintenance' },
+        { key: 'relapse', label: 'Relapse (or Recycling)' }
+    ];
+
+    function collectSmokingProducts(prefix) {
+        return smokingProductFields.map(field => {
+            const val = (document.getElementById(`${prefix}-prod-${field.id}`)?.value || '').trim();
+            return val ? `${field.label}: ${val}` : '';
+        }).filter(Boolean);
+    }
+
+    function collectSmokingQuitMethods(prefix) {
+        const result = { past: [], current: [] };
+        const otherText = (document.getElementById(`${prefix}-method-other-text`)?.value || '').trim();
+        smokingQuitMethods.forEach(method => {
+            const pastId = `${prefix}-method-${method.key}-past`;
+            const nowId = `${prefix}-method-${method.key}-now`;
+            const pastChecked = document.getElementById(pastId)?.checked;
+            const nowChecked = document.getElementById(nowId)?.checked;
+            let label = method.label;
+            if (method.key === 'other' && otherText) {
+                label = `${method.label}: ${otherText}`;
+            }
+            if (pastChecked) result.past.push(label);
+            if (nowChecked) result.current.push(label);
+        });
+        return result;
+    }
+
+    function collectSmokingWithdrawal(prefix, allowNone = false) {
+        const selections = smokingWithdrawalItems.map(item => {
+            if (item.key === 'other') {
+                const checked = document.getElementById(`${prefix}-withdrawal-other`)?.checked;
+                const text = (document.getElementById(`${prefix}-withdrawal-other-text`)?.value || '').trim();
+                if (checked) {
+                    return text ? `Other: ${text}` : 'Other: [specify]';
+                }
+                return '';
+            }
+            const checked = document.getElementById(`${prefix}-withdrawal-${item.key}`)?.checked;
+            return checked ? item.label : '';
+        }).filter(Boolean);
+
+        if (allowNone && document.getElementById(`${prefix}-withdrawal-none`)?.checked) {
+            return ['None'];
+        }
+        return selections;
+    }
+
+    function collectSmokingStages(prefix) {
+        return smokingStageItems
+            .map(item => ({ label: item.label, checked: document.getElementById(`${prefix}-stage-${item.key}`)?.checked }))
+            .filter(item => item.checked)
+            .map(item => item.label);
+    }
+
+    function collectComorbidities(selectOrContainerId, otherId) {
+        const node = document.getElementById(selectOrContainerId);
+        let selected = [];
+        if (node) {
+            if (node.tagName && node.tagName.toLowerCase() === 'select') {
+                selected = Array.from(node.selectedOptions).map(opt => opt.value || opt.textContent || '').filter(Boolean);
+            } else {
+                selected = Array.from(node.querySelectorAll('input[type="checkbox"]:checked')).map(cb => (cb.dataset.text || cb.value || cb.parentElement?.textContent || '').trim()).filter(Boolean);
+            }
+        }
+        const other = (document.getElementById(otherId)?.value || '').trim();
+        if (other) selected.push(other);
+        return selected;
+    }
+
+    function collectCheckedTexts(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return [];
+        return Array.from(container.querySelectorAll('input[type="checkbox"]:checked')).map(cb => {
+            const fallback = cb.parentElement ? cb.parentElement.textContent.trim() : '';
+            return (cb.dataset.text || fallback || '').replace(/\s+/g, ' ').trim();
+        }).filter(Boolean);
+    }
+
+    function collectResources(containerId, otherTextId) {
+        const items = collectCheckedTexts(containerId);
+        const otherText = (document.getElementById(otherTextId)?.value || '').trim();
+        if (otherText) {
+            const otherIndex = items.findIndex(item => item.toLowerCase().startsWith('other'));
+            const otherValue = `Other: ${otherText}`;
+            if (otherIndex >= 0) {
+                items[otherIndex] = otherValue;
+            } else {
+                items.push(otherValue);
+            }
+        }
+        return items;
+    }
+
+    function formatSmokingResourceList(resources) {
+        const prefix = 'The following smoking cessation resources were provided:';
+        if (resources.length === 1 && resources[0].startsWith(prefix)) {
+            const listPortion = resources[0].slice(prefix.length).trim();
+            const items = listPortion.split(';').map(part => part.trim()).filter(Boolean);
+            return { heading: prefix, items };
+        }
+        return null;
+    }
+
+    function openHsiModal(prefix) {
+        const modal = document.getElementById(`${prefix}-hsi-modal`);
+        if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeHsiModal(prefix) {
+        const modal = document.getElementById(`${prefix}-hsi-modal`);
+        if (modal) modal.classList.add('hidden');
+    }
+
+    function saveHsiModal(prefix) {
+        const q1 = document.querySelector(`input[name="${prefix}-hsi-q1"]:checked`);
+        const q2 = document.querySelector(`input[name="${prefix}-hsi-q2"]:checked`);
+        const score1 = q1 ? parseInt(q1.value, 10) : 0;
+        const score2 = q2 ? parseInt(q2.value, 10) : 0;
+        const total = score1 + score2;
+
+        let level = 'Low';
+        if (total >= 5) level = 'High';
+        else if (total >= 3) level = 'Medium';
+
+        const q1Text = q1?.dataset.label || 'n/a';
+        const q2Text = q2?.dataset.label || 'n/a';
+
+        const input = document.getElementById(`${prefix}-hsi-score`);
+        if (input) {
+            input.value = `${total} (${level}) — TTFC: ${q1Text}; CPD: ${q2Text}`;
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+
+        closeHsiModal(prefix);
+        updateFinalNote();
+    }
+
+    function formatDateValue(raw) {
+        if (!raw) return '';
+        const dt = new Date(`${raw}T00:00:00`);
+        if (Number.isNaN(dt.getTime())) return raw;
+        return dt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    function buildSmokingNote({ prefix, phase, role }) {
+        const val = (suffix) => (document.getElementById(`${prefix}-${suffix}`)?.value || '').trim();
+        const sections = [];
+
+        const diagnosis = val('diagnosis');
+        if (diagnosis) sections.push(`Diagnosis:\n${diagnosis}`);
+
+        const goal = val('goal');
+        if (goal) sections.push(`Goal:\n${goal}`);
+
+        const chief = val('chief');
+        if (chief) sections.push(`Chief Complaint/Reason for visit:\n${chief}`);
+
+        if (phase === 'initial') {
+            const productLines = collectSmokingProducts(prefix);
+            const comorbidities = collectComorbidities(`${prefix}-comorbidities`, `${prefix}-comorbid-other`);
+            const historyParts = [];
+            if (productLines.length > 0) historyParts.push(productLines.join('\n'));
+            if (comorbidities.length > 0) historyParts.push(`Client medical co-morbidities include: ${comorbidities.join(', ')}`);
+            if (historyParts.length > 0) sections.push(`TOBACCO USE HISTORY:\n${historyParts.join('\n')}`);
+
+            const quitAttempts = val('quit-attempts');
+            const quitMethods = collectSmokingQuitMethods(prefix);
+            const reasonsPast = val('reasons-past');
+            const reasonsNow = val('reasons-now');
+            const liked = val('liked');
+            const disliked = val('disliked');
+            const withdrawal = collectSmokingWithdrawal(prefix, false);
+            const relapseReasons = val('relapse-reasons');
+
+            const treatmentParts = [];
+            if (quitAttempts) treatmentParts.push(`Client reports the following quit attempts:\n${quitAttempts}`);
+            if (quitMethods.past.length > 0) treatmentParts.push(`Quit aids used (past): ${quitMethods.past.join(', ')}`);
+            if (quitMethods.current.length > 0) treatmentParts.push(`Quit aids used (now): ${quitMethods.current.join(', ')}`);
+            if (reasonsPast) treatmentParts.push(`Reasons to quit in the past:\n${reasonsPast}`);
+            if (reasonsNow) treatmentParts.push(`Reasons to quit now:\n${reasonsNow}`);
+            if (liked) treatmentParts.push(`Liked effects when using tobacco:\n${liked}`);
+            if (disliked) treatmentParts.push(`Disliked effects when using tobacco:\n${disliked}`);
+            if (withdrawal.length > 0) treatmentParts.push(`Withdrawal symptoms struggled with in past quit attempts:\n• ${withdrawal.join('\n• ')}`);
+            if (relapseReasons) treatmentParts.push(`Past reasons for relapse:\n${relapseReasons}`);
+            if (treatmentParts.length > 0) sections.push(`TOBACCO TREATMENT HISTORY:\n${treatmentParts.join('\n\n')}`);
+        } else {
+            const progress = val('progress');
+            const reasonsContinue = val('reasons-continue');
+            if (progress) sections.push(`Client report since last visit:\n${progress}`);
+            if (reasonsContinue) sections.push(`Reasons to continue working towards quitting:\n${reasonsContinue}`);
+            const liked = val('liked');
+            const disliked = val('disliked');
+            if (liked) sections.push(`Liked effects when using tobacco:\n${liked}`);
+            if (disliked) sections.push(`Disliked effects when using tobacco:\n${disliked}`);
+            const withdrawal = collectSmokingWithdrawal(prefix, true);
+            if (withdrawal.length > 0) sections.push(`Withdrawal symptoms:\n• ${withdrawal.join('\n• ')}`);
+            const relapseReason = val('relapse-reason');
+            if (relapseReason) sections.push(`Relapse reason (most recent attempt):\n${relapseReason}`);
+        }
+
+        const willingness = val('willingness');
+        const ability = val('ability');
+        if (willingness || ability) {
+            const ratings = [];
+            if (willingness) ratings.push(`Willingness to stop using tobacco: ${willingness}/10`);
+            if (ability) ratings.push(`Ability to stop using tobacco: ${ability}/10`);
+            sections.push(ratings.join('\n'));
+        }
+
+        const stages = collectSmokingStages(prefix);
+        if (stages.length > 0) sections.push(`Stage of Change:\n• ${stages.join('\n• ')}`);
+
+        const interventions = collectCheckedTexts(`${prefix}-interventions`);
+        const interventionsOther = val('interventions-other');
+        if (role === 'prescriber') {
+            const hsi = val('hsi-score');
+            if (hsi) interventions.push(`HSI score: ${hsi}`);
+            const pharma = collectCheckedTexts(`${prefix}-pharma-options`);
+            const pharmaOther = val('pharma-other-text');
+            if (pharmaOther) {
+                const otherIndex = pharma.findIndex(item => item.toLowerCase().startsWith('other'));
+                const replacement = `Other pharmacotherapy option discussed: ${pharmaOther}`;
+                if (otherIndex >= 0) {
+                    pharma[otherIndex] = replacement;
+                } else {
+                    pharma.push(replacement);
+                }
+            }
+            if (pharma.length > 0) interventions.push(`Pharmacotherapy options discussed: ${pharma.join('; ')}`);
+        }
+        if (interventionsOther) interventions.push(interventionsOther);
+        if (interventions.length > 0) sections.push(`Interventions used:\n• ${interventions.join('\n• ')}`);
+
+        const resources = collectResources(`${prefix}-resources`, `${prefix}-res-other-text`);
+        const smokingResources = formatSmokingResourceList(resources);
+        if (smokingResources) {
+            const bullets = smokingResources.items.length > 0 ? `\n• ${smokingResources.items.join('\n• ')}` : '';
+            sections.push(`Resources provided:\n${smokingResources.heading}${bullets}`);
+        } else if (resources.length > 0) {
+            sections.push(`Resources provided:\n• ${resources.join('\n• ')}`);
+        }
+
+        const response = val('response');
+        if (response) sections.push(`Client Response:\n${response}`);
+
+        const planItems = [];
+        if (role === 'prescriber') {
+            const medPlan = collectCheckedTexts(`${prefix}-med-plan-options`);
+            const medPlanOther = val('med-plan-other');
+            if (medPlanOther && medPlan.findIndex(item => item.toLowerCase().startsWith('other')) >= 0) {
+                // Replace generic Other with specific text
+                const idx = medPlan.findIndex(item => item.toLowerCase().startsWith('other'));
+                medPlan[idx] = `Other: ${medPlanOther}`;
+            } else if (medPlanOther) {
+                medPlan.push(`Other: ${medPlanOther}`);
+            }
+            if (medPlan.length > 0) planItems.push(`Medication Plan: ${medPlan.join(', ')}`);
+        }
+
+        const attendancePlan = document.getElementById(`${prefix}-plan-attendance`);
+        if (attendancePlan?.checked) planItems.push('Encourage continued attendance to counseling and/or groups');
+
+        const prescriberPlan = document.getElementById(`${prefix}-plan-prescriber`);
+        if (prescriberPlan?.checked) planItems.push('Referred to Prescriber for medication management');
+
+        const lpnPlan = document.getElementById(`${prefix}-plan-lpn`);
+        if (lpnPlan?.checked) planItems.push('Referred to LPN for monitoring and support');
+
+        const nextPlan = document.getElementById(`${prefix}-plan-next`);
+        if (nextPlan?.checked) {
+            const dateVal = formatDateValue(val('plan-next-date')) || '[date]';
+            planItems.push(`Scheduled next appointment for: ${dateVal}`);
+        }
+
+        const planOther = val('plan-other');
+        if (planOther) planItems.push(planOther);
+
+        if (planItems.length > 0) sections.push(`Plan/Next Steps:\n• ${planItems.join('\n• ')}`);
+
+        return sections.join('\n\n');
+    }
+
     function addDtcToxRow() {
         const container = document.getElementById('dtc-toxContainer');
         const row = document.createElement('div');
@@ -4369,6 +5383,49 @@ function addNurseInterventionRow(isFirstRow = false) {
                 updateFinalNote();
             });
         }
+    }
+
+    function wireSmokingForm(prefix, containerId, allowWithdrawalNone = false) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const inputs = container.querySelectorAll('input, select, textarea');
+        inputs.forEach(el => {
+            el.addEventListener('input', updateFinalNote);
+            el.addEventListener('change', updateFinalNote);
+            if (el.tagName.toLowerCase() === 'textarea') {
+                el.addEventListener('input', () => autoResize(el));
+            }
+        });
+
+        if (allowWithdrawalNone) {
+            const withdrawalContainer = document.getElementById(`${prefix}-withdrawal-options`);
+            const noneCheckbox = document.getElementById(`${prefix}-withdrawal-none`);
+            if (withdrawalContainer && noneCheckbox) {
+                const checkboxes = withdrawalContainer.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(cb => {
+                    cb.addEventListener('change', () => {
+                        if (cb === noneCheckbox && noneCheckbox.checked) {
+                            checkboxes.forEach(other => {
+                                if (other !== noneCheckbox) other.checked = false;
+                            });
+                        } else if (cb !== noneCheckbox && cb.checked && noneCheckbox.checked) {
+                            noneCheckbox.checked = false;
+                        }
+                        updateFinalNote();
+                    });
+                });
+            }
+        }
+    }
+
+    function initSmokingCessationListeners() {
+        [
+            { prefix: 'nsi', containerId: 'nurse-smoking-initial-container', allowWithdrawalNone: false },
+            { prefix: 'nsf', containerId: 'nurse-smoking-followup-container', allowWithdrawalNone: true },
+            { prefix: 'psi', containerId: 'prescriber-smoking-initial-container', allowWithdrawalNone: false },
+            { prefix: 'psf', containerId: 'prescriber-smoking-followup-container', allowWithdrawalNone: true }
+        ].forEach(cfg => wireSmokingForm(cfg.prefix, cfg.containerId, cfg.allowWithdrawalNone));
     }
 
     function updateFinalNote() {
@@ -5188,6 +6245,14 @@ function addNurseInterventionRow(isFirstRow = false) {
             noteParts.push(`Guiding Question(s) for Today’s MDT Discussion:\n${mdtGuidingQuestions.value || '[Questions]'}`);
 
             finalNote = noteParts.join('\n\n');
+        } else if (selectedNoteType === 'nurse-smoking-initial') {
+            finalNote = buildSmokingNote({ prefix: 'nsi', phase: 'initial', role: 'nurse' });
+        } else if (selectedNoteType === 'nurse-smoking-followup') {
+            finalNote = buildSmokingNote({ prefix: 'nsf', phase: 'followup', role: 'nurse' });
+        } else if (selectedNoteType === 'prescriber-smoking-initial') {
+            finalNote = buildSmokingNote({ prefix: 'psi', phase: 'initial', role: 'prescriber' });
+        } else if (selectedNoteType === 'prescriber-smoking-followup') {
+            finalNote = buildSmokingNote({ prefix: 'psf', phase: 'followup', role: 'prescriber' });
     } else if (selectedNoteType === 'med-mgmt-follow-up') {
         let noteParts = [];
         noteParts.push(`Chief Complaint:\n${document.getElementById('mmfu-chief-complaint').value || '[Client’s statement]'}`);
@@ -6292,6 +7357,7 @@ let interventions = [];
 
 
 // EVENT LISTENERS
+    initSmokingCessationListeners();
     noteTypeSelect.addEventListener('change', () => {
         const selection = noteTypeSelect.value;
         if (selection === 'eval-cd') {
