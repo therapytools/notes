@@ -4015,6 +4015,349 @@ Rochester, NY
         </div>
     </div>
 
+    <!-- Container for Psychiatric Follow-Up -->
+    <div id="psychiatric-followup-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Psychiatric Follow-Up</h2>
+
+        <!-- Identifying Information -->
+        <h3>Identifying Information</h3>
+        <textarea id="psych-fu-identifying-info" placeholder="Enter identifying information..."></textarea>
+
+        <!-- Chief Complaint -->
+        <h3>Chief Complaint</h3>
+        <textarea id="psych-fu-chief-complaint" placeholder="Enter chief complaint..."></textarea>
+
+        <!-- HPI -->
+        <h3>HPI: Historical Evidence Relevant to Current Presentation</h3>
+        <label>Current Symptoms:</label>
+        <textarea id="psych-fu-current-symptoms" placeholder="Enter current symptoms..."></textarea>
+
+        <label>Recent Psychosocial Stressors:</label>
+        <textarea id="psych-fu-psychosocial-stressors" placeholder="Enter recent psychosocial stressors..."></textarea>
+
+        <label>Reason Patient is Presenting Now:</label>
+        <textarea id="psych-fu-reason-presenting" placeholder="Enter reason for presenting..."></textarea>
+
+        <!-- Psychiatric ROS -->
+        <h3>Psychiatric ROS</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Depression:</label>
+                <input type="text" id="psych-fu-ros-depression" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Mania:</label>
+                <input type="text" id="psych-fu-ros-mania" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Psychotic Disorder:</label>
+                <input type="text" id="psych-fu-ros-psychotic" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Anxiety:</label>
+                <input type="text" id="psych-fu-ros-anxiety" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Panic:</label>
+                <input type="text" id="psych-fu-ros-panic" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">OCD:</label>
+                <input type="text" id="psych-fu-ros-ocd" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">PTSD:</label>
+                <input type="text" id="psych-fu-ros-ptsd" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Social Phobia:</label>
+                <input type="text" id="psych-fu-ros-social-phobia" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Somatoform:</label>
+                <input type="text" id="psych-fu-ros-somatoform" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Eating Disorders:</label>
+                <input type="text" id="psych-fu-ros-eating-disorders" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Cognitive Disorders:</label>
+                <input type="text" id="psych-fu-ros-cognitive-disorders" placeholder="" style="margin: 0;">
+            </div>
+            <div style="margin-bottom: 0;">
+                <label style="font-size: 0.9em; display: block; margin-bottom: 2px;">Learning Difficulties:</label>
+                <input type="text" id="psych-fu-ros-learning-difficulties" placeholder="" style="margin: 0;">
+            </div>
+        </div>
+
+        <!-- Past Psychiatric History -->
+        <h3>Past Psychiatric History</h3>
+        <label>Previous Symptoms, Past Diagnoses, and Current Psychiatric Diagnoses:</label>
+        <textarea id="psych-fu-past-diagnoses" placeholder="Enter previous symptoms and diagnoses..."></textarea>
+
+        <label>History of Psychiatric Treatment <span style="font-weight: normal; font-size: 0.9em; color: #555;">(Inpatient and Outpatient)</span>:</label>
+        <textarea id="psych-fu-treatment-history" placeholder="Outpatient:&#10;Inpatient:"></textarea>
+
+        <label>History of Psychotropic Medication Use and Reactions:</label>
+        <textarea id="psych-fu-medication-history" placeholder="Enter medication history and reactions..."></textarea>
+
+        <label>Substance Use (Past and Present):</label>
+        <textarea id="psych-fu-substance-use" placeholder="Enter substance use history..."></textarea>
+
+        <!-- Lethality -->
+        <h3>Lethality</h3>
+        <label>Current Ideation:</label>
+        <input type="text" id="psych-fu-current-ideation" placeholder="">
+
+        <label>Previous Ideation:</label>
+        <input type="text" id="psych-fu-previous-ideation" placeholder="">
+
+        <label>Previous Attempt:</label>
+        <input type="text" id="psych-fu-previous-attempt" placeholder="">
+
+        <!-- Risk Factors -->
+        <h3 style="margin-bottom: 0;">Risk Factors</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; padding: 10px; background-color: #f9f9f9; border-radius: 4px;">
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-male"> Male</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-female"> Female</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-advanced-age"> Advanced in Age</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-active-ideation"> Active Ideation</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-recent-loss"> Recent Loss</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-passive-ideation"> Passive Ideation</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-isolation"> Isolation</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-plan"> Plan</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-poor-support"> Poor Support System</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-method-available"> Method Available</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-married"> Married</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-intent"> Intent to Carry Out</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-impulsive-behaviors"> Recent Impulsive Behaviors</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-command-hallucinations"> Command Hallucinations</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-chronic-mental-illness"> Diagnoses of Chronic Mental Illness</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-history-assault"> History of Assault</label>
+        </div>
+
+        <!-- Protective Factors -->
+        <h3 style="margin-bottom: 8px;">Protective Factors</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; padding: 10px; background-color: #f0f8f0; border-radius: 4px;">
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-protect-higher-power"> Belief in a Higher Power</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-protect-married"> Married</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-protect-suicide-wrong"> Belief that Suicide is Wrong</label>
+            <label style="margin: 0;"><input type="checkbox" id="psych-fu-protect-support-system"> Strong Support System</label>
+        </div>
+
+        <!-- Past Medical History -->
+        <h3>Past Medical History</h3>
+        <label>Current and/or Previous Medical Problems/Surgeries:</label>
+        <textarea id="psych-fu-medical-problems" placeholder="Enter medical history..."></textarea>
+
+        <label>Allergies (Meds/Dyes/Food/Environmental):</label>
+        <textarea id="psych-fu-allergies" placeholder="Enter allergies..."></textarea>
+
+        <label>Type of Treatment (Prescription, Over-the-Counter, Home Remedies):</label>
+        <textarea id="psych-fu-current-treatment" placeholder="Enter current treatments..."></textarea>
+
+        <label>Pregnant/Regular Periods/Breastfeeding:</label>
+        <textarea id="psych-fu-pregnancy-info" placeholder="Enter pregnancy/period/breastfeeding information..."></textarea>
+
+        <label>Breastfeeding:</label>
+        <div style="margin-bottom: 15px;">
+            <label style="display: inline; font-weight: normal; margin-right: 15px;">
+                <input type="radio" name="psych-fu-breastfeeding" value="yes"> Yes
+            </label>
+            <label style="display: inline; font-weight: normal;">
+                <input type="radio" name="psych-fu-breastfeeding" value="no"> No
+            </label>
+        </div>
+
+        <label>Regular Exercise:</label>
+        <div style="margin-bottom: 10px;">
+            <label style="display: inline; font-weight: normal; margin-right: 15px;">
+                <input type="radio" name="psych-fu-exercise" value="yes"> Yes
+            </label>
+            <label style="display: inline; font-weight: normal;">
+                <input type="radio" name="psych-fu-exercise" value="no"> No
+            </label>
+        </div>
+        <label>Method and Frequency:</label>
+        <textarea id="psych-fu-exercise-details" placeholder="Enter exercise method and frequency..."></textarea>
+
+        <!-- Social Factors -->
+        <h3>Social Factors</h3>
+        <label>Source of Income:</label>
+        <select id="psych-fu-income-source">
+            <option value="" selected disabled>Select income source...</option>
+            <option value="alimony">Alimony or Child Support</option>
+            <option value="family">Family or Spouse Contribution</option>
+            <option value="none">None</option>
+            <option value="sna">Safety Net Assistance (SNA)</option>
+            <option value="ssi">SSI / SSDI / Social Security</option>
+            <option value="tanf">TANF (Temporary Assistance for Needy Families)</option>
+            <option value="va">Veterans Affairs Benefits</option>
+            <option value="wages">Wages or Salary</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="text" id="psych-fu-income-source-other" placeholder="Please specify..." style="display: none; margin-top: 10px;">
+
+        <label>Occupation:</label>
+        <textarea id="psych-fu-occupation" placeholder="Enter occupation..."></textarea>
+
+        <label>Relationship Status:</label>
+        <select id="psych-fu-relationship-status">
+            <option value="" selected disabled>Select relationship status...</option>
+            <option value="married">Married</option>
+            <option value="separated">Separated</option>
+            <option value="widowed">Widowed</option>
+            <option value="divorced">Divorced</option>
+            <option value="single">Single</option>
+            <option value="partnered">Partnered</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="text" id="psych-fu-relationship-other" placeholder="Please specify..." style="display: none; margin-top: 10px;">
+
+        <label>Number of Children:</label>
+        <input type="number" id="psych-fu-num-children" min="0" placeholder="0">
+
+        <label>Who Lives in Home:</label>
+        <input type="text" id="psych-fu-lives-in-home" placeholder="">
+
+        <label>Quality of Significant Other Relationship:</label>
+        <input type="text" id="psych-fu-relationship-quality" placeholder="">
+
+        <label>Support Network:</label>
+        <textarea id="psych-fu-support-network" placeholder="Enter support network information..."></textarea>
+
+        <label>Legal Issues:</label>
+        <textarea id="psych-fu-legal-issues" placeholder="Enter legal issues..."></textarea>
+
+        <!-- Psychiatric Diagnosis -->
+        <h3>Psychiatric Diagnoses</h3>
+        <textarea id="psych-fu-dsm5-diagnosis" placeholder="Ex: Depression, Anxiety, PTSD, Rule-Outs… If client meets clear Diagnostic criteria for an F code, add that here."></textarea>
+
+        <!-- Mental Status Exam -->
+        <h3>Mental Status Exam</h3>
+        <button class="mse-button" onclick="openPsychFUMSEModal()" style="margin-bottom: 15px;">Open Mental Status Exam Form</button>
+        <textarea id="psych-fu-mse-output" readonly placeholder="Mental Status Exam results will appear here..."></textarea>
+
+        <!-- Interventions Used -->
+        <h3 class="text-xl font-semibold text-gray-700 mt-4 mb-2">Interventions Used:</h3>
+        <div class="darp-interventions">
+            <div class="darp-column">
+                <strong class="font-semibold">Custom Interventions</strong><br>
+                <div class="controls mt-2 flex gap-2">
+                    <input class="flex-grow p-2 border border-gray-300 rounded-md" id="customInputFU" placeholder="Enter custom intervention" type="text">
+                    <button class="px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600" onclick="addCustomInterventionFU()" type="button">+</button>
+                    <button class="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600" onclick="removeSelectedInterventionFU()" type="button">-</button>
+                </div>
+                <div class="mt-2" id="customListFU"></div>
+            </div>
+            <div class="darp-column">
+                <strong class="font-semibold">CBT</strong><br>
+                <div class="darp-inline-checkbox"><input id="cbt_cr_fu" name="CBT-FU" type="checkbox" value="Cognitive Restructuring" onchange="updateDarpProgressNote()"><label for="cbt_cr_fu">Cognitive Restructuring</label></div>
+                <div class="darp-inline-checkbox"><input id="cbt_ba_fu" name="CBT-FU" type="checkbox" value="Behavioral Activation" onchange="updateDarpProgressNote()"><label for="cbt_ba_fu">Behavioral Activation</label></div>
+                <div class="darp-inline-checkbox"><input id="cbt_mt_fu" name="CBT-FU" type="checkbox" value="Mindfulness Training" onchange="updateDarpProgressNote()"><label for="cbt_mt_fu">Mindfulness Training</label></div>
+                <div class="darp-inline-checkbox"><input id="cbt_ps_fu" name="CBT-FU" type="checkbox" value="Problem-Solving" onchange="updateDarpProgressNote()"><label for="cbt_ps_fu">Problem-Solving</label></div>
+                <div class="darp-inline-checkbox"><input id="cbt_as_fu" name="CBT-FU" type="checkbox" value="Activity Scheduling" onchange="updateDarpProgressNote()"><label for="cbt_as_fu">Activity Scheduling</label></div>
+                <div class="darp-inline-checkbox"><input id="cbt_rt_fu" name="CBT-FU" type="checkbox" value="Relaxation Techniques" onchange="updateDarpProgressNote()"><label for="cbt_rt_fu">Relaxation Techniques</label></div>
+                <div class="darp-inline-checkbox"><input id="cbt_cd_fu" name="CBT-FU" type="checkbox" value="Cognitive Defusion" onchange="updateDarpProgressNote()"><label for="cbt_cd_fu">Cognitive Defusion</label></div>
+                <div class="darp-inline-checkbox"><input id="cbt_icd_fu" name="CBT-FU" type="checkbox" value="Identifying Cognitive Distortions and alternative thinking patterns" onchange="updateDarpProgressNote()"><label for="cbt_icd_fu">Identifying Cognitive Distortions and alternative thinking patterns</label></div>
+                Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="CBTOtherFU" type="text" oninput="updateDarpProgressNote()">
+            </div>
+            <div class="darp-column">
+                <strong class="font-semibold">Person Centered</strong><br>
+                <div class="darp-inline-checkbox"><input id="pc_oeq_fu" name="Person Centered-FU" type="checkbox" value="Open-ended questions" onchange="updateDarpProgressNote()"><label for="pc_oeq_fu">Open-ended questions</label></div>
+                <div class="darp-inline-checkbox"><input id="pc_rl_fu" name="Person Centered-FU" type="checkbox" value="Reflective Listening" onchange="updateDarpProgressNote()"><label for="pc_rl_fu">Reflective Listening</label></div>
+                <div class="darp-inline-checkbox"><input id="pc_sum_fu" name="Person Centered-FU" type="checkbox" value="Summarizing" onchange="updateDarpProgressNote()"><label for="pc_sum_fu">Summarizing</label></div>
+                <div class="darp-inline-checkbox"><input id="pc_emp_fu" name="Person Centered-FU" type="checkbox" value="Empathy" onchange="updateDarpProgressNote()"><label for="pc_emp_fu">Empathy</label></div>
+                <div class="darp-inline-checkbox"><input id="pc_al_fu" name="Person Centered-FU" type="checkbox" value="Active Listening" onchange="updateDarpProgressNote()"><label for="pc_al_fu">Active Listening</label></div>
+                <div class="darp-inline-checkbox"><input id="pc_val_fu" name="Person Centered-FU" type="checkbox" value="Validation" onchange="updateDarpProgressNote()"><label for="pc_val_fu">Validation</label></div>
+                <div class="darp-inline-checkbox"><input id="pc_sil_fu" name="Person Centered-FU" type="checkbox" value="Silence" onchange="updateDarpProgressNote()"><label for="pc_sil_fu">Silence</label></div>
+                <div class="darp-inline-checkbox"><input id="pc_ep_fu" name="Person Centered-FU" type="checkbox" value="Emotional Presence" onchange="updateDarpProgressNote()"><label for="pc_ep_fu">Emotional Presence</label></div>
+                <div class="darp-inline-checkbox"><input id="pc_ea_fu" name="Person Centered-FU" type="checkbox" value="Encouraging Autonomy" onchange="updateDarpProgressNote()"><label for="pc_ea_fu">Encouraging Autonomy</label></div>
+                <div class="darp-inline-checkbox"><input id="pc_fsd_fu" name="Person Centered-FU" type="checkbox" value="Facilitation of Self-Discovery" onchange="updateDarpProgressNote()"><label for="pc_fsd_fu">Facilitation of Self-Discovery</label></div>
+                <div class="darp-inline-checkbox"><input id="pc_upr_fu" name="Person Centered-FU" type="checkbox" value="Unconditional Positive Regard" onchange="updateDarpProgressNote()"><label for="pc_upr_fu">Unconditional Positive Regard</label></div>
+                Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="PersonCenteredOtherFU" type="text" oninput="updateDarpProgressNote()">
+            </div>
+            <div class="darp-column">
+                <strong class="font-semibold">Motivational Interviewing</strong><br>
+                <div class="darp-inline-checkbox"><input id="mi_oeq_fu" name="Motivational Interviewing-FU" type="checkbox" value="Open-Ended Questions" onchange="updateDarpProgressNote()"><label for="mi_oeq_fu">Open-Ended Questions</label></div>
+                <div class="darp-inline-checkbox"><input id="mi_rl_fu" name="Motivational Interviewing-FU" type="checkbox" value="Reflective Listening" onchange="updateDarpProgressNote()"><label for="mi_rl_fu">Reflective Listening</label></div>
+                <div class="darp-inline-checkbox"><input id="mi_sum_fu" name="Motivational Interviewing-FU" type="checkbox" value="Summarizing" onchange="updateDarpProgressNote()"><label for="mi_sum_fu">Summarizing</label></div>
+                <div class="darp-inline-checkbox"><input id="mi_aff_fu" name="Motivational Interviewing-FU" type="checkbox" value="Affirmations" onchange="updateDarpProgressNote()"><label for="mi_aff_fu">Affirmations</label></div>
+                <div class="darp-inline-checkbox"><input id="mi_db_fu" name="Motivational Interviewing-FU" type="checkbox" value="Decisional Balance (Pros/Cons)" onchange="updateDarpProgressNote()"><label for="mi_db_fu">Decisional Balance (Pros/Cons)</label></div>
+                <div class="darp-inline-checkbox"><input id="mi_did_fu" name="Motivational Interviewing-FU" type="checkbox" value="Developing and Identifying Discrepancy" onchange="updateDarpProgressNote()"><label for="mi_did_fu">Developing and Identifying Discrepancy</label></div>
+                <div class="darp-inline-checkbox"><input id="mi_sse_fu" name="Motivational Interviewing-FU" type="checkbox" value="Supporting Self-Efficacy" onchange="updateDarpProgressNote()"><label for="mi_sse_fu">Supporting Self-Efficacy</label></div>
+                <div class="darp-inline-checkbox"><input id="mi_ecl_fu" name="Motivational Interviewing-FU" type="checkbox" value="Evoking Commitment Language" onchange="updateDarpProgressNote()"><label for="mi_ecl_fu">Evoking Commitment Language</label></div>
+                Other: <input class="mt-1 p-2 border border-gray-300 rounded-md w-full" id="MotivationalInterviewingOtherFU" type="text" oninput="updateDarpProgressNote()">
+            </div>
+        </div>
+
+        <!-- Assessment -->
+        <h3>Assessment</h3>
+        <textarea id="psych-fu-assessment" placeholder="Enter assessment..."></textarea>
+
+        <!-- Plan -->
+        <h3 style="margin-bottom: 10px;">Plan</h3>
+        <div style="padding: 10px; background-color: #f9f9f9; border-radius: 4px; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-plan-continue-treatment"> Continue outpatient chemical dependency treatment</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-plan-abstain-education"> Educated patient on the importance of abstaining from substance use</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-plan-med-substance"> Reviewed that medications may be less effective or potentially harmful when combined with substance use</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-plan-med-education"> Provided education on prescribed medications and their role in managing symptoms</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-plan-medication-timeline"> Reviewed expected timeframe for medication effectiveness and discussed that dose adjustments may be required to reach therapeutic benefit</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-plan-crisis-safety"> Reviewed crisis safety procedures and confirmed patient understanding</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-plan-follow-up-importance"> Reviewed the importance of consistent follow up with the treatment team to support treatment goals</label>
+            <label style="display: block; margin-bottom: 0;"><input type="checkbox" id="psych-fu-plan-contact-info"> Patient has contact information for the office if support or questions arise before the next visit</label>
+        </div>
+
+        <label>Additional Plan Notes:</label>
+        <textarea id="psych-fu-plan-notes" placeholder="Enter additional plan notes..."></textarea>
+
+        <label>Follow Up:</label>
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 15px;">
+            <span>F/u with me in</span>
+            <input type="text" id="psych-fu-followup-timeframe" placeholder="e.g., 1 week, 2 weeks" style="width: 150px;">
+        </div>
+
+        <!-- Time Statement -->
+        <h3>Time Statement</h3>
+        <label>Face to Face/Telephonic Time:</label>
+        <input type="text" id="psych-fu-time-face-to-face" placeholder="e.g., 45 minutes">
+
+        <div style="margin-top: 8px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <span>Of the face-to-face time,</span>
+            <select id="psych-fu-psychotherapy-minutes" style="min-width: 110px;" onchange="updateFinalNote();">
+                <option value="" selected disabled>Select...</option>
+                <option value="0-15">0-15</option>
+                <option value="16+">16+</option>
+                <option value="31+">31+</option>
+            </select>
+            <span>minutes were spent in psychotherapy.</span>
+        </div>
+        <div id="psych-fu-psychotherapy-warning" class="hidden" style="color:#b00020; font-weight:bold; margin-top:6px;">Contact Kate to Notify Billing</div>
+
+        <label>Documentation:</label>
+        <input type="text" id="psych-fu-time-documentation" placeholder="e.g., 15 minutes">
+
+        <label>Coordination of Care:</label>
+        <input type="text" id="psych-fu-time-coordination" placeholder="e.g., 10 minutes">
+
+        <!-- Assessment Tools -->
+        <h3 style="margin-bottom: 10px;">Assessment Tools Needed at Next Appointment</h3>
+        <div style="padding: 10px; background-color: #f9f9f9; border-radius: 4px;">
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-tool-depression"> Depression Scale</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-tool-anxiety"> Anxiety Scale</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-tool-mmse"> MMSE</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-tool-panic"> Panic Attack Record</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-tool-adhd"> ADD/ADHD</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-tool-bipolar"> Bipolar Scale</label>
+            <label style="display: block; margin-bottom: 6px;"><input type="checkbox" id="psych-fu-tool-geriatric"> Geriatric Depression Scale</label>
+            <label style="display: block; margin-bottom: 0;">
+                <input type="checkbox" id="psych-fu-tool-other"> Other: 
+                <input type="text" id="psych-fu-tool-other-specify" placeholder="Specify..." style="display: none; width: 200px;">
+            </label>
+        </div>
+    </div>
+
     <!-- Read-only Note Output for Copying -->
     <div class="copy-area-container">
         <h2>Copy Area</h2>
@@ -4128,6 +4471,7 @@ Rochester, NY
             ],
             psychiatric: [
                 { value: 'psychiatric-assessment', label: 'Psychiatric Assessment' },
+                { value: 'psychiatric-followup', label: 'Psychiatric Follow-Up' },
                 { value: 'complex-coordination-of-care', label: 'Complex Coordination of Care' }
             ]
         };
@@ -5385,6 +5729,50 @@ function addNurseInterventionRow(isFirstRow = false) {
         }
     }
 
+    function initPsychiatricFollowupListeners() {
+        // All textareas and inputs for follow-up
+        const psychFuInputs = document.querySelectorAll('[id^="psych-fu-"]');
+        psychFuInputs.forEach(input => {
+            if (input.id !== 'psych-fu-mse-output' && input.id !== 'psych-fu-tool-other-specify') {
+                input.addEventListener('input', updateFinalNote);
+                input.addEventListener('change', updateFinalNote);
+                if (input.tagName.toLowerCase() === 'textarea') {
+                    input.addEventListener('input', () => autoResize(input));
+                }
+            }
+        });
+
+        // Income source other
+        const incomeSourceSelect = document.getElementById('psych-fu-income-source');
+        const incomeSourceOther = document.getElementById('psych-fu-income-source-other');
+        if (incomeSourceSelect && incomeSourceOther) {
+            incomeSourceSelect.addEventListener('change', () => {
+                incomeSourceOther.style.display = (incomeSourceSelect.value === 'other') ? 'block' : 'none';
+                updateFinalNote();
+            });
+        }
+
+        // Relationship status other
+        const relationshipSelect = document.getElementById('psych-fu-relationship-status');
+        const relationshipOther = document.getElementById('psych-fu-relationship-other');
+        if (relationshipSelect && relationshipOther) {
+            relationshipSelect.addEventListener('change', () => {
+                relationshipOther.style.display = (relationshipSelect.value === 'other') ? 'block' : 'none';
+                updateFinalNote();
+            });
+        }
+
+        // Other assessment tool checkbox
+        const otherToolCheckbox = document.getElementById('psych-fu-tool-other');
+        const otherToolSpecify = document.getElementById('psych-fu-tool-other-specify');
+        if (otherToolCheckbox && otherToolSpecify) {
+            otherToolCheckbox.addEventListener('change', () => {
+                otherToolSpecify.style.display = (otherToolCheckbox.checked) ? 'inline' : 'none';
+                updateFinalNote();
+            });
+        }
+    }
+
     function wireSmokingForm(prefix, containerId, allowWithdrawalNone = false) {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -5786,6 +6174,261 @@ function addNurseInterventionRow(isFirstRow = false) {
             }
 
             finalNote = sections.length > 0 ? `DETAILED PSYCHIATRIC ASSESSMENT\n\n${sections.join('\n\n')}` : '';
+        } else if (selectedNoteType === 'psychiatric-followup') {
+            const val = (suffix) => (document.getElementById(`psych-fu-${suffix}`)?.value || '').trim();
+            const checkedLabel = (id) => {
+                const el = document.getElementById(id);
+                return (el && el.checked) ? (el.nextElementSibling?.textContent.trim() || el.value) : '';
+            };
+            const sections = [];
+
+            // Identifying Information
+            const identifyingInfo = val('identifying-info');
+            if (identifyingInfo) sections.push(`IDENTIFYING INFORMATION:\n${identifyingInfo}`);
+
+            // Chief Complaint
+            const chiefComplaint = val('chief-complaint');
+            if (chiefComplaint) sections.push(`CHIEF COMPLAINT:\n${chiefComplaint}`);
+
+            // HPI
+            const hpiParts = [];
+            const currentSymptoms = val('current-symptoms');
+            const psychosocialStressors = val('psychosocial-stressors');
+            const reasonPresenting = val('reason-presenting');
+            if (currentSymptoms) hpiParts.push(`Current Symptoms: ${currentSymptoms}`);
+            if (psychosocialStressors) hpiParts.push(`Recent Psychosocial Stressors: ${psychosocialStressors}`);
+            if (reasonPresenting) hpiParts.push(`Reason Patient is Presenting Now: ${reasonPresenting}`);
+            if (hpiParts.length > 0) sections.push(`HPI: HISTORICAL EVIDENCE RELEVANT TO CURRENT PRESENTATION:\n${hpiParts.join('\n')}`);
+
+            // Psychiatric ROS
+            const rosItems = [
+                { field: 'depression', label: 'Depression' },
+                { field: 'mania', label: 'Mania' },
+                { field: 'psychotic', label: 'Psychotic Disorder' },
+                { field: 'anxiety', label: 'Anxiety' },
+                { field: 'panic', label: 'Panic' },
+                { field: 'ocd', label: 'OCD' },
+                { field: 'ptsd', label: 'PTSD' },
+                { field: 'social-phobia', label: 'Social Phobia' },
+                { field: 'somatoform', label: 'Somatoform' },
+                { field: 'eating-disorders', label: 'Eating Disorders' },
+                { field: 'cognitive-disorders', label: 'Cognitive Disorders' },
+                { field: 'learning-difficulties', label: 'Learning Difficulties' }
+            ];
+            const rosEntries = [];
+            rosItems.forEach(item => {
+                const value = val(`ros-${item.field}`);
+                if (value) rosEntries.push(`${item.label}: ${value}`);
+            });
+            if (rosEntries.length > 0) sections.push(`PSYCHIATRIC ROS:\n${rosEntries.join('\n')}`);
+
+            // Past Psychiatric History
+            const pphParts = [];
+            const pastDiagnoses = val('past-diagnoses');
+            const treatmentHistory = val('treatment-history');
+            const medicationHistory = val('medication-history');
+            const substanceUse = val('substance-use');
+            if (pastDiagnoses) pphParts.push(`Previous Symptoms/Diagnoses: ${pastDiagnoses}`);
+            if (treatmentHistory) pphParts.push(`History of Psychiatric Treatment: ${treatmentHistory}`);
+            if (medicationHistory) pphParts.push(`History of Psychotropic Medication Use and Reactions: ${medicationHistory}`);
+            if (substanceUse) pphParts.push(`Substance Use (Past and Present): ${substanceUse}`);
+            if (pphParts.length > 0) sections.push(`PAST PSYCHIATRIC HISTORY:\n${pphParts.join('\n')}`);
+
+            // Lethality
+            const lethalityParts = [];
+            const currentIdeation = val('current-ideation');
+            const previousIdeation = val('previous-ideation');
+            const previousAttempt = val('previous-attempt');
+            if (currentIdeation) lethalityParts.push(`Current Ideation: ${currentIdeation}`);
+            if (previousIdeation) lethalityParts.push(`Previous Ideation: ${previousIdeation}`);
+            if (previousAttempt) lethalityParts.push(`Previous Attempt: ${previousAttempt}`);
+            if (lethalityParts.length > 0) sections.push(`LETHALITY:\n${lethalityParts.join('\n')}`);
+
+            // Risk Factors
+            const riskIds = [
+                'psych-fu-risk-male','psych-fu-risk-female','psych-fu-risk-advanced-age','psych-fu-risk-active-ideation','psych-fu-risk-recent-loss','psych-fu-risk-passive-ideation','psych-fu-risk-isolation','psych-fu-risk-plan','psych-fu-risk-poor-support','psych-fu-risk-method-available','psych-fu-risk-married','psych-fu-risk-intent','psych-fu-risk-impulsive-behaviors','psych-fu-risk-command-hallucinations','psych-fu-risk-chronic-mental-illness','psych-fu-risk-history-assault'
+            ];
+            const riskChecked = riskIds.map(checkedLabel).filter(Boolean);
+            if (riskChecked.length > 0) sections.push(`RISK FACTORS:\n• ${riskChecked.join('\n• ')}`);
+
+            // Protective Factors
+            const protectIds = ['psych-fu-protect-higher-power','psych-fu-protect-married','psych-fu-protect-suicide-wrong','psych-fu-protect-support-system'];
+            const protectChecked = protectIds.map(checkedLabel).filter(Boolean);
+            if (protectChecked.length > 0) sections.push(`PROTECTIVE FACTORS:\n• ${protectChecked.join('\n• ')}`);
+
+            // Past Medical History
+            const medParts = [];
+            const medProblems = val('medical-problems');
+            const allergies = val('allergies');
+            const currentTreatment = val('current-treatment');
+            const pregnancyInfo = val('pregnancy-info');
+            const breastfeeding = (document.querySelector('input[name="psych-fu-breastfeeding"]:checked')?.value || '').trim();
+            const exercise = (document.querySelector('input[name="psych-fu-exercise"]:checked')?.value || '').trim();
+            const exerciseDetails = val('exercise-details');
+            if (medProblems) medParts.push(`Current/Previous Medical Problems or Surgeries: ${medProblems}`);
+            if (allergies) medParts.push(`Allergies (Meds/Dyes/Food/Environmental): ${allergies}`);
+            if (currentTreatment) medParts.push(`Type of Treatment (Prescription / OTC / Home Remedies): ${currentTreatment}`);
+            if (pregnancyInfo) medParts.push(`Pregnant/Regular Periods/Breastfeeding: ${pregnancyInfo}`);
+            if (breastfeeding) medParts.push(`Breastfeeding: ${breastfeeding}`);
+            if (exercise) medParts.push(`Regular Exercise: ${exercise}`);
+            if (exerciseDetails) medParts.push(`Exercise Method/Frequency: ${exerciseDetails}`);
+            if (medParts.length > 0) sections.push(`PAST MEDICAL HISTORY:\n${medParts.join('\n')}`);
+
+            // Social Factors
+            const socialParts = [];
+            const incomeSource = document.getElementById('psych-fu-income-source');
+            const incomeText = incomeSource && incomeSource.value ? incomeSource.options[incomeSource.selectedIndex].text : '';
+            const incomeOther = val('income-source-other');
+            if (incomeOther || incomeText) socialParts.push(`Source of Income: ${incomeOther || incomeText}`);
+            const occupation = val('occupation');
+            if (occupation) socialParts.push(`Occupation: ${occupation}`);
+            const relationshipSelect = document.getElementById('psych-fu-relationship-status');
+            const relationshipText = relationshipSelect && relationshipSelect.value ? relationshipSelect.options[relationshipSelect.selectedIndex].text : '';
+            if (relationshipText) socialParts.push(`Relationship Status: ${relationshipText}`);
+            const numChildren = val('num-children');
+            if (numChildren) socialParts.push(`Number of Children: ${numChildren}`);
+            const livesInHome = val('lives-in-home');
+            if (livesInHome) socialParts.push(`Who Lives in Home: ${livesInHome}`);
+            const relationshipQuality = val('relationship-quality');
+            if (relationshipQuality) socialParts.push(`Quality of Significant Other Relationship: ${relationshipQuality}`);
+            const supportNetwork = val('support-network');
+            if (supportNetwork) socialParts.push(`Support Network: ${supportNetwork}`);
+            const legalIssues = val('legal-issues');
+            if (legalIssues) socialParts.push(`Legal Issues: ${legalIssues}`);
+            if (socialParts.length > 0) sections.push(`SOCIAL FACTORS:\n${socialParts.join('\n')}`);
+
+            // DSM-5-TR Diagnosis
+            const dsmDiagnosis = val('dsm5-diagnosis');
+            if (dsmDiagnosis) sections.push(`DSM-5-TR DIAGNOSES:\n${dsmDiagnosis}`);
+
+            // Mental Status Exam
+            const mseOutput = val('mse-output');
+            if (mseOutput) sections.push(`MENTAL STATUS EXAM:\n${mseOutput}`);
+
+            // Add interventions if any are selected
+            try {
+                const interventionItems = [];
+
+                const cbtChecked = document.querySelectorAll('input[name="CBT-FU"]:checked');
+                if (cbtChecked.length > 0) {
+                    const cbtList = Array.from(cbtChecked).map(cb => cb.value);
+                    const cbtOther = document.getElementById('CBTOtherFU')?.value?.trim();
+                    if (cbtOther) cbtList.push(cbtOther);
+                    if (cbtList.length > 0) {
+                        interventionItems.push('CBT:\n  • ' + cbtList.join('\n  • '));
+                    }
+                }
+
+                const pcChecked = document.querySelectorAll('input[name="Person Centered-FU"]:checked');
+                if (pcChecked.length > 0) {
+                    const pcList = Array.from(pcChecked).map(cb => cb.value);
+                    const pcOther = document.getElementById('PersonCenteredOtherFU')?.value?.trim();
+                    if (pcOther) pcList.push(pcOther);
+                    if (pcList.length > 0) {
+                        interventionItems.push('Person Centered:\n  • ' + pcList.join('\n  • '));
+                    }
+                }
+
+                const miChecked = document.querySelectorAll('input[name="Motivational Interviewing-FU"]:checked');
+                if (miChecked.length > 0) {
+                    const miList = Array.from(miChecked).map(cb => cb.value);
+                    const miOther = document.getElementById('MotivationalInterviewingOtherFU')?.value?.trim();
+                    if (miOther) miList.push(miOther);
+                    if (miList.length > 0) {
+                        interventionItems.push('Motivational Interviewing:\n  • ' + miList.join('\n  • '));
+                    }
+                }
+
+                const customList = document.getElementById('customListFU');
+                if (customList) {
+                    const customItems = Array.from(customList.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.getAttribute('data-text') || cb.nextElementSibling?.textContent || cb.value).filter(Boolean);
+                    if (customItems.length > 0) {
+                        interventionItems.push('Interventions:\n  • ' + customItems.join('\n  • '));
+                    }
+                }
+
+                if (interventionItems.length > 0) {
+                    sections.push(`INTERVENTIONS USED:\n${interventionItems.join('\n\n')}`);
+                }
+            } catch (e) {
+                // Silently fail if interventions can't be collected
+            }
+
+            // Clinical Assessment
+            const assessment = val('assessment');
+            if (assessment) sections.push(`ASSESSMENT:\n${assessment}`);
+
+            // Plan / Next Steps
+            const planItems = [];
+            const planCheckboxes = [
+                'psych-fu-plan-continue-treatment',
+                'psych-fu-plan-abstain-education',
+                'psych-fu-plan-med-substance',
+                'psych-fu-plan-med-education',
+                'psych-fu-plan-medication-timeline',
+                'psych-fu-plan-crisis-safety',
+                'psych-fu-plan-follow-up-importance',
+                'psych-fu-plan-contact-info'
+            ];
+            planCheckboxes.forEach(id => {
+                const box = document.getElementById(id);
+                if (box && box.checked) {
+                    const label = box.nextElementSibling ? box.nextElementSibling.textContent : '';
+                    if (label.trim()) planItems.push(label.trim());
+                }
+            });
+            const planNotes = val('plan-notes');
+            if (planNotes) planItems.push(`Additional Plan Notes: ${planNotes}`);
+            const followUp = val('followup-timeframe');
+            if (followUp) planItems.push(`Follow Up: F/u with me in ${followUp}`);
+            if (planItems.length > 0) {
+                sections.push(`PLAN / NEXT STEPS:\n• ${planItems.join('\n• ')}`);
+            }
+
+            // Time Statement
+            const timeParts = [];
+            const faceToFace = val('time-face-to-face');
+            const psychotherapyMinutes = (document.getElementById('psych-fu-psychotherapy-minutes')?.value || '').trim();
+            const psychotherapyWarning = document.getElementById('psych-fu-psychotherapy-warning');
+            if (psychotherapyWarning) {
+                psychotherapyWarning.classList.toggle('hidden', psychotherapyMinutes !== '0-15');
+            }
+            const documentationTime = val('time-documentation');
+            const coordinationTime = val('time-coordination');
+            if (faceToFace) timeParts.push(`Face to Face/Telephonic Time: ${faceToFace}`);
+            if (psychotherapyMinutes) timeParts.push(`Of the face-to-face time, ${psychotherapyMinutes} minutes were spent in psychotherapy.`);
+            if (documentationTime) timeParts.push(`Documentation: ${documentationTime}`);
+            if (coordinationTime) timeParts.push(`Coordination of Care: ${coordinationTime}`);
+            if (timeParts.length > 0) sections.push(`TIME STATEMENT:\n${timeParts.join('\n')}`);
+
+            // Assessment tools
+            const toolEntries = [];
+            const toolCheckboxes = [
+                { id: 'psych-fu-tool-depression', label: 'Depression Scale' },
+                { id: 'psych-fu-tool-anxiety', label: 'Anxiety Scale' },
+                { id: 'psych-fu-tool-mmse', label: 'MMSE' },
+                { id: 'psych-fu-tool-panic', label: 'Panic Attack Record' },
+                { id: 'psych-fu-tool-adhd', label: 'ADD/ADHD' },
+                { id: 'psych-fu-tool-bipolar', label: 'Bipolar Scale' },
+                { id: 'psych-fu-tool-geriatric', label: 'Geriatric Depression Scale' },
+                { id: 'psych-fu-tool-other', label: 'Other' }
+            ];
+            toolCheckboxes.forEach(tool => {
+                const el = document.getElementById(tool.id);
+                if (el && el.checked) {
+                    if (tool.id === 'psych-fu-tool-other') {
+                        const other = (document.getElementById('psych-fu-tool-other-specify').value || '').trim();
+                        toolEntries.push(other ? `Other: ${other}` : 'Other: [Specify]');
+                    } else {
+                        toolEntries.push(tool.label);
+                    }
+                }
+            });
+            if (toolEntries.length > 0) {
+                sections.push(`ASSESSMENT TOOLS NEEDED AT NEXT APPOINTMENT:\n• ${toolEntries.join('\n• ')}`);
+            }
+
+            finalNote = sections.length > 0 ? `PSYCHIATRIC FOLLOW-UP\n\n${sections.join('\n\n')}` : '';
         } else if (selectedNoteType === 'eval-so') {
             const diagnosis = soDiagnosisSelect.value || '[SELECT A DIAGNOSIS]';
             const details = soDetailsTextarea.value || '[DETAILS OF CRITERIA MET]';
@@ -7391,6 +8034,9 @@ let interventions = [];
         } else if (selection === 'psychiatric-assessment') {
             // Initialize Psychiatric Assessment
             initPsychiatricAssessmentListeners();
+        } else if (selection === 'psychiatric-followup') {
+            // Initialize Psychiatric Follow-Up
+            initPsychiatricFollowupListeners();
         }
         updateFinalNote();
     });
@@ -8330,6 +8976,66 @@ Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
         if (first) {
             first.remove();
             updateDarpProgressNote();
+        }
+    }
+
+    function addCustomInterventionFU() {
+        const input = document.getElementById('customInputFU');
+        const value = input?.value?.trim();
+        
+        if (!value) {
+            alert('Please enter an intervention');
+            return;
+        }
+        
+        const customList = document.getElementById('customListFU');
+        const div = document.createElement('div');
+        const label = document.createElement('label');
+        label.style.display = 'flex';
+        label.style.alignItems = 'center';
+        label.style.gap = '8px';
+        label.style.cursor = 'pointer';
+
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.className = 'custom-intervention-checkbox';
+        cb.setAttribute('data-text', value);
+        cb.addEventListener('change', updateDarpProgressNote);
+
+        const span = document.createElement('span');
+        span.textContent = value;
+
+        label.appendChild(cb);
+        label.appendChild(span);
+        div.appendChild(label);
+        
+        customList.appendChild(div);
+        input.value = '';
+        input.focus();
+        updateDarpProgressNote();
+    }
+    
+    function removeSelectedInterventionFU() {
+        const customList = document.getElementById('customListFU');
+        // Prefer removing checked custom items; if none, remove the first
+        const checked = customList.querySelectorAll('input[type="checkbox"]:checked');
+        if (checked.length > 0) {
+            checked.forEach(cb => cb.closest('div')?.remove());
+            updateDarpProgressNote();
+            return;
+        }
+        const first = customList.querySelector('div');
+        if (first) {
+            first.remove();
+            updateDarpProgressNote();
+        }
+    }
+
+    function openPsychFUMSEModal() {
+        const mseModal = document.getElementById('mse-modal');
+        if (mseModal) {
+            activeMseTargetId = 'psych-fu-mse-output';
+            mseModal.style.display = 'block';
         }
     }
          
