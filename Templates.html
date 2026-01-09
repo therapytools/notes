@@ -943,16 +943,6 @@
             <label for="ccc-service-by">Service completed by:</label>
             <input type="text" id="ccc-service-by" placeholder="Name" style="max-width: 320px;">
 
-            <label for="ccc-role">Role of the person who completed the service:</label>
-            <select id="ccc-role" style="max-width: 340px;">
-                <option value="" selected disabled>Select role...</option>
-                <option value="Counselor">Counselor</option>
-                <option value="Intern">Intern</option>
-                <option value="Medical Provider">Medical Provider</option>
-                <option value="Other">Other</option>
-            </select>
-            <div id="ccc-role-warning" class="hidden ccc-role-warning">Complex Coordination of Care Services can only be completed by a counselor, intern, or medical provider.</div>
-
             <div id="ccc-blockable">
                 <label for="ccc-coordination-with">Who did you coordinate care with?</label>
                 <input type="text" id="ccc-coordination-with" placeholder="Agency / Name" style="max-width: 520px;">
@@ -3573,17 +3563,6 @@ Rochester, NY
                 <label for="dtc-ccc-service-by">Who completed the Drug Treatment Court Reporting?</label>
                 <input type="text" id="dtc-ccc-service-by" placeholder="Name" onchange="updateFinalNote()">
             </div>
-            <div>
-                <label for="dtc-ccc-role">Role of the person who completed the service:</label>
-                <select id="dtc-ccc-role" onchange="updateFinalNote()">
-                    <option value="" selected disabled>Select role...</option>
-                    <option value="Counselor">Counselor</option>
-                    <option value="Intern">Intern</option>
-                    <option value="Medical Provider">Medical Provider</option>
-                    <option value="Other">Other</option>
-                </select>
-                <div id="dtc-ccc-role-warning" class="hidden" style="color:#b00020; font-weight:bold; margin-top:6px;">Complex Coordination of Care Services can only be completed by a counselor, intern, or medical provider.</div>
-            </div>
         </div>
         <div style="margin-bottom:16px;">
             <label for="dtc-ccc-coordination-with">Who did you coordinate care with?</label>
@@ -3695,8 +3674,6 @@ Rochester, NY
         <!-- Risk Factors -->
         <h3 style="margin-bottom: 0;">Risk Factors</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; padding: 10px; background-color: #f9f9f9; border-radius: 4px;">
-            <label style="margin: 0;"><input type="checkbox" id="psych-risk-male"> Male</label>
-            <label style="margin: 0;"><input type="checkbox" id="psych-risk-female"> Female</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-risk-advanced-age"> Advanced in Age</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-risk-active-ideation"> Active Ideation</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-risk-recent-loss"> Recent Loss</label>
@@ -3711,6 +3688,8 @@ Rochester, NY
             <label style="margin: 0;"><input type="checkbox" id="psych-risk-command-hallucinations"> Command Hallucinations</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-risk-chronic-mental-illness"> Diagnoses of Chronic Mental Illness</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-risk-history-assault"> History of Assault</label>
+            <div id="psych-risk-other-container" style="grid-column: 1 / -1; margin-top: 4px;"></div>
+            <button type="button" class="copy-button" style="grid-column: 1 / -1; width: auto; padding: 6px 12px;" onclick="addPsychRiskOther()">+ Add Other Risk Factor</button>
         </div>
 
         <!-- Protective Factors -->
@@ -3720,6 +3699,8 @@ Rochester, NY
             <label style="margin: 0;"><input type="checkbox" id="psych-protect-married"> Married</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-protect-suicide-wrong"> Belief that Suicide is Wrong</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-protect-support-system"> Strong Support System</label>
+            <div id="psych-protect-other-container" style="grid-column: 1 / -1; margin-top: 4px;"></div>
+            <button type="button" class="copy-button" style="grid-column: 1 / -1; width: auto; padding: 6px 12px;" onclick="addPsychProtectOther()">+ Add Other Protective Factor</button>
         </div>
 
         <!-- Past Medical History -->
@@ -3981,7 +3962,7 @@ Rochester, NY
         <input type="text" id="psych-time-face-to-face" placeholder="e.g., 45 minutes">
 
         <div style="margin-top: 8px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-            <span>Of the face-to-face time,</span>
+            <span style="font-weight: bold;">Psychotherapy Time:</span>
             <select id="psych-psychotherapy-minutes" style="min-width: 110px;" onchange="updateFinalNote();">
                 <option value="" selected disabled>Select...</option>
                 <option value="0-15">0-15</option>
@@ -4119,8 +4100,6 @@ Rochester, NY
         <!-- Risk Factors -->
         <h3 style="margin-bottom: 0;">Risk Factors</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; padding: 10px; background-color: #f9f9f9; border-radius: 4px;">
-            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-male"> Male</label>
-            <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-female"> Female</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-advanced-age"> Advanced in Age</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-active-ideation"> Active Ideation</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-recent-loss"> Recent Loss</label>
@@ -4135,6 +4114,8 @@ Rochester, NY
             <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-command-hallucinations"> Command Hallucinations</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-chronic-mental-illness"> Diagnoses of Chronic Mental Illness</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-fu-risk-history-assault"> History of Assault</label>
+            <div id="psych-fu-risk-other-container" style="grid-column: 1 / -1; margin-top: 4px;"></div>
+            <button type="button" class="copy-button" style="grid-column: 1 / -1; width: auto; padding: 6px 12px;" onclick="addPsychFuRiskOther()">+ Add Other Risk Factor</button>
         </div>
 
         <!-- Protective Factors -->
@@ -4144,6 +4125,8 @@ Rochester, NY
             <label style="margin: 0;"><input type="checkbox" id="psych-fu-protect-married"> Married</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-fu-protect-suicide-wrong"> Belief that Suicide is Wrong</label>
             <label style="margin: 0;"><input type="checkbox" id="psych-fu-protect-support-system"> Strong Support System</label>
+            <div id="psych-fu-protect-other-container" style="grid-column: 1 / -1; margin-top: 4px;"></div>
+            <button type="button" class="copy-button" style="grid-column: 1 / -1; width: auto; padding: 6px 12px;" onclick="addPsychFuProtectOther()">+ Add Other Protective Factor</button>
         </div>
 
         <!-- Past Medical History -->
@@ -4324,7 +4307,7 @@ Rochester, NY
         <input type="text" id="psych-fu-time-face-to-face" placeholder="e.g., 45 minutes">
 
         <div style="margin-top: 8px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-            <span>Of the face-to-face time,</span>
+            <span style="font-weight: bold;">Psychotherapy Time:</span>
             <select id="psych-fu-psychotherapy-minutes" style="min-width: 110px;" onchange="updateFinalNote();">
                 <option value="" selected disabled>Select...</option>
                 <option value="0-15">0-15</option>
@@ -4664,8 +4647,6 @@ Rochester, NY
     const cccNonRoutineCheckbox = document.getElementById('ccc-non-routine');
     const cccBody = document.getElementById('ccc-body');
     const cccServiceByInput = document.getElementById('ccc-service-by');
-    const cccRoleSelect = document.getElementById('ccc-role');
-    const cccRoleWarning = document.getElementById('ccc-role-warning');
     const cccBlockable = document.getElementById('ccc-blockable');
     const cccCoordinationWithInput = document.getElementById('ccc-coordination-with');
     const cccCategorySelect = document.getElementById('ccc-category');
@@ -5954,15 +5935,21 @@ function addNurseInterventionRow(isFirstRow = false) {
 
             // Risk Factors
             const riskIds = [
-                'psych-risk-male','psych-risk-female','psych-risk-advanced-age','psych-risk-active-ideation','psych-risk-recent-loss','psych-risk-passive-ideation','psych-risk-isolation','psych-risk-plan','psych-risk-poor-support','psych-risk-method-available','psych-risk-married','psych-risk-intent','psych-risk-impulsive-behaviors','psych-risk-command-hallucinations','psych-risk-chronic-mental-illness','psych-risk-history-assault'
+                'psych-risk-advanced-age','psych-risk-active-ideation','psych-risk-recent-loss','psych-risk-passive-ideation','psych-risk-isolation','psych-risk-plan','psych-risk-poor-support','psych-risk-method-available','psych-risk-married','psych-risk-intent','psych-risk-impulsive-behaviors','psych-risk-command-hallucinations','psych-risk-chronic-mental-illness','psych-risk-history-assault'
             ];
             const riskChecked = riskIds.map(checkedLabel).filter(Boolean);
-            if (riskChecked.length > 0) sections.push(`RISK FACTORS:\n• ${riskChecked.join('\n• ')}`);
+            const riskOtherInputs = Array.from(document.querySelectorAll('#psych-risk-other-container input[type="text"]'));
+            const riskOtherValues = riskOtherInputs.map(inp => inp.value.trim()).filter(Boolean);
+            const allRiskFactors = [...riskChecked, ...riskOtherValues];
+            if (allRiskFactors.length > 0) sections.push(`RISK FACTORS:\n• ${allRiskFactors.join('\n• ')}`);
 
             // Protective Factors
             const protectIds = ['psych-protect-higher-power','psych-protect-married','psych-protect-suicide-wrong','psych-protect-support-system'];
             const protectChecked = protectIds.map(checkedLabel).filter(Boolean);
-            if (protectChecked.length > 0) sections.push(`PROTECTIVE FACTORS:\n• ${protectChecked.join('\n• ')}`);
+            const protectOtherInputs = Array.from(document.querySelectorAll('#psych-protect-other-container input[type="text"]'));
+            const protectOtherValues = protectOtherInputs.map(inp => inp.value.trim()).filter(Boolean);
+            const allProtectFactors = [...protectChecked, ...protectOtherValues];
+            if (allProtectFactors.length > 0) sections.push(`PROTECTIVE FACTORS:\n• ${allProtectFactors.join('\n• ')}`);
 
             // Past Medical History
             const medParts = [];
@@ -6141,7 +6128,7 @@ function addNurseInterventionRow(isFirstRow = false) {
             const documentationTime = val('psych-time-documentation');
             const coordinationTime = val('psych-time-coordination');
             if (faceToFace) timeParts.push(`Face to Face/Telephonic Time: ${faceToFace}`);
-            if (psychotherapyMinutes) timeParts.push(`Of the face-to-face time, ${psychotherapyMinutes} minutes were spent in psychotherapy.`);
+            if (psychotherapyMinutes) timeParts.push(`Psychotherapy Time: ${psychotherapyMinutes} minutes were spent in psychotherapy.`);
             if (documentationTime) timeParts.push(`Documentation: ${documentationTime}`);
             if (coordinationTime) timeParts.push(`Coordination of Care: ${coordinationTime}`);
             if (timeParts.length > 0) sections.push(`TIME STATEMENT:\n${timeParts.join('\n')}`);
@@ -6246,15 +6233,21 @@ function addNurseInterventionRow(isFirstRow = false) {
 
             // Risk Factors
             const riskIds = [
-                'psych-fu-risk-male','psych-fu-risk-female','psych-fu-risk-advanced-age','psych-fu-risk-active-ideation','psych-fu-risk-recent-loss','psych-fu-risk-passive-ideation','psych-fu-risk-isolation','psych-fu-risk-plan','psych-fu-risk-poor-support','psych-fu-risk-method-available','psych-fu-risk-married','psych-fu-risk-intent','psych-fu-risk-impulsive-behaviors','psych-fu-risk-command-hallucinations','psych-fu-risk-chronic-mental-illness','psych-fu-risk-history-assault'
+                'psych-fu-risk-advanced-age','psych-fu-risk-active-ideation','psych-fu-risk-recent-loss','psych-fu-risk-passive-ideation','psych-fu-risk-isolation','psych-fu-risk-plan','psych-fu-risk-poor-support','psych-fu-risk-method-available','psych-fu-risk-married','psych-fu-risk-intent','psych-fu-risk-impulsive-behaviors','psych-fu-risk-command-hallucinations','psych-fu-risk-chronic-mental-illness','psych-fu-risk-history-assault'
             ];
             const riskChecked = riskIds.map(checkedLabel).filter(Boolean);
-            if (riskChecked.length > 0) sections.push(`RISK FACTORS:\n• ${riskChecked.join('\n• ')}`);
+            const riskOtherInputs = Array.from(document.querySelectorAll('#psych-fu-risk-other-container input[type="text"]'));
+            const riskOtherValues = riskOtherInputs.map(inp => inp.value.trim()).filter(Boolean);
+            const allRiskFactors = [...riskChecked, ...riskOtherValues];
+            if (allRiskFactors.length > 0) sections.push(`RISK FACTORS:\n• ${allRiskFactors.join('\n• ')}`);
 
             // Protective Factors
             const protectIds = ['psych-fu-protect-higher-power','psych-fu-protect-married','psych-fu-protect-suicide-wrong','psych-fu-protect-support-system'];
             const protectChecked = protectIds.map(checkedLabel).filter(Boolean);
-            if (protectChecked.length > 0) sections.push(`PROTECTIVE FACTORS:\n• ${protectChecked.join('\n• ')}`);
+            const protectOtherInputs = Array.from(document.querySelectorAll('#psych-fu-protect-other-container input[type="text"]'));
+            const protectOtherValues = protectOtherInputs.map(inp => inp.value.trim()).filter(Boolean);
+            const allProtectFactors = [...protectChecked, ...protectOtherValues];
+            if (allProtectFactors.length > 0) sections.push(`PROTECTIVE FACTORS:\n• ${allProtectFactors.join('\n• ')}`);
 
             // Past Medical History
             const medParts = [];
@@ -6396,7 +6389,7 @@ function addNurseInterventionRow(isFirstRow = false) {
             const documentationTime = val('time-documentation');
             const coordinationTime = val('time-coordination');
             if (faceToFace) timeParts.push(`Face to Face/Telephonic Time: ${faceToFace}`);
-            if (psychotherapyMinutes) timeParts.push(`Of the face-to-face time, ${psychotherapyMinutes} minutes were spent in psychotherapy.`);
+            if (psychotherapyMinutes) timeParts.push(`Psychotherapy Time: ${psychotherapyMinutes} minutes were spent in psychotherapy.`);
             if (documentationTime) timeParts.push(`Documentation: ${documentationTime}`);
             if (coordinationTime) timeParts.push(`Coordination of Care: ${coordinationTime}`);
             if (timeParts.length > 0) sections.push(`TIME STATEMENT:\n${timeParts.join('\n')}`);
@@ -6604,16 +6597,14 @@ function addNurseInterventionRow(isFirstRow = false) {
             syncCccVisibility();
 
             const nonRoutine = cccNonRoutineCheckbox && cccNonRoutineCheckbox.checked;
-            const roleIsOther = cccRoleSelect && cccRoleSelect.value === 'Other';
             const serviceByFilled = !!(cccServiceByInput && cccServiceByInput.value.trim());
-            const roleFilled = !!(cccRoleSelect && cccRoleSelect.value);
             const coordinatedWithFilled = !!(cccCoordinationWithInput && cccCoordinationWithInput.value.trim());
             const categoryFilled = !!(cccCategorySelect && cccCategorySelect.value);
             const supportFilled = !!(cccSupportNextSteps && cccSupportNextSteps.value.trim());
             const narrativeFilled = !!(cccNoteTextarea && cccNoteTextarea.value.trim());
             const verificationComplete = (cccVerifyNextSteps && cccVerifyNextSteps.checked) && (cccVerifyGoals && cccVerifyGoals.checked);
 
-            const allComplete = nonRoutine && !roleIsOther && verificationComplete && serviceByFilled && roleFilled && coordinatedWithFilled && categoryFilled && supportFilled && narrativeFilled;
+            const allComplete = nonRoutine && verificationComplete && serviceByFilled && coordinatedWithFilled && categoryFilled && supportFilled && narrativeFilled;
             const showWarning = (cccVerificationWarning && nonRoutine && !allComplete);
 
             if (cccVerificationWarning) {
@@ -6622,13 +6613,12 @@ function addNurseInterventionRow(isFirstRow = false) {
 
             if (allComplete) {
                 const serviceBy = cccServiceByInput.value.trim();
-                const role = cccRoleSelect.value;
                 const coordinatedWith = cccCoordinationWithInput.value.trim();
                 const category = cccCategorySelect.value;
                 const support = cccSupportNextSteps.value.trim();
                 const narrative = cccNoteTextarea.value.trim();
 
-                finalNote = `Complex Coordination of Care (non-routine).\n\nService completed by: ${serviceBy} (${role}).\nCoordinated with: ${coordinatedWith}.\nCategory of service: ${category}.\nHow this interaction supports the client's next steps: ${support}.\n\nNarrative:\n${narrative}`;
+                finalNote = `Complex Coordination of Care (non-routine).\n\nService completed by: ${serviceBy}.\nCoordinated with: ${coordinatedWith}.\nCategory of service: ${category}.\nHow this interaction supports the client's next steps: ${support}.\n\nNarrative:\n${narrative}`;
             } else {
                 finalNote = '';
             }
@@ -7703,12 +7693,6 @@ let interventions = [];
             let courtText = '';
 
                 const dtcCccServiceBy = (document.getElementById('dtc-ccc-service-by')?.value || '').trim();
-                const dtcCccRoleSelect = document.getElementById('dtc-ccc-role');
-                const dtcCccRole = (dtcCccRoleSelect?.value || '').trim();
-                const dtcCccRoleWarning = document.getElementById('dtc-ccc-role-warning');
-                if (dtcCccRoleWarning) {
-                    dtcCccRoleWarning.classList.toggle('hidden', dtcCccRole !== 'Other');
-                }
                 const dtcCccCoordinationWith = (document.getElementById('dtc-ccc-coordination-with')?.value || '').trim();
 
             const lastCourtDate = formatDate(document.getElementById('dtc-initialCourtDate').value);
@@ -7727,8 +7711,8 @@ let interventions = [];
             if (careCoordination) {
                 progressText += `Writer also coordinated care with ${careCoordination}.\n\n`;
             }
-            if (dtcCccServiceBy || dtcCccRole) {
-                progressText += `Drug Treatment Court reporting completed by ${dtcCccServiceBy || '[Service completed by]'}${dtcCccRole ? ` (${dtcCccRole})` : ''}.\n\n`;
+            if (dtcCccServiceBy) {
+                progressText += `Drug Treatment Court reporting completed by ${dtcCccServiceBy}.\n\n`;
             }
             if (dtcCccCoordinationWith) {
                 progressText += `Coordinated with: ${dtcCccCoordinationWith}.\n\n`;
@@ -7969,14 +7953,6 @@ let interventions = [];
     // Complex Coordination of Care listeners
     if (cccNonRoutineCheckbox) {
         cccNonRoutineCheckbox.addEventListener('change', () => { syncCccVisibility(); updateFinalNote(); });
-    }
-    if (cccRoleSelect) {
-        cccRoleSelect.addEventListener('change', () => {
-            const showRoleWarning = cccRoleSelect.value === 'Other';
-            if (cccRoleWarning) cccRoleWarning.classList.toggle('hidden', !showRoleWarning);
-            if (cccBlockable) cccBlockable.classList.toggle('ccc-blocked', showRoleWarning);
-            updateFinalNote();
-        });
     }
     [cccServiceByInput, cccCoordinationWithInput, cccCategorySelect, cccSupportNextSteps, cccNoteTextarea, cccVerifyNextSteps, cccVerifyGoals].forEach(el => {
         if (el) {
@@ -8708,16 +8684,8 @@ Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
         // Clinician info listeners
         const dtcCccServiceBy = document.getElementById('dtc-ccc-service-by');
         const dtcCccCoordinationWith = document.getElementById('dtc-ccc-coordination-with');
-        const dtcCccRoleSelect = document.getElementById('dtc-ccc-role');
-        const dtcCccRoleWarning = document.getElementById('dtc-ccc-role-warning');
-        const toggleDtcCccRoleWarning = () => {
-            if (!dtcCccRoleWarning || !dtcCccRoleSelect) return;
-            dtcCccRoleWarning.classList.toggle('hidden', dtcCccRoleSelect.value !== 'Other');
-        };
         if (dtcCccServiceBy) dtcCccServiceBy.addEventListener('input', updateFinalNote);
         if (dtcCccCoordinationWith) dtcCccCoordinationWith.addEventListener('input', updateFinalNote);
-        if (dtcCccRoleSelect) dtcCccRoleSelect.addEventListener('change', () => { toggleDtcCccRoleWarning(); updateFinalNote(); });
-        toggleDtcCccRoleWarning();
     }
 
     // CIWA modal open/save functions
@@ -9037,6 +9005,114 @@ Total dispensed: 15 tablets (10 scheduled + 5 PRN).`;
             activeMseTargetId = 'psych-fu-mse-output';
             mseModal.style.display = 'block';
         }
+    }
+
+    function addPsychRiskOther() {
+        const container = document.getElementById('psych-risk-other-container');
+        const div = document.createElement('div');
+        div.style.cssText = 'display: flex; align-items: center; gap: 8px; margin-bottom: 6px;';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'Enter other risk factor...';
+        input.style.cssText = 'flex: 1; padding: 6px; border: 1px solid #ccc; border-radius: 4px;';
+        input.addEventListener('input', updateFinalNote);
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.textContent = 'Remove';
+        removeBtn.className = 'copy-button';
+        removeBtn.style.cssText = 'width: auto; padding: 6px 10px; background: #dc3545;';
+        removeBtn.onclick = () => {
+            div.remove();
+            updateFinalNote();
+        };
+        
+        div.appendChild(input);
+        div.appendChild(removeBtn);
+        container.appendChild(div);
+        input.focus();
+    }
+
+    function addPsychProtectOther() {
+        const container = document.getElementById('psych-protect-other-container');
+        const div = document.createElement('div');
+        div.style.cssText = 'display: flex; align-items: center; gap: 8px; margin-bottom: 6px;';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'Enter other protective factor...';
+        input.style.cssText = 'flex: 1; padding: 6px; border: 1px solid #ccc; border-radius: 4px;';
+        input.addEventListener('input', updateFinalNote);
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.textContent = 'Remove';
+        removeBtn.className = 'copy-button';
+        removeBtn.style.cssText = 'width: auto; padding: 6px 10px; background: #dc3545;';
+        removeBtn.onclick = () => {
+            div.remove();
+            updateFinalNote();
+        };
+        
+        div.appendChild(input);
+        div.appendChild(removeBtn);
+        container.appendChild(div);
+        input.focus();
+    }
+
+    function addPsychFuRiskOther() {
+        const container = document.getElementById('psych-fu-risk-other-container');
+        const div = document.createElement('div');
+        div.style.cssText = 'display: flex; align-items: center; gap: 8px; margin-bottom: 6px;';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'Enter other risk factor...';
+        input.style.cssText = 'flex: 1; padding: 6px; border: 1px solid #ccc; border-radius: 4px;';
+        input.addEventListener('input', updateFinalNote);
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.textContent = 'Remove';
+        removeBtn.className = 'copy-button';
+        removeBtn.style.cssText = 'width: auto; padding: 6px 10px; background: #dc3545;';
+        removeBtn.onclick = () => {
+            div.remove();
+            updateFinalNote();
+        };
+        
+        div.appendChild(input);
+        div.appendChild(removeBtn);
+        container.appendChild(div);
+        input.focus();
+    }
+
+    function addPsychFuProtectOther() {
+        const container = document.getElementById('psych-fu-protect-other-container');
+        const div = document.createElement('div');
+        div.style.cssText = 'display: flex; align-items: center; gap: 8px; margin-bottom: 6px;';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'Enter other protective factor...';
+        input.style.cssText = 'flex: 1; padding: 6px; border: 1px solid #ccc; border-radius: 4px;';
+        input.addEventListener('input', updateFinalNote);
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.textContent = 'Remove';
+        removeBtn.className = 'copy-button';
+        removeBtn.style.cssText = 'width: auto; padding: 6px 10px; background: #dc3545;';
+        removeBtn.onclick = () => {
+            div.remove();
+            updateFinalNote();
+        };
+        
+        div.appendChild(input);
+        div.appendChild(removeBtn);
+        container.appendChild(div);
+        input.focus();
     }
          
 </script>
