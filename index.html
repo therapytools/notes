@@ -102,15 +102,15 @@
                 <button class="tab-button flex-grow text-center text-gray-500 hover:text-gray-700 py-4 px-2 border-b-2 border-transparent text-base md:text-lg" onclick="openTab(event, 'NoteTemplates')">
                     Templates
                 </button>
-                <div class="relative flex-grow">
+                <div class="relative flex-grow" id="sudContainer" onmouseenter="showSudDropdown()" onmouseleave="hideSudDropdown()">
                     <button class="tab-button w-full text-center text-gray-500 hover:text-gray-700 py-4 px-2 border-b-2 border-transparent text-base md:text-lg" onclick="toggleSudDropdown(event)">
-                        SUD Dx ▼
+                        SUD Dx
                     </button>
                     <div id="sudDropdown" class="absolute left-0 mt-0 w-full bg-white border border-gray-200 rounded shadow-lg hidden z-10">
-                        <button type="button" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="openTab(event, 'SUD')">
+                        <button type="button" class="dropdown-option w-full text-left px-4 py-2 text-gray-700 transition-all" onclick="openTab(event, 'SUD')" onmouseenter="highlightOption(this)" onmouseleave="unhighlightOption(this)">
                             SUD Dx
                         </button>
-                        <button type="button" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 border-t border-gray-200" onclick="openTab(event, 'DSMDx')">
+                        <button type="button" class="dropdown-option w-full text-left px-4 py-2 text-gray-700 transition-all border-t border-gray-200" onclick="openTab(event, 'DSMDx')" onmouseenter="highlightOption(this)" onmouseleave="unhighlightOption(this)">
                             DSM-V-TR Dx
                         </button>
                     </div>
@@ -322,10 +322,29 @@
         evt.stopPropagation();
     }
 
+    function showSudDropdown() {
+        const dropdown = document.getElementById('sudDropdown');
+        dropdown.classList.remove('hidden');
+    }
+
+    function hideSudDropdown() {
+        const dropdown = document.getElementById('sudDropdown');
+        dropdown.classList.add('hidden');
+    }
+
+    function highlightOption(element) {
+        element.classList.add('bg-indigo-200', 'font-semibold');
+    }
+
+    function unhighlightOption(element) {
+        element.classList.remove('bg-indigo-200', 'font-semibold');
+    }
+
     // Close dropdown when clicking outside
     document.addEventListener('click', function() {
         const dropdown = document.getElementById('sudDropdown');
-        if (dropdown && !dropdown.classList.contains('hidden')) {
+        const sudContainer = document.getElementById('sudContainer');
+        if (dropdown && !dropdown.classList.contains('hidden') && !sudContainer.contains(event.target)) {
             dropdown.classList.add('hidden');
         }
     });
