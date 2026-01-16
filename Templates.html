@@ -1522,6 +1522,65 @@ Rochester, NY
             <input type="checkbox" id="mmfu-plan-call-911">
             <label for="mmfu-plan-call-911">Client agrees to call 911 and contact staff with any SI/HI or urgent mental health concerns.</label>
         </div>
+
+        <h3 style="margin-top: 25px;">Medication Changes</h3>
+        <div style="margin-top: 15px;">
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex: 1;">Buprenorphine extended-release injection (Brixadi)</div>
+                <label style="display:flex; align-items:center; gap:5px; margin-right: 15px;"><input type="checkbox" id="mmfu-med-brixadi-initiated"> Initiated</label>
+                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="mmfu-med-brixadi-removed"> Removed (stopped)</label>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex: 1;">Buprenorphine extended-release injection (Sublocade)</div>
+                <label style="display:flex; align-items:center; gap:5px; margin-right: 15px;"><input type="checkbox" id="mmfu-med-sublocade-initiated"> Initiated</label>
+                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="mmfu-med-sublocade-removed"> Removed (stopped)</label>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex: 1;">Naltrexone extended-release injectable (Vivitrol)</div>
+                <label style="display:flex; align-items:center; gap:5px; margin-right: 15px;"><input type="checkbox" id="mmfu-med-vivitrol-initiated"> Initiated</label>
+                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="mmfu-med-vivitrol-removed"> Removed (stopped)</label>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex: 1;">Buprenorphine/naloxone sublingual (Suboxone)</div>
+                <label style="display:flex; align-items:center; gap:5px; margin-right: 15px;"><input type="checkbox" id="mmfu-med-suboxone-initiated"> Initiated</label>
+                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="mmfu-med-suboxone-removed"> Removed (stopped)</label>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex: 1;">Buprenorphine/naloxone sublingual (generics)</div>
+                <label style="display:flex; align-items:center; gap:5px; margin-right: 15px;"><input type="checkbox" id="mmfu-med-generics-initiated"> Initiated</label>
+                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="mmfu-med-generics-removed"> Removed (stopped)</label>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex: 1;">Buprenorphine/naloxone sublingual (Zubsolv)</div>
+                <label style="display:flex; align-items:center; gap:5px; margin-right: 15px;"><input type="checkbox" id="mmfu-med-zubsolv-initiated"> Initiated</label>
+                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="mmfu-med-zubsolv-removed"> Removed (stopped)</label>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex: 1;">Buprenorphine/naloxone sublingual (Bunavail)</div>
+                <label style="display:flex; align-items:center; gap:5px; margin-right: 15px;"><input type="checkbox" id="mmfu-med-bunavail-initiated"> Initiated</label>
+                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="mmfu-med-bunavail-removed"> Removed (stopped)</label>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex: 1;">Buprenorphine monoproduct (Subutex)</div>
+                <label style="display:flex; align-items:center; gap:5px; margin-right: 15px;"><input type="checkbox" id="mmfu-med-subutex-initiated"> Initiated</label>
+                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="mmfu-med-subutex-removed"> Removed (stopped)</label>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex: 1;">Naltrexone oral (Revia)</div>
+                <label style="display:flex; align-items:center; gap:5px; margin-right: 15px;"><input type="checkbox" id="mmfu-med-revia-initiated"> Initiated</label>
+                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="mmfu-med-revia-removed"> Removed (stopped)</label>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex: 1;">Acamprosate (Campral)</div>
+                <label style="display:flex; align-items:center; gap:5px; margin-right: 15px;"><input type="checkbox" id="mmfu-med-campral-initiated"> Initiated</label>
+                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="mmfu-med-campral-removed"> Removed (stopped)</label>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex: 1;">Disulfiram (Antabuse)</div>
+                <label style="display:flex; align-items:center; gap:5px; margin-right: 15px;"><input type="checkbox" id="mmfu-med-antabuse-initiated"> Initiated</label>
+                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="mmfu-med-antabuse-removed"> Removed (stopped)</label>
+            </div>
+        </div>
     </div>
 
     <!-- Container for Initial - Nurse Smoking Cessation -->
@@ -6915,6 +6974,35 @@ function addNurseInterventionRow(isFirstRow = false) {
         planParts.push(`Follow up with ${followupProvider} as scheduled.`);
         if (document.getElementById('mmfu-plan-call-911').checked) planParts.push('Client agrees to call 911 and contact staff with any SI/HI or urgent mental health concerns.');
         noteParts.push(`Plan:\n${planParts.join('\n\n')}`);
+
+        // Medication Changes
+        const medChanges = [
+            { name: 'Buprenorphine extended-release injection (Brixadi)', id: 'brixadi' },
+            { name: 'Buprenorphine extended-release injection (Sublocade)', id: 'sublocade' },
+            { name: 'Naltrexone extended-release injectable (Vivitrol)', id: 'vivitrol' },
+            { name: 'Buprenorphine/naloxone sublingual (Suboxone)', id: 'suboxone' },
+            { name: 'Buprenorphine/naloxone sublingual (generics)', id: 'generics' },
+            { name: 'Buprenorphine/naloxone sublingual (Zubsolv)', id: 'zubsolv' },
+            { name: 'Buprenorphine/naloxone sublingual (Bunavail)', id: 'bunavail' },
+            { name: 'Buprenorphine monoproduct (Subutex)', id: 'subutex' },
+            { name: 'Naltrexone oral (Revia)', id: 'revia' },
+            { name: 'Acamprosate (Campral)', id: 'campral' },
+            { name: 'Disulfiram (Antabuse)', id: 'antabuse' }
+        ];
+        let medChangesParts = [];
+        medChanges.forEach(med => {
+            const initiatedEl = document.getElementById(`mmfu-med-${med.id}-initiated`);
+            const removedEl = document.getElementById(`mmfu-med-${med.id}-removed`);
+            if (initiatedEl && initiatedEl.checked) {
+                medChangesParts.push(`${med.name}: Initiated`);
+            }
+            if (removedEl && removedEl.checked) {
+                medChangesParts.push(`${med.name}: Removed (stopped)`);
+            }
+        });
+        if (medChangesParts.length > 0) {
+            noteParts.push(`Medication Changes:\n${medChangesParts.join('\n')}`);
+        }
 
         finalNote = noteParts.join('\n\n');
     } else if (selectedNoteType === 'opioid-use-disorder-short') {
