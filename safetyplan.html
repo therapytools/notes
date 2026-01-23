@@ -208,6 +208,9 @@
         const pageWidth = doc.internal.pageSize.width;
         const margin = 15;
         let y = 20; // Initial Y position
+        const headerFontSize = 21;
+        const bodyFontSize = 11;
+        const lineHeight = 5;
 
         function checkPageBreak(requiredHeight) {
             if (y + requiredHeight >= pageHeight - margin) {
@@ -216,12 +219,13 @@
             }
         }
 
-        doc.setFontSize(21);
+        doc.setFontSize(headerFontSize);
         doc.setFont(undefined, 'bold');
         doc.text("Safety Plan", pageWidth / 2, y, { align: 'center' });
         y += 12;
 
-        const patientName = `Patient Name: ${document.getElementById('patientName').value || 'N/A'}`;
+        const patientNameRaw = document.getElementById('patientName').value || '';
+        const patientName = `Patient Name: ${patientNameRaw || 'N/A'}`;
         let planDateStr = "N/A";
         const dateValue = document.getElementById('planDate').value;
         if (dateValue) {
@@ -231,7 +235,7 @@
         const planDate = `Date: ${planDateStr}`;
         const createdWith = `Created with: ${document.getElementById('createdWith').value || 'N/A'}`;
 
-        doc.setFontSize(10);
+        doc.setFontSize(bodyFontSize);
         doc.setFont(undefined, 'normal');
         checkPageBreak(10);
         doc.text(patientName, margin, y);
@@ -254,7 +258,7 @@
             
             if (label && hasContent) { 
                 checkPageBreak(10);
-                doc.setFontSize(11);
+                doc.setFontSize(bodyFontSize);
                 doc.setFont(undefined, 'bold');
                 doc.text(label.textContent, margin, y);
                 y += 6;
@@ -266,7 +270,7 @@
                  const col1Width = col2x - col1x - 2, col2Width = col3x - col2x - 2, col3Width = pageWidth - col3x - margin;
 
                  if (Array.from(threeColInputs).some(input => input.querySelector('.name-field').value)) {
-                     doc.setFontSize(9.5);
+                     doc.setFontSize(bodyFontSize);
                      doc.setFont(undefined, 'bold');
                      doc.text("Name", col1x, y);
                      doc.text("Phone", col2x, y);
@@ -274,7 +278,7 @@
                      y += 5;
                  }
             
-                 doc.setFontSize(9.5);
+                 doc.setFontSize(bodyFontSize);
                  doc.setFont(undefined, 'normal');
                  threeColInputs.forEach(inputWrapper => {
                      const name = inputWrapper.querySelector('.name-field').value;
@@ -287,7 +291,7 @@
                          const extLines = doc.splitTextToSize(ext, col3Width);
                     
                          const linesRequired = Math.max(nameLines.length, phoneLines.length, extLines.length);
-                         const heightRequired = linesRequired * 4;
+                         const heightRequired = linesRequired * lineHeight;
                          checkPageBreak(heightRequired);
 
                          doc.text(nameLines, col1x, y);
@@ -306,7 +310,7 @@
                      if (input.value.trim() !== '') {
                          const line = `- ${input.value}`;
                          const splitText = doc.splitTextToSize(line, pageWidth - (margin * 2) - 5);
-                         const heightRequired = splitText.length * 4;
+                         const heightRequired = splitText.length * lineHeight;
                          checkPageBreak(heightRequired);
                          doc.text(splitText, margin + 5, y);
                          y += heightRequired + 1;
@@ -343,7 +347,7 @@
                 if (resources.length > 0) {
                     const col1Width = 80;
                     const col2x = margin + col1Width + 2;
-                    doc.setFontSize(9.5);
+                    doc.setFontSize(bodyFontSize);
 
                     resources.forEach(resource => {
                         doc.setFont(undefined, 'bold');
@@ -352,7 +356,7 @@
                         const valueLines = doc.splitTextToSize(resource.value, pageWidth - col2x - margin);
                         
                         const linesRequired = Math.max(labelLines.length, valueLines.length);
-                        const heightRequired = linesRequired * 5;
+                        const heightRequired = linesRequired * lineHeight;
                         checkPageBreak(heightRequired);
 
                         doc.setFont(undefined, 'bold');
@@ -367,9 +371,9 @@
             y += 4;
         });
 
-
-
-        doc.save("safety_plan.pdf");
+        const sanitizedName = patientNameRaw.trim().replace(/\s+/g, '_').replace(/[^A-Za-z0-9_-]/g, '');
+        const fileBase = sanitizedName || 'Safety_Plan';
+        doc.save(`${fileBase}_Safety_Plan.pdf`);
     }
 
     document.getElementById("saveBtn").addEventListener("click", generatePDF);
