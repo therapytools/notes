@@ -2467,34 +2467,45 @@ Rochester, NY
 <div class="checkbox-container"><input type="checkbox" id="ouds-assess-consent"><label for="ouds-assess-consent"><b>Informed Consent:</b> Patient expressed understanding of risks and benefits, and agreed to start buprenorphine treatment.</label></div>
 <div class="checkbox-container"><input type="checkbox" id="ouds-assess-therapeutic-contract"><label for="ouds-assess-therapeutic-contract" style="color: red; font-weight: bold;">Reviewed & Signed Therapeutic Contract</label></div>
 <h3>Plan:</h3>
-        <div class="ouds-aligned-item">
-            <span>
-                <input type="checkbox" id="ouds-plan-start">
-                <label for="ouds-plan-start">Start buprenorphine as discussed</label>
-            </span>
+    <div id="ouds-plan-options">
+        <div class="info-box" style="margin-top:15px;">
+            <h4>General Plan</h4>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-gen-start"><label for="ouds-plan-gen-start">Start <input type="text" class="inline-form-element" placeholder="[chosen medication]"> as discussed</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-gen-labs"><label for="ouds-plan-gen-labs">Obtain baseline labs (LFTs, renal function as indicated)</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-gen-support"><label for="ouds-plan-gen-support">Provide counseling/referral to behavioral support</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-gen-naloxone"><label for="ouds-plan-gen-naloxone">Provide naloxone kit</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-gen-fup"><label for="ouds-plan-gen-fup">Schedule follow-up in 24 weeks to assess response, side effects, adherence</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-gen-dental"><label for="ouds-plan-gen-dental">Encourage dental visit within next 3 months</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-gen-pcp"><label for="ouds-plan-gen-pcp">F/U with nurse to support connection with PCP</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-gen-stopped"><label for="ouds-plan-gen-stopped">Stopped</label></div>
         </div>
-        <div class="ouds-aligned-item">
-            <span>
-                <input type="checkbox" id="ouds-plan-prescribe">
-                <label for="ouds-plan-prescribe">Provide prescription and instructions</label>
-            </span>
+        <div class="info-box" style="margin-top:15px;">
+            <h4>Buprenorphine/Naloxone Sublingual Plan</h4>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-sub-start"><label for="ouds-plan-sub-start">Start buprenorphine/naloxone sublingual</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-sub-labs"><label for="ouds-plan-sub-labs">Obtain baseline LFTs</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-sub-fup"><label for="ouds-plan-sub-fup">Schedule follow-up in 24 weeks</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-sub-dental"><label for="ouds-plan-sub-dental">Encourage dental visit within next 3 months</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-sub-pcp"><label for="ouds-plan-sub-pcp">F/U with nurse to support connection with PCP</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-sub-stopped"><label for="ouds-plan-sub-stopped">Stopped</label></div>
         </div>
-        <div class="ouds-aligned-item">
-            <span>
-                <input type="checkbox" id="ouds-plan-naloxone">
-                <label for="ouds-plan-naloxone">Provide naloxone kit</label>
-            </span>
+        <div class="info-box" style="margin-top:15px;">
+            <h4>Buprenorphine Extended-Release Injection Plan (Sublocade, Brixadi)</h4>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-er-start"><label for="ouds-plan-er-start">Start buprenorphine extended-release injection (Sublocade or Brixadi)</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-er-labs"><label for="ouds-plan-er-labs">Obtain baseline LFTs</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-er-fup"><label for="ouds-plan-er-fup">Schedule follow-up in 24 weeks</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-er-pcp"><label for="ouds-plan-er-pcp">F/U with nurse to support connection with PCP</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-er-stopped"><label for="ouds-plan-er-stopped">Stopped</label></div>
         </div>
-        <div class="ouds-aligned-item">
-            <label for="ouds-plan-followup-time">Schedule follow-up in</label>
-            <input type="text" id="ouds-plan-followup-time" placeholder="time frame" class="inline-form-element">
+        <div class="info-box" style="margin-top:15px;">
+            <h4>Buprenorphine Monoproduct Plan (Subutex)</h4>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-mono-start"><label for="ouds-plan-mono-start">Start buprenorphine monoproduct (Subutex)</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-mono-labs"><label for="ouds-plan-mono-labs">Obtain baseline LFTs</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-mono-fup"><label for="ouds-plan-mono-fup">Schedule follow-up in 24 weeks</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-mono-dental"><label for="ouds-plan-mono-dental">Encourage dental visit within next 3 months</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-mono-pcp"><label for="ouds-plan-mono-pcp">F/U with nurse to support connection with PCP</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="ouds-plan-mono-stopped"><label for="ouds-plan-mono-stopped">Stopped</label></div>
         </div>
-        <div class="ouds-aligned-item">
-            <span>
-                <input type="checkbox" id="ouds-plan-dental">
-                <label for="ouds-plan-dental">Encourage dental visit within next 3 months</label>
-            </span>
-        </div>
+    </div>
 
         <h3>Time Statement</h3>
         <p>Today's visit time consisted of the following:</p>
@@ -2813,13 +2824,16 @@ Rochester, NY
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-gen-support"><label for="auds-plan-gen-support">Provide counseling/referral to behavioral support</label></div>
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-gen-fup"><label for="auds-plan-gen-fup">Schedule follow-up in 24 weeks to assess response, side effects, adherence</label></div>
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-gen-pcp"><label for="auds-plan-gen-pcp">F/U with nurse to support connection with PCP</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="auds-plan-gen-stopped"><label for="auds-plan-gen-stopped">Stopped</label></div>
         </div>
         <div class="info-box" style="margin-top:15px;">
-            <h4>Naltrexone Plan</h4>
+            <h4>Naltrexone Plan (Oral or Injectable)</h4>
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-nal-start"><label for="auds-plan-nal-start">Start oral naltrexone 50 mg daily</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="auds-plan-nal-vivitrol"><label for="auds-plan-nal-vivitrol">Start Naltrexone extended-release injectable (Vivitrol)</label></div>
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-nal-labs"><label for="auds-plan-nal-labs">Obtain baseline LFTs</label></div>
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-nal-fup"><label for="auds-plan-nal-fup">Schedule follow-up in 24 weeks</label></div>
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-nal-pcp"><label for="auds-plan-nal-pcp">F/U with nurse to support connection with PCP</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="auds-plan-nal-stopped"><label for="auds-plan-nal-stopped">Stopped</label></div>
         </div>
          <div class="info-box" style="margin-top:15px;">
             <h4>Acamprosate Plan</h4>
@@ -2827,6 +2841,7 @@ Rochester, NY
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-aca-labs"><label for="auds-plan-aca-labs">Obtain baseline renal function</label></div>
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-aca-fup"><label for="auds-plan-aca-fup">Schedule follow-up in 24 weeks</label></div>
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-aca-pcp"><label for="auds-plan-aca-pcp">F/U with nurse to support connection with PCP</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="auds-plan-aca-stopped"><label for="auds-plan-aca-stopped">Stopped</label></div>
         </div>
         <div class="info-box" style="margin-top:15px;">
             <h4>Disulfiram Plan</h4>
@@ -2834,6 +2849,7 @@ Rochester, NY
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-dis-labs"><label for="auds-plan-dis-labs">Obtain baseline LFTs</label></div>
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-dis-fup"><label for="auds-plan-dis-fup">Schedule follow-up in 24 weeks</label></div>
             <div class="checkbox-container"><input type="checkbox" id="auds-plan-dis-pcp"><label for="auds-plan-dis-pcp">F/U with nurse to support connection with PCP</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="auds-plan-dis-stopped"><label for="auds-plan-dis-stopped">Stopped</label></div>
         </div>
     </div>
 
