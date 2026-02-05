@@ -294,7 +294,7 @@
             margin: 0;
         }
         /* Updated styling for ouds-inline-label to handle short textboxes */
-        .ouds-inline-label, .auds-inline-label {
+        .ouds-inline-label, .auds-inline-label, .suds-inline-label {
             display: grid; /* Use grid for alignment */
             grid-template-columns: 1fr 1fr; /* Create two even columns */
             align-items: start; /* Align items to the top for wrapped labels */
@@ -306,19 +306,25 @@
             margin: 0;
             font-weight: bold; /* Keep labels bold */
         }
+        .suds-inline-label label {
+            margin: 0;
+            font-weight: bold; /* Keep labels bold */
+        }
         .ouds-inline-label input[type="text"],
         .ouds-inline-label input[type="date"],
         .auds-inline-label input[type="text"],
-        .auds-inline-label input[type="date"] {
+        .auds-inline-label input[type="date"],
+        .suds-inline-label input[type="text"],
+        .suds-inline-label input[type="date"] {
             margin: 0;
             flex-grow: 1; /* Allow input to grow */
         }
-        .ouds-inline-label textarea, .auds-inline-label textarea { /* Textareas should still take full width below label */
+        .ouds-inline-label textarea, .auds-inline-label textarea, .suds-inline-label textarea { /* Textareas should still take full width below label */
             grid-column: 1 / -1; /* Make textarea span all columns */
             margin: 0;
             flex-grow: 1;
         }
-        .ouds-inline-label .radio-group, .auds-inline-label .radio-group {
+        .ouds-inline-label .radio-group, .auds-inline-label .radio-group, .suds-inline-label .radio-group {
             display: flex;
             gap: 15px;
             margin: 0;
@@ -332,7 +338,7 @@
             margin-bottom: 10px;
         }
         /* New styles for aligned items in Plan and Time Statement */
-        .ouds-aligned-item, .auds-aligned-item {
+        .ouds-aligned-item, .auds-aligned-item, .suds-aligned-item {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
@@ -343,27 +349,31 @@
         .ouds-aligned-item > span,
         .ouds-aligned-item > label:first-child,
         .auds-aligned-item > span,
-        .auds-aligned-item > label:first-child {
+        .auds-aligned-item > label:first-child,
+        .suds-aligned-item > span,
+        .suds-aligned-item > label:first-child {
             display: flex;
             align-items: center;
             grid-column: 1 / 2;
         }
         
         .ouds-aligned-item > input[type="text"],
-        .auds-aligned-item > input[type="text"] {
+        .auds-aligned-item > input[type="text"],
+        .suds-aligned-item > input[type="text"] {
             grid-column: 2 / 3;
             margin: 0;
         }
         
         .ouds-aligned-item input[type="checkbox"],
-        .auds-aligned-item input[type="checkbox"] {
+        .auds-aligned-item input[type="checkbox"],
+        .suds-aligned-item input[type="checkbox"] {
             margin-right: 12px;
             margin-top: 0;
             flex-shrink: 0;
             width: 18px;
             height: 18px;
         }
-        .ouds-aligned-item label, .auds-aligned-item label {
+        .ouds-aligned-item label, .auds-aligned-item label, .suds-aligned-item label {
             font-weight: normal;
             margin: 0;
         }
@@ -450,7 +460,8 @@
         }
       /* Corrected spacing for labels above LARGE textareas in OUD Short note */
 #opioid-use-disorder-short-container .ouds-inline-label:has(textarea),
-#alcohol-use-disorder-short-container .auds-inline-label:has(textarea) {
+#alcohol-use-disorder-short-container .auds-inline-label:has(textarea),
+#stimulant-use-disorder-short-container .suds-inline-label:has(textarea) {
     display: block;      /* Override the grid layout for these specific fields */
     grid-template-columns: none; /* Remove the column definition */
     gap: 0;              /* Remove the unwanted gap */
@@ -459,19 +470,22 @@
 }
 
 #opioid-use-disorder-short-container .ouds-inline-label:has(textarea) > label,
-#alcohol-use-disorder-short-container .auds-inline-label:has(textarea) > label {
+#alcohol-use-disorder-short-container .auds-inline-label:has(textarea) > label,
+#stimulant-use-disorder-short-container .suds-inline-label:has(textarea) > label {
     margin-bottom: 0px; /* Reduce space between the label and its textbox */
     margin-top: 0;
 }
 
 #opioid-use-disorder-short-container .ouds-inline-label:has(textarea) > textarea,
-#alcohol-use-disorder-short-container .auds-inline-label:has(textarea) > textarea {
+#alcohol-use-disorder-short-container .auds-inline-label:has(textarea) > textarea,
+#stimulant-use-disorder-short-container .suds-inline-label:has(textarea) > textarea {
     margin-top: 0; /* Ensure no extra space above the textarea */
 }
 
 /* This rule adds back a small amount of space for textareas that come directly after a main heading (like I-STOP). */
 #opioid-use-disorder-short-container h3 + textarea,
-#alcohol-use-disorder-short-container h3 + textarea {
+#alcohol-use-disorder-short-container h3 + textarea,
+#stimulant-use-disorder-short-container h3 + textarea {
     margin-top: 5px;
 }
 
@@ -2542,6 +2556,294 @@ Rochester, NY
             </select>
         </div>
     </div>
+
+<!-- Container for Stimulant Use Disorder Short -->
+<div id="stimulant-use-disorder-short-container" class="note-container hidden">
+    <h2 style="margin-top: 20px;">Stimulant Use Disorder Short</h2>
+    <p>New patient visit.</p>
+    
+    <div class="suds-inline-label" id="suds-chief-complaint-display-label">
+        <label>Chief Complaint:</label>
+        <select id="suds-chief-complaint" class="inline-form-element">
+            <option value="">Select chief complaint</option>
+            <option value="Follow-up for stimulant use disorder">Follow-up for stimulant use disorder</option>
+            <option value="Seeking help to reduce or stop stimulant use">Seeking help to reduce or stop stimulant use</option>
+            <option value="Other">Other</option>
+        </select>
+        <input type="text" id="suds-chief-complaint-other" placeholder="Specify if Other" class="inline-form-element hidden" style="width: 200px;">
+    </div>
+
+    <h3>Substance Use History</h3>
+    <div class="suds-inline-label">
+        <label for="suds-primary-stimulant">Primary stimulant used:</label>
+        <input type="text" id="suds-primary-stimulant" placeholder="e.g., methamphetamine, cocaine, prescription stimulants">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-route">Route of use:</label>
+        <input type="text" id="suds-route" placeholder="e.g., oral, nasal, smoking, injection">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-frequency-amount">Frequency and amount:</label>
+        <input type="text" id="suds-frequency-amount">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-last-use">Last use:</label>
+        <input type="date" id="suds-last-use">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-duration">Duration of use:</label>
+        <input type="text" id="suds-duration" placeholder="e.g., 5 years">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-triggers">Triggers / patterns of use:</label>
+        <textarea id="suds-triggers" rows="2"></textarea>
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-prior-treatment">Prior periods of abstinence / treatment history:</label>
+        <textarea id="suds-prior-treatment" rows="2"></textarea>
+    </div>
+
+    <h3>Co-use of Other Substances</h3>
+    <p style="font-size: 0.9em; color: #555;">(Check all that apply)</p>
+    <div id="suds-couse-list">
+        <div class="checkbox-container"><input type="checkbox" id="suds-couse-alcohol"><label for="suds-couse-alcohol">Alcohol</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="suds-couse-cannabis"><label for="suds-couse-cannabis">Cannabis</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="suds-couse-opioids"><label for="suds-couse-opioids">Opioids</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="suds-couse-benzodiazepines"><label for="suds-couse-benzodiazepines">Benzodiazepines</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="suds-couse-nicotine"><label for="suds-couse-nicotine">Nicotine</label></div>
+        <div class="checkbox-container"><input type="checkbox" id="suds-couse-other"><label for="suds-couse-other">Other:</label><input type="text" id="suds-couse-other-text" placeholder="Specify" style="width: 200px; padding: 6px; margin-left: 10px;"></div>
+    </div>
+
+    <h3>Cravings</h3>
+    <div class="radio-group" style="display: flex; gap: 15px;">
+        <label><input type="radio" name="suds-cravings" value="None"> None</label>
+        <label><input type="radio" name="suds-cravings" value="Mild"> Mild</label>
+        <label><input type="radio" name="suds-cravings" value="Moderate"> Moderate</label>
+        <label><input type="radio" name="suds-cravings" value="Severe"> Severe</label>
+    </div>
+
+    <h3>Withdrawal Symptoms</h3>
+    <p style="font-size: 0.9em; color: #555;">(Check all that apply)</p>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+        <div class="checkbox-container" style="margin: 0; padding: 0; background: none; border: none;"><input type="checkbox" id="suds-withdrawal-none"><label for="suds-withdrawal-none">None</label></div>
+        <div class="checkbox-container" style="margin: 0; padding: 0; background: none; border: none;"><input type="checkbox" id="suds-withdrawal-fatigue"><label for="suds-withdrawal-fatigue">Fatigue</label></div>
+        <div class="checkbox-container" style="margin: 0; padding: 0; background: none; border: none;"><input type="checkbox" id="suds-withdrawal-depression"><label for="suds-withdrawal-depression">Depression</label></div>
+        <div class="checkbox-container" style="margin: 0; padding: 0; background: none; border: none;"><input type="checkbox" id="suds-withdrawal-hypersomnia"><label for="suds-withdrawal-hypersomnia">Hypersomnia</label></div>
+        <div class="checkbox-container" style="margin: 0; padding: 0; background: none; border: none;"><input type="checkbox" id="suds-withdrawal-appetite"><label for="suds-withdrawal-appetite">Increased appetite</label></div>
+        <div class="checkbox-container" style="margin: 0; padding: 0; background: none; border: none;"><input type="checkbox" id="suds-withdrawal-anhedonia"><label for="suds-withdrawal-anhedonia">Anhedonia</label></div>
+    </div>
+
+    <h3>Motivation for Change</h3>
+    <div class="radio-group" style="display: flex; gap: 15px;">
+        <label><input type="radio" name="suds-motivation" value="Precontemplative"> Precontemplative</label>
+        <label><input type="radio" name="suds-motivation" value="Contemplative"> Contemplative</label>
+        <label><input type="radio" name="suds-motivation" value="Preparation"> Preparation</label>
+        <label><input type="radio" name="suds-motivation" value="Action"> Action</label>
+        <label><input type="radio" name="suds-motivation" value="Maintenance"> Maintenance</label>
+    </div>
+
+    <h3>Psychiatric Symptoms</h3>
+    <div class="suds-inline-label">
+        <label for="suds-psych-symptoms">Anxiety, depression, sleep disturbance, paranoia, hallucinations:</label>
+        <textarea id="suds-psych-symptoms" rows="3"></textarea>
+    </div>
+
+    <h3>Psychosocial</h3>
+    <div class="suds-inline-label">
+        <label for="suds-housing">Housing:</label>
+        <input type="text" id="suds-housing">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-support-network">Support network:</label>
+        <textarea id="suds-support-network" rows="2"></textarea>
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-employment">Employment:</label>
+        <input type="text" id="suds-employment">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-legal">Legal issues:</label>
+        <input type="text" id="suds-legal">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-safety-concerns">Safety concerns:</label>
+        <textarea id="suds-safety-concerns" rows="2"></textarea>
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-goals">Patient goals for today:</label>
+        <textarea id="suds-goals" rows="2" placeholder="e.g., discuss medication options, relapse prevention, coping skills"></textarea>
+    </div>
+
+    <h3>Objective:</h3>
+    <div class="suds-inline-label">
+        <label for="suds-appearance">General appearance:</label>
+        <input type="text" id="suds-appearance" placeholder="e.g., alert, oriented, cooperative, fatigued, disheveled">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-speech-behavior">Speech / behavior:</label>
+        <input type="text" id="suds-speech-behavior" placeholder="e.g., pressured, tangential, normal rate/tone, cooperative">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-mood-affect">Mood / affect:</label>
+        <input type="text" id="suds-mood-affect" placeholder="e.g., euthymic, anxious, depressed, irritable">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-thought-process">Thought process / content:</label>
+        <input type="text" id="suds-thought-process" placeholder="e.g., logical, organized, no delusions/hallucinations noted">
+    </div>
+    <div class="suds-inline-label">
+        <label for="suds-insight-judgment">Insight / judgment:</label>
+        <input type="text" id="suds-insight-judgment" placeholder="e.g., intact, fair, impaired">
+    </div>
+
+    <h3>Vitals (if obtained)</h3>
+    <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; align-items:center;">
+            <input type="text" id="suds-vs-bp" style="width:100px; padding:6px; margin-bottom:6px;" placeholder="BP" />
+            <label style="font-size:0.85em; text-align:center; margin:0;">BP</label>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+            <input type="text" id="suds-vs-hr" style="width:80px; padding:6px; margin-bottom:6px;" placeholder="HR" />
+            <label style="font-size:0.85em; text-align:center; margin:0;">HR</label>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+            <input type="text" id="suds-vs-rr" style="width:80px; padding:6px; margin-bottom:6px;" placeholder="RR" />
+            <label style="font-size:0.85em; text-align:center; margin:0;">RR</label>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+            <input type="text" id="suds-vs-temp" style="width:100px; padding:6px; margin-bottom:6px;" placeholder="Temp" />
+            <label style="font-size:0.85em; text-align:center; margin:0;">Temp</label>
+        </div>
+    </div>
+
+    <h3>UDS (Urine Drug Screen)</h3>
+    <div class="suds-inline-label">
+        <label for="suds-uds-result">Result:</label>
+        <div class="radio-group">
+            <label><input type="radio" name="suds-uds-result" value="Positive"> Positive for: <input type="text" id="suds-uds-positive" placeholder="specify substances" style="width: 200px; padding: 6px; margin-left: 10px;"></label>
+            <label><input type="radio" name="suds-uds-result" value="Negative"> Negative</label>
+        </div>
+    </div>
+
+    <h3>Assessment:</h3>
+    <div class="info-box" style="margin-top:15px;">
+        <h4>Diagnosis</h4>
+        <div class="suds-inline-label">
+            <label>Stimulant Use Disorder:</label>
+            <div style="display: flex; gap: 15px; margin-top: 10px;">
+                <label><input type="radio" name="suds-severity" value="Mild"> Mild</label>
+                <label><input type="radio" name="suds-severity" value="Moderate"> Moderate</label>
+                <label><input type="radio" name="suds-severity" value="Severe"> Severe</label>
+            </div>
+        </div>
+        <div class="suds-inline-label">
+            <label for="suds-other-diagnoses">Other pertinent diagnoses:</label>
+            <textarea id="suds-other-diagnoses" rows="2" placeholder="e.g., MDD, Anxiety Disorder, ADHD, polysubstance use, insomnia"></textarea>
+        </div>
+        <div class="suds-inline-label">
+            <label for="suds-assessment-summary">Clinical Summary:</label>
+            <textarea id="suds-assessment-summary" rows="3" placeholder="Patient with ongoing stimulant use, expressing interest in reducing or discontinuing use. Discussed behavioral and pharmacologic supports. No acute safety concerns."></textarea>
+        </div>
+    </div>
+
+    <h3>Plan:</h3>
+    <div id="suds-plan-options">
+        <div class="info-box" style="margin-top:15px;">
+            <h4>General Plan</h4>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-gen-start"><label for="suds-plan-gen-start">Start <input type="text" class="inline-form-element" placeholder="[chosen medication]"> as discussed</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-gen-psychoed"><label for="suds-plan-gen-psychoed">Provided psychoeducation on stimulant use disorder, risks (cardiac, psychiatric, neurologic), and relapse prevention strategies</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-gen-harm-reduction"><label for="suds-plan-gen-harm-reduction">Discussed harm reduction strategies (hydration, nutrition, sleep hygiene, avoiding polysubstance use)</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-gen-behavioral"><label for="suds-plan-gen-behavioral">Encouraged engagement in behavioral therapies (CBT, contingency management, group therapy)</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-gen-screen-depression"><label for="suds-plan-gen-screen-depression">Screen / treat for depression, anxiety, ADHD, and trauma-related symptoms</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-gen-smoking-cessation"><label for="suds-plan-gen-smoking-cessation">Smoking cessation counseling provided if appropriate</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-gen-si-denies"><label for="suds-plan-gen-si-denies">Denies suicidal ideation or homicidal ideation</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-gen-crisis-resources"><label for="suds-plan-gen-crisis-resources">Crisis resources reviewed (988, ER if worsening)</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-gen-fup"><label for="suds-plan-gen-fup">Schedule follow-up in 24 weeks to assess response, side effects, adherence</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-gen-stopped"><label for="suds-plan-gen-stopped">Stopped</label></div>
+        </div>
+
+        <div class="info-box" style="margin-top:15px;">
+            <h4>Bupropion (Wellbutrin) Plan</h4>
+            <p style="font-size: 0.9em; color: #555; font-style: italic; margin: 5px 0 10px 0;">May reduce cravings and improve mood/energy</p>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-bup-start"><label for="suds-plan-bup-start">Start bupropion as discussed</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-bup-labs"><label for="suds-plan-bup-labs">Obtain baseline labs (LFTs, EKG if indicated)</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-bup-fup"><label for="suds-plan-bup-fup">Schedule follow-up in 24 weeks</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-bup-stopped"><label for="suds-plan-bup-stopped">Stopped</label></div>
+        </div>
+
+        <div class="info-box" style="margin-top:15px;">
+            <h4>Naltrexone (Vivitrol/Oral) Plan</h4>
+            <p style="font-size: 0.9em; color: #555; font-style: italic; margin: 5px 0 10px 0;">May reduce stimulant reward response; can be used in combination with bupropion</p>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-nal-start"><label for="suds-plan-nal-start">Start naltrexone as discussed</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-nal-labs"><label for="suds-plan-nal-labs">Obtain baseline LFTs</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-nal-fup"><label for="suds-plan-nal-fup">Schedule follow-up in 24 weeks</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-nal-stopped"><label for="suds-plan-nal-stopped">Stopped</label></div>
+        </div>
+
+        <div class="info-box" style="margin-top:15px;">
+            <h4>Mirtazapine Plan</h4>
+            <p style="font-size: 0.9em; color: #555; font-style: italic; margin: 5px 0 10px 0;">May assist with sleep, mood, and decrease methamphetamine use in some studies</p>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-mir-start"><label for="suds-plan-mir-start">Start mirtazapine as discussed</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-mir-labs"><label for="suds-plan-mir-labs">Obtain baseline labs as indicated</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-mir-fup"><label for="suds-plan-mir-fup">Schedule follow-up in 24 weeks</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-mir-stopped"><label for="suds-plan-mir-stopped">Stopped</label></div>
+        </div>
+
+        <div class="info-box" style="margin-top:15px;">
+            <h4>Topiramate / Modafinil Plan</h4>
+            <p style="font-size: 0.9em; color: #555; font-style: italic; margin: 5px 0 10px 0;">Off-label options with limited but emerging evidence</p>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-topo-start"><label for="suds-plan-topo-start">Start topiramate or modafinil as discussed</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-topo-labs"><label for="suds-plan-topo-labs">Obtain baseline labs as indicated</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-topo-fup"><label for="suds-plan-topo-fup">Schedule follow-up in 24 weeks</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-topo-stopped"><label for="suds-plan-topo-stopped">Stopped</label></div>
+        </div>
+
+        <div class="info-box" style="margin-top:15px;">
+            <h4>Other / Combination Plan</h4>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-other-start"><label for="suds-plan-other-start">Start <input type="text" id="suds-plan-other-med" placeholder="medication(s)" class="inline-form-element" style="width: 200px;"> as discussed</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-other-notes"><label for="suds-plan-other-notes">Medication notes: <input type="text" id="suds-plan-other-notes-text" placeholder="specify indication or combination" class="inline-form-element" style="width: 300px;"></label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-other-labs"><label for="suds-plan-other-labs">Obtain baseline labs as indicated</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-other-fup"><label for="suds-plan-other-fup">Schedule follow-up in 24 weeks</label></div>
+            <div class="checkbox-container"><input type="checkbox" id="suds-plan-other-stopped"><label for="suds-plan-other-stopped">Stopped</label></div>
+        </div>
+    </div>
+
+    <h3>Time Statement</h3>
+    <p>Today's visit time consisted of the following:</p>
+    <div class="suds-aligned-item">
+        <span>
+            <input type="checkbox" id="suds-time-face">
+            <label for="suds-time-face">Face to face/telephonic time:</label>
+        </span>
+        <input type="text" id="suds-time-face-txt" class="inline-form-element">
+    </div>
+    <div class="suds-aligned-item">
+        <span>
+            <input type="checkbox" id="suds-time-doc">
+            <label for="suds-time-doc">Documentation:</label>
+        </span>
+        <input type="text" id="suds-time-doc-txt" class="inline-form-element">
+    </div>
+    <div class="suds-aligned-item">
+        <span>
+            <input type="checkbox" id="suds-time-coord">
+            <label for="suds-time-coord">Coordination of care:</label>
+        </span>
+        <input type="text" id="suds-time-coord-txt" class="inline-form-element">
+    </div>
+    <div class="suds-aligned-item">
+        <span>
+            <input type="checkbox" id="suds-time-total">
+            <label for="suds-time-total">Total visit time:</label>
+        </span>
+        <select id="suds-time-total-txt" class="inline-form-element">
+            <option value="">Select time</option>
+            <option value="16+ minutes">16+ minutes</option>
+            <option value="31+ minutes">31+ minutes</option>
+        </select>
+    </div>
+</div>
+
 <div id="alcohol-use-disorder-short-container" class="note-container hidden">
     <h2 style="margin-top: 20px;">Alcohol Use Disorder Short</h2>
     <p>New patient visit.</p>
@@ -4496,6 +4798,7 @@ Rochester, NY
                 { value: 'op-alcohol-detox', label: 'OP Alcohol Detox' },
                 { value: 'ciwa-ar-assessment', label: 'CIWA-Ar Assessment' },
                 { value: 'opioid-use-disorder-short', label: 'Opioid Use Disorder Short' },
+                { value: 'stimulant-use-disorder-short', label: 'Stimulant Use Disorder Short' },
                 { value: 'alcohol-use-disorder-short', label: 'Alcohol Use Disorder Short' },
                 { value: 'telehealth', label: 'Telehealth' }
             ],
@@ -7149,6 +7452,171 @@ document.getElementById('ouds-psych-ideation').addEventListener('change', (event
             if (time.length > 0) noteParts.push(`Time Statement\nToday's visit time consisted of the following:\n${time.join('\n')}`);
 
             finalNote = noteParts.join('\n\n');
+} else if (selectedNoteType === 'stimulant-use-disorder-short') {
+    let noteParts = [];
+    noteParts.push("New patient visit.");
+    
+    const sudsChiefComplaint = document.getElementById('suds-chief-complaint').value;
+    const sudsChiefComplaintOther = document.getElementById('suds-chief-complaint-other').value;
+    if (sudsChiefComplaint === 'Other' && sudsChiefComplaintOther) {
+        noteParts.push(`Chief Complaint: ${sudsChiefComplaintOther}`);
+    } else if (sudsChiefComplaint) {
+        noteParts.push(`Chief Complaint: ${sudsChiefComplaint}`);
+    }
+
+    let sudsSuh = [];
+    if (document.getElementById('suds-primary-stimulant').value) sudsSuh.push(`Primary stimulant used: ${document.getElementById('suds-primary-stimulant').value}`);
+    if (document.getElementById('suds-route').value) sudsSuh.push(`Route of use: ${document.getElementById('suds-route').value}`);
+    if (document.getElementById('suds-frequency-amount').value) sudsSuh.push(`Frequency and amount: ${document.getElementById('suds-frequency-amount').value}`);
+    if (document.getElementById('suds-last-use').value) sudsSuh.push(`Last use: ${document.getElementById('suds-last-use').value}`);
+    if (document.getElementById('suds-duration').value) sudsSuh.push(`Duration of use: ${document.getElementById('suds-duration').value}`);
+    if (document.getElementById('suds-triggers').value) sudsSuh.push(`Triggers / patterns of use: ${document.getElementById('suds-triggers').value}`);
+    if (document.getElementById('suds-prior-treatment').value) sudsSuh.push(`Prior periods of abstinence / treatment history: ${document.getElementById('suds-prior-treatment').value}`);
+    if (sudsSuh.length > 0) noteParts.push(`Substance Use History\n${sudsSuh.join('\n')}`);
+
+    let sudsCouse = [];
+    const sudsCoUseCheckboxes = ['suds-couse-alcohol', 'suds-couse-cannabis', 'suds-couse-opioids', 'suds-couse-benzodiazepines', 'suds-couse-nicotine'];
+    sudsCoUseCheckboxes.forEach(id => {
+        if (document.getElementById(id).checked) {
+            sudsCouse.push(document.querySelector(`label[for="${id}"]`).textContent);
+        }
+    });
+    if (document.getElementById('suds-couse-other').checked && document.getElementById('suds-couse-other-text').value) {
+        sudsCouse.push(`Other: ${document.getElementById('suds-couse-other-text').value}`);
+    }
+    if (sudsCouse.length > 0) noteParts.push(`Co-use of Other Substances\n${sudsCouse.join('\n')}`);
+
+    const sudsCravings = document.querySelector('input[name="suds-cravings"]:checked');
+    if (sudsCravings) noteParts.push(`Cravings: ${sudsCravings.value}`);
+
+    let sudsWithdrawal = [];
+    const sudsWithdrawalCheckboxes = ['suds-withdrawal-none', 'suds-withdrawal-fatigue', 'suds-withdrawal-depression', 'suds-withdrawal-hypersomnia', 'suds-withdrawal-appetite', 'suds-withdrawal-anhedonia'];
+    sudsWithdrawalCheckboxes.forEach(id => {
+        if (document.getElementById(id).checked) {
+            sudsWithdrawal.push(document.querySelector(`label[for="${id}"]`).textContent);
+        }
+    });
+    if (sudsWithdrawal.length > 0) noteParts.push(`Withdrawal Symptoms\n${sudsWithdrawal.join('\n')}`);
+
+    const sudsMotivation = document.querySelector('input[name="suds-motivation"]:checked');
+    if (sudsMotivation) noteParts.push(`Motivation for Change: ${sudsMotivation.value}`);
+
+    if (document.getElementById('suds-psych-symptoms').value) noteParts.push(`Psychiatric Symptoms\n${document.getElementById('suds-psych-symptoms').value}`);
+
+    let sudsPsychosocial = [];
+    if (document.getElementById('suds-housing').value) sudsPsychosocial.push(`Housing: ${document.getElementById('suds-housing').value}`);
+    if (document.getElementById('suds-support-network').value) sudsPsychosocial.push(`Support network: ${document.getElementById('suds-support-network').value}`);
+    if (document.getElementById('suds-employment').value) sudsPsychosocial.push(`Employment: ${document.getElementById('suds-employment').value}`);
+    if (document.getElementById('suds-legal').value) sudsPsychosocial.push(`Legal issues: ${document.getElementById('suds-legal').value}`);
+    if (document.getElementById('suds-safety-concerns').value) sudsPsychosocial.push(`Safety concerns: ${document.getElementById('suds-safety-concerns').value}`);
+    if (document.getElementById('suds-goals').value) sudsPsychosocial.push(`Patient goals for today: ${document.getElementById('suds-goals').value}`);
+    if (sudsPsychosocial.length > 0) noteParts.push(`Psychosocial\n${sudsPsychosocial.join('\n')}`);
+
+    let sudsObjective = [];
+    if (document.getElementById('suds-appearance').value) sudsObjective.push(`General appearance: ${document.getElementById('suds-appearance').value}`);
+    if (document.getElementById('suds-speech-behavior').value) sudsObjective.push(`Speech / behavior: ${document.getElementById('suds-speech-behavior').value}`);
+    if (document.getElementById('suds-mood-affect').value) sudsObjective.push(`Mood / affect: ${document.getElementById('suds-mood-affect').value}`);
+    if (document.getElementById('suds-thought-process').value) sudsObjective.push(`Thought process / content: ${document.getElementById('suds-thought-process').value}`);
+    if (document.getElementById('suds-insight-judgment').value) sudsObjective.push(`Insight / judgment: ${document.getElementById('suds-insight-judgment').value}`);
+    if (sudsObjective.length > 0) noteParts.push(`Objective\n${sudsObjective.join('\n')}`);
+
+    let sudsVitals = [];
+    if (document.getElementById('suds-vs-bp').value) sudsVitals.push(`BP: ${document.getElementById('suds-vs-bp').value}`);
+    if (document.getElementById('suds-vs-hr').value) sudsVitals.push(`HR: ${document.getElementById('suds-vs-hr').value}`);
+    if (document.getElementById('suds-vs-rr').value) sudsVitals.push(`RR: ${document.getElementById('suds-vs-rr').value}`);
+    if (document.getElementById('suds-vs-temp').value) sudsVitals.push(`Temp: ${document.getElementById('suds-vs-temp').value}`);
+    if (sudsVitals.length > 0) noteParts.push(`Vitals\n${sudsVitals.join('\n')}`);
+
+    const sudsUdsResult = document.querySelector('input[name="suds-uds-result"]:checked');
+    if (sudsUdsResult) {
+        if (sudsUdsResult.value === 'Positive') {
+            const sudsUdsPositive = document.getElementById('suds-uds-positive').value;
+            noteParts.push(`UDS (Urine Drug Screen): Positive for ${sudsUdsPositive || '[substances]'}`);
+        } else {
+            noteParts.push(`UDS (Urine Drug Screen): Negative`);
+        }
+    }
+
+    let sudsAssessment = [];
+    const sudsSeverity = document.querySelector('input[name="suds-severity"]:checked');
+    if (sudsSeverity) sudsAssessment.push(`Stimulant Use Disorder, ${sudsSeverity.value}`);
+    if (document.getElementById('suds-other-diagnoses').value) sudsAssessment.push(`Other diagnoses: ${document.getElementById('suds-other-diagnoses').value}`);
+    if (sudsAssessment.length > 0) noteParts.push(`Assessment\n${sudsAssessment.join('\n')}`);
+    if (document.getElementById('suds-assessment-summary').value) noteParts.push(`Summary\n${document.getElementById('suds-assessment-summary').value}`);
+
+    let sudsPlan = [];
+    
+    // General Plan
+    let sudsGeneral = [];
+    if (document.getElementById('suds-plan-gen-start').checked) sudsGeneral.push("Start medication as discussed");
+    if (document.getElementById('suds-plan-gen-psychoed').checked) sudsGeneral.push("Provided psychoeducation on stimulant use disorder, risks (cardiac, psychiatric, neurologic), and relapse prevention strategies");
+    if (document.getElementById('suds-plan-gen-harm-reduction').checked) sudsGeneral.push("Discussed harm reduction strategies (hydration, nutrition, sleep hygiene, avoiding polysubstance use)");
+    if (document.getElementById('suds-plan-gen-behavioral').checked) sudsGeneral.push("Encouraged engagement in behavioral therapies (CBT, contingency management, group therapy)");
+    if (document.getElementById('suds-plan-gen-screen-depression').checked) sudsGeneral.push("Screen / treat for depression, anxiety, ADHD, and trauma-related symptoms");
+    if (document.getElementById('suds-plan-gen-smoking-cessation').checked) sudsGeneral.push("Smoking cessation counseling provided if appropriate");
+    if (document.getElementById('suds-plan-gen-si-denies').checked) sudsGeneral.push("Denies suicidal ideation or homicidal ideation");
+    if (document.getElementById('suds-plan-gen-crisis-resources').checked) sudsGeneral.push("Crisis resources reviewed (988, ER if worsening)");
+    if (document.getElementById('suds-plan-gen-fup').checked) sudsGeneral.push("Schedule follow-up in 24 weeks to assess response, side effects, adherence");
+    if (document.getElementById('suds-plan-gen-stopped').checked) sudsGeneral.push("Stopped");
+    if (sudsGeneral.length > 0) sudsPlan.push(`General Plan\n${sudsGeneral.join('\n')}`);
+    
+    // Bupropion Plan
+    let sudsBup = [];
+    if (document.getElementById('suds-plan-bup-start').checked) sudsBup.push("Start bupropion as discussed");
+    if (document.getElementById('suds-plan-bup-note').checked) sudsBup.push("May reduce cravings and improve mood/energy");
+    if (document.getElementById('suds-plan-bup-labs').checked) sudsBup.push("Obtain baseline labs (LFTs, EKG if indicated)");
+    if (document.getElementById('suds-plan-bup-fup').checked) sudsBup.push("Schedule follow-up in 24 weeks");
+    if (document.getElementById('suds-plan-bup-stopped').checked) sudsBup.push("Stopped");
+    if (sudsBup.length > 0) sudsPlan.push(`Bupropion (Wellbutrin) Plan\n${sudsBup.join('\n')}`);
+    
+    // Naltrexone Plan
+    let sudsNal = [];
+    if (document.getElementById('suds-plan-nal-start').checked) sudsNal.push("Start naltrexone as discussed");
+    if (document.getElementById('suds-plan-nal-note').checked) sudsNal.push("May reduce stimulant reward response; can be used in combination with bupropion");
+    if (document.getElementById('suds-plan-nal-labs').checked) sudsNal.push("Obtain baseline LFTs");
+    if (document.getElementById('suds-plan-nal-fup').checked) sudsNal.push("Schedule follow-up in 24 weeks");
+    if (document.getElementById('suds-plan-nal-stopped').checked) sudsNal.push("Stopped");
+    if (sudsNal.length > 0) sudsPlan.push(`Naltrexone (Vivitrol/Oral) Plan\n${sudsNal.join('\n')}`);
+    
+    // Mirtazapine Plan
+    let sudsMir = [];
+    if (document.getElementById('suds-plan-mir-start').checked) sudsMir.push("Start mirtazapine as discussed");
+    if (document.getElementById('suds-plan-mir-note').checked) sudsMir.push("May assist with sleep, mood, and decrease methamphetamine use in some studies");
+    if (document.getElementById('suds-plan-mir-labs').checked) sudsMir.push("Obtain baseline labs as indicated");
+    if (document.getElementById('suds-plan-mir-fup').checked) sudsMir.push("Schedule follow-up in 24 weeks");
+    if (document.getElementById('suds-plan-mir-stopped').checked) sudsMir.push("Stopped");
+    if (sudsMir.length > 0) sudsPlan.push(`Mirtazapine Plan\n${sudsMir.join('\n')}`);
+    
+    // Topiramate/Modafinil Plan
+    let sudsTopo = [];
+    if (document.getElementById('suds-plan-topo-start').checked) sudsTopo.push("Start topiramate or modafinil as discussed");
+    if (document.getElementById('suds-plan-topo-note').checked) sudsTopo.push("Off-label options with limited but emerging evidence");
+    if (document.getElementById('suds-plan-topo-labs').checked) sudsTopo.push("Obtain baseline labs as indicated");
+    if (document.getElementById('suds-plan-topo-fup').checked) sudsTopo.push("Schedule follow-up in 24 weeks");
+    if (document.getElementById('suds-plan-topo-stopped').checked) sudsTopo.push("Stopped");
+    if (sudsTopo.length > 0) sudsPlan.push(`Topiramate / Modafinil Plan\n${sudsTopo.join('\n')}`);
+    
+    // Other/Combination Plan
+    let sudsOther = [];
+    const sudsOtherMed = document.getElementById('suds-plan-other-med').value;
+    if (document.getElementById('suds-plan-other-start').checked && sudsOtherMed) sudsOther.push(`Start ${sudsOtherMed} as discussed`);
+    const sudsOtherNotesText = document.getElementById('suds-plan-other-notes-text').value;
+    if (document.getElementById('suds-plan-other-notes').checked && sudsOtherNotesText) sudsOther.push(`Medication notes: ${sudsOtherNotesText}`);
+    if (document.getElementById('suds-plan-other-labs').checked) sudsOther.push("Obtain baseline labs as indicated");
+    if (document.getElementById('suds-plan-other-fup').checked) sudsOther.push("Schedule follow-up in 24 weeks");
+    if (document.getElementById('suds-plan-other-stopped').checked) sudsOther.push("Stopped");
+    if (sudsOther.length > 0) sudsPlan.push(`Other / Combination Plan\n${sudsOther.join('\n')}`);
+
+    if (sudsPlan.length > 0) noteParts.push(`Plan\n${sudsPlan.join('\n\n')}`);
+
+    let sudsTime = [];
+    if (document.getElementById('suds-time-face').checked) sudsTime.push(`Face to face/telephonic time: ${document.getElementById('suds-time-face-txt').value}`);
+    if (document.getElementById('suds-time-doc').checked) sudsTime.push(`Documentation: ${document.getElementById('suds-time-doc-txt').value}`);
+    if (document.getElementById('suds-time-coord').checked) sudsTime.push(`Coordination of care: ${document.getElementById('suds-time-coord-txt').value}`);
+    if (document.getElementById('suds-time-total').checked) sudsTime.push(`Total visit time: ${document.getElementById('suds-time-total-txt').value}`);
+    if (sudsTime.length > 0) noteParts.push(`Time Statement\nToday's visit time consisted of the following:\n${sudsTime.join('\n')}`);
+
+    finalNote = noteParts.join('\n\n');
 } else if (selectedNoteType === 'alcohol-use-disorder-short') {
     let noteParts = [];
     noteParts.push("New patient visit.");
@@ -8147,6 +8615,45 @@ let interventions = [];
             });
         }
     });
+
+// Stimulant Use Disorder Short Listeners
+    const sudsInputs = document.querySelectorAll('#stimulant-use-disorder-short-container input, #stimulant-use-disorder-short-container textarea, #stimulant-use-disorder-short-container select');
+    sudsInputs.forEach(input => {
+        input.addEventListener('input', updateFinalNote);
+        input.addEventListener('change', updateFinalNote);
+        if (input.tagName.toLowerCase() === 'textarea') {
+            input.addEventListener('input', () => autoResize(input));
+        }
+    });
+    
+    // Show/hide other chief complaint input
+    const sudsChiefComplaint = document.getElementById('suds-chief-complaint');
+    const sudsChiefComplaintOther = document.getElementById('suds-chief-complaint-other');
+    if (sudsChiefComplaint) {
+        sudsChiefComplaint.addEventListener('change', () => {
+            sudsChiefComplaintOther.classList.toggle('hidden', sudsChiefComplaint.value !== 'Other');
+            updateFinalNote();
+        });
+    }
+    
+    // Show/hide other co-use input
+    const sudsCoUseOtherCb = document.getElementById('suds-couse-other');
+    const sudsCoUseOtherText = document.getElementById('suds-couse-other-text');
+    if (sudsCoUseOtherCb) {
+        sudsCoUseOtherCb.addEventListener('change', () => {
+            sudsCoUseOtherText.classList.toggle('hidden', !sudsCoUseOtherCb.checked);
+            updateFinalNote();
+        });
+    }
+    
+    // Show/hide UDS positive details
+    const sudsUdsRadios = document.querySelectorAll('input[name="suds-uds-result"]');
+    const sudsUdsPositive = document.getElementById('suds-uds-positive');
+    sudsUdsRadios.forEach(radio => radio.addEventListener('change', () => {
+        sudsUdsPositive.classList.toggle('hidden', radio.value !== 'Positive');
+        updateFinalNote();
+    }));
+
 // Alcohol Use Disorder Short Listeners
     const audsInputs = document.querySelectorAll('#alcohol-use-disorder-short-container input, #alcohol-use-disorder-short-container textarea, #alcohol-use-disorder-short-container select');
     audsInputs.forEach(input => {
