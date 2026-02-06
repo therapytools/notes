@@ -7372,17 +7372,6 @@ function addNurseInterventionRow(isFirstRow = false) {
                     otherSubs.push(detail);
                 }
             });
-document.getElementById('ouds-psych-ideation').addEventListener('change', (event) => {
-    const safetyContainer = document.getElementById('ouds-safety-planning-container');
-    const safetyCheckbox = document.getElementById('ouds-safety-planning-checkbox');
-    if (event.target.value.includes('Endorses')) {
-      safetyContainer.classList.remove('hidden');
-    } else {
-      safetyContainer.classList.add('hidden');
-      safetyCheckbox.checked = false; // Uncheck it when hidden
-    }
-    updateFinalNote();
-  });
             if (otherSubs.length > 0) noteParts.push(`Any other substance use?\n${otherSubs.join('\n')}`);
 
             let medHistory = [];
@@ -7437,11 +7426,27 @@ document.getElementById('ouds-psych-ideation').addEventListener('change', (event
             if (assessmentText.length > 0) noteParts.push(`Assessment:\nOpioid Use Disorder appropriate for pharmacotherapy\n\n${assessmentText.join('\n\n')}`);
 
             let plan = [];
-            if (document.getElementById('ouds-plan-start').checked) plan.push("Start buprenorphine as discussed");
-            if (document.getElementById('ouds-plan-prescribe').checked) plan.push("Provide prescription and instructions");
-            if (document.getElementById('ouds-plan-naloxone').checked) plan.push("Provide naloxone kit");
-            if (document.getElementById('ouds-plan-followup-time').value) plan.push(`Schedule follow-up in ${document.getElementById('ouds-plan-followup-time').value}`);
-            if (document.getElementById('ouds-plan-dental').checked) plan.push("Encourage dental visit within next 3 months");
+            // Gather all plan checkboxes from all plan sections
+            const planCheckboxIds = [
+                'ouds-plan-gen-start', 'ouds-plan-gen-labs', 'ouds-plan-gen-support', 
+                'ouds-plan-gen-naloxone', 'ouds-plan-gen-fup', 'ouds-plan-gen-dental', 
+                'ouds-plan-gen-pcp', 'ouds-plan-gen-stopped',
+                'ouds-plan-sub-start', 'ouds-plan-sub-labs', 'ouds-plan-sub-fup', 
+                'ouds-plan-sub-dental', 'ouds-plan-sub-pcp', 'ouds-plan-sub-stopped',
+                'ouds-plan-er-start', 'ouds-plan-er-labs', 'ouds-plan-er-fup', 
+                'ouds-plan-er-pcp', 'ouds-plan-er-stopped',
+                'ouds-plan-mono-start', 'ouds-plan-mono-labs', 'ouds-plan-mono-fup', 
+                'ouds-plan-mono-dental', 'ouds-plan-mono-pcp', 'ouds-plan-mono-stopped'
+            ];
+            planCheckboxIds.forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox && checkbox.checked) {
+                    const label = document.querySelector(`label[for="${id}"]`);
+                    if (label) {
+                        plan.push(label.textContent.trim());
+                    }
+                }
+            });
             if (plan.length > 0) noteParts.push(`Plan:\n${plan.join('\n')}`);
 
             let time = [];
@@ -8615,6 +8620,22 @@ let interventions = [];
             });
         }
     });
+
+    // OUDS Psychiatric Ideation Listener
+    const oudsParallaxIdeation = document.getElementById('ouds-psych-ideation');
+    if (oudsParallaxIdeation) {
+        oudsParallaxIdeation.addEventListener('change', (event) => {
+            const safetyContainer = document.getElementById('ouds-safety-planning-container');
+            const safetyCheckbox = document.getElementById('ouds-safety-planning-checkbox');
+            if (event.target.value.includes('Endorses')) {
+                safetyContainer.classList.remove('hidden');
+            } else {
+                safetyContainer.classList.add('hidden');
+                safetyCheckbox.checked = false; // Uncheck it when hidden
+            }
+            updateFinalNote();
+        });
+    }
 
 // Stimulant Use Disorder Short Listeners
     const sudsInputs = document.querySelectorAll('#stimulant-use-disorder-short-container input, #stimulant-use-disorder-short-container textarea, #stimulant-use-disorder-short-container select');
