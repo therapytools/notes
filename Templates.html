@@ -7426,28 +7426,52 @@ function addNurseInterventionRow(isFirstRow = false) {
             if (assessmentText.length > 0) noteParts.push(`Assessment:\nOpioid Use Disorder appropriate for pharmacotherapy\n\n${assessmentText.join('\n\n')}`);
 
             let plan = [];
-            // Gather all plan checkboxes from all plan sections
-            const planCheckboxIds = [
-                'ouds-plan-gen-start', 'ouds-plan-gen-labs', 'ouds-plan-gen-support', 
-                'ouds-plan-gen-naloxone', 'ouds-plan-gen-fup', 'ouds-plan-gen-dental', 
-                'ouds-plan-gen-pcp', 'ouds-plan-gen-stopped',
-                'ouds-plan-sub-start', 'ouds-plan-sub-labs', 'ouds-plan-sub-fup', 
-                'ouds-plan-sub-dental', 'ouds-plan-sub-pcp', 'ouds-plan-sub-stopped',
-                'ouds-plan-er-start', 'ouds-plan-er-labs', 'ouds-plan-er-fup', 
-                'ouds-plan-er-pcp', 'ouds-plan-er-stopped',
-                'ouds-plan-mono-start', 'ouds-plan-mono-labs', 'ouds-plan-mono-fup', 
-                'ouds-plan-mono-dental', 'ouds-plan-mono-pcp', 'ouds-plan-mono-stopped'
-            ];
-            planCheckboxIds.forEach(id => {
+            
+            // General Plan
+            let oudsGeneral = [];
+            ['ouds-plan-gen-start', 'ouds-plan-gen-labs', 'ouds-plan-gen-support', 'ouds-plan-gen-naloxone', 'ouds-plan-gen-fup', 'ouds-plan-gen-dental', 'ouds-plan-gen-pcp', 'ouds-plan-gen-stopped'].forEach(id => {
                 const checkbox = document.getElementById(id);
                 if (checkbox && checkbox.checked) {
                     const label = document.querySelector(`label[for="${id}"]`);
-                    if (label) {
-                        plan.push(label.textContent.trim());
-                    }
+                    if (label) oudsGeneral.push(label.textContent.trim());
                 }
             });
-            if (plan.length > 0) noteParts.push(`Plan:\n${plan.join('\n')}`);
+            if (oudsGeneral.length > 0) plan.push(`General Plan\n${oudsGeneral.join('\n')}`);
+            
+            // Buprenorphine/Naloxone Sublingual Plan
+            let oudsSub = [];
+            ['ouds-plan-sub-start', 'ouds-plan-sub-labs', 'ouds-plan-sub-fup', 'ouds-plan-sub-dental', 'ouds-plan-sub-pcp', 'ouds-plan-sub-stopped'].forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox && checkbox.checked) {
+                    const label = document.querySelector(`label[for="${id}"]`);
+                    if (label) oudsSub.push(label.textContent.trim());
+                }
+            });
+            if (oudsSub.length > 0) plan.push(`Buprenorphine/Naloxone Sublingual Plan\n${oudsSub.join('\n')}`);
+            
+            // Buprenorphine Extended-Release Injection Plan
+            let oudsEr = [];
+            ['ouds-plan-er-start', 'ouds-plan-er-labs', 'ouds-plan-er-fup', 'ouds-plan-er-pcp', 'ouds-plan-er-stopped'].forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox && checkbox.checked) {
+                    const label = document.querySelector(`label[for="${id}"]`);
+                    if (label) oudsEr.push(label.textContent.trim());
+                }
+            });
+            if (oudsEr.length > 0) plan.push(`Buprenorphine Extended-Release Injection Plan (Sublocade, Brixadi)\n${oudsEr.join('\n')}`);
+            
+            // Buprenorphine Monoproduct Plan
+            let oudsMono = [];
+            ['ouds-plan-mono-start', 'ouds-plan-mono-labs', 'ouds-plan-mono-fup', 'ouds-plan-mono-dental', 'ouds-plan-mono-pcp', 'ouds-plan-mono-stopped'].forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox && checkbox.checked) {
+                    const label = document.querySelector(`label[for="${id}"]`);
+                    if (label) oudsMono.push(label.textContent.trim());
+                }
+            });
+            if (oudsMono.length > 0) plan.push(`Buprenorphine Monoproduct Plan (Subutex)\n${oudsMono.join('\n')}`);
+            
+            if (plan.length > 0) noteParts.push(`Plan:\n${plan.join('\n\n')}`);
 
             let time = [];
             if (document.getElementById('ouds-time-face').checked) time.push(`Face to face/telephonic time: ${document.getElementById('ouds-time-face-txt').value}`);
@@ -7774,35 +7798,60 @@ function addNurseInterventionRow(isFirstRow = false) {
     if (audsAssessmentText.length > 0) noteParts.push(`Assessment:\nAlcohol Use Disorder appropriate for pharmacotherapy\n\n${audsAssessmentText.join('\n\n')}`);
 
     let audsPlan = [];
+    
     // General Plan
-    if (document.getElementById('auds-plan-gen-start').checked) {
-        const chosenMed = document.querySelector('#auds-plan-gen-start ~ label input').value || '[chosen medication]';
-        audsPlan.push(`Start ${chosenMed} as discussed`);
-    }
-    if (document.getElementById('auds-plan-gen-labs').checked) audsPlan.push("Obtain baseline labs (LFTs, renal function as indicated)");
-    if (document.getElementById('auds-plan-gen-support').checked) audsPlan.push("Provide counseling/referral to behavioral support");
-    if (document.getElementById('auds-plan-gen-fup').checked) audsPlan.push("Schedule follow-up in 24 weeks to assess response, side effects, adherence");
-    if (document.getElementById('auds-plan-gen-pcp').checked) audsPlan.push("F/U with nurse to support connection with PCP");
-
+    let audsGeneral = [];
+    ['auds-plan-gen-start', 'auds-plan-gen-labs', 'auds-plan-gen-support', 'auds-plan-gen-fup', 'auds-plan-gen-pcp', 'auds-plan-gen-stopped'].forEach(id => {
+        const checkbox = document.getElementById(id);
+        if (checkbox && checkbox.checked) {
+            const label = document.querySelector(`label[for="${id}"]`);
+            if (label) {
+                if (id === 'auds-plan-gen-start') {
+                    const input = label.querySelector('input[type="text"]');
+                    const medName = (input && input.value) ? input.value : '[chosen medication]';
+                    audsGeneral.push(`Start ${medName} as discussed`);
+                } else {
+                    audsGeneral.push(label.textContent.trim());
+                }
+            }
+        }
+    });
+    if (audsGeneral.length > 0) audsPlan.push(`General Plan\n${audsGeneral.join('\n')}`);
+    
     // Naltrexone Plan
-    if (document.getElementById('auds-plan-nal-start').checked) audsPlan.push("Start oral naltrexone 50 mg daily");
-    if (document.getElementById('auds-plan-nal-labs').checked) audsPlan.push("Obtain baseline LFTs");
-    if (document.getElementById('auds-plan-nal-fup').checked) audsPlan.push("Schedule follow-up in 24 weeks");
-    if (document.getElementById('auds-plan-nal-pcp').checked) audsPlan.push("F/U with nurse to support connection with PCP");
-
+    let audsNal = [];
+    ['auds-plan-nal-start', 'auds-plan-nal-vivitrol', 'auds-plan-nal-labs', 'auds-plan-nal-fup', 'auds-plan-nal-pcp', 'auds-plan-nal-stopped'].forEach(id => {
+        const checkbox = document.getElementById(id);
+        if (checkbox && checkbox.checked) {
+            const label = document.querySelector(`label[for="${id}"]`);
+            if (label) audsNal.push(label.textContent.trim());
+        }
+    });
+    if (audsNal.length > 0) audsPlan.push(`Naltrexone Plan (Oral or Vivitrol)\n${audsNal.join('\n')}`);
+    
     // Acamprosate Plan
-    if (document.getElementById('auds-plan-aca-start').checked) audsPlan.push("Start acamprosate 666 mg TID");
-    if (document.getElementById('auds-plan-aca-labs').checked) audsPlan.push("Obtain baseline renal function");
-    if (document.getElementById('auds-plan-aca-fup').checked) audsPlan.push("Schedule follow-up in 24 weeks");
-    if (document.getElementById('auds-plan-aca-pcp').checked) audsPlan.push("F/U with nurse to support connection with PCP");
-
+    let audsAca = [];
+    ['auds-plan-aca-start', 'auds-plan-aca-labs', 'auds-plan-aca-fup', 'auds-plan-aca-pcp', 'auds-plan-aca-stopped'].forEach(id => {
+        const checkbox = document.getElementById(id);
+        if (checkbox && checkbox.checked) {
+            const label = document.querySelector(`label[for="${id}"]`);
+            if (label) audsAca.push(label.textContent.trim());
+        }
+    });
+    if (audsAca.length > 0) audsPlan.push(`Acamprosate Plan\n${audsAca.join('\n')}`);
+    
     // Disulfiram Plan
-    if (document.getElementById('auds-plan-dis-start').checked) audsPlan.push("Start disulfiram 250 mg daily");
-    if (document.getElementById('auds-plan-dis-labs').checked) audsPlan.push("Obtain baseline LFTs");
-    if (document.getElementById('auds-plan-dis-fup').checked) audsPlan.push("Schedule follow-up in 24 weeks");
-    if (document.getElementById('auds-plan-dis-pcp').checked) audsPlan.push("F/U with nurse to support connection with PCP");
+    let audsDis = [];
+    ['auds-plan-dis-start', 'auds-plan-dis-labs', 'auds-plan-dis-fup', 'auds-plan-dis-pcp', 'auds-plan-dis-stopped'].forEach(id => {
+        const checkbox = document.getElementById(id);
+        if (checkbox && checkbox.checked) {
+            const label = document.querySelector(`label[for="${id}"]`);
+            if (label) audsDis.push(label.textContent.trim());
+        }
+    });
+    if (audsDis.length > 0) audsPlan.push(`Disulfiram Plan\n${audsDis.join('\n')}`);
 
-    if (audsPlan.length > 0) noteParts.push(`Plan:\n${audsPlan.join('\n')}`);
+    if (audsPlan.length > 0) noteParts.push(`Plan:\n${audsPlan.join('\n\n')}`);
 
     let audsTime = [];
     if (document.getElementById('auds-time-face').checked) audsTime.push(`Face to face/telephonic time: ${document.getElementById('auds-time-face-txt').value || '[time]'}`);
