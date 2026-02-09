@@ -115,8 +115,21 @@
                                 <input type="date" id="guLetterDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                             </div>
                             <div>
-                                <label for="guSubject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                                <input type="text" id="guSubject" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="(optional)">
+                                <label for="commonSubject" class="block text-sm font-semibold text-gray-700 mb-1">Subject (optional)</label>
+                                <input type="text" id="commonSubject" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., Evaluation Results" />
+                            </div>
+                            <div class="space-y-3">
+                                <div>
+                                    <label for="commonSalutationType" class="block text-sm font-semibold text-gray-700 mb-1">Salutation</label>
+                                    <select id="commonSalutationType" onchange="toggleCommonSalutationName(); generateReport();" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                        <option value="toWhom">To Whom It May Concern</option>
+                                        <option value="dear">Dear</option>
+                                    </select>
+                                </div>
+                                <div id="commonSalutationNameWrap" class="hidden">
+                                    <label for="commonSalutationName" class="block text-sm font-medium text-gray-700 mb-1">Letter Recipient</label>
+                                    <input type="text" id="commonSalutationName" oninput="generateReport()" class="w-48 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="name" />
+                                </div>
                             </div>
                             <div>
                                 <label for="guBody" class="block text-sm font-medium text-gray-700 mb-1">Body</label>
@@ -130,6 +143,32 @@ Sincerely,</textarea>
 
                 <!-- ===== TEMPLATE: Discharge Letter ===== -->
                 <div id="dischargeFields" class="hidden form-section max-w-4xl mx-auto">
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6">
+                        <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Letter Information</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="disLetterDate" class="block text-sm font-medium text-gray-700 mb-1">Letter Date</label>
+                                <input type="date" id="disLetterDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="disSubject" class="block text-sm font-semibold text-gray-700 mb-1">Subject (optional)</label>
+                                <input type="text" id="disSubject" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., Evaluation Results">
+                            </div>
+                            <div class="space-y-3">
+                                <div>
+                                    <label for="disSalutationType" class="block text-sm font-medium text-gray-700 mb-1">Salutation</label>
+                                    <select id="disSalutationType" onchange="toggleDisSalutationName(); generateReport();" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                        <option value="toWhom">To Whom It May Concern</option>
+                                        <option value="dear">Dear</option>
+                                    </select>
+                                </div>
+                                <div id="disSalutationNameWrap" class="hidden">
+                                    <label for="disSalutationName" class="block text-sm font-medium text-gray-700 mb-1">Letter Recipient</label>
+                                    <input type="text" id="disSalutationName" oninput="generateReport()" class="w-48 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <!-- Client & Dates -->
                         <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
@@ -211,16 +250,36 @@ Sincerely,</textarea>
                             <img id="ev-preview-logo" src="https://therapytools.github.io/notes/logo.png" alt="Delphi Rise Logo" class="h-16" onerror="this.onerror=null;this.src='https://placehold.co/150x50/ffffff/333333?text=Logo';">
                             <p id="ev-todays-date-display" class="text-sm"></p>
                         </div>
-                
-                        <!-- Salutation -->
-                        <p class="mb-6">To Whom It May Concern,</p>
+
+                        <!-- Letter Information (inline) -->
+                        <div class="space-y-4 mb-8 text-sm font-sans">
+                            <div>
+                                <label for="evLetterDate" class="block text-gray-700 mb-1">Letter Date</label>
+                                <input type="date" id="evLetterDate" oninput="generateReport()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-base">
+                            </div>
+                            <div>
+                                <label for="evSubject" class="block text-gray-700 font-semibold mb-1">Subject (optional)</label>
+                                <input type="text" id="evSubject" oninput="generateReport()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-base" placeholder="e.g., Enrollment Verification">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="evSalutationType" class="block text-gray-700 mb-1">Salutation</label>
+                                <select id="evSalutationType" onchange="toggleEvSalutationName(); generateReport();" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-base">
+                                    <option value="toWhom">To Whom It May Concern</option>
+                                    <option value="dear">Dear</option>
+                                </select>
+                                <div id="evSalutationNameWrap" class="hidden">
+                                    <label for="evSalutationName" class="block text-gray-700 mb-1">Letter Recipient</label>
+                                    <input type="text" id="evSalutationName" oninput="generateReport()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-base" placeholder="name">
+                                </div>
+                            </div>
+                        </div>
                 
                         <!-- Paragraph 1: Client Info -->
                         <p class="mb-6">
                             This letter is to verify that
                             <input type="text" id="evClientFirstName" placeholder="First Name" class="inline-input" oninput="generateReport()">
                             <input type="text" id="evClientLastName" placeholder="Last Name" class="inline-input" oninput="generateReport()">,
-                            DOB <input type="date" id="evClientDOB" class="inline-input-date" oninput="generateReport()">,
+                            Date of birth <input type="date" id="evClientDOB" class="inline-input-date" oninput="generateReport()">,
                             is currently enrolled in services with Delphi Rise. Services began on
                             <input type="date" id="evStartDate" class="inline-input-date" oninput="generateReport()">.
                         </p>
@@ -287,6 +346,30 @@ Sincerely,</textarea>
 
                 <!-- ===== TEMPLATE: Treatment Recommended ===== -->
                 <div id="treatmentRecFields" class="hidden form-section max-w-4xl mx-auto">
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6">
+                        <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Letter Information</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="trLetterDate" class="block text-sm font-medium text-gray-700 mb-1">Letter Date</label>
+                                <input type="date" id="trLetterDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            </div>
+                            <div>
+                                <label for="trSubject" class="block text-sm font-semibold text-gray-700 mb-1">Subject (optional)</label>
+                                <input type="text" id="trSubject" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., Evaluation Results">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="trSalutationType" class="block text-sm font-medium text-gray-700 mb-1">Salutation</label>
+                                <select id="trSalutationType" onchange="toggleTrSalutationName(); generateReport();" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    <option value="toWhom">To Whom It May Concern</option>
+                                    <option value="dear">Dear</option>
+                                </select>
+                                <div id="trSalutationNameWrap" class="hidden">
+                                    <label for="trSalutationName" class="block text-sm font-medium text-gray-700 mb-1">Letter Recipient</label>
+                                    <input type="text" id="trSalutationName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <!-- Client Information -->
                         <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
@@ -299,6 +382,10 @@ Sincerely,</textarea>
                                 <div>
                                     <label for="trClientLastName" class="block text-sm font-medium text-gray-700 mb-1">Client’s Last Name</label>
                                     <input type="text" id="trClientLastName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="trClientDob" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                                    <input type="date" id="trClientDob" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                                 </div>
                             </div>
                         </div>
@@ -368,6 +455,30 @@ Sincerely,</textarea>
 
                 <!-- ===== TEMPLATE: Treatment Not Recommended ===== -->
                 <div id="treatmentNotRecFields" class="hidden form-section max-w-4xl mx-auto">
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6">
+                        <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Letter Information</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="tnrLetterDate" class="block text-sm font-medium text-gray-700 mb-1">Letter Date</label>
+                                <input type="date" id="tnrLetterDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            </div>
+                            <div>
+                                <label for="tnrSubject" class="block text-sm font-semibold text-gray-700 mb-1">Subject (optional)</label>
+                                <input type="text" id="tnrSubject" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., Evaluation Results">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="tnrSalutationType" class="block text-sm font-medium text-gray-700 mb-1">Salutation</label>
+                                <select id="tnrSalutationType" onchange="toggleTnrSalutationName(); generateReport();" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    <option value="toWhom">To Whom It May Concern</option>
+                                    <option value="dear">Dear</option>
+                                </select>
+                                <div id="tnrSalutationNameWrap" class="hidden">
+                                    <label for="tnrSalutationName" class="block text-sm font-medium text-gray-700 mb-1">Letter Recipient</label>
+                                    <input type="text" id="tnrSalutationName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Client Information -->
                         <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
@@ -381,6 +492,10 @@ Sincerely,</textarea>
                                     <label for="clientLastName" class="block text-sm font-medium text-gray-700 mb-1">Client’s Last Name</label>
                                     <input type="text" id="clientLastName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
                                 </div>
+                                <div>
+                                    <label for="clientDob" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                                    <input type="date" id="clientDob" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                </div>
                             </div>
                         </div>
 
@@ -388,17 +503,6 @@ Sincerely,</textarea>
                         <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
                             <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Report Details</h2>
                             <div class="space-y-4">
-                                <div>
-                                    <label for="recipientType" class="block text-sm font-medium text-gray-700 mb-1">Recipient</label>
-                                    <select id="recipientType" onchange="toggleRecipientName(); generateReport();" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                                        <option value="toWhom">To Whom It May Concern,</option>
-                                        <option value="dear">Dear...</option>
-                                    </select>
-                                </div>
-                                <div id="recipientNameContainer" class="hidden">
-                                    <label for="recipientName" class="block text-sm font-medium text-gray-700 mb-1">Recipient Name</label>
-                                    <input type="text" id="recipientName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                                </div>
                                 <div>
                                     <label for="todaysDate" class="block text-sm font-medium text-gray-700 mb-1">Date of Report</label>
                                     <input type="date" id="todaysDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
@@ -448,6 +552,30 @@ Sincerely,</textarea>
 
                 <!-- ===== TEMPLATE: Evaluation in Progress ===== -->
                 <div id="evalInProgressFields" class="hidden form-section max-w-4xl mx-auto">
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6">
+                        <h2 class="text-xl font-semibold mb-4 text-gray-600 border-b pb-2">Letter Information</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="eipLetterDate" class="block text-sm font-medium text-gray-700 mb-1">Letter Date</label>
+                                <input type="date" id="eipLetterDate" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            </div>
+                            <div>
+                                <label for="eipSubject" class="block text-sm font-semibold text-gray-700 mb-1">Subject (optional)</label>
+                                <input type="text" id="eipSubject" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="e.g., Evaluation Results">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="eipSalutationType" class="block text-sm font-medium text-gray-700 mb-1">Salutation</label>
+                                <select id="eipSalutationType" onchange="toggleEipSalutationName(); generateReport();" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    <option value="toWhom">To Whom It May Concern</option>
+                                    <option value="dear">Dear</option>
+                                </select>
+                                <div id="eipSalutationNameWrap" class="hidden">
+                                    <label for="eipSalutationName" class="block text-sm font-medium text-gray-700 mb-1">Letter Recipient</label>
+                                    <input type="text" id="eipSalutationName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                                 <!-- Client Information -->
                                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
@@ -460,6 +588,10 @@ Sincerely,</textarea>
                                         <div>
                                             <label for="eipClientLastName" class="block text-sm font-medium text-gray-700 mb-1">Client’s Last Name</label>
                                             <input type="text" id="eipClientLastName" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                        </div>
+                                        <div>
+                                            <label for="eipClientDob" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                                            <input type="date" id="eipClientDob" oninput="generateReport()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
                                         </div>
                                     </div>
                                 </div>
@@ -699,8 +831,60 @@ Sincerely,</textarea>
             document.getElementById('eipTodaysDate').value = todayString;
             document.getElementById('reTodaysDate').value = todayString;
             document.getElementById('trTodaysDate').value = todayString;
-            document.getElementById('disDischargeDate').value = todayString;
+            document.getElementById('eipLetterDate').value = todayString;
+            document.getElementById('trLetterDate').value = todayString;
+            document.getElementById('tnrLetterDate').value = todayString;
+            document.getElementById('evLetterDate').value = todayString;
+            document.getElementById('disLetterDate').value = todayString;
+            document.getElementById('disDischargeDate').value = '';
             document.getElementById('evStartDate').value = todayString;
+            document.getElementById('commonSalutationType').value = 'toWhom';
+            toggleCommonSalutationName();
+            const disSubjectEl = document.getElementById('disSubject');
+            if (disSubjectEl && !disSubjectEl.value) {
+                disSubjectEl.value = 'Patient Discharge from Delphi Rise';
+            }
+            const eipSubjectEl = document.getElementById('eipSubject');
+            if (eipSubjectEl && !eipSubjectEl.value) {
+                eipSubjectEl.value = 'Evaluation in Progress';
+            }
+            const trSubjectEl = document.getElementById('trSubject');
+            if (trSubjectEl && !trSubjectEl.value) {
+                trSubjectEl.value = 'Treatment Recommendation';
+            }
+            const tnrSubjectEl = document.getElementById('tnrSubject');
+            if (tnrSubjectEl && !tnrSubjectEl.value) {
+                tnrSubjectEl.value = 'Treatment Recommendation';
+            }
+            const evSubjectEl = document.getElementById('evSubject');
+            if (evSubjectEl && !evSubjectEl.value) {
+                evSubjectEl.value = 'Enrollment Verification';
+            }
+            const disSalType = document.getElementById('disSalutationType');
+            if (disSalType) {
+                disSalType.value = 'toWhom';
+                toggleDisSalutationName();
+            }
+            const eipSalType = document.getElementById('eipSalutationType');
+            if (eipSalType) {
+                eipSalType.value = 'toWhom';
+                toggleEipSalutationName();
+            }
+            const trSalType = document.getElementById('trSalutationType');
+            if (trSalType) {
+                trSalType.value = 'toWhom';
+                toggleTrSalutationName();
+            }
+            const tnrSalType = document.getElementById('tnrSalutationType');
+            if (tnrSalType) {
+                tnrSalType.value = 'toWhom';
+                toggleTnrSalutationName();
+            }
+            const evSalType = document.getElementById('evSalutationType');
+            if (evSalType) {
+                evSalType.value = 'toWhom';
+                toggleEvSalutationName();
+            }
             
             // Set the default closure date for the re-engagement letter
             setClosureDate();
@@ -780,6 +964,22 @@ Sincerely,</textarea>
             generateReport();
         }
 
+        function getCommonSalutation() {
+            const typeEl = document.getElementById('commonSalutationType');
+            const nameEl = document.getElementById('commonSalutationName');
+            const type = typeEl ? typeEl.value : 'toWhom';
+            const name = nameEl ? (nameEl.value || '[Name]') : '[Name]';
+            return type === 'dear' ? `Dear ${name},` : 'To Whom It May Concern,';
+        }
+
+        function getSalutationByPrefix(prefix) {
+            const typeEl = document.getElementById(`${prefix}SalutationType`);
+            const nameEl = document.getElementById(`${prefix}SalutationName`);
+            const type = typeEl ? typeEl.value : 'toWhom';
+            const name = nameEl ? (nameEl.value || '[Name]') : '[Name]';
+            return type === 'dear' ? `Dear ${name},` : 'To Whom It May Concern,';
+        }
+
         document.getElementById('signatureUpload').addEventListener('change', function(event) {
             const [file] = event.target.files;
             if (file) {
@@ -794,10 +994,35 @@ Sincerely,</textarea>
             }
         });
 
+        function toggleCommonSalutationName() {
+            const salutationType = document.getElementById('commonSalutationType').value;
+            const nameWrap = document.getElementById('commonSalutationNameWrap');
+            nameWrap.classList.toggle('hidden', salutationType !== 'dear');
+        }
+
+        function toggleSalutationNameByPrefix(prefix) {
+            const typeEl = document.getElementById(`${prefix}SalutationType`);
+            const wrapEl = document.getElementById(`${prefix}SalutationNameWrap`);
+            if (!typeEl || !wrapEl) return;
+            wrapEl.classList.toggle('hidden', typeEl.value !== 'dear');
+        }
+
+        function toggleEipSalutationName() { toggleSalutationNameByPrefix('eip'); }
+        function toggleTrSalutationName() { toggleSalutationNameByPrefix('tr'); }
+        function toggleTnrSalutationName() { toggleSalutationNameByPrefix('tnr'); }
+        function toggleEvSalutationName() { toggleSalutationNameByPrefix('ev'); }
+
         function toggleRecipientName() {
             const recipientType = document.getElementById('recipientType').value;
             const recipientNameContainer = document.getElementById('recipientNameContainer');
             recipientNameContainer.style.display = recipientType === 'dear' ? 'block' : 'none';
+        }
+
+        function toggleDisSalutationName() {
+            const salutationType = document.getElementById('disSalutationType').value;
+            const nameWrap = document.getElementById('disSalutationNameWrap');
+            if (!nameWrap) return;
+            nameWrap.classList.toggle('hidden', salutationType !== 'dear');
         }
 
         function togglePositiveSubstance() {
@@ -1085,7 +1310,10 @@ Monroe County Mobile Crisis Team
         
         function generateGeneralUseReport() {
             const letterDate = formatDate(document.getElementById('guLetterDate').value, "Today's Date");
-            const subject = document.getElementById('guSubject').value;
+            const subject = document.getElementById('commonSubject').value;
+            const salutationType = document.getElementById('commonSalutationType').value;
+            const salutationName = document.getElementById('commonSalutationName').value || '[Name]';
+            const salutation = salutationType === 'dear' ? `Dear ${salutationName},` : 'To Whom It May Concern,';
             const body = document.getElementById('guBody').value || '[Letter body]';
             
             const mainParagraphs = [
@@ -1095,6 +1323,7 @@ Monroe County Mobile Crisis Team
             if (subject) {
                 mainParagraphs.push(`Subject: ${subject}`);
             }
+            mainParagraphs.push(salutation);
             
             mainParagraphs.push(body);
             
@@ -1104,7 +1333,8 @@ Monroe County Mobile Crisis Team
         }
         
         function generateDischargeReport() {
-            const dischargeDate = formatDate(document.getElementById('disDischargeDate').value, "Today's Date");
+            const letterDate = formatDate(document.getElementById('disLetterDate').value, "Today's Date");
+            const dischargeDate = formatDate(document.getElementById('disDischargeDate').value, "Discharge Date");
             const clientFirstName = document.getElementById('disClientFirstName').value || '[First Name]';
             const clientLastName = document.getElementById('disClientLastName').value || '[Last Name]';
             const clientFullName = `${clientFirstName} ${clientLastName}`.trim();
@@ -1112,6 +1342,10 @@ Monroe County Mobile Crisis Team
             const admissionDate = formatDate(document.getElementById('disAdmissionDate').value, "Admission Date");
             const numSessions = document.getElementById('disNumSessions').value || '[Number of Sessions]';
             const goalAchievement = document.getElementById('disGoalAchievement').value;
+            const subject = document.getElementById('disSubject').value;
+            const disSalutationType = document.getElementById('disSalutationType').value;
+            const disSalutationName = document.getElementById('disSalutationName').value || '[Name]';
+            const disSalutation = disSalutationType === 'dear' ? `Dear ${disSalutationName},` : 'To Whom It May Concern,';
 
             let oasasReasonText = document.getElementById('disOasasReasonSelect').value;
             let finalOasasSentence;
@@ -1124,13 +1358,20 @@ Monroe County Mobile Crisis Team
             }
 
             const mainParagraphs = [
-                dischargeDate,
-                `To Whom It May Concern,`,
+                letterDate
+            ];
+
+            if (subject) {
+                mainParagraphs.push(`Subject: ${subject}`);
+            }
+
+            mainParagraphs.push(
+                disSalutation,
                 `This letter is to confirm that ${clientFullName}, date of birth ${clientDOB}, was admitted to Delphi Rise Outpatient on ${admissionDate} and discharged on ${dischargeDate}.`,
                 `During treatment, ${clientFirstName} attended a total of ${numSessions} sessions. At the time of discharge, ${clientFirstName} ${goalAchievement} the treatment goals established at the start of services.`,
                 `In accordance with OASAS reporting requirements, this discharge is recorded as follows: ${finalOasasSentence}`,
                 `If further information is required, please contact me using the information provided below.`
-            ];
+            );
             
             const signatureBlock = getSignatureBlock();
             const fullText = mainParagraphs.join('\n\n') + `\n\nSincerely,\n\n\n\n${signatureBlock}`;
@@ -1139,21 +1380,30 @@ Monroe County Mobile Crisis Team
 
         function generateEnrollmentVerificationReport() {
             // Update live preview elements within the form
-            document.getElementById('ev-todays-date-display').textContent = formatDate(new Date().toISOString().slice(0,10), "Today's Date");
+            const evLetterDateVal = document.getElementById('evLetterDate').value;
+            document.getElementById('ev-todays-date-display').textContent = formatDate(evLetterDateVal, "Today's Date");
+            const evSubjectVal = document.getElementById('evSubject').value;
+            const evSalutation = getSalutationByPrefix('ev');
             document.getElementById('ev-signature-block-preview').textContent = getSignatureBlock();
 
             // Build the final text for copy/PDF
             const clientFirstName = document.getElementById('evClientFirstName').value || '[Client First Name]';
             const clientLastName = document.getElementById('evClientLastName').value || '[Client Last Name]';
             const clientFullName = `${clientFirstName} ${clientLastName}`.trim();
-            const clientDOB = formatDate(document.getElementById('evClientDOB').value, "DOB");
+            const clientDOB = formatDate(document.getElementById('evClientDOB').value, "Date of Birth");
             const startDate = formatDate(document.getElementById('evStartDate').value, "Start Date");
+            const salutation = evSalutation;
 
             const bodyParagraphs = [
-                document.getElementById('ev-todays-date-display').textContent,
-                `To Whom It May Concern,`,
-                `This letter is to verify that ${clientFullName}, DOB ${clientDOB}, is currently enrolled in services with Delphi Rise. Services began on ${startDate}.`
+                document.getElementById('ev-todays-date-display').textContent
             ];
+            if (evSubjectVal) {
+                bodyParagraphs.push(`Subject: ${evSubjectVal}`);
+            }
+            bodyParagraphs.push(
+                salutation,
+                `This letter is to verify that ${clientFullName}, date of birth ${clientDOB}, is currently enrolled in services with Delphi Rise. Services began on ${startDate}.`
+            );
 
             // Attendance
             if (!document.getElementById('evAttOmit').checked) {
@@ -1198,12 +1448,15 @@ Monroe County Mobile Crisis Team
             const clientFirstName = document.getElementById('trClientFirstName').value || '[Client’s First Name]';
             const clientLastName = document.getElementById('trClientLastName').value || '[Client’s Last Name]';
             const clientFullName = `${clientFirstName} ${clientLastName}`.trim();
-            const todaysDate = formatDate(document.getElementById('trTodaysDate').value, "DATE");
+            const clientDob = formatDate(document.getElementById('trClientDob').value, 'Date of Birth');
+            const letterDate = formatDate(document.getElementById('trLetterDate').value, "DATE");
             const evaluationDate = formatDate(document.getElementById('trEvaluationDate').value, "Date of Evaluation");
             const diagnosisText = formatDiagnoses(selectedDiagnoses);
             const levelOfCare = document.getElementById('trLevelOfCare').value || '[level of care]';
             const toxScreenDate = formatDate(document.getElementById('trToxScreenDate').value, "Toxicology Screen Date");
             const toxResult = document.querySelector('input[name="trToxResult"]:checked').value;
+            const salutation = getSalutationByPrefix('tr');
+            const subject = document.getElementById('trSubject').value;
             let toxSentence = `${clientFirstName}’s toxicology screen, which was collected on ${toxScreenDate}, was ${toxResult}`;
             if (toxResult === 'positive') {
                 const substances = document.getElementById('trPositiveSubstance').value || '[substances]';
@@ -1213,13 +1466,21 @@ Monroe County Mobile Crisis Team
             }
 
             const mainParagraphs = [
+                letterDate
+            ];
+
+            if (subject) {
+                mainParagraphs.push(`Subject: ${subject}`);
+            }
+
+            mainParagraphs.push(
+                salutation,
                 `Re: Evaluation Results for ${clientFullName}`,
-                `Date: ${todaysDate}`,
-                `On ${evaluationDate}, ${clientFullName} completed a substance and alcohol use disorder evaluation at Delphi Rise. The evaluation included gathering a history of substance and alcohol use, collateral interviews, a toxicology screen, and a brief screen to identify potential mental health concerns.`,
+                `On ${evaluationDate}, ${clientFullName}, date of birth ${clientDob}, completed a substance and alcohol use disorder evaluation at Delphi Rise. The evaluation included gathering a history of substance and alcohol use, collateral interviews, a toxicology screen, and a brief screen to identify potential mental health concerns.`,
                 `Based on this comprehensive clinical evaluation, ${clientFirstName} has been diagnosed with ${diagnosisText} and is recommended for ${levelOfCare} treatment. ${toxSentence}`,
                 `Delphi Rise is committed to providing personalized, evidence-based treatment to help clients achieve long-term recovery. We believe that ${clientFirstName} would benefit from ongoing engagement in the recommended services and a structured, supportive environment to address the challenges of substance and alcohol use.`,
                 `Please feel free to contact us if you require any additional information or clarification regarding this evaluation or the services we provide.`
-            ];
+            );
 
             const signatureBlock = getSignatureBlock();
             const fullText = mainParagraphs.join('\n\n') + `\n\nSincerely,\n\n\n\n${signatureBlock}`;
@@ -1230,13 +1491,10 @@ Monroe County Mobile Crisis Team
             const clientFirstName = document.getElementById('clientFirstName').value || '[Client’s First Name]';
             const clientLastName = document.getElementById('clientLastName').value || '[Client’s Last Name]';
             const clientFullName = `${clientFirstName} ${clientLastName}`.trim() || '[Client’s Full Name]';
-            const todaysDate = formatDate(document.getElementById('todaysDate').value, "Date of Report");
-            const recipientType = document.getElementById('recipientType').value;
-            let recipientSalutation = "To Whom It May Concern,";
-            if (recipientType === 'dear') {
-                const name = document.getElementById('recipientName').value || '_____';
-                recipientSalutation = `Dear ${name},`;
-            }
+            const clientDob = formatDate(document.getElementById('clientDob').value, 'Date of Birth');
+            const letterDate = formatDate(document.getElementById('tnrLetterDate').value, "Date of Report");
+            const subject = document.getElementById('tnrSubject').value;
+            const recipientSalutation = getSalutationByPrefix('tnr');
             const evaluationDate = formatDate(document.getElementById('evaluationDate').value, 'Evaluation Date');
             const toxScreenDate = formatDate(document.getElementById('toxScreenDate').value, 'Tox Screen Date');
             const includeInterviews = document.getElementById('includeInterviews').checked;
@@ -1245,7 +1503,7 @@ Monroe County Mobile Crisis Team
                 assessmentParts.splice(1, 0, 'personal interviews');
             }
             let assessmentString = assessmentParts.length === 2 ? assessmentParts.join(' and ') : assessmentParts.slice(0, -1).join(', ') + ', and ' + assessmentParts.slice(-1);
-            const firstP = `I am writing to provide an update regarding ${clientFullName}, who was evaluated at Delphi Rise on ${evaluationDate} for substance and alcohol use disorders. As part of our comprehensive assessment, a detailed evaluation was conducted, including ${assessmentString}.`;
+            const firstP = `I am writing to provide an update regarding ${clientFullName}, date of birth ${clientDob}, who was evaluated at Delphi Rise on ${evaluationDate} for substance and alcohol use disorders. As part of our comprehensive assessment, a detailed evaluation was conducted, including ${assessmentString}.`;
             const toxResult = document.querySelector('input[name="toxResult"]:checked').value;
             let toxParagraph = '';
             if (toxResult === 'negative') {
@@ -1258,14 +1516,21 @@ Monroe County Mobile Crisis Team
             const conclusionParagraph = `Additionally, based on ${conclusionSource}, there is no current evidence suggesting a substance or alcohol use disorder at this time.`;
             
             const mainParagraphs = [
-                `Subject: Evaluation Report for ${clientFullName}`,
-                `Date: ${todaysDate}`,
+                letterDate
+            ];
+
+            if (subject) {
+                mainParagraphs.push(`Subject: ${subject}`);
+            }
+
+            mainParagraphs.push(
                 recipientSalutation,
+                `Re: Evaluation Report for ${clientFullName}`,
                 firstP,
                 `${toxParagraph} ${conclusionParagraph}`,
                 `Given these findings, we do not recommend ${clientFirstName} for further treatment or intervention related to substance use at this moment. Should there be any future concerns or changes in ${clientFirstName}’s status, we would be prepared to reassess and provide further recommendations as needed.`,
                 `Please let us know if there are any additional requirements or if further information is needed. We are committed to supporting ${clientFirstName}’s ongoing progress and well-being in any way we can.`
-            ];
+            );
             
             const signatureBlock = getSignatureBlock();
             const fullText = mainParagraphs.join('\n\n') + `\n\nSincerely,\n\n\n\n${signatureBlock}`;
@@ -1283,19 +1548,29 @@ Monroe County Mobile Crisis Team
             const clientFirstName = document.getElementById('eipClientFirstName').value || '[Client’s First Name]';
             const clientLastName = document.getElementById('eipClientLastName').value || '[Client’s Last Name]';
             const clientFullName = `${clientFirstName} ${clientLastName}`.trim();
-            const todaysDate = formatDate(document.getElementById('eipTodaysDate').value, "Today's Date");
+            const clientDob = formatDate(document.getElementById('eipClientDob').value, 'Date of Birth');
+            const letterDate = formatDate(document.getElementById('eipLetterDate').value, "Today's Date");
             const evaluationDate = formatDate(document.getElementById('eipEvaluationDate').value, 'Evaluation Date');
             const evaluationTime = formatTime(document.getElementById('eipEvaluationTime').value, 'Evaluation Time');
+            const salutation = getSalutationByPrefix('eip');
+            const subject = document.getElementById('eipSubject').value;
             
             const mainParagraphs = [
+                letterDate
+            ];
+
+            if (subject) {
+                mainParagraphs.push(`Subject: ${subject}`);
+            }
+
+            mainParagraphs.push(
+                salutation,
                 `Re: Evaluation Status for ${clientFullName}`,
-                `Date: ${todaysDate}`,
-                `To Whom it May Concern;`,
-                `I am writing to inform you of the current status of the substance use disorder evaluation for ${clientFullName}, which took place on ${evaluationDate} at ${evaluationTime}.`,
+                `I am writing to inform you of the current status of the substance use disorder evaluation for ${clientFullName}, date of birth ${clientDob}, which took place on ${evaluationDate} at ${evaluationTime}.`,
                 `${clientFirstName} attended the evaluation as scheduled. The assessment has been conducted; however, the results are currently pending the completion of a toxicology screen, which is necessary for a comprehensive evaluation.`,
                 `We will provide the final evaluation results as soon as the toxicology screen results are available. Please feel free to contact our office if you need any additional information or if there are any specific forms or documentation required in the interim.`,
                 `Thank you for your attention to this matter.`
-            ];
+            );
             
             const signatureBlock = getSignatureBlock();
             const fullText = mainParagraphs.join('\n\n') + `\n\nSincerely,\n\n\n\n${signatureBlock}`;
@@ -1310,6 +1585,7 @@ Monroe County Mobile Crisis Team
             const cityStateZip = document.getElementById('reClientCityStateZip').value || '[CITY], [STATE] [ZIP]';
             const todaysDateFormatted = formatDate(document.getElementById('reTodaysDate').value, "TODAY'S DATE");
             const closureDate = formatDate(document.getElementById('closureDate').value, "CLOSURE DATE");
+            const salutation = getCommonSalutation();
 
             // Calculate days since last service
             const lastServiceDateVal = document.getElementById('lastServiceDate').value;
@@ -1329,7 +1605,7 @@ Monroe County Mobile Crisis Team
             
             const bodyParagraphs = [
                 todaysDateFormatted,
-                `Dear ${clientFirstName},`,
+                salutation,
                 `I hope you’re doing well. It has been ${daysDifference} days since your last service with us, and in accordance with OASAS regulations, we are required to close your chart if there is no further engagement. However, we want to ensure you continue receiving the support and services that can help you in your recovery.`,
                 `If you would like to remain active with Delphi Rise and continue receiving services, we ask that you schedule an appointment by ${closureDate}. You can do so by calling us at 585-467-2230.`,
                 `If there are any barriers preventing you from scheduling, please reach out—we are happy to discuss ways to help. We value your well-being and hope to continue supporting you on your journey.`
@@ -1613,7 +1889,7 @@ Monroe County Mobile Crisis Team
 
             switch(letterType) {
                 case 'generalUse':
-                    clientFirstName = document.getElementById('guSubject').value || 'General';
+                    clientFirstName = document.getElementById('commonSubject').value || 'General';
                     clientLastName = 'Letter';
                     break;
                 case 'treatmentNotRec':
