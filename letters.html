@@ -963,6 +963,7 @@ Sincerely,</textarea>
                     generateEnrollmentVerificationReport();
                     break;
             }
+            appendResourcesToTextarea();
         }
         
         // --- Report Generation Functions ---
@@ -974,6 +975,113 @@ Sincerely,</textarea>
             const adjustedDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
             return adjustedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         };
+
+        const APPENDIX_HEADER = "=====\nAlso included with the letter:\n=====";
+        const APPENDIX_TEXT = `${APPENDIX_HEADER}
+Mental Health Clinic open access/walk-in times:
+
+Catholic Family Center- Clinton Ave (Adult & Child/Youth)
+87 N. Clinton Avenue, Rochester NY, 14604, (585) 546-7220
+Mondays 1-3pm; Tuesdays, Wednesdays, & Thursdays 9-11am
+
+Liberty Resources (Adult & Child/Youth)
+175 Winton Rd N, Rochester, NY (585) 410-3370
+Mondays, Tuesdays & Thursdays 8:30am-10:00am
+
+Rochester Rehabilitation (Adult only)
+1000 Elmwood Avenue, Rochester NY, 14620, (585) 271-2520
+Thursday mornings 8:30-9:30am
+
+Behavioral Health Access and Crisis Center at St. Mary's Medical Campus (Adult only)
+65 Genesee St, Rochester NY 14611, (585) 723-7000
+Every Day – 9am-9pm
+
+
+Crisis Resources:
+
+988 Suicide & Crisis Lifeline
+- Description: A nationwide service connecting individuals to trained crisis counselors 24/7 for support with suicide, mental health, and substance use crises.
+- How to Access: Call or text 988, or chat online at 988lifeline.org.
+
+211 Helpline
+- Description: A free, confidential service providing information and referrals for health and human services, including mental health support.
+- How to Access: Dial 211 to connect with a local specialist.
+
+Person In Crisis (PIC) Team – Rochester
+- Description: A team responding to mental health, substance use, and other crises, providing immediate assistance and support.
+- How to Access: Call 211 or 988 to dispatch the PIC team.
+
+Delphi Rise Open Access Clinic
+- Description: Offers 24/7 substance use evaluations and treatment referrals, including detox, inpatient, residential, and outpatient services.
+- Location: 72 Hinchey Road, Rochester, NY 14624
+- Contact: Call (585) 627-1777
+
+UR Medicine Mental Health Crisis Call Line
+- Description: Provides 24/7 access to professionals for immediate mental health crisis support and referrals.
+- How to Access: Call (585) 275-8686
+
+Comprehensive Psychiatric Emergency Program (CPEP)
+- Description: Provides emergency psychiatric evaluation and crisis intervention services at Strong Memorial Hospital.
+- How to Access: Call (585) 275-4501
+
+ 
+Primary Care Physicians:
+
+Gates Medical Associates
+Address: 2135 Buffalo Road, Rochester, NY 14624
+Phone Number: (585) 276-7575
+
+Primary Care – Greece (part of Highland Hospital)
+Address: 10 South Pointe Landing, Suite 210, Rochester, NY 14606
+Phone Number: (585) 723-3330
+
+Canalside Family Medicine
+Address: 10 South Pointe Landing, Ste 250, Rochester, NY
+Phone Number: (585) 426-4084
+
+His Branches Community Health Center
+Address: 340 Arnett Blvd, Rochester, NY 14619
+Phone: (585) 235-2250
+
+Manhattan Square Family Medicine
+Address: 454 E Broad St, Ste 100, Rochester, NY 14607
+Phone Number: (585) 276-7640
+
+Trillium Health
+Address: 259 Monroe Avenue, Rochester, NY 14607
+Phone Number: (585) 545-7200
+
+Twelve Corners Internal Medicine
+Address: 400 White Spruce Boulevard, Suite A, Rochester, NY 14623
+Phone Number: (585) 602-9000
+
+
+Domestic Violence and Interpersonal Safety
+
+Willow Domestic Violence Center
+- 24/7 Hotline: (585) 222-7233
+- Crisis counseling, emergency shelter, orders of protection support, safety planning.
+- Available to all genders and gender identities experiencing controlling, threatening, or emotionally abusive situations even without physical violence.
+
+RESTORE Sexual Assault Services
+- Hotline: (585) 546-2777
+- Support for sexual assault, intimate partner violence, and exploitation.
+
+
+Alternative to Law Enforcement for Crisis
+
+Monroe County Mobile Crisis Team
+- 24/7 in-person crisis response for adults and youth.
+- Community-based crisis response service designed to help people in Monroe County who are experiencing a significant mental health crisis outside of a hospital or emergency department.
+- Accessed through 211 or 988.`;
+
+        function appendResourcesToTextarea() {
+            const textarea = document.getElementById('generatedText');
+            if (!textarea) return;
+            const current = textarea.value || '';
+            const base = current.includes(APPENDIX_HEADER) ? current.split(APPENDIX_HEADER)[0].trimEnd() : current.trimEnd();
+            textarea.value = `${base}\n\n${APPENDIX_TEXT}`.trimEnd();
+        }
         
         function generateGeneralUseReport() {
             const letterDate = formatDate(document.getElementById('guLetterDate').value, "Today's Date");
