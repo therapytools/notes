@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -1258,6 +1259,41 @@ Sincerely,</textarea>
             }
         }
 
+        let referralsPdfBytesPromise = null; // cache to avoid repeated fetches
+
+        async function getReferralsPdfBytes() {
+            if (referralsPdfBytesPromise) return referralsPdfBytesPromise;
+
+            const candidates = [
+                new URL('Referrals.pdf', window.location.href).toString(),
+                'https://therapytools.github.io/notes/Referrals.pdf',
+                'https://raw.githubusercontent.com/therapytools/notes/main/Referrals.pdf'
+            ];
+
+            referralsPdfBytesPromise = (async () => {
+                let lastError = null;
+                for (const url of candidates) {
+                    try {
+                        const response = await fetch(url, { cache: 'no-cache' });
+                        if (!response.ok) {
+                            lastError = new Error(`Unable to fetch Referrals.pdf from ${url} (status ${response.status})`);
+                            continue;
+                        }
+                        return await response.arrayBuffer();
+                    } catch (err) {
+                        lastError = err;
+                        continue;
+                    }
+                }
+                throw lastError || new Error('Unable to fetch Referrals.pdf');
+            })().catch(err => {
+                referralsPdfBytesPromise = null; // allow retry on next attempt
+                throw err;
+            });
+
+            return referralsPdfBytesPromise;
+        }
+
         async function processSignatureImage(dataUrl) {
             // Create a canvas to process the signature image and remove grey backgrounds
             const canvas = document.createElement('canvas');
@@ -1498,7 +1534,34 @@ Sincerely,</textarea>
                     break;
             }
             const clientName = `${clientFirstName} ${clientLastName}`.trim() || 'report';
-            pdf.save(`${clientName.replace(/\s/g, '_')}_Report.pdf`);
+            const fileName = `${clientName.replace(/\s/g, '_')}_Report.pdf`;
+
+            try {
+                if (!window.PDFLib) throw new Error('PDFLib failed to load');
+
+                const mainPdfBytes = await pdf.output('arraybuffer');
+                const referralsBytes = await getReferralsPdfBytes();
+
+                const mergedPdf = await PDFLib.PDFDocument.load(mainPdfBytes);
+                const referralsPdf = await PDFLib.PDFDocument.load(referralsBytes);
+
+                const referralPages = await mergedPdf.copyPages(referralsPdf, referralsPdf.getPageIndices());
+                referralPages.forEach(page => mergedPdf.addPage(page));
+
+                const mergedBytes = await mergedPdf.save();
+                const blob = new Blob([mergedBytes], { type: 'application/pdf' });
+                const blobUrl = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.download = fileName;
+                link.click();
+                URL.revokeObjectURL(blobUrl);
+                showNotification('PDF downloaded with Referrals appendix attached.');
+            } catch (error) {
+                console.error('Failed to append Referrals.pdf, saving base PDF instead:', error);
+                showNotification('Could not append Referrals.pdf. Downloaded base PDF only.', true);
+                pdf.save(fileName);
+            }
         }
     </script>
 </body>
