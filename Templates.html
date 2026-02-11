@@ -220,6 +220,37 @@
         .copy-button:active, .mse-button:active {
             background-color: #1e7e34;
         }
+        .discharge-medication-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .discharge-medication-table th,
+        .discharge-medication-table td {
+            border: 1px solid #dcdcdc;
+            padding: 8px;
+            text-align: left;
+        }
+        .discharge-medication-table input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .discharge-summary-area textarea {
+            width: 100%;
+            min-height: 150px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            padding: 12px;
+            box-sizing: border-box;
+            background-color: #fdfdfd;
+        }
+        .discharge-medication-row-actions button {
+            font-size: 14px;
+            padding: 6px 10px;
+        }
         .hidden {
                 display: none !important;
         }
@@ -1457,6 +1488,63 @@ Rochester, NY
             <button id="copy-family-services-btn" class="copy-button" style="width:auto; padding:8px 16px; margin-top:0;">Copy</button>
         </div>
         <p style="margin-top:20px; color:#555;">You may copy and paste these resources into your discharge summary or provide them directly to clients/families.</p>
+            <div style="margin-top: 25px;">
+            <h3 style="margin-bottom: 10px;">Other needs identified in the comprehensive evaluation or during the course of treatment:</h3>
+            <label for="discharge-reason">Reason for Discharge:</label>
+            <input type="text" id="discharge-reason" placeholder="Briefly summarize reason for discharge" style="margin-bottom: 14px; width: 100%;">
+            <label>Current Medications:</label>
+            <table class="discharge-medication-table">
+                <thead>
+                    <tr>
+                        <th>Medication Name</th>
+                        <th>Frequency</th>
+                        <th>Dose</th>
+                        <th class="discharge-medication-row-actions">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="discharge-medications-body"></tbody>
+            </table>
+            <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top: 8px;">
+                <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="discharge-medications-none"> Patient is not currently using medications.</label>
+                <button type="button" id="discharge-add-medication-btn" class="copy-button" style="width:auto; padding:6px 16px; font-size:14px;">+ Add Medication</button>
+            </div>
+            <label for="discharge-referral-dropdown" style="margin-top: 14px;">Referral for Medication Management?</label>
+            <select id="discharge-referral-dropdown">
+                <option value="" selected disabled>Select...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="N/A">N/A</option>
+            </select>
+            <input type="text" id="discharge-referral-location" class="hidden" placeholder="Where was client referred?" style="margin-top:6px;" />
+            <label for="discharge-overdose-dropdown" style="margin-top: 14px;">Overdose Prevention, education, and training was offered and a naloxone kit was offered?</label>
+            <select id="discharge-overdose-dropdown">
+                <option value="" selected disabled>Select...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Patient Declined">Patient Declined</option>
+            </select>
+            <label for="discharge-continuing-care-dropdown" style="margin-top: 14px;">Continuing Care was discussed and offered?</label>
+            <select id="discharge-continuing-care-dropdown">
+                <option value="" selected disabled>Select...</option>
+                <option value="Yes - Patient Accepted">Yes - Patient Accepted</option>
+                <option value="Yes - Patient Declined">Yes - Patient Declined</option>
+                <option value="No">No</option>
+                <option value="N/A">N/A</option>
+            </select>
+            <label for="discharge-appointments-dropdown" style="margin-top: 14px;">Does the Patient have scheduled appointments with Mental Health, Physical Health, Probation, Parole, Continuing Care, or another service provider?</label>
+            <select id="discharge-appointments-dropdown">
+                <option value="" selected disabled>Select...</option>
+                <option value="yes">Yes - appointments documented under Services/Needs</option>
+                <option value="no">No - but referrals were provided</option>
+            </select>
+            <div class="discharge-summary-area">
+                <label for="discharge-other-needs-summary">Other needs identified in the comprehensive evaluation or during the course of treatment:</label>
+                <div style="display:flex; gap:12px; align-items:flex-start; margin-top:6px;">
+                    <textarea id="discharge-other-needs-summary" rows="6" readonly style="flex:1;"></textarea>
+                    <button type="button" id="copy-discharge-other-needs-btn" class="copy-button" style="width:auto; padding:8px 16px; font-size:14px;">Copy</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Container for Medication Management Follow-up -->
@@ -4909,6 +4997,19 @@ Rochester, NY
     const telehealthSatisfaction = document.getElementById('telehealth-satisfaction');
     const telehealthSatisfactionConcerns = document.getElementById('telehealth-satisfaction-concerns');
 
+    // Discharge Plan elements
+    const dischargeMedicationBody = document.getElementById('discharge-medications-body');
+    const dischargeMedicationsNoneCheckbox = document.getElementById('discharge-medications-none');
+    const dischargeAddMedicationBtn = document.getElementById('discharge-add-medication-btn');
+    const dischargeReferralDropdown = document.getElementById('discharge-referral-dropdown');
+    const dischargeReferralLocation = document.getElementById('discharge-referral-location');
+    const dischargeOverdoseDropdown = document.getElementById('discharge-overdose-dropdown');
+    const dischargeContinuingCareDropdown = document.getElementById('discharge-continuing-care-dropdown');
+    const dischargeReasonInput = document.getElementById('discharge-reason');
+    const dischargeAppointmentsDropdown = document.getElementById('discharge-appointments-dropdown');
+    const dischargeSummaryTextbox = document.getElementById('discharge-other-needs-summary');
+    const dischargeSummaryCopyBtn = document.getElementById('copy-discharge-other-needs-btn');
+
     // Closing Note (Admitted) elements
     const closingReason = document.getElementById('closing-reason');
     const closingRecommendations = document.getElementById('closing-recommendations');
@@ -5311,6 +5412,134 @@ function addNurseInterventionRow(isFirstRow = false) {
         if (courtElement) {
             courtElement.style.height = 'auto';
             courtElement.style.height = (courtElement.scrollHeight) + 'px';
+        }
+    }
+
+    function addDischargeMedicationRow(data = {}) {
+        if (!dischargeMedicationBody) return null;
+        const escapeValue = (value = '') => value.replace(/"/g, '&quot;');
+        const safeName = escapeValue(data.name || '');
+        const safeFrequency = escapeValue(data.frequency || '');
+        const safeDose = escapeValue(data.dose || '');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><input type="text" class="discharge-medication-name" placeholder="Medication Name" value="${safeName}"></td>
+            <td><input type="text" class="discharge-medication-frequency" placeholder="Frequency" value="${safeFrequency}"></td>
+            <td><input type="text" class="discharge-medication-dose" placeholder="Dose" value="${safeDose}"></td>
+            <td class="discharge-medication-row-actions"><button type="button" class="remove-medication-row-btn">Remove</button></td>
+        `;
+        row.querySelectorAll('input').forEach(input => input.addEventListener('input', updateDischargeOtherNeedsSummary));
+        const removeBtn = row.querySelector('.remove-medication-row-btn');
+        if (removeBtn) {
+            removeBtn.addEventListener('click', () => {
+                row.remove();
+                updateDischargeMedicationRowButtons();
+                updateDischargeOtherNeedsSummary();
+            });
+        }
+        dischargeMedicationBody.appendChild(row);
+        updateDischargeMedicationRowButtons();
+        toggleDischargeMedicationInputs();
+        return row;
+    }
+
+    function updateDischargeMedicationRowButtons() {
+        if (!dischargeMedicationBody) return;
+        const rows = Array.from(dischargeMedicationBody.querySelectorAll('tr'));
+        rows.forEach(row => {
+            const btn = row.querySelector('.remove-medication-row-btn');
+            if (btn) {
+                btn.disabled = rows.length === 1;
+            }
+        });
+    }
+
+    function toggleDischargeMedicationInputs() {
+        if (!dischargeMedicationBody) return;
+        const disable = dischargeMedicationsNoneCheckbox?.checked;
+        dischargeMedicationBody.querySelectorAll('input').forEach(input => {
+            input.disabled = Boolean(disable);
+        });
+        const rows = Array.from(dischargeMedicationBody.querySelectorAll('tr'));
+        rows.forEach(row => {
+            const btn = row.querySelector('.remove-medication-row-btn');
+            if (btn) {
+                btn.disabled = Boolean(disable) || rows.length === 1;
+            }
+        });
+    }
+
+    function getDischargeMedicationList() {
+        if (!dischargeMedicationBody) return [];
+        return Array.from(dischargeMedicationBody.querySelectorAll('tr'))
+            .map(row => {
+                const name = row.querySelector('.discharge-medication-name')?.value.trim() || '';
+                const frequency = row.querySelector('.discharge-medication-frequency')?.value.trim() || '';
+                const dose = row.querySelector('.discharge-medication-dose')?.value.trim() || '';
+                return { name, frequency, dose };
+            })
+            .filter(entry => entry.name || entry.frequency || entry.dose);
+    }
+
+    function updateDischargeOtherNeedsSummary() {
+        const lines = [];
+        lines.push('Other needs identified in the comprehensive evaluation or during the course of treatment:');
+        const reasonValue = dischargeReasonInput?.value.trim();
+        lines.push(`Reason for Discharge: ${reasonValue || '[Describe reason for discharge]'}`);
+        if (dischargeMedicationsNoneCheckbox?.checked) {
+            lines.push('Current Medications: Patient is not currently using medications.');
+        } else {
+            const meds = getDischargeMedicationList();
+            if (meds.length > 0) {
+                const medLines = meds.map(med => {
+                    const fragments = [];
+                    if (med.name) fragments.push(med.name);
+                    if (med.frequency) fragments.push(`Frequency: ${med.frequency}`);
+                    if (med.dose) fragments.push(`Dose: ${med.dose}`);
+                    return fragments.length > 0 ? `- ${fragments.join(' | ')}` : '- [Medication details]';
+                });
+                lines.push(`Current Medications:\n${medLines.join('\n')}`);
+            } else {
+                lines.push('Current Medications: [List medications or mark patient as not using medications]');
+            }
+        }
+        let referralText = '[Select option]';
+        if (dischargeReferralDropdown) {
+            const value = dischargeReferralDropdown.value;
+            if (value) {
+                referralText = value;
+                if (value === 'Yes') {
+                    const location = dischargeReferralLocation?.value.trim();
+                    referralText += location ? ` (Referred to ${location})` : ' (Referred location: [specify])';
+                }
+            }
+        }
+        lines.push(`Referral for Medication Management: ${referralText}`);
+
+        const overdoseValue = dischargeOverdoseDropdown?.value;
+        lines.push(`Overdose prevention education and naloxone kit offered: ${overdoseValue || '[Select option]'}`);
+
+        const continuingCareValue = dischargeContinuingCareDropdown?.value;
+        lines.push(`Continuing care discussed and offered: ${continuingCareValue || '[Select option]'}`);
+        let appointmentText = '[Select option]';
+        if (dischargeAppointmentsDropdown && dischargeAppointmentsDropdown.value) {
+            const option = dischargeAppointmentsDropdown.options[dischargeAppointmentsDropdown.selectedIndex];
+            appointmentText = option ? option.text : '[Select option]';
+        }
+        lines.push(`Scheduled appointments with Mental Health, Physical Health, Probation, Parole, Continuing Care, or other providers: ${appointmentText}`);
+
+        const summary = lines.join('\n\n');
+        if (dischargeSummaryTextbox) {
+            dischargeSummaryTextbox.value = summary;
+            autoResize(dischargeSummaryTextbox);
+        }
+        return summary;
+    }
+
+    function initializeDischargeMedicationRows() {
+        if (!dischargeMedicationBody) return;
+        if (dischargeMedicationBody.children.length === 0) {
+            addDischargeMedicationRow();
         }
     }
 
@@ -7025,6 +7254,9 @@ function addNurseInterventionRow(isFirstRow = false) {
     const providedTo = nonAdmittedProvidedTo3.value ? ` and ${nonAdmittedProvidedTo3.value}` : '';
     finalNote = `Client will not be admitted for treatment at this time due to not meeting diagnostic criteria. Urine screen was ${urineScreenResult} and no concerns were reported by collateral contacts. An outcome letter was provided to the client${providedTo}.`;
 }
+        } else if (selectedNoteType === 'discharge-plan') {
+            finalNote = updateDischargeOtherNeedsSummary();
+        } else if (selectedNoteType === 'injections') {
         } else if (selectedNoteType === 'injections') {
             const injectionType = injectionTypeSelect.value;
             switch (injectionType) {
@@ -8501,6 +8733,11 @@ let interventions = [];
         const singleCopyArea = document.getElementById('single-note-copy-area');
         const dtcDualCopyArea = document.getElementById('dtc-dual-copy-area');
         const tocCopyButton = document.getElementById('toc-copy-button');
+        const copyAreaContainer = document.querySelector('.copy-area-container');
+        const hideCopyAreaForDischargePlan = selectedNoteType === 'discharge-plan';
+        if (copyAreaContainer) {
+            copyAreaContainer.style.display = hideCopyAreaForDischargePlan ? 'none' : 'block';
+        }
         
         if (selectedNoteType === 'drug-treatment-court-report') {
             singleCopyArea.style.display = 'none';
@@ -8810,6 +9047,43 @@ let interventions = [];
         updateFinalNote();
     });
 
+    // Discharge Plan Listeners
+    if (dischargeAddMedicationBtn) {
+        dischargeAddMedicationBtn.addEventListener('click', () => {
+            addDischargeMedicationRow();
+            updateDischargeOtherNeedsSummary();
+        });
+    }
+    if (dischargeMedicationsNoneCheckbox) {
+        dischargeMedicationsNoneCheckbox.addEventListener('change', () => {
+            toggleDischargeMedicationInputs();
+            updateDischargeOtherNeedsSummary();
+        });
+    }
+    if (dischargeReferralDropdown) {
+        dischargeReferralDropdown.addEventListener('change', () => {
+            const showLocation = dischargeReferralDropdown.value === 'Yes';
+            if (dischargeReferralLocation) {
+                dischargeReferralLocation.classList.toggle('hidden', !showLocation);
+                if (!showLocation) {
+                    dischargeReferralLocation.value = '';
+                }
+            }
+            updateDischargeOtherNeedsSummary();
+        });
+    }
+    dischargeReferralLocation?.addEventListener('input', updateDischargeOtherNeedsSummary);
+    dischargeOverdoseDropdown?.addEventListener('change', updateDischargeOtherNeedsSummary);
+    dischargeContinuingCareDropdown?.addEventListener('change', updateDischargeOtherNeedsSummary);
+    dischargeReasonInput?.addEventListener('input', () => {
+        updateDischargeOtherNeedsSummary();
+        updateFinalNote();
+    });
+    dischargeAppointmentsDropdown?.addEventListener('change', () => {
+        updateDischargeOtherNeedsSummary();
+        updateFinalNote();
+    });
+
     // MAT Listeners
     matEducationType.addEventListener('change', () => {
         const selected = matEducationType.value;
@@ -8986,6 +9260,8 @@ let interventions = [];
         toggleSafetyPlan(soHasMhProviderTextCheckbox, soSafetyPlanHasProviderCheckbox);
         toggleSafetyPlan(soNoMhProviderTextCheckbox, soSafetyPlanNoProviderCheckbox);
         syncCccVisibility();
+        initializeDischargeMedicationRows();
+        updateDischargeOtherNeedsSummary();
         updateFinalNote();
     });
 
@@ -9014,6 +9290,9 @@ let interventions = [];
     }
     if (copyFamilyServicesBtn && familyServicesTextbox) {
         copyFamilyServicesBtn.addEventListener('click', () => copyTextboxContent(familyServicesTextbox, copyFamilyServicesBtn));
+    }
+    if (dischargeSummaryCopyBtn && dischargeSummaryTextbox) {
+        dischargeSummaryCopyBtn.addEventListener('click', () => copyTextboxContent(dischargeSummaryTextbox, dischargeSummaryCopyBtn));
     }
 
     // Eval-CD Goal Copy Buttons
