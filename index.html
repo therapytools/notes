@@ -693,13 +693,25 @@
                  if(!modality) return;
 
                  const checkedBoxes = container.querySelectorAll('input[type="checkbox"]:checked');
-                 const selectedItems = Array.from(checkedBoxes).map(cb => cb.value);
+                 
+                 const selectedItems = Array.from(checkedBoxes).map(cb => {
+                     let text = cb.value;
+                     // Look for justification
+                     const justDiv = document.getElementById(`just-container-${cb.id}`);
+                     if (justDiv) {
+                         const textarea = justDiv.querySelector('textarea');
+                         if (textarea && textarea.value.trim()) {
+                             text += ` - ${textarea.value.trim()}`;
+                         }
+                     }
+                     return text;
+                 });
                  
                  if (selectedItems.length > 0) {
                      if (modality.title === "Custom Interventions") {
-                         interventionsUsed += selectedItems.join(", ") + "\n";
+                         interventionsUsed += selectedItems.join("\n") + "\n";
                      } else {
-                         interventionsUsed += `${modality.title}: ${selectedItems.join(", ")}\n`;
+                         interventionsUsed += `${modality.title}:\n${selectedItems.join("\n")}\n`;
                      }
                  }
             });
@@ -863,28 +875,33 @@
 
             // List of interventions
             const listDiv = document.createElement('div');
-            listDiv.className = 'space-y-1';
+            listDiv.className = 'space-y-2'; // Increased spacing for comfort
             
             modality.items.forEach((item, itemIndex) => {
+                // Wrapper for item + justification
+                const wrapper = document.createElement('div');
+                
                 const itemDiv = document.createElement('div');
-                itemDiv.className = 'darp-inline-checkbox flex items-center justify-between group';
+                itemDiv.className = 'darp-inline-checkbox flex items-center justify-between group mb-1';
                 
                 const leftDiv = document.createElement('div');
                 leftDiv.className = 'flex items-center gap-2';
 
+                // Re-calculating ID for clarity
+                const uniqueId = `mod-${modIndex}-item-${itemIndex}`;
+
                 const cb = document.createElement('input');
                 cb.type = 'checkbox';
-                cb.id = `mod-${modIndex}-item-${itemIndex}`;
+                cb.id = uniqueId;
                 cb.value = item;
-                // Important: checkboxes don't persist state in darpModalities (only structural config). 
-                // State is transient for the session usually, unless we want to save checked state too?
-                // The original app didn't seem to save checked state across reloads explicitly, 
-                // but the old Custom did because it was just a list.
-                // We will just let them be unchecked by default on reload.
-                cb.onchange = updateDarpProgressNote;
+                // On change: Toggle visibility AND update note
+                cb.onchange = (e) => {
+                    toggleJustification(e.target);
+                    updateDarpProgressNote();
+                };
                 
                 const label = document.createElement('label');
-                label.htmlFor = `mod-${modIndex}-item-${itemIndex}`;
+                label.htmlFor = uniqueId;
                 label.textContent = item;
                 label.className = 'text-sm text-gray-700';
 
@@ -899,12 +916,45 @@
                 
                 itemDiv.appendChild(leftDiv);
                 itemDiv.appendChild(delItemBtn);
-                listDiv.appendChild(itemDiv);
+                
+                // Justification Textbox
+                const justDiv = document.createElement('div');
+                justDiv.id = `just-container-${uniqueId}`;
+                justDiv.className = 'hidden ml-6 pr-2'; 
+                
+                const textarea = document.createElement('textarea');
+                textarea.className = 'w-full text-xs p-1.5 border border-gray-300 rounded text-gray-600 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500';
+                textarea.placeholder = 'Clinical Rationale / Goal Alignment';
+                textarea.rows = 1;
+                // Auto-resize logic for this specific textarea
+                textarea.oninput = function() {
+                    this.style.height = 'auto';
+                    this.style.height = (this.scrollHeight) + 'px';
+                    updateDarpProgressNote();
+                };
+
+                justDiv.appendChild(textarea);
+
+                wrapper.appendChild(itemDiv);
+                wrapper.appendChild(justDiv);
+                listDiv.appendChild(wrapper);
             });
             
             col.appendChild(listDiv);
             container.appendChild(col);
         });
+    }
+
+    function toggleJustification(checkbox) {
+        const justDiv = document.getElementById(`just-container-${checkbox.id}`);
+        if(justDiv) {
+            if(checkbox.checked) {
+                justDiv.classList.remove('hidden');
+                // Focus the textarea? Maybe annoyance if bulk checking.
+            } else {
+                justDiv.classList.add('hidden');
+            }
+        }
     }
 
     function addNewModality() {
