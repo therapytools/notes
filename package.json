@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node ./node_modules/postcss-cli/index.js -o ./dist/output.css ./src/input.css",
+    "smoke": "powershell -ExecutionPolicy Bypass -File ./smoke-check.ps1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

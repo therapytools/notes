@@ -156,6 +156,19 @@
     const telehealthSatisfaction = document.getElementById('telehealth-satisfaction');
     const telehealthSatisfactionConcerns = document.getElementById('telehealth-satisfaction-concerns');
 
+    // Discharge Plan elements
+    const dischargeMedicationBody = document.getElementById('discharge-medications-body');
+    const dischargeMedicationsNoneCheckbox = document.getElementById('discharge-medications-none');
+    const dischargeAddMedicationBtn = document.getElementById('discharge-add-medication-btn');
+    const dischargeReferralDropdown = document.getElementById('discharge-referral-dropdown');
+    const dischargeReferralLocation = document.getElementById('discharge-referral-location');
+    const dischargeOverdoseDropdown = document.getElementById('discharge-overdose-dropdown');
+    const dischargeContinuingCareDropdown = document.getElementById('discharge-continuing-care-dropdown');
+    const dischargeReasonInput = document.getElementById('discharge-reason');
+    const dischargeAppointmentsDropdown = document.getElementById('discharge-appointments-dropdown');
+    const dischargeSummaryTextbox = document.getElementById('discharge-other-needs-summary');
+    const dischargeSummaryCopyBtn = document.getElementById('copy-discharge-other-needs-btn');
+
     // Closing Note (Admitted) elements
     const closingReason = document.getElementById('closing-reason');
     const closingRecommendations = document.getElementById('closing-recommendations');
@@ -558,6 +571,134 @@ function addNurseInterventionRow(isFirstRow = false) {
         if (courtElement) {
             courtElement.style.height = 'auto';
             courtElement.style.height = (courtElement.scrollHeight) + 'px';
+        }
+    }
+
+    function addDischargeMedicationRow(data = {}) {
+        if (!dischargeMedicationBody) return null;
+        const escapeValue = (value = '') => value.replace(/"/g, '&quot;');
+        const safeName = escapeValue(data.name || '');
+        const safeFrequency = escapeValue(data.frequency || '');
+        const safeDose = escapeValue(data.dose || '');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><input type="text" class="discharge-medication-name" placeholder="Medication Name" value="${safeName}"></td>
+            <td><input type="text" class="discharge-medication-frequency" placeholder="Frequency" value="${safeFrequency}"></td>
+            <td><input type="text" class="discharge-medication-dose" placeholder="Dose" value="${safeDose}"></td>
+            <td class="discharge-medication-row-actions"><button type="button" class="remove-medication-row-btn">Remove</button></td>
+        `;
+        row.querySelectorAll('input').forEach(input => input.addEventListener('input', updateDischargeOtherNeedsSummary));
+        const removeBtn = row.querySelector('.remove-medication-row-btn');
+        if (removeBtn) {
+            removeBtn.addEventListener('click', () => {
+                row.remove();
+                updateDischargeMedicationRowButtons();
+                updateDischargeOtherNeedsSummary();
+            });
+        }
+        dischargeMedicationBody.appendChild(row);
+        updateDischargeMedicationRowButtons();
+        toggleDischargeMedicationInputs();
+        return row;
+    }
+
+    function updateDischargeMedicationRowButtons() {
+        if (!dischargeMedicationBody) return;
+        const rows = Array.from(dischargeMedicationBody.querySelectorAll('tr'));
+        rows.forEach(row => {
+            const btn = row.querySelector('.remove-medication-row-btn');
+            if (btn) {
+                btn.disabled = rows.length === 1;
+            }
+        });
+    }
+
+    function toggleDischargeMedicationInputs() {
+        if (!dischargeMedicationBody) return;
+        const disable = dischargeMedicationsNoneCheckbox?.checked;
+        dischargeMedicationBody.querySelectorAll('input').forEach(input => {
+            input.disabled = Boolean(disable);
+        });
+        const rows = Array.from(dischargeMedicationBody.querySelectorAll('tr'));
+        rows.forEach(row => {
+            const btn = row.querySelector('.remove-medication-row-btn');
+            if (btn) {
+                btn.disabled = Boolean(disable) || rows.length === 1;
+            }
+        });
+    }
+
+    function getDischargeMedicationList() {
+        if (!dischargeMedicationBody) return [];
+        return Array.from(dischargeMedicationBody.querySelectorAll('tr'))
+            .map(row => {
+                const name = row.querySelector('.discharge-medication-name')?.value.trim() || '';
+                const frequency = row.querySelector('.discharge-medication-frequency')?.value.trim() || '';
+                const dose = row.querySelector('.discharge-medication-dose')?.value.trim() || '';
+                return { name, frequency, dose };
+            })
+            .filter(entry => entry.name || entry.frequency || entry.dose);
+    }
+
+    function updateDischargeOtherNeedsSummary() {
+        const lines = [];
+        lines.push('Other needs identified in the comprehensive evaluation or during the course of treatment:');
+        const reasonValue = dischargeReasonInput?.value.trim();
+        lines.push(`Reason for Discharge: ${reasonValue || '[Describe reason for discharge]'}`);
+        if (dischargeMedicationsNoneCheckbox?.checked) {
+            lines.push('Current Medications: Patient is not currently using medications.');
+        } else {
+            const meds = getDischargeMedicationList();
+            if (meds.length > 0) {
+                const medLines = meds.map(med => {
+                    const fragments = [];
+                    if (med.name) fragments.push(med.name);
+                    if (med.frequency) fragments.push(`Frequency: ${med.frequency}`);
+                    if (med.dose) fragments.push(`Dose: ${med.dose}`);
+                    return fragments.length > 0 ? `- ${fragments.join(' | ')}` : '- [Medication details]';
+                });
+                lines.push(`Current Medications:\n${medLines.join('\n')}`);
+            } else {
+                lines.push('Current Medications: [List medications or mark patient as not using medications]');
+            }
+        }
+        let referralText = '[Select option]';
+        if (dischargeReferralDropdown) {
+            const value = dischargeReferralDropdown.value;
+            if (value) {
+                referralText = value;
+                if (value === 'Yes') {
+                    const location = dischargeReferralLocation?.value.trim();
+                    referralText += location ? ` (Referred to ${location})` : ' (Referred location: [specify])';
+                }
+            }
+        }
+        lines.push(`Referral for Medication Management: ${referralText}`);
+
+        const overdoseValue = dischargeOverdoseDropdown?.value;
+        lines.push(`Overdose prevention education and naloxone kit offered: ${overdoseValue || '[Select option]'}`);
+
+        const continuingCareValue = dischargeContinuingCareDropdown?.value;
+        lines.push(`Continuing care discussed and offered: ${continuingCareValue || '[Select option]'}`);
+        let appointmentText = '[Select option]';
+        if (dischargeAppointmentsDropdown && dischargeAppointmentsDropdown.value) {
+            const option = dischargeAppointmentsDropdown.options[dischargeAppointmentsDropdown.selectedIndex];
+            appointmentText = option ? option.text : '[Select option]';
+        }
+        lines.push(`Scheduled appointments with Mental Health, Physical Health, Probation, Parole, Continuing Care, or other providers: ${appointmentText}`);
+
+        const summary = lines.join('\n\n');
+        if (dischargeSummaryTextbox) {
+            dischargeSummaryTextbox.value = summary;
+            autoResize(dischargeSummaryTextbox);
+        }
+        return summary;
+    }
+
+    function initializeDischargeMedicationRows() {
+        if (!dischargeMedicationBody) return;
+        if (dischargeMedicationBody.children.length === 0) {
+            addDischargeMedicationRow();
         }
     }
 
@@ -2272,6 +2413,8 @@ function addNurseInterventionRow(isFirstRow = false) {
     const providedTo = nonAdmittedProvidedTo3.value ? ` and ${nonAdmittedProvidedTo3.value}` : '';
     finalNote = `Client will not be admitted for treatment at this time due to not meeting diagnostic criteria. Urine screen was ${urineScreenResult} and no concerns were reported by collateral contacts. An outcome letter was provided to the client${providedTo}.`;
 }
+        } else if (selectedNoteType === 'discharge-plan') {
+            finalNote = updateDischargeOtherNeedsSummary();
         } else if (selectedNoteType === 'injections') {
             const injectionType = injectionTypeSelect.value;
             switch (injectionType) {
@@ -3748,6 +3891,11 @@ let interventions = [];
         const singleCopyArea = document.getElementById('single-note-copy-area');
         const dtcDualCopyArea = document.getElementById('dtc-dual-copy-area');
         const tocCopyButton = document.getElementById('toc-copy-button');
+        const copyAreaContainer = document.querySelector('.copy-area-container');
+        const hideCopyAreaForDischargePlan = selectedNoteType === 'discharge-plan';
+        if (copyAreaContainer) {
+            copyAreaContainer.style.display = hideCopyAreaForDischargePlan ? 'none' : 'block';
+        }
         
         if (selectedNoteType === 'drug-treatment-court-report') {
             singleCopyArea.style.display = 'none';
@@ -4057,6 +4205,43 @@ let interventions = [];
         updateFinalNote();
     });
 
+    // Discharge Plan Listeners
+    if (dischargeAddMedicationBtn) {
+        dischargeAddMedicationBtn.addEventListener('click', () => {
+            addDischargeMedicationRow();
+            updateDischargeOtherNeedsSummary();
+        });
+    }
+    if (dischargeMedicationsNoneCheckbox) {
+        dischargeMedicationsNoneCheckbox.addEventListener('change', () => {
+            toggleDischargeMedicationInputs();
+            updateDischargeOtherNeedsSummary();
+        });
+    }
+    if (dischargeReferralDropdown) {
+        dischargeReferralDropdown.addEventListener('change', () => {
+            const showLocation = dischargeReferralDropdown.value === 'Yes';
+            if (dischargeReferralLocation) {
+                dischargeReferralLocation.classList.toggle('hidden', !showLocation);
+                if (!showLocation) {
+                    dischargeReferralLocation.value = '';
+                }
+            }
+            updateDischargeOtherNeedsSummary();
+        });
+    }
+    dischargeReferralLocation?.addEventListener('input', updateDischargeOtherNeedsSummary);
+    dischargeOverdoseDropdown?.addEventListener('change', updateDischargeOtherNeedsSummary);
+    dischargeContinuingCareDropdown?.addEventListener('change', updateDischargeOtherNeedsSummary);
+    dischargeReasonInput?.addEventListener('input', () => {
+        updateDischargeOtherNeedsSummary();
+        updateFinalNote();
+    });
+    dischargeAppointmentsDropdown?.addEventListener('change', () => {
+        updateDischargeOtherNeedsSummary();
+        updateFinalNote();
+    });
+
     // MAT Listeners
     matEducationType.addEventListener('change', () => {
         const selected = matEducationType.value;
@@ -4156,7 +4341,10 @@ let interventions = [];
         vivitrolSite, vivitrolLot, vivitrolExp, vivitrolSn, vivitrolNextInjection,
         sublocadeSite, sublocadeLot, sublocadeExp, sublocadeSn, sublocadeNextInjection,
         brixadiSite, brixadiLot, brixadiExp, brixadiSn, brixadiNextInjection
-    ].forEach(el => el.addEventListener('input', updateFinalNote));
+    ].forEach(el => {
+        el.addEventListener('input', updateFinalNote);
+        el.addEventListener('change', updateFinalNote);
+    });
 
     // Medical Screening Listeners
     const medicalScreeningContainer = document.getElementById('medical-screening-container');
@@ -4233,6 +4421,8 @@ let interventions = [];
         toggleSafetyPlan(soHasMhProviderTextCheckbox, soSafetyPlanHasProviderCheckbox);
         toggleSafetyPlan(soNoMhProviderTextCheckbox, soSafetyPlanNoProviderCheckbox);
         syncCccVisibility();
+        initializeDischargeMedicationRows();
+        updateDischargeOtherNeedsSummary();
         updateFinalNote();
     });
 
@@ -4261,6 +4451,9 @@ let interventions = [];
     }
     if (copyFamilyServicesBtn && familyServicesTextbox) {
         copyFamilyServicesBtn.addEventListener('click', () => copyTextboxContent(familyServicesTextbox, copyFamilyServicesBtn));
+    }
+    if (dischargeSummaryCopyBtn && dischargeSummaryTextbox) {
+        dischargeSummaryCopyBtn.addEventListener('click', () => copyTextboxContent(dischargeSummaryTextbox, dischargeSummaryCopyBtn));
     }
 
     // Eval-CD Goal Copy Buttons
