@@ -25,3 +25,19 @@ Run smoke checks:
 - npm run smoke
 - If script execution is blocked, use: powershell -ExecutionPolicy Bypass -File .\smoke-check.ps1
 - Windows quick launch: double-click run-smoke-check.cmd
+
+Run runtime fixture checks (all configured note types):
+- Prerequisite (one-time): npm i -D playwright
+- Browser install (one-time): npx playwright install chromium
+- Auto-add missing fixture stubs for new note types: npm run fixtures:sync
+- Run from script: npm run fixtures
+- Windows quick launch: double-click run-note-fixtures.cmd
+	(this launcher auto-falls back to C:\nodejs\node.exe if Node is not on PATH)
+
+The smoke check validates all configured note types by ensuring each note type has:
+- a matching container in Templates.html
+- a matching generator branch in src/templates.js
+- plus key integrity checks for high-risk paths (Injections, Discharge Plan, DTC).
+
+The runtime fixture check opens Templates.html headlessly, applies fixture steps from tests/note-fixtures.json,
+and verifies expected output behavior for single-copy, DTC dual-copy, and TOC modes.

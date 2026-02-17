@@ -6,6 +6,8 @@
   "scripts": {
     "build": "node ./node_modules/postcss-cli/index.js -o ./dist/output.css ./src/input.css",
     "smoke": "powershell -ExecutionPolicy Bypass -File ./smoke-check.ps1",
+    "fixtures:sync": "node ./tests/sync-note-fixtures.mjs",
+    "fixtures": "node ./tests/run-note-fixtures.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +25,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "autoprefixer": "^10.4.22",
+    "playwright": "^1.58.2",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
     "tailwindcss": "^4.1.17"
