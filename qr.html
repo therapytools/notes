@@ -148,7 +148,7 @@
 </head>
 <body>
 <div class="page">
-    <h1>QR Calendar Appointment</h1>
+    <h1>Appointment QR Generator</h1>
     <div class="card">
         <div class="layout">
             <div class="left-section">
@@ -179,6 +179,12 @@
             <div class="right-section">
                 <div class="qr-label">Scan to Add Event</div>
                 <div id="qrcode"></div>
+                
+                <label for="qrMode" style="margin-top: 2rem;">QR Type</label>
+                <select id="qrMode">
+                    <option value="appointment">Show Appointment QR</option>
+                    <option value="contact">Show Delphi Rise Contact QR</option>
+                </select>
             </div>
         </div>
     </div>
@@ -188,6 +194,10 @@
 <script>
     const FIXED_LOCATION = "72 Hinchey Road, Rochester, NY 14624";
     const FIXED_DESCRIPTION = "Phone: 585-467-2230";
+    const CONTACT_NAME = "Delphi Rise";
+    const CONTACT_PHONE = "585-467-2230";
+    const CONTACT_ADDRESS = "72 Hinchey Road, Rochester, NY 14624";
+    const CONTACT_PHOTO = "https://therapytools.github.io/notes/contact-image.png";
 
     function pad(value) {
         return String(value).padStart(2, "0");
@@ -205,6 +215,18 @@
             .replace(/\n/g, "\\n")
             .replace(/,/g, "\\,")
             .replace(/;/g, "\\;");
+    }
+
+    function buildVCard() {
+        return [
+            "BEGIN:VCARD",
+            "VERSION:3.0",
+            `FN:${CONTACT_NAME}`,
+            `TEL:${CONTACT_PHONE}`,
+            `ADR:;;72 Hinchey Road;Rochester;NY;14624;USA`,
+            `PHOTO;VALUE=URI:${CONTACT_PHOTO}`,
+            "END:VCARD"
+        ].join("\r\n");
     }
 
     function buildIcsString({ title, date, startTime, endTime, location, description }) {
@@ -260,11 +282,34 @@
     }
 
     function updateQr() {
-        const eventData = getEventFromInputs();
-        const error = validateEvent(eventData);
         const qrcodeContainer = document.getElementById("qrcode");
+        const qrLabel = document.querySelector(".qr-label");
+        const mode = document.getElementById("qrMode").value;
 
         qrcodeContainer.innerHTML = "";
+
+        if (mode === "contact") {
+            qrLabel.textContent = "Scan to Add Contact";
+            const vcard = buildVCard();
+
+            if (!window.QRCode) {
+                qrcodeContainer.innerHTML = `<div style="color: #dc2626; font-weight: 600; text-align: center;">QR library failed to load.</div>`;
+                return;
+            }
+
+            new QRCode(qrcodeContainer, {
+                text: vcard,
+                width: 380,
+                height: 380,
+                correctLevel: QRCode.CorrectLevel.M
+            });
+            return;
+        }
+
+        // Appointment mode
+        qrLabel.textContent = "Scan to Add Event";
+        const eventData = getEventFromInputs();
+        const error = validateEvent(eventData);
 
         if (error) {
             qrcodeContainer.innerHTML = `<div style="color: #dc2626; font-weight: 600; text-align: center;">${error}</div>`;
@@ -306,6 +351,8 @@
             document.getElementById(id).addEventListener("input", updateQr);
             document.getElementById(id).addEventListener("change", updateQr);
         });
+
+        document.getElementById("qrMode").addEventListener("change", updateQr);
         updateQr();
     }
 
