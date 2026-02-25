@@ -194,10 +194,7 @@
 <script>
     const FIXED_LOCATION = "72 Hinchey Road, Rochester, NY 14624";
     const FIXED_DESCRIPTION = "Phone: 585-467-2230";
-    const CONTACT_NAME = "Delphi Rise";
-    const CONTACT_PHONE = "585-467-2230";
-    const CONTACT_ADDRESS = "72 Hinchey Road, Rochester, NY 14624";
-    const CONTACT_PHOTO = "https://therapytools.github.io/notes/contact-image.png";
+    const CONTACT_VCF_URL = "https://therapytools.github.io/notes/delphi-rise-contact.vcf";
 
     function pad(value) {
         return String(value).padStart(2, "0");
@@ -217,17 +214,7 @@
             .replace(/;/g, "\\;");
     }
 
-    function buildVCard() {
-        return [
-            "BEGIN:VCARD",
-            "VERSION:3.0",
-            `FN:${CONTACT_NAME}`,
-            `TEL:${CONTACT_PHONE}`,
-            `ADR:;;72 Hinchey Road;Rochester;NY;14624;USA`,
-            `PHOTO;VALUE=URI:${CONTACT_PHOTO}`,
-            "END:VCARD"
-        ].join("\r\n");
-    }
+    // No longer embed full vCard in QR; we point to a hosted .vcf instead
 
     function buildIcsString({ title, date, startTime, endTime, location, description }) {
         const dtStart = formatDateForICS(date, startTime);
@@ -290,7 +277,6 @@
 
         if (mode === "contact") {
             qrLabel.textContent = "Scan to Add Contact";
-            const vcard = buildVCard();
 
             if (!window.QRCode) {
                 qrcodeContainer.innerHTML = `<div style="color: #dc2626; font-weight: 600; text-align: center;">QR library failed to load.</div>`;
@@ -298,7 +284,7 @@
             }
 
             new QRCode(qrcodeContainer, {
-                text: vcard,
+                text: CONTACT_VCF_URL,
                 width: 380,
                 height: 380,
                 correctLevel: QRCode.CorrectLevel.M
