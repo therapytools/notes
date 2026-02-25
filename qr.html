@@ -115,7 +115,7 @@
         }
 
         #qrcode {
-            min-height: 350px;
+            min-height: 450px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -124,7 +124,7 @@
             padding: 2rem;
             box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.06);
             width: 100%;
-            max-width: 350px;
+            max-width: 450px;
             margin: 0 auto;
         }
 
@@ -280,8 +280,8 @@
 
         new QRCode(qrcodeContainer, {
             text: icsPayload,
-            width: 280,
-            height: 280,
+            width: 380,
+            height: 380,
             correctLevel: QRCode.CorrectLevel.M
         });
     }
