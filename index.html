@@ -694,25 +694,21 @@
 
                  const checkedBoxes = container.querySelectorAll('input[type="checkbox"]:checked');
                  
-                 const selectedItems = Array.from(checkedBoxes).map(cb => {
-                     let text = cb.value;
-                     // Look for justification
-                     const justDiv = document.getElementById(`just-container-${cb.id}`);
-                     if (justDiv) {
-                         const textarea = justDiv.querySelector('textarea');
-                         if (textarea && textarea.value.trim()) {
-                             text += ` - ${textarea.value.trim()}`;
-                         }
-                     }
-                     return text;
-                 });
-                 
+                 const selectedItems = Array.from(checkedBoxes).map(cb => cb.value);
+
                  if (selectedItems.length > 0) {
+                     const joined = selectedItems.join(', ');
+                     const pinned = document.getElementById(`pinned-rationale-${modalityIndex}`);
+                     const rationale = pinned && pinned.value ? pinned.value.trim() : '';
                      if (modality.title === "Custom Interventions") {
-                         interventionsUsed += selectedItems.join("\n") + "\n";
+                         interventionsUsed += `${joined}`;
                      } else {
-                         interventionsUsed += `${modality.title}:\n${selectedItems.join("\n")}\n`;
+                         interventionsUsed += `${modality.title}: ${joined}`;
                      }
+                     if (rationale) {
+                         interventionsUsed += `. Rationale: ${rationale}`;
+                     }
+                     interventionsUsed += "\n";
                  }
             });
         }
@@ -891,7 +887,7 @@
 
             darpModalities.forEach((modality, modIndex) => {
                 const col = document.createElement('div');
-                col.className = 'darp-column relative p-2 border border-blue-50 rounded bg-blue-50/30';
+                col.className = 'darp-column relative p-2 border border-blue-50 rounded bg-blue-50/30 flex flex-col';
                 col.setAttribute('data-index', modIndex);
                 
                 // Header with delete button
@@ -957,71 +953,72 @@
                 listDiv.className = 'space-y-2'; // Increased spacing for comfort
                 
                 modality.items.forEach((item, itemIndex) => {
-                    // Wrapper for item + justification
+                    // Wrapper for item
                     const wrapper = document.createElement('div');
-                    
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'darp-inline-checkbox flex items-center justify-between group mb-1';
-                    
                     const leftDiv = document.createElement('div');
                     leftDiv.className = 'flex items-center gap-2';
-
-                    // Re-calculating ID for clarity
                     const uniqueId = `mod-${modIndex}-item-${itemIndex}`;
-
                     const cb = document.createElement('input');
                     cb.type = 'checkbox';
                     cb.id = uniqueId;
                     cb.value = item;
-                    // On change: Toggle visibility AND update note
-                    cb.onchange = (e) => {
-                        toggleJustification(e.target);
+                    cb.onchange = () => {
+                        updatePinnedRationaleVisibility(modIndex);
                         updateDarpProgressNote();
                     };
-                    
                     const label = document.createElement('label');
                     label.htmlFor = uniqueId;
                     label.textContent = item;
                     label.className = 'text-sm text-gray-700';
-
                     leftDiv.appendChild(cb);
                     leftDiv.appendChild(label);
-                    
-                    // Delete Item Button (visible when hovering group?)
                     const delItemBtn = document.createElement('button');
-                    delItemBtn.type = 'button'; // Prevent form submission
+                    delItemBtn.type = 'button';
                     delItemBtn.innerHTML = '&times;';
                     delItemBtn.className = 'text-gray-400 hover:text-red-600 font-bold ml-2 opacity-0 group-hover:opacity-100 transition-opacity';
                     delItemBtn.onclick = () => deleteIntervention(modIndex, itemIndex);
-                    
                     itemDiv.appendChild(leftDiv);
                     itemDiv.appendChild(delItemBtn);
-                    
-                    // Justification Textbox
-                    const justDiv = document.createElement('div');
-                    justDiv.id = `just-container-${uniqueId}`;
-                    justDiv.className = 'hidden ml-6 pr-2'; 
-                    
-                    const textarea = document.createElement('textarea');
-                    textarea.className = 'w-full text-xs p-1.5 border border-gray-300 rounded text-gray-600 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500';
-                    textarea.placeholder = 'Clinical Rationale / Goal Alignment';
-                    textarea.rows = 1;
-                    // Auto-resize logic for this specific textarea
-                    textarea.oninput = function() {
-                        this.style.height = 'auto';
-                        this.style.height = (this.scrollHeight) + 'px';
-                        updateDarpProgressNote();
-                    };
-
-                    justDiv.appendChild(textarea);
-
                     wrapper.appendChild(itemDiv);
-                    wrapper.appendChild(justDiv);
                     listDiv.appendChild(wrapper);
                 });
-                
+                // Pinned rationale textarea (bottom of modality box)
+                const pinnedRationaleDiv = document.createElement('div');
+                pinnedRationaleDiv.className = 'pinned-rationale mt-2';
+                pinnedRationaleDiv.style.marginTop = 'auto';
+                pinnedRationaleDiv.style.display = 'none';
+                pinnedRationaleDiv.style.position = 'relative';
+                pinnedRationaleDiv.style.bottom = '0';
+                pinnedRationaleDiv.style.width = '100%';
+                pinnedRationaleDiv.style.zIndex = '1';
+                pinnedRationaleDiv.style.background = 'transparent';
+                const pinnedTextarea = document.createElement('textarea');
+                pinnedTextarea.className = 'w-full text-xs p-1.5 border border-gray-300 rounded text-gray-600 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500';
+                pinnedTextarea.placeholder = `Clinical Rationale / Goal Alignment for selected ${modality.title} interventions...`;
+                pinnedTextarea.rows = 2;
+                pinnedTextarea.id = `pinned-rationale-${modIndex}`;
+                pinnedTextarea.oninput = function() {
+                    this.style.height = 'auto';
+                    this.style.height = (this.scrollHeight) + 'px';
+                    updateDarpProgressNote();
+                };
+                pinnedRationaleDiv.appendChild(pinnedTextarea);
                 col.appendChild(listDiv);
+                col.appendChild(pinnedRationaleDiv);
                 container.appendChild(col);
+                // Attach event listeners to all checkboxes in this modality to update rationale visibility
+                setTimeout(() => {
+                    const colElem = document.querySelector(`.darp-column[data-index="${modIndex}"]`);
+                    if (colElem) {
+                        const checkboxes = colElem.querySelectorAll('input[type="checkbox"]');
+                        checkboxes.forEach(cb => {
+                            cb.addEventListener('change', () => updatePinnedRationaleVisibility(modIndex));
+                        });
+                        updatePinnedRationaleVisibility(modIndex);
+                    }
+                }, 0);
             });
         } catch (error) {
             console.error("Error rendering interventions:", error);
@@ -1029,14 +1026,19 @@
     }
 
     function toggleJustification(checkbox) {
-        const justDiv = document.getElementById(`just-container-${checkbox.id}`);
-        if(justDiv) {
-            if(checkbox.checked) {
-                justDiv.classList.remove('hidden');
-                // Focus the textarea? Maybe annoyance if bulk checking.
-            } else {
-                justDiv.classList.add('hidden');
-            }
+        // No longer needed: per-intervention rationale
+        return;
+    }
+
+    // Show/hide pinned rationale textarea for modality
+    function updatePinnedRationaleVisibility(modIndex) {
+        const col = document.querySelector(`.darp-column[data-index="${modIndex}"]`);
+        if (!col) return;
+        const checkboxes = col.querySelectorAll('input[type="checkbox"]');
+        const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+        const pinnedDiv = col.querySelector('.pinned-rationale');
+        if (pinnedDiv) {
+            pinnedDiv.style.display = anyChecked ? '' : 'none';
         }
     }
 
