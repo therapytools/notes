@@ -1607,18 +1607,15 @@ Description: Support for individuals and families impacted by substance use and 
                 letterDate
             ];
 
-            if (subject) {
-                mainParagraphs.push(`Subject: ${subject}`);
-            }
+                mainParagraphs.push(`Subject: Evaluation report for ${clientFirstName} ${clientLastName}`);
 
-            mainParagraphs.push(
-                salutation,
-                `Re: Evaluation Results for ${clientFullName}`,
-                `On ${evaluationDate}, ${clientFullName}, date of birth ${clientDob}, completed a substance and alcohol use disorder evaluation at Delphi Rise. The evaluation included gathering a history of substance and alcohol use, collateral interviews, a toxicology screen, and a brief screen to identify potential mental health concerns.`,
-                `Based on this comprehensive clinical evaluation, ${clientFirstName} has been diagnosed with ${diagnosisText} and is recommended for ${levelOfCare} treatment. ${toxSentence}`,
-                `Delphi Rise is committed to providing personalized, evidence-based treatment to help clients achieve long-term recovery. We believe that ${clientFirstName} would benefit from ongoing engagement in the recommended services and a structured, supportive environment to address the challenges of substance and alcohol use.`,
-                `Please feel free to contact us if you require any additional information or clarification regarding this evaluation or the services we provide.`
-            );
+                mainParagraphs.push(
+                    salutation,
+                    `On ${evaluationDate}, ${clientFullName}, date of birth ${clientDob}, completed a substance and alcohol use disorder evaluation at Delphi Rise. The evaluation included gathering a history of substance and alcohol use, collateral interviews, a toxicology screen, and a brief screen to identify potential mental health concerns.`,
+                    `Based on this comprehensive clinical evaluation, ${clientFirstName} has been diagnosed with ${diagnosisText} and is recommended for ${levelOfCare} treatment. ${toxSentence}`,
+                    `Delphi Rise is committed to providing personalized, evidence-based treatment to help clients achieve long-term recovery. We believe that ${clientFirstName} would benefit from ongoing engagement in the recommended services and a structured, supportive environment to address the challenges of substance and alcohol use.`,
+                    `Please feel free to contact us if you require any additional information or clarification regarding this evaluation or the services we provide.`
+                );
 
             const signatureBlock = getSignatureBlock();
             const fullText = mainParagraphs.join('\n\n') + `\n\nSincerely,\n\n\n\n${signatureBlock}`;
@@ -1657,18 +1654,15 @@ Description: Support for individuals and families impacted by substance use and 
                 letterDate
             ];
 
-            if (subject) {
-                mainParagraphs.push(`Subject: ${subject}`);
-            }
+                mainParagraphs.push(`Subject: Evaluation Report for ${clientFirstName} ${clientLastName}`);
 
-            mainParagraphs.push(
-                recipientSalutation,
-                `Re: Evaluation Report for ${clientFullName}`,
-                firstP,
-                `${toxParagraph} ${conclusionParagraph}`,
-                `Given these findings, we do not recommend ${clientFirstName} for further treatment or intervention related to substance use at this moment. Should there be any future concerns or changes in ${clientFirstName}’s status, we would be prepared to reassess and provide further recommendations as needed.`,
-                `Please let us know if there are any additional requirements or if further information is needed. We are committed to supporting ${clientFirstName}’s ongoing progress and well-being in any way we can.`
-            );
+                mainParagraphs.push(
+                    recipientSalutation,
+                    firstP,
+                    `${toxParagraph} ${conclusionParagraph}`,
+                    `Given these findings, we do not recommend ${clientFirstName} for further treatment or intervention related to substance use at this moment. Should there be any future concerns or changes in ${clientFirstName}’s status, we would be prepared to reassess and provide further recommendations as needed.`,
+                    `Please let us know if there are any additional requirements or if further information is needed. We are committed to supporting ${clientFirstName}’s ongoing progress and well-being in any way we can.`
+                );
             
             const signatureBlock = getSignatureBlock();
             const fullText = mainParagraphs.join('\n\n') + `\n\nSincerely,\n\n\n\n${signatureBlock}`;
