@@ -5,8 +5,9 @@
 
         const staffNoteOptions = {
             counseling: [
-                { value: 'closing-note-admitted', label: 'Closing Note  Admitted' },
-                { value: 'closing-note-non-admitted', label: 'Closing Note  Non-Admitted' },
+                { value: 'closing-note-admitted', label: 'Closing Note - Admitted' },
+                { value: 'closing-note-non-admitted', label: 'Closing Note - Non-Admitted' },
+                { value: 'closing-note-loss-of-contact', label: 'Closing Note - Loss of Contact' },
                 { value: 'complex-coordination-of-care', label: 'Complex Coordination of Care' },
                 { value: 'discharge-plan', label: 'Discharge Plan' },
                 { value: 'drug-treatment-court-report', label: 'Drug Treatment Court Report' },
@@ -45,6 +46,22 @@
                 { value: 'complex-coordination-of-care', label: 'Complex Coordination of Care' }
             ]
         };
+
+        // Helper: format date strings used in final copy to MM/DD/YYYY
+        function formatDateForOutput(val) {
+            if (!val) return val;
+            const s = String(val).trim();
+            const m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+            if (m) return `${m[2]}/${m[3]}/${m[1]}`;
+            const d = new Date(s);
+            if (!isNaN(d.getTime())) {
+                const mm = String(d.getMonth() + 1).padStart(2, '0');
+                const dd = String(d.getDate()).padStart(2, '0');
+                const yyyy = d.getFullYear();
+                return `${mm}/${dd}/${yyyy}`;
+            }
+            return val;
+        }
 
         function populateNoteTypesForRole(role) {
             // clear current options
@@ -178,6 +195,26 @@
     const closingReferrals = document.getElementById('closing-referrals');
     const closingOfferedToDropdown = document.getElementById('closing-offered-to-dropdown');
     const closingClientResponse = document.getElementById('closing-client-response');
+    // Closing Note (Loss of Contact) elements
+    const closingLossSessions = document.getElementById('closing-loss-sessions');
+    const closingLossStartDate = document.getElementById('closing-loss-start-date');
+    const closingLossEndDate = document.getElementById('closing-loss-end-date');
+    const closingLossEntryOnly = document.getElementById('closing-loss-entry-only');
+    const closingLossSessionsRadio = document.getElementById('closing-loss-sessions-radio');
+    const closingLossSessionsContainer = document.getElementById('closing-loss-sessions-container');
+
+    // Sync visibility for loss-of-contact options
+    function syncClosingLossVisibility() {
+        if (!closingLossSessionsContainer || !closingLossEntryOnly || !closingLossSessionsRadio) return;
+        const showSessions = closingLossSessionsRadio.checked;
+        closingLossSessionsContainer.classList.toggle('hidden', !showSessions);
+    }
+    if (closingLossEntryOnly || closingLossSessionsRadio) {
+        if (closingLossEntryOnly) closingLossEntryOnly.addEventListener('change', () => { syncClosingLossVisibility(); updateFinalNote(); });
+        if (closingLossSessionsRadio) closingLossSessionsRadio.addEventListener('change', () => { syncClosingLossVisibility(); updateFinalNote(); });
+        // run once on load
+        syncClosingLossVisibility();
+    }
     
     // Closing Note (Non-Admitted) elements
     const nonAdmittedClientType = document.getElementById('non-admitted-client-type');
@@ -2397,6 +2434,18 @@ function addNurseInterventionRow(isFirstRow = false) {
                 finalNote = joinedNote + '.';
             }
 
+        } else if (selectedNoteType === 'closing-note-loss-of-contact') {
+            const entryOnlyChecked = (closingLossEntryOnly && closingLossEntryOnly.checked);
+            if (entryOnlyChecked) {
+                finalNote = `Client was discharged due to loss of contact. Client engaged in their evaluation and entry session only. Re-engagement efforts are documented in the chart. A discharge letter was sent to the client's last known address with the reason for their discharge, an invitation to re-engage in treatment when they are ready, and a recovery resource handout outlining community resources for urgent support, harm reduction resources, and referrals to MAT providers and recovery peer services.`;
+            } else {
+                const sessionsVal = (closingLossSessions && closingLossSessions.value) ? closingLossSessions.value : '[number]';
+                const startVal = formatDateForOutput(closingLossStartDate && closingLossStartDate.value) || '[start date]';
+                const endVal = formatDateForOutput(closingLossEndDate && closingLossEndDate.value) || '[end date]';
+                const sessionsNum = Number(sessionsVal);
+                const sessionLabel = (sessionsNum === 1) ? 'session' : 'sessions';
+                finalNote = `Client was discharged due to loss of contact. Client completed ${sessionsVal} ${sessionLabel} between ${startVal} and ${endVal}. Re-engagement efforts are documented in the chart. A discharge letter was sent to the client's last known address with the reason for their discharge, an invitation to re-engage in treatment when they are ready, and a recovery resource handout outlining community resources for urgent support, harm reduction resources, and referrals to MAT providers and recovery peer services.`;
+            }
         } else if (selectedNoteType === 'closing-note-non-admitted') {
             const clientType = nonAdmittedClientType.value;
             if (clientType === 'no-engage') {
@@ -2418,14 +2467,25 @@ function addNurseInterventionRow(isFirstRow = false) {
         } else if (selectedNoteType === 'injections') {
             const injectionType = injectionTypeSelect.value;
             switch (injectionType) {
-                case 'vivitrol':
-                    finalNote = `Vivitrol 380mg Sus ER rec\nSuspension prepared as instructed with preparation needle.\nSite: ${vivitrolSite.value || '[Site]'}\nLot #: ${vivitrolLot.value || '[Lot #]'}\nExp date: ${vivitrolExp.value || '[Exp Date]'}\nSN: ${vivitrolSn.value || '[SN]'}\nGluteal injection site identified by landmarks, prepped with alcohol swab. 2-inch admin needle used. 4.2 ml of suspension injected (Vivitrol 380 mg) with scant bleeding, Band-aid applied. Pt tolerated procedure well without complication. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection.\nNext scheduled Injection: ${vivitrolNextInjection.value || '[Next Injection Date]'}`;
+                case 'vivitrol': {
+                    const next = formatDateForOutput(vivitrolNextInjection && vivitrolNextInjection.value) || '[Next Injection Date]';
+                    const exp = formatDateForOutput(vivitrolExp && vivitrolExp.value) || (vivitrolExp && vivitrolExp.value) || '[Exp Date]';
+                    finalNote = `Vivitrol 380mg Sus ER rec\nSuspension prepared as instructed with preparation needle.\nSite: ${vivitrolSite.value || '[Site]'}\nLot #: ${vivitrolLot.value || '[Lot #]'}\nExp date: ${exp}\nSN: ${vivitrolSn.value || '[SN]'}\nGluteal injection site identified by landmarks, prepped with alcohol swab. 2-inch admin needle used. 4.2 ml of suspension injected (Vivitrol 380 mg) with scant bleeding, Band-aid applied. Pt tolerated procedure well without complication. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection.\nNext scheduled Injection: ${next}`;
+                }
                     break;
                 case 'sublocade':
-                    finalNote = `Sublocade SQ injection administered\nSite: ${sublocadeSite.value || '[Site]'}\nLot #: ${sublocadeLot.value || '[Lot #]'}\nExp date: ${sublocadeExp.value || '[Exp Date]'}\nSN: ${sublocadeSn.value || '[SN]'}\nIce pack applied to site prior to administration Cold Spray applied to site. Site prepped with alcohol swab. Pt tolerated procedure well without complication. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection. PT instructed on importance of medication adherence and follow appointments with providers.\nNext scheduled Injection: ${sublocadeNextInjection.value || '[Next Injection Date]'}`;
+                    {
+                        const next = formatDateForOutput(sublocadeNextInjection && sublocadeNextInjection.value) || '[Next Injection Date]';
+                        const exp = formatDateForOutput(sublocadeExp && sublocadeExp.value) || (sublocadeExp && sublocadeExp.value) || '[Exp Date]';
+                        finalNote = `Sublocade SQ injection administered\nSite: ${sublocadeSite.value || '[Site]'}\nLot #: ${sublocadeLot.value || '[Lot #]'}\nExp date: ${exp}\nSN: ${sublocadeSn.value || '[SN]'}\nIce pack applied to site prior to administration Cold Spray applied to site. Site prepped with alcohol swab. Pt tolerated procedure well without complication. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection. PT instructed on importance of medication adherence and follow appointments with providers.\nNext scheduled Injection: ${next}`;
+                    }
                     break;
                 case 'brixadi':
-                    finalNote = `Brixadi SQ injection administered\nSite: ${brixadiSite.value || '[Site]'}\nLot #: ${brixadiLot.value || '[Lot #]'}\nExp date: ${brixadiExp.value || '[Exp Date]'}\nSN: ${brixadiSn.value || '[SN]'}\nSite prepped with alcohol swab. Pt tolerated procedure. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection.\nNext scheduled Injection: ${brixadiNextInjection.value || '[Next Injection Date]'}`;
+                    {
+                        const next = formatDateForOutput(brixadiNextInjection && brixadiNextInjection.value) || '[Next Injection Date]';
+                        const exp = formatDateForOutput(brixadiExp && brixadiExp.value) || (brixadiExp && brixadiExp.value) || '[Exp Date]';
+                        finalNote = `Brixadi SQ injection administered\nSite: ${brixadiSite.value || '[Site]'}\nLot #: ${brixadiLot.value || '[Lot #]'}\nExp date: ${exp}\nSN: ${brixadiSn.value || '[SN]'}\nSite prepped with alcohol swab. Pt tolerated procedure. Reviewed with Pt medication side effects, signs/systems of infection at injection site. Encouraged PT to contact clinic for any concerns/ questions regarding injection.\nNext scheduled Injection: ${next}`;
+                    }
                     break;
             }
         } else if (selectedNoteType === 'medical-screening') {
@@ -2609,11 +2669,11 @@ function addNurseInterventionRow(isFirstRow = false) {
             noteParts.push(`Safety Plan Completed:\n${mdtSafetyPlanCompleted.value || '[Yes/No]'}`);
             noteParts.push(`Safety Plan Applicable to Current Presentation:\n${mdtSafetyPlanApplicable.value || '[Details]'}`);
             noteParts.push(`MAT Status:\n${mdtMatStatus.value || '[Status]'}`);
-            noteParts.push(`Date Last Urine Toxicology Collected:\n${mdtLastToxDate.value || '[Date]'}`);
+            noteParts.push(`Date Last Urine Toxicology Collected:\n${formatDateForOutput(mdtLastToxDate && mdtLastToxDate.value) || '[Date]'}`);
             noteParts.push(`Result of Toxicology Screen:\n${mdtToxResult.value || '[Result]'}`);
             noteParts.push(`Is Client Engaging?:\n${mdtClientEngaging.value || '[Engaging Status]'}`);
-            noteParts.push(`Most Recent Appointment Date:\n${mdtMostRecentAppt.value || '[Date]'}`);
-            noteParts.push(`Next Appointment Date:\n${mdtNextAppt.value || '[Date]'}`);
+            noteParts.push(`Most Recent Appointment Date:\n${formatDateForOutput(mdtMostRecentAppt && mdtMostRecentAppt.value) || '[Date]'}`);
+            noteParts.push(`Next Appointment Date:\n${formatDateForOutput(mdtNextAppt && mdtNextAppt.value) || '[Date]'}`);
             noteParts.push(`Progress on Most Recent MDT Recommendations:\n${mdtProgressRecommendations.value || '[Progress]'}`);
             noteParts.push(`Guiding Question(s) for Todays MDT Discussion:\n${mdtGuidingQuestions.value || '[Questions]'}`);
 

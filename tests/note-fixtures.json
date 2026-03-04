@@ -7,6 +7,18 @@
     },
     {
       "staffRole": "counseling",
+      "noteType": "closing-note-loss-of-contact",
+      "mode": "single",
+      "steps": [
+        {
+          "action": "setValue",
+          "selector": "#closing-loss-sessions",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "staffRole": "counseling",
       "noteType": "closing-note-non-admitted",
       "mode": "single",
       "steps": [

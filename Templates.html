@@ -1115,6 +1115,24 @@
         <input type="text" id="closing-client-response" placeholder="Enter client's response...">
     </div>
 
+    <div id="closing-note-loss-of-contact-container" class="note-container hidden">
+        <h2 style="margin-top: 20px;">Closing Note Details</h2>
+        <div style="margin-bottom:8px;">
+            <label><input type="radio" name="closing-loss-mode" id="closing-loss-sessions-radio" value="sessions" checked> Enter number of sessions and date range</label>
+        </div>
+        <div id="closing-loss-sessions-container" style="margin-left:18px; margin-bottom:10px;">
+            <label>Sessions completed: <input type="number" id="closing-loss-sessions" min="0" placeholder="0" oninput="updateFinalNote()" style="width:70px;"></label>
+            <label style="margin-left:12px;">Start date: <input type="date" id="closing-loss-start-date" onchange="updateFinalNote()"></label>
+            <label style="margin-left:12px;">End date: <input type="date" id="closing-loss-end-date" onchange="updateFinalNote()"></label>
+        </div>
+
+        <div style="margin-bottom:8px;">
+            <label><input type="radio" name="closing-loss-mode" id="closing-loss-entry-only" value="entryonly"> Client engaged in their evaluation and entry session only.</label>
+        </div>
+
+        <p>Re-engagement efforts are documented in the chart. A discharge letter was sent to the client's last known address with the reason for their discharge, an invitation to re-engage in treatment when they are ready, and a recovery resource handout outlining community resources for urgent support, harm reduction resources, and referrals to MAT providers and recovery peer services.</p>
+    </div>
+
     <div id="closing-note-non-admitted-container" class="note-container hidden">
         <h2 style="margin-top: 20px;">Closing Note Details</h2>
         <label for="non-admitted-client-type">Client Type:</label>
